@@ -32,7 +32,11 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     func startNewFlow(flow: Flowable) {
-
+        
+    }
+    
+    func signeOut() {
+        parentCoordinator?.signeOut()
     }
 
     func navigateBack() {
@@ -51,6 +55,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         vc.coordinator = self
         vc.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    deinit {
+        print("AVERAKEDABRA: RELEASE -> BoardsCoordinator")
     }
 
 }

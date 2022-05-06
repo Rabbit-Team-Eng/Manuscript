@@ -22,7 +22,7 @@ class ApplicationCoordinator: Coordinator, FlowFinisher {
     }
 
     func start(with flow: Flowable) {
-        if startupUtils.getAccessToken() != nil {
+        if startupUtils.getAccessToken() != "" {
             handleFlow(flow: ApplicationFlow.main(mainFLow: TabBarFlow.boards))
         } else {
             if startupUtils.isOnboarded() {

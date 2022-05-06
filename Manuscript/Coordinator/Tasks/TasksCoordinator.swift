@@ -20,7 +20,7 @@ class TasksCoordinator: Coordinator, RootProvider, FlowStarter {
 
     init(mainComponent: MainInjector) {
         self.mainComponent = mainComponent
-        print("AVERAKEDABRA: ALLOC -> BoardsCoordinator")
+        print("AVERAKEDABRA: ALLOC -> TasksCoordinator")
     }
 
     func start(with flow: Flowable) {
@@ -41,5 +41,7 @@ class TasksCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.pushViewController(vc, animated: true)
     }
 
-
+    deinit {
+        print("AVERAKEDABRA: RELEASE -> TasksCoordinator")
+    }
 }

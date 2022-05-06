@@ -13,12 +13,14 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     var childCoordinators: [Coordinator] = []
 
     // Local Scope
-    private let mainInjector: MainInjector = MainInjector()
+    private let mainInjector: MainInjector
 
     private let mainTabBarController: UITabBarController = UITabBarController()
 
     override init() {
+        self.mainInjector = MainInjector()
         super.init()
+        print("AVERAKEDABRA: ALLOC -> TabBarCoordinator")
         mainTabBarController.delegate = self
     }
 
@@ -33,6 +35,10 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     // If need to have custom behavior when tab is selected
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         return true
+    }
+    
+    func signeOut() {
+        parentCoordinator?.childDidFinish(child: self, flow: ApplicationFlow.authentication(authenticationFlow: AuthenticationFlow.signIn))
     }
 
     private func addAllTabBarControllers() {
@@ -53,5 +59,9 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
 
         boardsCoordinator.start(with: BoardsFlow.boards)
         tasksCoordinator.start(with: TasksFlow.tasks)
+    }
+    
+    deinit {
+        print("AVERAKEDABRA: RELEASE -> TabBarCoordinator")
     }
 }

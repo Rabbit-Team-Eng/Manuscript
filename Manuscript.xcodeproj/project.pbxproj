@@ -60,6 +60,43 @@
 		09D275AB2825B91F00933F16 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AA2825B91F00933F16 /* UserDefaults.swift */; };
 		09D275AE2825B93400933F16 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AD2825B93400933F16 /* Palette.swift */; };
 		09D275B02825B94300933F16 /* StartupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AF2825B94300933F16 /* StartupUtils.swift */; };
+		09D275B22825C81100933F16 /* BoardAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B12825C81100933F16 /* BoardAPI.swift */; };
+		09D275B42825C82000933F16 /* BoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B32825C82000933F16 /* BoardService.swift */; };
+		09D275B62825C83400933F16 /* TaskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B52825C83400933F16 /* TaskAPI.swift */; };
+		09D275B82825C84400933F16 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B72825C84400933F16 /* TaskService.swift */; };
+		09D275BA2825C85600933F16 /* WorkspaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B92825C85600933F16 /* WorkspaceAPI.swift */; };
+		09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BB2825C86A00933F16 /* WorkspaceService.swift */; };
+		09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BD2825C8F300933F16 /* CreateNewTaskRequest.swift */; };
+		09D275C02825C92500933F16 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BF2825C92500933F16 /* Endpoint.swift */; };
+		09D275C22825C93D00933F16 /* UpdateTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C12825C93D00933F16 /* UpdateTaskRequest.swift */; };
+		09D275C42825C95900933F16 /* GetAllTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C32825C95900933F16 /* GetAllTaskRequest.swift */; };
+		09D275C62825C96C00933F16 /* DeleteTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C52825C96C00933F16 /* DeleteTaskRequest.swift */; };
+		09D275C82825C98000933F16 /* GetTaskByIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C72825C98000933F16 /* GetTaskByIdRequest.swift */; };
+		09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C92825C9DE00933F16 /* CreateNewBoardRequest.swift */; };
+		09D275CC2825C9F500933F16 /* UpdateBoardRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275CB2825C9F500933F16 /* UpdateBoardRequest.swift */; };
+		09D275CE2825CA1000933F16 /* GetAllBoardsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275CD2825CA1000933F16 /* GetAllBoardsRequest.swift */; };
+		09D275D02825CA2900933F16 /* DeleteBoardRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275CF2825CA2900933F16 /* DeleteBoardRequest.swift */; };
+		09D275D22825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275D12825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift */; };
+		09D275D42825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275D32825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift */; };
+		09D275D62825CA7700933F16 /* AddCurrentMemberToWorkspaceByWorkspaceIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275D52825CA7700933F16 /* AddCurrentMemberToWorkspaceByWorkspaceIdRequest.swift */; };
+		09D275D82825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275D72825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift */; };
+		09D275DA2825CB5A00933F16 /* GetWorkspaceByIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275D92825CB5A00933F16 /* GetWorkspaceByIdRequest.swift */; };
+		09D275DC2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275DB2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift */; };
+		09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275DD2825CB8100933F16 /* GetAllWorkspacesRequest.swift */; };
+		09D275E12825CBE800933F16 /* WorkspaceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275E02825CBE800933F16 /* WorkspaceRequest.swift */; };
+		09D275E32825CBEF00933F16 /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275E22825CBEF00933F16 /* WorkspaceResponse.swift */; };
+		09D275E52825CBF500933F16 /* AllWorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275E42825CBF500933F16 /* AllWorkspaceResponse.swift */; };
+		09D275E72825CC2100933F16 /* Syncable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275E62825CC2100933F16 /* Syncable.swift */; };
+		09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275E92825CC3D00933F16 /* MemberResponse.swift */; };
+		09D275EC2825CC5200933F16 /* BoardRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275EB2825CC5200933F16 /* BoardRequest.swift */; };
+		09D275EE2825CC5D00933F16 /* BoardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275ED2825CC5D00933F16 /* BoardResponse.swift */; };
+		09D275F02825CC6800933F16 /* AllBoardsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275EF2825CC6800933F16 /* AllBoardsResponse.swift */; };
+		09D275F32825CC8100933F16 /* TaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275F22825CC8100933F16 /* TaskRequest.swift */; };
+		09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275F42825CC8E00933F16 /* AllTaskResponse.swift */; };
+		09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275F62825CC9B00933F16 /* TaskResponse.swift */; };
+		09D275F92825CCB300933F16 /* WorkspaceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275F82825CCB300933F16 /* WorkspaceError.swift */; };
+		09D275FB2825CCC000933F16 /* BoardError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275FA2825CCC000933F16 /* BoardError.swift */; };
+		09D275FD2825CCCC00933F16 /* TaskError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275FC2825CCCC00933F16 /* TaskError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +155,43 @@
 		09D275AA2825B91F00933F16 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		09D275AD2825B93400933F16 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		09D275AF2825B94300933F16 /* StartupUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupUtils.swift; sourceTree = "<group>"; };
+		09D275B12825C81100933F16 /* BoardAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardAPI.swift; sourceTree = "<group>"; };
+		09D275B32825C82000933F16 /* BoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardService.swift; sourceTree = "<group>"; };
+		09D275B52825C83400933F16 /* TaskAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPI.swift; sourceTree = "<group>"; };
+		09D275B72825C84400933F16 /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
+		09D275B92825C85600933F16 /* WorkspaceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAPI.swift; sourceTree = "<group>"; };
+		09D275BB2825C86A00933F16 /* WorkspaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceService.swift; sourceTree = "<group>"; };
+		09D275BD2825C8F300933F16 /* CreateNewTaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewTaskRequest.swift; sourceTree = "<group>"; };
+		09D275BF2825C92500933F16 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		09D275C12825C93D00933F16 /* UpdateTaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTaskRequest.swift; sourceTree = "<group>"; };
+		09D275C32825C95900933F16 /* GetAllTaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllTaskRequest.swift; sourceTree = "<group>"; };
+		09D275C52825C96C00933F16 /* DeleteTaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTaskRequest.swift; sourceTree = "<group>"; };
+		09D275C72825C98000933F16 /* GetTaskByIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTaskByIdRequest.swift; sourceTree = "<group>"; };
+		09D275C92825C9DE00933F16 /* CreateNewBoardRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewBoardRequest.swift; sourceTree = "<group>"; };
+		09D275CB2825C9F500933F16 /* UpdateBoardRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBoardRequest.swift; sourceTree = "<group>"; };
+		09D275CD2825CA1000933F16 /* GetAllBoardsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllBoardsRequest.swift; sourceTree = "<group>"; };
+		09D275CF2825CA2900933F16 /* DeleteBoardRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteBoardRequest.swift; sourceTree = "<group>"; };
+		09D275D12825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteWorkspaceByIdRequest.swift; sourceTree = "<group>"; };
+		09D275D32825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateWorkspaceByIdRequest.swift; sourceTree = "<group>"; };
+		09D275D52825CA7700933F16 /* AddCurrentMemberToWorkspaceByWorkspaceIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCurrentMemberToWorkspaceByWorkspaceIdRequest.swift; sourceTree = "<group>"; };
+		09D275D72825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWorkspaceSharingUrlRequest.swift; sourceTree = "<group>"; };
+		09D275D92825CB5A00933F16 /* GetWorkspaceByIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWorkspaceByIdRequest.swift; sourceTree = "<group>"; };
+		09D275DB2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewWorkspaceRequest.swift; sourceTree = "<group>"; };
+		09D275DD2825CB8100933F16 /* GetAllWorkspacesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllWorkspacesRequest.swift; sourceTree = "<group>"; };
+		09D275E02825CBE800933F16 /* WorkspaceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRequest.swift; sourceTree = "<group>"; };
+		09D275E22825CBEF00933F16 /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
+		09D275E42825CBF500933F16 /* AllWorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllWorkspaceResponse.swift; sourceTree = "<group>"; };
+		09D275E62825CC2100933F16 /* Syncable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syncable.swift; sourceTree = "<group>"; };
+		09D275E92825CC3D00933F16 /* MemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberResponse.swift; sourceTree = "<group>"; };
+		09D275EB2825CC5200933F16 /* BoardRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardRequest.swift; sourceTree = "<group>"; };
+		09D275ED2825CC5D00933F16 /* BoardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardResponse.swift; sourceTree = "<group>"; };
+		09D275EF2825CC6800933F16 /* AllBoardsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBoardsResponse.swift; sourceTree = "<group>"; };
+		09D275F22825CC8100933F16 /* TaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRequest.swift; sourceTree = "<group>"; };
+		09D275F42825CC8E00933F16 /* AllTaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTaskResponse.swift; sourceTree = "<group>"; };
+		09D275F62825CC9B00933F16 /* TaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResponse.swift; sourceTree = "<group>"; };
+		09D275F82825CCB300933F16 /* WorkspaceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceError.swift; sourceTree = "<group>"; };
+		09D275FA2825CCC000933F16 /* BoardError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardError.swift; sourceTree = "<group>"; };
+		09D275FC2825CCCC00933F16 /* TaskError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +380,7 @@
 				09D2757A2825B7BD00933F16 /* API */,
 				09D2758A2825B83400933F16 /* ServiceConstants.swift */,
 				09D2759A2825B8A900933F16 /* ManuscriptEnvironment.swift */,
+				09D275BF2825C92500933F16 /* Endpoint.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -314,6 +389,9 @@
 			isa = PBXGroup;
 			children = (
 				09D2757B2825B7C700933F16 /* AuthenticationAPI.swift */,
+				09D275B12825C81100933F16 /* BoardAPI.swift */,
+				09D275B52825C83400933F16 /* TaskAPI.swift */,
+				09D275B92825C85600933F16 /* WorkspaceAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -322,6 +400,9 @@
 			isa = PBXGroup;
 			children = (
 				09D2757E2825B7D900933F16 /* AuthenticationError.swift */,
+				09D275F82825CCB300933F16 /* WorkspaceError.swift */,
+				09D275FA2825CCC000933F16 /* BoardError.swift */,
+				09D275FC2825CCCC00933F16 /* TaskError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -329,7 +410,11 @@
 		09D275802825B7E900933F16 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				09D275F12825CC7D00933F16 /* Task */,
+				09D275E82825CC3900933F16 /* Board */,
+				09D275DF2825CBE400933F16 /* Workspace */,
 				09D275812825B7F000933F16 /* Authentication */,
+				09D275E62825CC2100933F16 /* Syncable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -353,6 +438,22 @@
 				09D275912825B85700933F16 /* GetUserByIdRequest.swift */,
 				09D275932825B85D00933F16 /* ResetPasswordRequest.swift */,
 				09D275952825B86300933F16 /* SignInUserRequest.swift */,
+				09D275BD2825C8F300933F16 /* CreateNewTaskRequest.swift */,
+				09D275C12825C93D00933F16 /* UpdateTaskRequest.swift */,
+				09D275C32825C95900933F16 /* GetAllTaskRequest.swift */,
+				09D275C52825C96C00933F16 /* DeleteTaskRequest.swift */,
+				09D275C72825C98000933F16 /* GetTaskByIdRequest.swift */,
+				09D275C92825C9DE00933F16 /* CreateNewBoardRequest.swift */,
+				09D275CB2825C9F500933F16 /* UpdateBoardRequest.swift */,
+				09D275CD2825CA1000933F16 /* GetAllBoardsRequest.swift */,
+				09D275CF2825CA2900933F16 /* DeleteBoardRequest.swift */,
+				09D275D12825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift */,
+				09D275D32825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift */,
+				09D275D52825CA7700933F16 /* AddCurrentMemberToWorkspaceByWorkspaceIdRequest.swift */,
+				09D275D72825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift */,
+				09D275D92825CB5A00933F16 /* GetWorkspaceByIdRequest.swift */,
+				09D275DB2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift */,
+				09D275DD2825CB8100933F16 /* GetAllWorkspacesRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -361,6 +462,9 @@
 			isa = PBXGroup;
 			children = (
 				09D275982825B89700933F16 /* AuthenticationManager.swift */,
+				09D275B32825C82000933F16 /* BoardService.swift */,
+				09D275B72825C84400933F16 /* TaskService.swift */,
+				09D275BB2825C86A00933F16 /* WorkspaceService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -406,6 +510,37 @@
 				09D275AF2825B94300933F16 /* StartupUtils.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		09D275DF2825CBE400933F16 /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				09D275E02825CBE800933F16 /* WorkspaceRequest.swift */,
+				09D275E22825CBEF00933F16 /* WorkspaceResponse.swift */,
+				09D275E42825CBF500933F16 /* AllWorkspaceResponse.swift */,
+			);
+			path = Workspace;
+			sourceTree = "<group>";
+		};
+		09D275E82825CC3900933F16 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				09D275E92825CC3D00933F16 /* MemberResponse.swift */,
+				09D275EB2825CC5200933F16 /* BoardRequest.swift */,
+				09D275ED2825CC5D00933F16 /* BoardResponse.swift */,
+				09D275EF2825CC6800933F16 /* AllBoardsResponse.swift */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		09D275F12825CC7D00933F16 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				09D275F22825CC8100933F16 /* TaskRequest.swift */,
+				09D275F42825CC8E00933F16 /* AllTaskResponse.swift */,
+				09D275F62825CC9B00933F16 /* TaskResponse.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -478,33 +613,62 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09D275D62825CA7700933F16 /* AddCurrentMemberToWorkspaceByWorkspaceIdRequest.swift in Sources */,
+				09D275D22825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift in Sources */,
+				09D275D02825CA2900933F16 /* DeleteBoardRequest.swift in Sources */,
+				09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */,
+				09D275F92825CCB300933F16 /* WorkspaceError.swift in Sources */,
+				09D275D42825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift in Sources */,
+				09D275B82825C84400933F16 /* TaskService.swift in Sources */,
+				09D275C22825C93D00933F16 /* UpdateTaskRequest.swift in Sources */,
+				09D275CC2825C9F500933F16 /* UpdateBoardRequest.swift in Sources */,
+				09D275E52825CBF500933F16 /* AllWorkspaceResponse.swift in Sources */,
 				09D2756B2825B73A00933F16 /* FlowFinisher.swift in Sources */,
+				09D275B62825C83400933F16 /* TaskAPI.swift in Sources */,
 				09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */,
+				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
+				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
 				09D2758B2825B83400933F16 /* ServiceConstants.swift in Sources */,
+				09D275BA2825C85600933F16 /* WorkspaceAPI.swift in Sources */,
+				09D275C82825C98000933F16 /* GetTaskByIdRequest.swift in Sources */,
 				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
 				09D275942825B85D00933F16 /* ResetPasswordRequest.swift in Sources */,
 				09D2753D2825B5DF00933F16 /* AuthenticationViewController.swift in Sources */,
 				09D275902825B85000933F16 /* ForgotPasswordRequest.swift in Sources */,
+				09D275E72825CC2100933F16 /* Syncable.swift in Sources */,
 				09D275922825B85700933F16 /* GetUserByIdRequest.swift in Sources */,
 				09D275962825B86300933F16 /* SignInUserRequest.swift in Sources */,
 				09D275992825B89700933F16 /* AuthenticationManager.swift in Sources */,
 				09D275442825B62600933F16 /* BoardDetailViewController.swift in Sources */,
+				09D275FB2825CCC000933F16 /* BoardError.swift in Sources */,
+				09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */,
+				09D275DA2825CB5A00933F16 /* GetWorkspaceByIdRequest.swift in Sources */,
 				09D275562825B6B100933F16 /* BoardsFlow.swift in Sources */,
+				09D275CE2825CA1000933F16 /* GetAllBoardsRequest.swift in Sources */,
+				09D275EC2825CC5200933F16 /* BoardRequest.swift in Sources */,
 				09D275B02825B94300933F16 /* StartupUtils.swift in Sources */,
 				09D275692825B73400933F16 /* Flowable.swift in Sources */,
 				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
 				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
+				09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */,
 				09D2757C2825B7C700933F16 /* AuthenticationAPI.swift in Sources */,
 				09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */,
+				09D275B22825C81100933F16 /* BoardAPI.swift in Sources */,
 				09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */,
 				09D275602825B6F800933F16 /* OnboardingFlow.swift in Sources */,
+				09D275EE2825CC5D00933F16 /* BoardResponse.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
 				09D2757F2825B7D900933F16 /* AuthenticationError.swift in Sources */,
+				09D275DC2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift in Sources */,
+				09D275F32825CC8100933F16 /* TaskRequest.swift in Sources */,
 				09D275A22825B8C900933F16 /* PermissionsViewController.swift in Sources */,
+				09D275B42825C82000933F16 /* BoardService.swift in Sources */,
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
+				09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */,
 				09D2754A2825B65700933F16 /* ApplicationCoordinator.swift in Sources */,
 				09D275592825B6CE00933F16 /* TabBarCoordinator.swift in Sources */,
+				09D275C42825C95900933F16 /* GetAllTaskRequest.swift in Sources */,
 				09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */,
 				09D275AE2825B93400933F16 /* Palette.swift in Sources */,
 				09D2753B2825B5D700933F16 /* AuthenticationEvent.swift in Sources */,
@@ -513,8 +677,11 @@
 				09D275852825B80100933F16 /* ResetPasswordRequestModel.swift in Sources */,
 				09D275542825B6AB00933F16 /* BoardsCoordinator.swift in Sources */,
 				09D2758E2825B84A00933F16 /* CreateNewUserRequest.swift in Sources */,
+				09D275C02825C92500933F16 /* Endpoint.swift in Sources */,
 				09D2759E2825B8BD00933F16 /* OnboardingViewController.swift in Sources */,
+				09D275E32825CBEF00933F16 /* WorkspaceResponse.swift in Sources */,
 				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
+				09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */,
 				09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */,
 				09D275892825B80C00933F16 /* UserResponse.swift in Sources */,
 				09D275632825B71100933F16 /* TasksCoordinator.swift in Sources */,
@@ -524,11 +691,16 @@
 				09D275762825B78600933F16 /* MainInjector.swift in Sources */,
 				09D275A82825B90900933F16 /* TasksViewController.swift in Sources */,
 				09D275782825B78C00933F16 /* OnboardingInjector.swift in Sources */,
+				09D275E12825CBE800933F16 /* WorkspaceRequest.swift in Sources */,
 				09D275A02825B8C300933F16 /* OnboardingViewModel.swift in Sources */,
+				09D275F02825CC6800933F16 /* AllBoardsResponse.swift in Sources */,
+				09D275C62825C96C00933F16 /* DeleteTaskRequest.swift in Sources */,
 				09D275872825B80700933F16 /* UserRequest.swift in Sources */,
 				09D2755B2825B6DA00933F16 /* TabBarFlow.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
+				09D275D82825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift in Sources */,
+				09D275FD2825CCCC00933F16 /* TaskError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
