@@ -11,6 +11,55 @@
 		09D275252825B4B800933F16 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275242825B4B800933F16 /* SceneDelegate.swift */; };
 		09D2752C2825B4B800933F16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09D2752B2825B4B800933F16 /* Assets.xcassets */; };
 		09D2752F2825B4B800933F16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09D2752D2825B4B800933F16 /* LaunchScreen.storyboard */; };
+		09D2753B2825B5D700933F16 /* AuthenticationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2753A2825B5D700933F16 /* AuthenticationEvent.swift */; };
+		09D2753D2825B5DF00933F16 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2753C2825B5DF00933F16 /* AuthenticationViewController.swift */; };
+		09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2753E2825B5E500933F16 /* AuthenticationViewModel.swift */; };
+		09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275402825B5ED00933F16 /* ForgotPasswordViewController.swift */; };
+		09D275442825B62600933F16 /* BoardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275432825B62600933F16 /* BoardDetailViewController.swift */; };
+		09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275452825B62D00933F16 /* BoardsViewController.swift */; };
+		09D2754A2825B65700933F16 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275492825B65700933F16 /* ApplicationCoordinator.swift */; };
+		09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2754B2825B65D00933F16 /* ApplicationFlow.swift */; };
+		09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2754E2825B68400933F16 /* AuthenticationCoordinator.swift */; };
+		09D275512825B68B00933F16 /* AuthenticationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275502825B68B00933F16 /* AuthenticationFlow.swift */; };
+		09D275542825B6AB00933F16 /* BoardsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275532825B6AB00933F16 /* BoardsCoordinator.swift */; };
+		09D275562825B6B100933F16 /* BoardsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275552825B6B100933F16 /* BoardsFlow.swift */; };
+		09D275592825B6CE00933F16 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275582825B6CE00933F16 /* TabBarCoordinator.swift */; };
+		09D2755B2825B6DA00933F16 /* TabBarFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2755A2825B6DA00933F16 /* TabBarFlow.swift */; };
+		09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2755D2825B6F200933F16 /* OnboardingCoordinator.swift */; };
+		09D275602825B6F800933F16 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2755F2825B6F800933F16 /* OnboardingFlow.swift */; };
+		09D275632825B71100933F16 /* TasksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275622825B71100933F16 /* TasksCoordinator.swift */; };
+		09D275652825B71700933F16 /* TasksFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275642825B71700933F16 /* TasksFlow.swift */; };
+		09D275672825B72E00933F16 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275662825B72E00933F16 /* Coordinator.swift */; };
+		09D275692825B73400933F16 /* Flowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275682825B73400933F16 /* Flowable.swift */; };
+		09D2756B2825B73A00933F16 /* FlowFinisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2756A2825B73A00933F16 /* FlowFinisher.swift */; };
+		09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2756C2825B74000933F16 /* FlowStarter.swift */; };
+		09D2756F2825B74600933F16 /* RootProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2756E2825B74600933F16 /* RootProvider.swift */; };
+		09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275712825B77A00933F16 /* ApplicationInjector.swift */; };
+		09D275742825B78000933F16 /* AuthenticationInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275732825B78000933F16 /* AuthenticationInjector.swift */; };
+		09D275762825B78600933F16 /* MainInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275752825B78600933F16 /* MainInjector.swift */; };
+		09D275782825B78C00933F16 /* OnboardingInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275772825B78C00933F16 /* OnboardingInjector.swift */; };
+		09D2757C2825B7C700933F16 /* AuthenticationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2757B2825B7C700933F16 /* AuthenticationAPI.swift */; };
+		09D2757F2825B7D900933F16 /* AuthenticationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2757E2825B7D900933F16 /* AuthenticationError.swift */; };
+		09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275822825B7FA00933F16 /* AccessTokenResponse.swift */; };
+		09D275852825B80100933F16 /* ResetPasswordRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275842825B80100933F16 /* ResetPasswordRequestModel.swift */; };
+		09D275872825B80700933F16 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275862825B80700933F16 /* UserRequest.swift */; };
+		09D275892825B80C00933F16 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275882825B80C00933F16 /* UserResponse.swift */; };
+		09D2758B2825B83400933F16 /* ServiceConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2758A2825B83400933F16 /* ServiceConstants.swift */; };
+		09D2758E2825B84A00933F16 /* CreateNewUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2758D2825B84A00933F16 /* CreateNewUserRequest.swift */; };
+		09D275902825B85000933F16 /* ForgotPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2758F2825B85000933F16 /* ForgotPasswordRequest.swift */; };
+		09D275922825B85700933F16 /* GetUserByIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275912825B85700933F16 /* GetUserByIdRequest.swift */; };
+		09D275942825B85D00933F16 /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275932825B85D00933F16 /* ResetPasswordRequest.swift */; };
+		09D275962825B86300933F16 /* SignInUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275952825B86300933F16 /* SignInUserRequest.swift */; };
+		09D275992825B89700933F16 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275982825B89700933F16 /* AuthenticationManager.swift */; };
+		09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2759A2825B8A900933F16 /* ManuscriptEnvironment.swift */; };
+		09D2759E2825B8BD00933F16 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2759D2825B8BD00933F16 /* OnboardingViewController.swift */; };
+		09D275A02825B8C300933F16 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2759F2825B8C300933F16 /* OnboardingViewModel.swift */; };
+		09D275A22825B8C900933F16 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275A12825B8C900933F16 /* PermissionsViewController.swift */; };
+		09D275A52825B8F400933F16 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275A42825B8F400933F16 /* Defaults.swift */; };
+		09D275A82825B90900933F16 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275A72825B90900933F16 /* TasksViewController.swift */; };
+		09D275AB2825B91F00933F16 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AA2825B91F00933F16 /* UserDefaults.swift */; };
+		09D275AE2825B93400933F16 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AD2825B93400933F16 /* Palette.swift */; };
+		09D275B02825B94300933F16 /* StartupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AF2825B94300933F16 /* StartupUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +69,55 @@
 		09D2752B2825B4B800933F16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09D2752E2825B4B800933F16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09D275302825B4B800933F16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09D2753A2825B5D700933F16 /* AuthenticationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEvent.swift; sourceTree = "<group>"; };
+		09D2753C2825B5DF00933F16 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		09D2753E2825B5E500933F16 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		09D275402825B5ED00933F16 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		09D275432825B62600933F16 /* BoardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailViewController.swift; sourceTree = "<group>"; };
+		09D275452825B62D00933F16 /* BoardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewController.swift; sourceTree = "<group>"; };
+		09D275492825B65700933F16 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		09D2754B2825B65D00933F16 /* ApplicationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationFlow.swift; sourceTree = "<group>"; };
+		09D2754E2825B68400933F16 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
+		09D275502825B68B00933F16 /* AuthenticationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlow.swift; sourceTree = "<group>"; };
+		09D275532825B6AB00933F16 /* BoardsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsCoordinator.swift; sourceTree = "<group>"; };
+		09D275552825B6B100933F16 /* BoardsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsFlow.swift; sourceTree = "<group>"; };
+		09D275582825B6CE00933F16 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
+		09D2755A2825B6DA00933F16 /* TabBarFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFlow.swift; sourceTree = "<group>"; };
+		09D2755D2825B6F200933F16 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		09D2755F2825B6F800933F16 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		09D275622825B71100933F16 /* TasksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksCoordinator.swift; sourceTree = "<group>"; };
+		09D275642825B71700933F16 /* TasksFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksFlow.swift; sourceTree = "<group>"; };
+		09D275662825B72E00933F16 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		09D275682825B73400933F16 /* Flowable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flowable.swift; sourceTree = "<group>"; };
+		09D2756A2825B73A00933F16 /* FlowFinisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowFinisher.swift; sourceTree = "<group>"; };
+		09D2756C2825B74000933F16 /* FlowStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowStarter.swift; sourceTree = "<group>"; };
+		09D2756E2825B74600933F16 /* RootProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootProvider.swift; sourceTree = "<group>"; };
+		09D275712825B77A00933F16 /* ApplicationInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationInjector.swift; sourceTree = "<group>"; };
+		09D275732825B78000933F16 /* AuthenticationInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInjector.swift; sourceTree = "<group>"; };
+		09D275752825B78600933F16 /* MainInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInjector.swift; sourceTree = "<group>"; };
+		09D275772825B78C00933F16 /* OnboardingInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingInjector.swift; sourceTree = "<group>"; };
+		09D2757B2825B7C700933F16 /* AuthenticationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationAPI.swift; sourceTree = "<group>"; };
+		09D2757E2825B7D900933F16 /* AuthenticationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationError.swift; sourceTree = "<group>"; };
+		09D275822825B7FA00933F16 /* AccessTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenResponse.swift; sourceTree = "<group>"; };
+		09D275842825B80100933F16 /* ResetPasswordRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequestModel.swift; sourceTree = "<group>"; };
+		09D275862825B80700933F16 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
+		09D275882825B80C00933F16 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		09D2758A2825B83400933F16 /* ServiceConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceConstants.swift; sourceTree = "<group>"; };
+		09D2758D2825B84A00933F16 /* CreateNewUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewUserRequest.swift; sourceTree = "<group>"; };
+		09D2758F2825B85000933F16 /* ForgotPasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRequest.swift; sourceTree = "<group>"; };
+		09D275912825B85700933F16 /* GetUserByIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserByIdRequest.swift; sourceTree = "<group>"; };
+		09D275932825B85D00933F16 /* ResetPasswordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequest.swift; sourceTree = "<group>"; };
+		09D275952825B86300933F16 /* SignInUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUserRequest.swift; sourceTree = "<group>"; };
+		09D275982825B89700933F16 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		09D2759A2825B8A900933F16 /* ManuscriptEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuscriptEnvironment.swift; sourceTree = "<group>"; };
+		09D2759D2825B8BD00933F16 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		09D2759F2825B8C300933F16 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		09D275A12825B8C900933F16 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
+		09D275A42825B8F400933F16 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		09D275A72825B90900933F16 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
+		09D275AA2825B91F00933F16 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		09D275AD2825B93400933F16 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		09D275AF2825B94300933F16 /* StartupUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +150,16 @@
 		09D275212825B4B800933F16 /* Manuscript */ = {
 			isa = PBXGroup;
 			children = (
+				09D275AC2825B93000933F16 /* Utils */,
+				09D275A92825B91B00933F16 /* UserDefaults */,
+				09D275A62825B90300933F16 /* Tasks */,
+				09D275A32825B8E900933F16 /* PropertyWrappers */,
+				09D2759C2825B8B700933F16 /* Onboarding */,
+				09D275792825B7B700933F16 /* Network */,
+				09D275702825B77500933F16 /* Injectors */,
+				09D275472825B64600933F16 /* Coordinator */,
+				09D275422825B61E00933F16 /* Boards */,
+				09D275392825B5CB00933F16 /* Authentication */,
 				09D275382825B54C00933F16 /* Application */,
 				09D275372825B53D00933F16 /* LaunchScreen */,
 				09D275362825B50900933F16 /* Resources */,
@@ -83,6 +191,221 @@
 				09D275242825B4B800933F16 /* SceneDelegate.swift */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		09D275392825B5CB00933F16 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				09D2753A2825B5D700933F16 /* AuthenticationEvent.swift */,
+				09D2753C2825B5DF00933F16 /* AuthenticationViewController.swift */,
+				09D2753E2825B5E500933F16 /* AuthenticationViewModel.swift */,
+				09D275402825B5ED00933F16 /* ForgotPasswordViewController.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		09D275422825B61E00933F16 /* Boards */ = {
+			isa = PBXGroup;
+			children = (
+				09D275432825B62600933F16 /* BoardDetailViewController.swift */,
+				09D275452825B62D00933F16 /* BoardsViewController.swift */,
+			);
+			path = Boards;
+			sourceTree = "<group>";
+		};
+		09D275472825B64600933F16 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				09D275612825B70E00933F16 /* Tasks */,
+				09D2755C2825B6E800933F16 /* Onboarding */,
+				09D275572825B6C900933F16 /* Main */,
+				09D275522825B6A800933F16 /* Boards */,
+				09D2754D2825B67A00933F16 /* Authentication */,
+				09D275482825B64D00933F16 /* Application */,
+				09D275662825B72E00933F16 /* Coordinator.swift */,
+				09D275682825B73400933F16 /* Flowable.swift */,
+				09D2756A2825B73A00933F16 /* FlowFinisher.swift */,
+				09D2756C2825B74000933F16 /* FlowStarter.swift */,
+				09D2756E2825B74600933F16 /* RootProvider.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		09D275482825B64D00933F16 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				09D275492825B65700933F16 /* ApplicationCoordinator.swift */,
+				09D2754B2825B65D00933F16 /* ApplicationFlow.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		09D2754D2825B67A00933F16 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				09D2754E2825B68400933F16 /* AuthenticationCoordinator.swift */,
+				09D275502825B68B00933F16 /* AuthenticationFlow.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		09D275522825B6A800933F16 /* Boards */ = {
+			isa = PBXGroup;
+			children = (
+				09D275532825B6AB00933F16 /* BoardsCoordinator.swift */,
+				09D275552825B6B100933F16 /* BoardsFlow.swift */,
+			);
+			path = Boards;
+			sourceTree = "<group>";
+		};
+		09D275572825B6C900933F16 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				09D275582825B6CE00933F16 /* TabBarCoordinator.swift */,
+				09D2755A2825B6DA00933F16 /* TabBarFlow.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		09D2755C2825B6E800933F16 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				09D2755D2825B6F200933F16 /* OnboardingCoordinator.swift */,
+				09D2755F2825B6F800933F16 /* OnboardingFlow.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		09D275612825B70E00933F16 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				09D275622825B71100933F16 /* TasksCoordinator.swift */,
+				09D275642825B71700933F16 /* TasksFlow.swift */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+		09D275702825B77500933F16 /* Injectors */ = {
+			isa = PBXGroup;
+			children = (
+				09D275712825B77A00933F16 /* ApplicationInjector.swift */,
+				09D275732825B78000933F16 /* AuthenticationInjector.swift */,
+				09D275752825B78600933F16 /* MainInjector.swift */,
+				09D275772825B78C00933F16 /* OnboardingInjector.swift */,
+			);
+			path = Injectors;
+			sourceTree = "<group>";
+		};
+		09D275792825B7B700933F16 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				09D275972825B89300933F16 /* Service */,
+				09D2758C2825B84500933F16 /* Requests */,
+				09D275802825B7E900933F16 /* Model */,
+				09D2757D2825B7D500933F16 /* Error */,
+				09D2757A2825B7BD00933F16 /* API */,
+				09D2758A2825B83400933F16 /* ServiceConstants.swift */,
+				09D2759A2825B8A900933F16 /* ManuscriptEnvironment.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		09D2757A2825B7BD00933F16 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				09D2757B2825B7C700933F16 /* AuthenticationAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		09D2757D2825B7D500933F16 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				09D2757E2825B7D900933F16 /* AuthenticationError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		09D275802825B7E900933F16 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				09D275812825B7F000933F16 /* Authentication */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		09D275812825B7F000933F16 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				09D275822825B7FA00933F16 /* AccessTokenResponse.swift */,
+				09D275842825B80100933F16 /* ResetPasswordRequestModel.swift */,
+				09D275862825B80700933F16 /* UserRequest.swift */,
+				09D275882825B80C00933F16 /* UserResponse.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		09D2758C2825B84500933F16 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				09D2758D2825B84A00933F16 /* CreateNewUserRequest.swift */,
+				09D2758F2825B85000933F16 /* ForgotPasswordRequest.swift */,
+				09D275912825B85700933F16 /* GetUserByIdRequest.swift */,
+				09D275932825B85D00933F16 /* ResetPasswordRequest.swift */,
+				09D275952825B86300933F16 /* SignInUserRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		09D275972825B89300933F16 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				09D275982825B89700933F16 /* AuthenticationManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		09D2759C2825B8B700933F16 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				09D2759D2825B8BD00933F16 /* OnboardingViewController.swift */,
+				09D2759F2825B8C300933F16 /* OnboardingViewModel.swift */,
+				09D275A12825B8C900933F16 /* PermissionsViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		09D275A32825B8E900933F16 /* PropertyWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				09D275A42825B8F400933F16 /* Defaults.swift */,
+			);
+			path = PropertyWrappers;
+			sourceTree = "<group>";
+		};
+		09D275A62825B90300933F16 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				09D275A72825B90900933F16 /* TasksViewController.swift */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+		09D275A92825B91B00933F16 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				09D275AA2825B91F00933F16 /* UserDefaults.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		09D275AC2825B93000933F16 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				09D275AD2825B93400933F16 /* Palette.swift */,
+				09D275AF2825B94300933F16 /* StartupUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,8 +478,57 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09D2756B2825B73A00933F16 /* FlowFinisher.swift in Sources */,
+				09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */,
+				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
+				09D2758B2825B83400933F16 /* ServiceConstants.swift in Sources */,
+				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
+				09D275942825B85D00933F16 /* ResetPasswordRequest.swift in Sources */,
+				09D2753D2825B5DF00933F16 /* AuthenticationViewController.swift in Sources */,
+				09D275902825B85000933F16 /* ForgotPasswordRequest.swift in Sources */,
+				09D275922825B85700933F16 /* GetUserByIdRequest.swift in Sources */,
+				09D275962825B86300933F16 /* SignInUserRequest.swift in Sources */,
+				09D275992825B89700933F16 /* AuthenticationManager.swift in Sources */,
+				09D275442825B62600933F16 /* BoardDetailViewController.swift in Sources */,
+				09D275562825B6B100933F16 /* BoardsFlow.swift in Sources */,
+				09D275B02825B94300933F16 /* StartupUtils.swift in Sources */,
+				09D275692825B73400933F16 /* Flowable.swift in Sources */,
+				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
+				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
+				09D2757C2825B7C700933F16 /* AuthenticationAPI.swift in Sources */,
+				09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */,
+				09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */,
+				09D275602825B6F800933F16 /* OnboardingFlow.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
+				09D2757F2825B7D900933F16 /* AuthenticationError.swift in Sources */,
+				09D275A22825B8C900933F16 /* PermissionsViewController.swift in Sources */,
+				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
+				09D2754A2825B65700933F16 /* ApplicationCoordinator.swift in Sources */,
+				09D275592825B6CE00933F16 /* TabBarCoordinator.swift in Sources */,
+				09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */,
+				09D275AE2825B93400933F16 /* Palette.swift in Sources */,
+				09D2753B2825B5D700933F16 /* AuthenticationEvent.swift in Sources */,
+				09D275742825B78000933F16 /* AuthenticationInjector.swift in Sources */,
 				09D275252825B4B800933F16 /* SceneDelegate.swift in Sources */,
+				09D275852825B80100933F16 /* ResetPasswordRequestModel.swift in Sources */,
+				09D275542825B6AB00933F16 /* BoardsCoordinator.swift in Sources */,
+				09D2758E2825B84A00933F16 /* CreateNewUserRequest.swift in Sources */,
+				09D2759E2825B8BD00933F16 /* OnboardingViewController.swift in Sources */,
+				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
+				09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */,
+				09D275892825B80C00933F16 /* UserResponse.swift in Sources */,
+				09D275632825B71100933F16 /* TasksCoordinator.swift in Sources */,
+				09D275652825B71700933F16 /* TasksFlow.swift in Sources */,
+				09D275512825B68B00933F16 /* AuthenticationFlow.swift in Sources */,
+				09D275AB2825B91F00933F16 /* UserDefaults.swift in Sources */,
+				09D275762825B78600933F16 /* MainInjector.swift in Sources */,
+				09D275A82825B90900933F16 /* TasksViewController.swift in Sources */,
+				09D275782825B78C00933F16 /* OnboardingInjector.swift in Sources */,
+				09D275A02825B8C300933F16 /* OnboardingViewModel.swift in Sources */,
+				09D275872825B80700933F16 /* UserRequest.swift in Sources */,
+				09D2755B2825B6DA00933F16 /* TabBarFlow.swift in Sources */,
+				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
+				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

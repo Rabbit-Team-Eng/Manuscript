@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        configureTabBarAppearance()
         return true
     }
 
@@ -29,6 +29,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    private func configureTabBarAppearance() {
+        if #available(iOS 13.0, *) {
+            let tabBarItemAppearance = UITabBarItemAppearance()
+
+            tabBarItemAppearance.normal.iconColor = Palette.lightGray
+            tabBarItemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Palette.lightGray]
+
+            tabBarItemAppearance.selected.iconColor = Palette.blue
+            tabBarItemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Palette.blue]
+
+            let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithDefaultBackground()
+            tabBarAppearance.backgroundColor = Palette.gray
+            tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
+            UITabBar.appearance().standardAppearance = tabBarAppearance
+
+            if #available(iOS 15.0, *) {
+                UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+            }
+        }
     }
 
 
