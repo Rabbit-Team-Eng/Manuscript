@@ -97,7 +97,8 @@ class IntegrationsViewController: UIViewController {
         let boardsService = BoardService(accessToken: startupUtils.getAccessToken(), environment: .production, jsonEncoder: JSONEncoder(), jsonDecoder: JSONDecoder())
         let dataProvider = DataProvider(coreDataStack: coreDataStack)
         let authManager = AuthenticationManager(environment: .production, jsonDecoder: JSONDecoder(), jsonEncoder: JSONEncoder())
-        let workspaceSyncronizer = WorkspaceSyncronizer(coreDataStack: coreDataStack, workspaceService: workspaceService, startupUtils: startupUtils)
+        let workspaceCoreDataManager = WorkspaceCoreDataManager(coreDataStack: coreDataStack)
+        let workspaceSyncronizer = WorkspaceSyncronizer(coreDataStack: coreDataStack, workspaceService: workspaceService, startupUtils: startupUtils, workspaceCoreDataManager: workspaceCoreDataManager)
         
         
         viewModel = ViewModel(coreDataStack: coreDataStack,
@@ -141,7 +142,7 @@ class IntegrationsViewController: UIViewController {
     }
     
     @objc func signIn(_ sender: UIButton) {
-        viewModel?.signIn(email: "fortest@test.com", password: "Pass123!")
+        viewModel?.signIn(email: "shady@test.com", password: "Pass123!")
     }
     
     @objc func printLocalDBDidTap(_ sender: UIButton) {

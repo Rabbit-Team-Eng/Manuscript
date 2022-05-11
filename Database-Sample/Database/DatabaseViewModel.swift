@@ -32,10 +32,11 @@ class DatabaseViewModel {
                                           isInitiallySynced: false,
                                           isPendingDeletionOnTheServer: false)
         
-        self.workspaceCoreDataManager.insertIntoLocalAsync(item: item, completion: { [weak self] in
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
+            self.workspaceCoreDataManager.insertIntoLocalAsyncBlocking(item: item)
             self.state.send(.didInsertedNewWorkspaceIntoDatabase)
-        })
+        }
 
     }
 }

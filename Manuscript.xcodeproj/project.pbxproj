@@ -18,6 +18,12 @@
 		097EDF2A282B1F1A0060C8FD /* DatabaseSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF29282B1F1A0060C8FD /* DatabaseSection.swift */; };
 		097EDF2C282B1F200060C8FD /* DatabaseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF2B282B1F200060C8FD /* DatabaseItem.swift */; };
 		097EDF30282B22180060C8FD /* DatabaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF2F282B22180060C8FD /* DatabaseViewModel.swift */; };
+		097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */; };
+		097EDF34282B63970060C8FD /* WorkspaceCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */; };
+		097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */; };
+		097EDF38282B63C80060C8FD /* WorkspaceSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */; };
+		097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */; };
+		097EDF3B282B63F30060C8FD /* BoardSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
 		09CAAA0C2829D80200FE0214 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */; };
 		09CAAA0E2829D80200FE0214 /* IntegrationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0D2829D80200FE0214 /* IntegrationsViewController.swift */; };
@@ -239,6 +245,9 @@
 		097EDF29282B1F1A0060C8FD /* DatabaseSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseSection.swift; sourceTree = "<group>"; };
 		097EDF2B282B1F200060C8FD /* DatabaseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseItem.swift; sourceTree = "<group>"; };
 		097EDF2F282B22180060C8FD /* DatabaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewModel.swift; sourceTree = "<group>"; };
+		097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoreDataManager.swift; sourceTree = "<group>"; };
+		097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSyncronizer.swift; sourceTree = "<group>"; };
+		097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSyncronizer.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09CAAA092829D80200FE0214 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -424,6 +433,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		097EDF31282B63530060C8FD /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		097EDF35282B63B10060C8FD /* Syncronizer */ = {
+			isa = PBXGroup;
+			children = (
+				09D276572826FB9700933F16 /* DataSyncronizer.swift */,
+				097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */,
+				097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */,
+			);
+			path = Syncronizer;
+			sourceTree = "<group>";
+		};
 		09CAAA082829D80200FE0214 /* Database-Sample */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +492,8 @@
 			isa = PBXGroup;
 			children = (
 				09D276202825CE6000933F16 /* Storage */,
+				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
+				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,
 				09D275AC2825B93000933F16 /* Utils */,
 				09D275A92825B91B00933F16 /* UserDefaults */,
 				09D275A62825B90300933F16 /* Tasks */,
@@ -804,13 +833,12 @@
 		09D276202825CE6000933F16 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,
-				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
+				097EDF35282B63B10060C8FD /* Syncronizer */,
+				097EDF31282B63530060C8FD /* Manager */,
 				09D276022825CE2300933F16 /* Entitites */,
-				09D276212825CE6000933F16 /* DataProvider.swift */,
 				09D276222825CE6000933F16 /* Comparator */,
 				09D2762C2825CE6000933F16 /* BusinessModel */,
-				09D276572826FB9700933F16 /* DataSyncronizer.swift */,
+				09D276212825CE6000933F16 /* DataProvider.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -947,6 +975,7 @@
 				097EDF22282B1EE20060C8FD /* SingleButtonCell.swift in Sources */,
 				09CAAA2D2829D8B200FE0214 /* BoardComparator.swift in Sources */,
 				09CAAA632829D90C00FE0214 /* UpdateTaskRequest.swift in Sources */,
+				097EDF3B282B63F30060C8FD /* BoardSyncronizer.swift in Sources */,
 				097EDF24282B1EFB0060C8FD /* DatabaseEventProtocol.swift in Sources */,
 				09CAAA262829D8B200FE0214 /* MemberComparator.swift in Sources */,
 				09CAAA4D2829D90700FE0214 /* UserRequest.swift in Sources */,
@@ -1002,6 +1031,7 @@
 				097EDF2A282B1F1A0060C8FD /* DatabaseSection.swift in Sources */,
 				09CAAA552829D90C00FE0214 /* GetTaskByIdRequest.swift in Sources */,
 				09CAAA422829D8FE00FE0214 /* AllTaskResponse.swift in Sources */,
+				097EDF38282B63C80060C8FD /* WorkspaceSyncronizer.swift in Sources */,
 				09CAAA242829D8A800FE0214 /* MemberEntity+CoreDataProperties.swift in Sources */,
 				09CAAA692829D91300FE0214 /* WorkspaceService.swift in Sources */,
 				09CAAA3C2829D8E900FE0214 /* BoardAPI.swift in Sources */,
@@ -1028,6 +1058,7 @@
 				09CAAA5C2829D90C00FE0214 /* GetAllTaskRequest.swift in Sources */,
 				097EDF19282AEC760060C8FD /* DatabaseViewController.swift in Sources */,
 				09CAAA682829D91300FE0214 /* TaskService.swift in Sources */,
+				097EDF34282B63970060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09CAAA1C2829D8A000FE0214 /* TaskDB.xcdatamodeld in Sources */,
 				09CAAA462829D90100FE0214 /* BoardResponse.swift in Sources */,
 				09CAAA432829D8FE00FE0214 /* TaskRequest.swift in Sources */,
@@ -1052,6 +1083,7 @@
 				09D275D22825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift in Sources */,
 				09D275D02825CA2900933F16 /* DeleteBoardRequest.swift in Sources */,
 				09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */,
+				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
 				09D276122825CE2300933F16 /* TaskDB.xcdatamodeld in Sources */,
 				09D275F92825CCB300933F16 /* WorkspaceError.swift in Sources */,
 				09D275D42825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift in Sources */,
@@ -1158,7 +1190,9 @@
 				09D2755B2825B6DA00933F16 /* TabBarFlow.swift in Sources */,
 				09D276362825CE6000933F16 /* TaskComparator.swift in Sources */,
 				09D276112825CE2300933F16 /* CoreDataStack.swift in Sources */,
+				097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
+				097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
 				09D275D82825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift in Sources */,
 				09D275FD2825CCCC00933F16 /* TaskError.swift in Sources */,

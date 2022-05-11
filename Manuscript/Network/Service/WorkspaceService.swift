@@ -39,7 +39,7 @@ public class WorkspaceService: WorkspaceAPI {
             .mapError({ error in
                 return WorkspaceError.unableToCreateWorkspace(error: error)
             })
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
+//            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .eraseToAnyPublisher()
     }
 
