@@ -42,13 +42,13 @@ public class BoardService: BoardAPI {
             .eraseToAnyPublisher()
     }
     
-    public func getAllBoards(accessToken: String, workspaceId: String) -> AnyPublisher<AllBoardsResponse, Error> {
+    public func getAllBoards() -> AnyPublisher<AllBoardsResponse, Error> {
 
         let request = GetAllBoardsRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
         
         return URLSession.shared
-            .dataTaskPublisher(for: request.getRequestForAllWorkspaces(workspaceId: workspaceId))
+            .dataTaskPublisher(for: request.getAllBoards())
             .tryMap() { element -> Data in
                 guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     fatalError("Bad Response, code is: \(String(describing: (element.response as? HTTPURLResponse)?.statusCode))")
@@ -59,6 +59,42 @@ public class BoardService: BoardAPI {
             .mapError({ error in
                 return BoardError.unableToCreateBoard(errorMessage: "Decoding error. \(error.localizedDescription)")
             })
+            .receive(on: DispatchQueue.global(qos: .userInteractive))
+            .eraseToAnyPublisher()
+    }
+    
+    public func getAllBoardsBusinessModel() -> AnyPublisher<[BoardBusinessModel], Error> {
+
+        let request = GetAllBoardsRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
+        
+        
+        return URLSession.shared
+            .dataTaskPublisher(for: request.getAllBoards())
+            .tryMap() { element -> Data in
+                guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    fatalError("Bad Response, code is: \(String(describing: (element.response as? HTTPURLResponse)?.statusCode))")
+                }
+                return element.data
+            }
+            .decode(type: AllBoardsResponse.self, decoder: jsonDecoder)
+            .mapError({ error in
+                return BoardError.unableToCreateBoard(errorMessage: "Decoding error. \(error.localizedDescription)")
+            })
+            .map { response in
+                let boards = response.items
+                var ret: [BoardBusinessModel] = []
+                boards.forEach { response in
+                    ret.append(BoardBusinessModel(remoteId: Int32(response.id),
+                                                  title: response.title,
+                                                  assetUrl: response.assetUrl ?? "",
+                                                  ownerWorkspaceId: Int32(response.workspaceId),
+                                                  lastModifiedDate: response.lastModifiedDate,
+                                                  isInitiallySynced: true,
+                                                  isPendingDeletionOnTheServer: false))
+                }
+                return ret
+            }
+
             .receive(on: DispatchQueue.global(qos: .userInteractive))
             .eraseToAnyPublisher()
     }

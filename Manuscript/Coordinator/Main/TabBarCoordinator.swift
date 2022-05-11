@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarControllerDelegate {
     // Coordinator
@@ -14,14 +15,19 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
 
     // Local Scope
     private let mainInjector: MainInjector
+    private var tokens: Set<AnyCancellable> = []
 
     private let mainTabBarController: UITabBarController = UITabBarController()
 
-    override init() {
-        self.mainInjector = MainInjector()
+    init(applicationInjector: ApplicationInjector) {
+        self.mainInjector = MainInjector(applicationInjector: applicationInjector)
         super.init()
         print("AVERAKEDABRA: ALLOC -> TabBarCoordinator")
         mainTabBarController.delegate = self
+        
+        let manager = mainInjector.provideDatabaseManager()
+        manager.syncronizeAllEntities()
+
     }
 
     func start(with flow: Flowable) {
@@ -53,8 +59,8 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
 
         let boardsRoot = boardsCoordinator.provideRootViewController()
         let tasksRoot = tasksCoordinator.provideRootViewController()
-        boardsRoot.tabBarItem = mainInjector.provideBoardsTabBarItem()
-        tasksRoot.tabBarItem = mainInjector.provideTasksTabBarItem()
+        boardsRoot.tabBarItem = UITabBarItem(title: "Boards", image: UIImage(systemName: "checkerboard.rectangle"), selectedImage: UIImage(systemName: "checkerboard.rectangle"))
+        tasksRoot.tabBarItem = UITabBarItem(title: "Tasks", image: UIImage(systemName: "square.and.pencil"), selectedImage: UIImage(systemName: "square.and.pencil"))
         mainTabBarController.setViewControllers([boardsRoot, tasksRoot], animated: false)
 
         boardsCoordinator.start(with: BoardsFlow.boards)

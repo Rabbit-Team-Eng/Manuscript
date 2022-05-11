@@ -10,6 +10,8 @@ import UIKit
 class BoardsViewController: UIViewController {
 
     weak var coordinator: BoardsCoordinator? = nil
+    
+    private let boardsViewModel: BoardsViewModel
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -20,7 +22,8 @@ class BoardsViewController: UIViewController {
         view.backgroundColor = Palette.lightBlack
     }
 
-    init() {
+    init(boardsViewModel: BoardsViewModel) {
+        self.boardsViewModel = boardsViewModel
         print("AVERAKEDABRA: ALLOC -> BoardsViewController")
         super.init(nibName: nil, bundle: nil)
     }

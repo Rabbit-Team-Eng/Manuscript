@@ -9,8 +9,8 @@ import Foundation
 
 extension UserDefaults {
 
-    @Defaults(key: "accessToken", defaultValue: nil)
-    static var accessToken: String?
+    @Defaults(key: "accessToken", defaultValue: "")
+    static var accessToken: String
 
     @Defaults(key: "isOnboarded", defaultValue: false)
     static var isOnboarded: Bool

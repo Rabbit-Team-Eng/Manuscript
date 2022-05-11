@@ -17,7 +17,7 @@ class StartupUtils {
         UserDefaults.isOnboarded = true
     }
 
-    func getAccessToken() -> String? {
+    func getAccessToken() -> String {
         return UserDefaults.accessToken
     }
 

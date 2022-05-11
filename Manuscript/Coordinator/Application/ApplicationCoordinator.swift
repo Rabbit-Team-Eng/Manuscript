@@ -35,7 +35,7 @@ class ApplicationCoordinator: Coordinator, FlowFinisher {
     }
 
     func navigateToTabBarFlow(flow: TabBarFlow) {
-        let coordinator = TabBarCoordinator()
+        let coordinator = TabBarCoordinator(applicationInjector: injector)
         applicationMainWindow.rootViewController = coordinator.provideRootViewController()
         coordinator.parentCoordinator = self
         childCoordinators.append(coordinator)

@@ -39,7 +39,7 @@ struct GetAllBoardsRequest {
         return request
     }
     
-    func getRequestForAllWorkspaces(workspaceId: String) -> URLRequest {
+    func getAllBoards() -> URLRequest {
         let urlString = "\(environment.rawValue)\(Endpoint.board)"
         var request = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = ServiceConstants.GET

@@ -44,7 +44,7 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     func navigateToBoardsScreen() {
-        let vc = BoardsViewController()
+        let vc = BoardsViewController(boardsViewModel: mainComponent.provideBoardsViewModel())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

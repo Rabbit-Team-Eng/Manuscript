@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         configureTabBarAppearance()
+        printOutCoreDataDatabaseLocation()
         return true
     }
 
@@ -51,6 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
             }
         }
+    }
+    
+    private func printOutCoreDataDatabaseLocation() {
+        #if targetEnvironment(simulator)
+        print("\n\n\n\n=================================CORE DATA LOCAL SQLite FILE LOCATION=================================")
+        print("In order to open the local SQLite file use the following command in terminal. Make sure you have appropriate soft installed.")
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let terminalComand = "open /Users/\(paths[0].split(separator: "/")[1])/Library/Developer/CoreSimulator/Devices/\(paths[0].split(separator: "/")[6])/data/Containers/Data/Application/\(paths[0].split(separator: "/")[11])/Library/Application\\ Support/TaskDB.sqlite "
+        print(terminalComand)
+        print("===================================================================================================\n")
+        #endif
     }
 
 
