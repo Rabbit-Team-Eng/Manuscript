@@ -9,4 +9,8 @@ import Foundation
 
 enum DatabaseAction: Hashable {
     case createNewWorkspace
+    case updateWorkspaceById(id: String, newTitle: String, entity: EntityType)
+    case printEntityById(id: String, entity: EntityType)
+    case updateBoardById
+    case updateTaskById
 }

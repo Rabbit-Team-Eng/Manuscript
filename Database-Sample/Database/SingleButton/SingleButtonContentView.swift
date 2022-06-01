@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SingleButtonContentView: UIView, UIContentView, UITextFieldDelegate {
+class SingleButtonContentView: UIView, UIContentView {
     weak var delegate: DatabaseEventProtocol?
     private var model: DatabaseItem?
     var configuration: UIContentConfiguration

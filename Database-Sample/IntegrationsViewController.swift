@@ -120,13 +120,20 @@ class IntegrationsViewController: UIViewController {
 
         guard let vm = viewModel else { return }
         
-        vm.state.sink { completion in } receiveValue: { event in
+        vm.state
+            .receive(on: RunLoop.main)
+            .sink { completion in } receiveValue: { event in
             if event == .didSignedIn {
                 print("The User Did Singe In!")
             }
             
             if event == .didRefreshedTheDB {
                 print("The User Did Refresh the Entire DB!")
+                dataProvider.getAllWorkspacesSync().forEach { model in
+                    print("Title: \(model.title), ID: \(model.remoteId)")
+                }
+                
+                
             }
         }
         .store(in: &tokens)
@@ -142,7 +149,7 @@ class IntegrationsViewController: UIViewController {
     }
     
     @objc func signIn(_ sender: UIButton) {
-        viewModel?.signIn(email: "shady@test.com", password: "Pass123!")
+        viewModel?.signIn(email: "dudu@test.com", password: "Pass123!")
     }
     
     @objc func printLocalDBDidTap(_ sender: UIButton) {

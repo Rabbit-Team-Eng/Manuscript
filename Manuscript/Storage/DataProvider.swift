@@ -15,6 +15,87 @@ class DataProvider {
     init(coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
     }
+    
+    func getAllWorkspacesSync() -> [WorkspaceBusinessModel] {
+        var allWorkspaces: [WorkspaceBusinessModel] = []
+        let context = coreDataStack.databaseContainer.viewContext
+        
+        let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
+        do {
+            let allWorkspaceEntities: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
+            allWorkspaceEntities.forEach { currentWorkspaceEntity in
+                var members: [MemberBusinessModel] = []
+                var boards: [BoardBusinessModel] = []
+
+                currentWorkspaceEntity.boards?.forEach { boardEntity in
+                    if let board = boardEntity as? BoardEntity {
+                        var tasks: [TaskBusinessModel] = []
+                        
+                        board.tasks?.forEach { taskEntity in
+                            if let task = taskEntity as? TaskEntity {
+                                tasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                               title: task.title,
+                                                               detail: task.detail,
+                                                               dueDate: task.dueDate,
+                                                               ownerBoardId: task.ownerBoardId,
+                                                               status: task.status,
+                                                               workspaceId: task.workspaceId,
+                                                               lastModifiedDate: task.lastModifiedDate,
+                                                               isInitiallySynced: task.isInitiallySynced,
+                                                               isPendingDeletionOnTheServer: task.isInitiallySynced))
+                            }
+                        }
+                        
+                        boards.append(BoardBusinessModel(remoteId: board.remoteId,
+                                                         coreDataId: board.objectID,
+                                                         title: board.title,
+                                                         assetUrl: board.assetUrl,
+                                                         ownerWorkspaceId: board.ownerWorkspaceId,
+                                                         lastModifiedDate: board.lastModifiedDate,
+                                                         tasks: tasks,
+                                                         isInitiallySynced: board.isInitiallySynced,
+                                                         isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
+                    }
+                }
+                
+                currentWorkspaceEntity.members?.forEach { memberEntity in
+                    if let member = memberEntity as? MemberEntity {
+                        members.append(MemberBusinessModel(remoteId: member.remoteId,
+                                                           firstName: member.firstName,
+                                                           lastName: member.lastName,
+                                                           avatarUrl: member.avatarUrl,
+                                                           email: member.email,
+                                                           isWorkspaceOwner: member.isWorkspaceOwner,
+                                                           ownerWorkspaceId: member.ownerWorkspaceId,
+                                                           lastModifiedDate: member.lastModifiedDate,
+                                                           isInitiallySynced: member.isInitiallySynced,
+                                                           isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
+                        )
+                    }
+                }
+                
+                let currentWorkspaceBusinessModel = WorkspaceBusinessModel(remoteId: currentWorkspaceEntity.remoteId,
+                                                                           coreDataId: currentWorkspaceEntity.objectID,
+                                                                           title: currentWorkspaceEntity.title,
+                                                                           mainDescription: currentWorkspaceEntity.mainDescription,
+                                                                           sharingEnabled: currentWorkspaceEntity.sharingEnabled,
+                                                                           boards: boards,
+                                                                           members: members,
+                                                                           lastModifiedDate: currentWorkspaceEntity.lastModifiedDate,
+                                                                           isInitiallySynced: currentWorkspaceEntity.isInitiallySynced,
+                                                                           isPendingDeletionOnTheServer: currentWorkspaceEntity.isPendingDeletionOnTheServer)
+                
+                allWorkspaces.append(currentWorkspaceBusinessModel)
+            }
+        } catch let error as NSError {
+            fatalError(error.localizedDescription)
+        }
+        
+
+        return allWorkspaces
+
+
+    }
 
 
     func getAllWorkspacesInBackground() -> [WorkspaceBusinessModel] {

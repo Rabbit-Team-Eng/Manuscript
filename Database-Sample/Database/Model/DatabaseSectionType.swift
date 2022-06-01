@@ -10,5 +10,7 @@ import Foundation
 
 enum DatabaseSectionType: Hashable {
     case workspace
+    case input
     case board
+    case fetcher
 }

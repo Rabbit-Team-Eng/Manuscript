@@ -20,7 +20,7 @@ class BoardSyncronizer: DataSyncronizer {
     }
 
     
-    func syncronize(items: [ComparatorResult<BoardBusinessModel>]) {
+    func syncronize(items: [ComparatorResult<BoardBusinessModel>], completion: @escaping () -> Void) {
         items.filter { $0.target == .local && $0.operation == .insertion }.map { $0.businessObject }.forEach { boardBusinessModelToBeInserted in
             insertIntoLocal(item: boardBusinessModelToBeInserted)
         }

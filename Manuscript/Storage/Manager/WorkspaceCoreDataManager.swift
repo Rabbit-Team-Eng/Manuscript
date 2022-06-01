@@ -19,7 +19,6 @@ class WorkspaceCoreDataManager {
     func insertIntoLocalAsyncBlocking(item: WorkspaceBusinessModel) {
         let context = self.coreDataStack.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
-        
         context.performAndWait {
             let workspaceCoreDataEntity = WorkspaceEntity(context: context)
             workspaceCoreDataEntity.remoteId = item.remoteId
@@ -73,5 +72,34 @@ class WorkspaceCoreDataManager {
                 }
             }
         }
+    }
+    
+    func getWorkspaceByIdSync(id: Int) -> WorkspaceBusinessModel? {
+        var searchingWorkspace: WorkspaceBusinessModel? = nil
+        
+        let context = coreDataStack.databaseContainer.viewContext
+
+        context.performAndWait {
+            
+            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
+            workspacesFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
+            
+            do {
+                let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
+                let worskpaceEntity = workspace.first!
+                searchingWorkspace = WorkspaceBusinessModel(remoteId: worskpaceEntity.remoteId,
+                                                            coreDataId: worskpaceEntity.objectID,
+                                                            title: worskpaceEntity.title,
+                                                            mainDescription: worskpaceEntity.mainDescription,
+                                                            sharingEnabled: worskpaceEntity.sharingEnabled,
+                                                            lastModifiedDate: worskpaceEntity.lastModifiedDate,
+                                                            isInitiallySynced: worskpaceEntity.isInitiallySynced,
+                                                            isPendingDeletionOnTheServer: worskpaceEntity.isPendingDeletionOnTheServer)
+            } catch {
+                fatalError()
+            }
+        }
+        
+        return searchingWorkspace
     }
 }

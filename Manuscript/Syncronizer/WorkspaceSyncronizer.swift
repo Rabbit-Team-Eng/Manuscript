@@ -8,6 +8,11 @@
 import CoreData
 import Combine
 
+enum WorkspaceSyncronizerState {
+    case initial
+    case done
+}
+
 class WorkspaceSyncronizer: DataSyncronizer {
     
     typealias Model = WorkspaceBusinessModel
@@ -17,6 +22,8 @@ class WorkspaceSyncronizer: DataSyncronizer {
     private var tokens: Set<AnyCancellable> = []
     private let startupUtils: StartupUtils
     private let workspaceCoreDataManager: WorkspaceCoreDataManager
+    
+    private let state: CurrentValueSubject<WorkspaceSyncronizerState, Never> = CurrentValueSubject(.initial)
 
     init(coreDataStack: CoreDataStack, workspaceService: WorkspaceService, startupUtils: StartupUtils, workspaceCoreDataManager: WorkspaceCoreDataManager) {
         self.coreDataStack = coreDataStack
@@ -25,7 +32,25 @@ class WorkspaceSyncronizer: DataSyncronizer {
         self.workspaceCoreDataManager = workspaceCoreDataManager
     }
     
-    func syncronize(items: [ComparatorResult<Model>]) {
+    func syncronize(items: [ComparatorResult<Model>], completion: @escaping () -> Void) {
+        if items.count == 0 {
+            completion()
+            return
+        }
+        var index = 0
+        
+        state.sink { completion in } receiveValue: { workspaceSyncronizerState in
+            
+            if workspaceSyncronizerState == .done {
+                index += 1
+            }
+            
+            if index == items.count {
+                completion()
+            }
+        }
+        .store(in: &tokens)
+        
         items.filter { $0.target == .local && $0.operation == .insertion }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeInserted in
             insertIntoLocal(item: workspaceBusinessModelToBeInserted)
         }
@@ -46,8 +71,8 @@ class WorkspaceSyncronizer: DataSyncronizer {
             updateIntoServer(item: workspaceBusinessModelToBeInserted)
         }
         
-        items.filter { $0.target == .server && $0.operation == .removal }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeInserted in
-
+        items.filter { $0.target == .server && $0.operation == .removal }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeDeleted in
+            deleteIntoServer(item: workspaceBusinessModelToBeDeleted)
         }
     }
 
@@ -55,17 +80,20 @@ class WorkspaceSyncronizer: DataSyncronizer {
     
     private func insertIntoLocal(item: WorkspaceBusinessModel) {
         workspaceCoreDataManager.insertIntoLocalAsyncBlocking(item: item)
+        self.state.send(.done)
     }
     
     private func updateIntoLocal(item: WorkspaceBusinessModel) {
         workspaceCoreDataManager.updateIntoLocalAsyncBlocking(item: item)
+        self.state.send(.done)
     }
     
     private func deleteIntoLocal(item: WorkspaceBusinessModel) {
         workspaceCoreDataManager.deleteIntoLocalAsyncBlocking(item: item)
+        self.state.send(.done)
     }
     
-    func insertIntoServer(item: WorkspaceBusinessModel) {
+    private func insertIntoServer(item: WorkspaceBusinessModel) {
         workspaceService.createNewWorkspace(accessToken: startupUtils.getAccessToken(),
                                             requestBody: WorkspaceRequest(title: item.title, description: item.mainDescription ?? "",
                                                shareEnabled: false))
@@ -81,6 +109,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
                     worskaceToBeUpdated.isInitiallySynced = true
                     do {
                         try context.save()
+                        self.state.send(.done)
                     } catch {
                         fatalError()
                     }
@@ -91,7 +120,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
         .store(in: &tokens)
     }
     
-    func updateIntoServer(item: WorkspaceBusinessModel) {
+    private func updateIntoServer(item: WorkspaceBusinessModel) {
         workspaceService.updateWorkspaceById(accessToken: startupUtils.getAccessToken(),
                                                 workspaceId: "\(item.remoteId)", body: WorkspaceRequest(title: item.title,
                                                                                                         description: item.mainDescription ?? "",
@@ -117,8 +146,12 @@ class WorkspaceSyncronizer: DataSyncronizer {
         .store(in: &tokens)
     }
     
-    func deleteIntoServer(item: WorkspaceBusinessModel) {
-        
+    private func deleteIntoServer(item: WorkspaceBusinessModel) {
+        workspaceService.deleteWorkspaceById(accessToken: startupUtils.getAccessToken(), workspaceId: "\(item.remoteId)")
+        .sink { completion in } receiveValue: { response in
+            print(response)
+        }
+        .store(in: &tokens)
     }
     
 }

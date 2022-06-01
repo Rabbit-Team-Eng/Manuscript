@@ -7,9 +7,15 @@
 
 import Foundation
 
+enum EntityType {
+    case workspace
+    case board
+    case task
+}
+
 struct DatabaseItem: Hashable {
     let id: String
     let title: String
-    let action: DatabaseAction
     let type: DatabaseSectionType
+    let entityType: EntityType
 }

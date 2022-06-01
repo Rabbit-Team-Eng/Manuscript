@@ -10,6 +10,7 @@ import UIKit
 
 enum DatabaseViewModelState {
     case didInsertedNewWorkspaceIntoDatabase
+    case didFetchWorkspaceById(workspace: WorkspaceBusinessModel)
 }
 
 class DatabaseViewModel {
@@ -38,5 +39,10 @@ class DatabaseViewModel {
             self.state.send(.didInsertedNewWorkspaceIntoDatabase)
         }
 
+    }
+    
+    func fetchWorkspaceById(id: Int) {
+        let wc = workspaceCoreDataManager.getWorkspaceByIdSync(id: id)
+        state.send(.didFetchWorkspaceById(workspace: wc!))
     }
 }

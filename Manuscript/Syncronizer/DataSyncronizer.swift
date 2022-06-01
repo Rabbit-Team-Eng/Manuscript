@@ -11,7 +11,7 @@ import CoreData
 protocol DataSyncronizer {
     associatedtype Model where Model : BusinessModelProtocol
     
-    func syncronize(items: [ComparatorResult<Model>])
+    func syncronize(items: [ComparatorResult<Model>], completion: @escaping () -> Void)
 }
 
 

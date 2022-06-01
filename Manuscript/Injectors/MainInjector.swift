@@ -14,7 +14,7 @@ class MainInjector {
     private var workspaceService: WorkspaceService? = nil
     private var dataManager: DataProvider? = nil
     private var boardsViewModel: BoardsViewModel? = nil
-    private var databaseManager: DatabaseManager? = nil
+    private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
 
     // Injected from Application Scope
@@ -33,20 +33,20 @@ class MainInjector {
         if workspaceSyncronizer != nil {
             return workspaceSyncronizer!
         } else {
-            workspaceSyncronizer = WorkspaceSyncronizer(coreDataStack: provideCoreDataStack())
+            workspaceSyncronizer = WorkspaceSyncronizer(coreDataStack: provideCoreDataStack(),
+                                                        workspaceService: provideWorkspaceService(),
+                                                        startupUtils: startupUtils,
+                                                        workspaceCoreDataManager: provideWorkspaceCoreDataManager())
             return workspaceSyncronizer!
         }
     }
-    
-    func provideDatabaseManager() -> DatabaseManager {
-        if databaseManager != nil {
-            return databaseManager!
+
+    func provideWorkspaceCoreDataManager() -> WorkspaceCoreDataManager {
+        if workspaceCoreDatabaseManager != nil {
+            return workspaceCoreDatabaseManager!
         } else {
-            databaseManager = DatabaseManager(workspaceSyncronizer: provideWorkspaceSyncronizer(),
-                                              workspaceService: provideWorkspaceService(),
-                                              dataProvider: provideDataManager(),
-                                              startupUtils: startupUtils)
-            return databaseManager!
+            workspaceCoreDatabaseManager = WorkspaceCoreDataManager(coreDataStack: provideCoreDataStack())
+            return workspaceCoreDatabaseManager!
         }
     }
     
