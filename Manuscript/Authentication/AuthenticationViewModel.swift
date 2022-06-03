@@ -20,9 +20,11 @@ class AuthenticationViewModel {
     init(startupUtils: StartupUtils, authenticationManager: AuthenticationManager) {
         self.startupUtils = startupUtils
         self.authenticationManager = authenticationManager
+        print("AVERAKEDABRA: ALLOC -> AuthenticationViewModel")
     }
 
     func createNewUser(name: String, email: String, password: String) {
+
         authenticationManager.signUp(body: UserRequest(email: email, password: password, passwordConfirm: password))
                 .sink(receiveCompletion: { completion in  }, receiveValue: { [weak self] accessTokenResponse in
                     guard let self = self else { return }
@@ -30,15 +32,31 @@ class AuthenticationViewModel {
                     self.authenticationEventPublisher.send(.didSignedUpSuccessfully)
                 })
                 .store(in: &tokens)
+        
+
     }
 
     func signIn(email: String, password: String) {
-        authenticationManager.signIn(email: email, password: password)
-                .sink(receiveCompletion: { completion in  }, receiveValue: { [weak self] accessTokenResponse in
-                    guard let self = self else { return }
-                    self.startupUtils.saveAccessToken(token: accessTokenResponse.access_token)
-                    self.authenticationEventPublisher.send(.didSignedInSuccessfully)
-                })
-                .store(in: &tokens)
+        
+        if email == Constants.emptyString && password != Constants.emptyString {
+            authenticationEventPublisher.send(.wrongFormatForEmail)
+        } else if password == Constants.emptyString && email != Constants.emptyString {
+            authenticationEventPublisher.send(.wrongFormatForPassword)
+        } else if email == Constants.emptyString && password == Constants.emptyString {
+            authenticationEventPublisher.send(.wrongFormarForBothEmailAndPassword)
+        } else if email != Constants.emptyString && password != Constants.emptyString {
+            authenticationManager.signIn(email: email, password: password)
+                    .sink(receiveCompletion: { completion in  }, receiveValue: { [weak self] accessTokenResponse in
+                        guard let self = self else { return }
+                        self.startupUtils.saveAccessToken(token: accessTokenResponse.access_token)
+                        self.authenticationEventPublisher.send(.didSignedInSuccessfully)
+                    })
+                    .store(in: &tokens)
+        }
+        
+    }
+    
+    deinit {
+        print("AVERAKEDABRA: RELEASE -> AuthenticationViewModel")
     }
 }

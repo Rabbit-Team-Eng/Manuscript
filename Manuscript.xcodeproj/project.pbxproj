@@ -250,8 +250,10 @@
 		09EDE718284701E8009B23A9 /* DatabaseAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF27282B1F140060C8FD /* DatabaseAction.swift */; };
 		09EDE719284702B2009B23A9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4E09D282A303300B3A47F /* UIColor+Extension.swift */; };
 		09EDE71C2848893A009B23A9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 09EDE71B2848893A009B23A9 /* Lottie */; };
-		09EDE71F28488976009B23A9 /* sign_in_new.json in Resources */ = {isa = PBXBuildFile; fileRef = 09EDE71E28488976009B23A9 /* sign_in_new.json */; };
-		09EDE72128488AC6009B23A9 /* 105509-delivery-man.json in Resources */ = {isa = PBXBuildFile; fileRef = 09EDE72028488AC6009B23A9 /* 105509-delivery-man.json */; };
+		09F088E42849954B0012D83D /* 107115-id-authentication.json in Resources */ = {isa = PBXBuildFile; fileRef = 09F088E32849954B0012D83D /* 107115-id-authentication.json */; };
+		09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
+		09F088E8284A6E070012D83D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E7284A6E070012D83D /* Constants.swift */; };
+		09F088E9284A71010012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -407,8 +409,9 @@
 		09DCED07282C242900A2884B /* SingleInputFieldContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldContentView.swift; sourceTree = "<group>"; };
 		09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldCellConfiguration.swift; sourceTree = "<group>"; };
 		09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldButtonCell.swift; sourceTree = "<group>"; };
-		09EDE71E28488976009B23A9 /* sign_in_new.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sign_in_new.json; sourceTree = "<group>"; };
-		09EDE72028488AC6009B23A9 /* 105509-delivery-man.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "105509-delivery-man.json"; sourceTree = "<group>"; };
+		09F088E32849954B0012D83D /* 107115-id-authentication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107115-id-authentication.json"; sourceTree = "<group>"; };
+		09F088E5284A57580012D83D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		09F088E7284A6E070012D83D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,6 +601,7 @@
 				09D2753C2825B5DF00933F16 /* AuthenticationViewController.swift */,
 				09D2753E2825B5E500933F16 /* AuthenticationViewModel.swift */,
 				09D275402825B5ED00933F16 /* ForgotPasswordViewController.swift */,
+				09F088E5284A57580012D83D /* KeychainHelper.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -834,6 +838,7 @@
 				09D2762B2825CE6000933F16 /* DateTimeUtils.swift */,
 				09D275AD2825B93400933F16 /* Palette.swift */,
 				09D275AF2825B94300933F16 /* StartupUtils.swift */,
+				09F088E7284A6E070012D83D /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -936,8 +941,7 @@
 		09EDE71D2848896B009B23A9 /* Lotties */ = {
 			isa = PBXGroup;
 			children = (
-				09EDE72028488AC6009B23A9 /* 105509-delivery-man.json */,
-				09EDE71E28488976009B23A9 /* sign_in_new.json */,
+				09F088E32849954B0012D83D /* 107115-id-authentication.json */,
 			);
 			path = Lotties;
 			sourceTree = "<group>";
@@ -1040,8 +1044,7 @@
 			files = (
 				09D2752F2825B4B800933F16 /* LaunchScreen.storyboard in Resources */,
 				09D2752C2825B4B800933F16 /* Assets.xcassets in Resources */,
-				09EDE72128488AC6009B23A9 /* 105509-delivery-man.json in Resources */,
-				09EDE71F28488976009B23A9 /* sign_in_new.json in Resources */,
+				09F088E42849954B0012D83D /* 107115-id-authentication.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,6 +1086,7 @@
 				09CAAA4F2829D90700FE0214 /* ResetPasswordRequestModel.swift in Sources */,
 				09CAAA4C2829D90700FE0214 /* AccessTokenResponse.swift in Sources */,
 				09CAAA1F2829D8A800FE0214 /* WorkspaceEntity+CoreDataProperties.swift in Sources */,
+				09F088E9284A71010012D83D /* KeychainHelper.swift in Sources */,
 				09CAAA222829D8A800FE0214 /* TaskEntity+CoreDataProperties.swift in Sources */,
 				097EDF42282B91AD0060C8FD /* FieldButtonCell.swift in Sources */,
 				09CAAA1E2829D8A800FE0214 /* BoardEntity+CoreDataClass.swift in Sources */,
@@ -1239,6 +1243,7 @@
 				09D275A22825B8C900933F16 /* PermissionsViewController.swift in Sources */,
 				09D275B42825C82000933F16 /* BoardService.swift in Sources */,
 				09D2763A2825CE6000933F16 /* BoardComparator.swift in Sources */,
+				09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */,
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
 				09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */,
 				09EDE715284701CC009B23A9 /* DatabaseEventProtocol.swift in Sources */,
@@ -1270,6 +1275,7 @@
 				09D275892825B80C00933F16 /* UserResponse.swift in Sources */,
 				09EDE719284702B2009B23A9 /* UIColor+Extension.swift in Sources */,
 				09D275632825B71100933F16 /* TasksCoordinator.swift in Sources */,
+				09F088E8284A6E070012D83D /* Constants.swift in Sources */,
 				09D275652825B71700933F16 /* TasksFlow.swift in Sources */,
 				09D275512825B68B00933F16 /* AuthenticationFlow.swift in Sources */,
 				09D275AB2825B91F00933F16 /* UserDefaults.swift in Sources */,

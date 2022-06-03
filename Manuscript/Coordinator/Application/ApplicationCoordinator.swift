@@ -23,6 +23,7 @@ class ApplicationCoordinator: Coordinator, FlowFinisher {
 
     func start(with flow: Flowable) {
         if startupUtils.getAccessToken() != "" {
+            print("Access Token: \(startupUtils.getAccessToken())")
             handleFlow(flow: ApplicationFlow.main(mainFLow: TabBarFlow.boards))
         } else {
             if startupUtils.isOnboarded() {

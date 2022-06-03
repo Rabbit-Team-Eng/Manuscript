@@ -12,6 +12,7 @@ class BoardsViewController: UIViewController {
     weak var coordinator: BoardsCoordinator? = nil
     
     private let boardsViewModel: BoardsViewModel
+    private let startUpUtils: StartupUtils
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -20,10 +21,17 @@ class BoardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Palette.lightBlack
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(signOut(_:)))
+    }
+    
+    @objc private func signOut(_ sender: UIBarButtonItem) {
+        startUpUtils.deleteAcessToken()
+        coordinator?.signeOut()
     }
 
-    init(boardsViewModel: BoardsViewModel) {
+    init(boardsViewModel: BoardsViewModel, startUpUtils: StartupUtils) {
         self.boardsViewModel = boardsViewModel
+        self.startUpUtils = startUpUtils
         print("AVERAKEDABRA: ALLOC -> BoardsViewController")
         super.init(nibName: nil, bundle: nil)
     }

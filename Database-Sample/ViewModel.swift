@@ -43,7 +43,7 @@ class ViewModel {
     
     func signIn(email: String, password: String) {
         authenticationManager.signIn(email: email, password: password)
-                .sink(receiveCompletion: { completion in  }, receiveValue: { [weak self] accessTokenResponse in
+                .sink(receiveCompletion: { completion in }, receiveValue: { [weak self] accessTokenResponse in
                     guard let self = self else { return }
                     self.startupUtils.saveAccessToken(token: accessTokenResponse.access_token)
                     self.state.send(.didSignedIn)

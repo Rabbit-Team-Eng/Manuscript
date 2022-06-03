@@ -85,6 +85,10 @@ class MainInjector {
             return dataManager!
         }
     }
+    
+    func provideStartUpUtils() -> StartupUtils {
+        return startupUtils
+    }
 
     deinit {
         print("AVERAKEDABRA: RELEASE -> MainInjector")

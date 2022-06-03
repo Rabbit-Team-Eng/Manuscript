@@ -18,11 +18,21 @@ class StartupUtils {
     }
 
     func getAccessToken() -> String {
-        return UserDefaults.accessToken
+        if let data = KeychainHelper.standard.read(service: "access-token", account: "custom") {
+            let accessToken = String(data: data, encoding: .utf8)!
+            return accessToken
+        }
+        return ""
     }
 
     func saveAccessToken(token: String) {
-        UserDefaults.accessToken = token
+        let accessToken = token
+        let data = Data(accessToken.utf8)
+        KeychainHelper.standard.save(data, service: "access-token", account: "custom")
+    }
+    
+    func deleteAcessToken() {
+        KeychainHelper.standard.delete(service: "access-token", account: "custom")
     }
 
     func provideEnvironment() -> ManuscriptEnvironment {
