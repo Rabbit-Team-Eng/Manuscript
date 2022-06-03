@@ -254,6 +254,9 @@
 		09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
 		09F088E8284A6E070012D83D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E7284A6E070012D83D /* Constants.swift */; };
 		09F088E9284A71010012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
+		09F088EC284A7F270012D83D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088EB284A7F270012D83D /* UIView+Extensions.swift */; };
+		09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088ED284A7F420012D83D /* UITextField+Extensions.swift */; };
+		09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088EF284A7F640012D83D /* UIFont+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -412,6 +415,9 @@
 		09F088E32849954B0012D83D /* 107115-id-authentication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107115-id-authentication.json"; sourceTree = "<group>"; };
 		09F088E5284A57580012D83D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		09F088E7284A6E070012D83D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		09F088EB284A7F270012D83D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		09F088ED284A7F420012D83D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
+		09F088EF284A7F640012D83D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -548,8 +554,6 @@
 			children = (
 				097EDF35282B63B10060C8FD /* Syncronizer */,
 				09D276202825CE6000933F16 /* Storage */,
-				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
-				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,
 				09D275AC2825B93000933F16 /* Utils */,
 				09D275A92825B91B00933F16 /* UserDefaults */,
 				09D275A62825B90300933F16 /* Tasks */,
@@ -835,6 +839,7 @@
 		09D275AC2825B93000933F16 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				09F088EA284A7F040012D83D /* Extensions */,
 				09D2762B2825CE6000933F16 /* DateTimeUtils.swift */,
 				09D275AD2825B93400933F16 /* Palette.swift */,
 				09D275AF2825B94300933F16 /* StartupUtils.swift */,
@@ -892,6 +897,8 @@
 		09D276202825CE6000933F16 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
+				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,
 				097EDF31282B63530060C8FD /* Manager */,
 				09D276022825CE2300933F16 /* Entitites */,
 				09D276222825CE6000933F16 /* Comparator */,
@@ -944,6 +951,16 @@
 				09F088E32849954B0012D83D /* 107115-id-authentication.json */,
 			);
 			path = Lotties;
+			sourceTree = "<group>";
+		};
+		09F088EA284A7F040012D83D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				09F088EB284A7F270012D83D /* UIView+Extensions.swift */,
+				09F088ED284A7F420012D83D /* UITextField+Extensions.swift */,
+				09F088EF284A7F640012D83D /* UIFont+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1198,6 +1215,7 @@
 				09D276332825CE6000933F16 /* DataProvider.swift in Sources */,
 				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				09DCED08282C242900A2884B /* SingleInputFieldContentView.swift in Sources */,
+				09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */,
 				09D275942825B85D00933F16 /* ResetPasswordRequest.swift in Sources */,
 				09D27652282605E900933F16 /* BoardEntity+CoreDataProperties.swift in Sources */,
 				09D276402825CE6000933F16 /* BusinessModelProtocol.swift in Sources */,
@@ -1224,6 +1242,7 @@
 				09D275B02825B94300933F16 /* StartupUtils.swift in Sources */,
 				09D27656282605E900933F16 /* WorkspaceEntity+CoreDataProperties.swift in Sources */,
 				09D275692825B73400933F16 /* Flowable.swift in Sources */,
+				09F088EC284A7F270012D83D /* UIView+Extensions.swift in Sources */,
 				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
 				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
 				09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */,
@@ -1296,6 +1315,7 @@
 				09D276112825CE2300933F16 /* CoreDataStack.swift in Sources */,
 				097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
+				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,
 				097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
 				09D275D82825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift in Sources */,
