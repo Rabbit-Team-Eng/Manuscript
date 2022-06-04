@@ -32,26 +32,31 @@ class BoardsViewModel {
             let allWorkspaces = dataProvider.fetchAllWorkspacesOnMainThread()
 
             if let firstWorkspace = allWorkspaces.first {
-                if  let boards = firstWorkspace.boards {
-                    UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
-                    events.send(.titleDidFetch(title: firstWorkspace.title))
-                    events.send(.boardsDidFetch(boards: boards))
-                } else {
-                    events.send(.noBoardIsCreated)
-                }
+                events.send(.titleDidFetch(title: firstWorkspace.title))
+                UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
 
+                if  let boards = firstWorkspace.boards {
+                    if boards.count == 0 {
+                        events.send(.noBoardIsCreated)
+                    } else {
+                        events.send(.boardsDidFetch(boards: boards))
+                    }
+                }
             }
             
         } else {
             let selectedWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
             
             if let firstWorkspace = selectedWorksapce {
+                events.send(.titleDidFetch(title: firstWorkspace.title))
+                UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
+
                 if let boards = firstWorkspace.boards {
-                    UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
-                    events.send(.titleDidFetch(title: firstWorkspace.title))
-                    events.send(.boardsDidFetch(boards: boards))
-                } else {
-                    events.send(.noBoardIsCreated)
+                    if boards.count == 0 {
+                        events.send(.noBoardIsCreated)
+                    } else {
+                        events.send(.boardsDidFetch(boards: boards))
+                    }
                 }
             }
         }

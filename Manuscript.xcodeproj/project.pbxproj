@@ -14,6 +14,7 @@
 		096BEDB9284AE0F2001C7136 /* WorkspaceComparatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDB8284AE0F2001C7136 /* WorkspaceComparatorTest.swift */; };
 		096BEDBB284AE147001C7136 /* DateTimeUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDBA284AE147001C7136 /* DateTimeUtilsTest.swift */; };
 		096BEDBC284AEFBD001C7136 /* BoardCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */; };
+		096BEDC0284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */; };
 		097EDF19282AEC760060C8FD /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF18282AEC760060C8FD /* DatabaseViewController.swift */; };
 		097EDF1C282B1EA30060C8FD /* SimpleSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */; };
 		097EDF1E282B1EC10060C8FD /* SingleButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */; };
@@ -282,6 +283,7 @@
 		096BEDAF284AE0C9001C7136 /* ManuscriptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManuscriptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		096BEDB8284AE0F2001C7136 /* WorkspaceComparatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceComparatorTest.swift; sourceTree = "<group>"; };
 		096BEDBA284AE147001C7136 /* DateTimeUtilsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeUtilsTest.swift; sourceTree = "<group>"; };
+		096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107448-human-in-vr-glasses-in-metaverse.json"; sourceTree = "<group>"; };
 		097EDF18282AEC760060C8FD /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
 		097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionHeaderView.swift; sourceTree = "<group>"; };
 		097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonContentView.swift; sourceTree = "<group>"; };
@@ -981,6 +983,7 @@
 		09EDE71D2848896B009B23A9 /* Lotties */ = {
 			isa = PBXGroup;
 			children = (
+				096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */,
 				09F088E32849954B0012D83D /* 107115-id-authentication.json */,
 			);
 			path = Lotties;
@@ -1123,6 +1126,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				096BEDC0284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json in Resources */,
 				09D2752F2825B4B800933F16 /* LaunchScreen.storyboard in Resources */,
 				09D2752C2825B4B800933F16 /* Assets.xcassets in Resources */,
 				09F088E42849954B0012D83D /* 107115-id-authentication.json in Resources */,
