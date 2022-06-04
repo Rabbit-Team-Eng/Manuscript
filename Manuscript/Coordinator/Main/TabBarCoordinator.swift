@@ -24,6 +24,9 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         super.init()
         print("AVERAKEDABRA: ALLOC -> TabBarCoordinator")
         mainTabBarController.delegate = self
+        
+        let cloud = mainInjector.provideCloudSync()
+        cloud.syncronize()
 
     }
 

@@ -18,7 +18,7 @@ extension UserDefaults {
     @Defaults(key: "environment", defaultValue: ManuscriptEnvironment.production)
     static var environment: ManuscriptEnvironment
     
-    @Defaults(key: "selectedWorkspace", defaultValue: Constants.emptyString)
-    static var selectedWorkspace: String
+    @Defaults(key: "selectedWorkspaceId", defaultValue: Constants.emptyString)
+    static var selectedWorkspaceId: String
 
 }

@@ -19,6 +19,7 @@ class BoardCoreDataManager {
     func insertIntoLocalOnBackgroundThread(item: BoardBusinessModel) {
         let context = self.coreDataStack.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
+        
         context.performAndWait {
             let boardEntity = BoardEntity(context: context)
             boardEntity.assetUrl = item.assetUrl
@@ -28,8 +29,14 @@ class BoardCoreDataManager {
             boardEntity.ownerWorkspaceId = item.ownerWorkspaceId
             boardEntity.remoteId = item.remoteId
             boardEntity.title = item.title
-
+            
+            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
+            workspacesFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(item.ownerWorkspaceId))")
+            
             do {
+                let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
+                let worskpaceEntity = workspace.first!
+                worskpaceEntity.addToBoards(boardEntity)
                 try context.save()
             } catch {
                 fatalError()

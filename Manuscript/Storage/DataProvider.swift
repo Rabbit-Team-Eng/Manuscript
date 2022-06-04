@@ -42,14 +42,53 @@ class DataProvider: Datasource {
             do {
                 let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
                 let worskpaceEntity = workspace.first!
+                var allBoards: [BoardBusinessModel] = []
+                
+                worskpaceEntity.boards?.forEach({ boardEntity in
+                      
+                    if let board = boardEntity as? BoardEntity {
+                        var allTasks: [TaskBusinessModel] = []
+                        
+                        board.tasks?.forEach({ taskEntity in
+                            if let task = taskEntity as? TaskEntity {
+                                allTasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                                  title: task.title,
+                                                                  detail: task.detail,
+                                                                  dueDate: task.dueDate,
+                                                                  ownerBoardId: task.ownerBoardId,
+                                                                  status: task.status,
+                                                                  workspaceId: task.workspaceId,
+                                                                  lastModifiedDate: task.lastModifiedDate,
+                                                                  isInitiallySynced: task.isInitiallySynced,
+                                                                  isPendingDeletionOnTheServer: task.isInitiallySynced))
+                            }
+                        })
+                        
+                        allBoards.append(BoardBusinessModel(remoteId: board.remoteId,
+                                                         coreDataId: board.objectID,
+                                                         title: board.title,
+                                                         assetUrl: board.assetUrl,
+                                                         ownerWorkspaceId: board.ownerWorkspaceId,
+                                                         lastModifiedDate: board.lastModifiedDate,
+                                                         tasks: allTasks,
+                                                         isInitiallySynced: board.isInitiallySynced,
+                                                         isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
+                        
+                    }
+                    
+                })
+                
                 searchingWorkspace = WorkspaceBusinessModel(remoteId: worskpaceEntity.remoteId,
                                                             coreDataId: worskpaceEntity.objectID,
                                                             title: worskpaceEntity.title,
                                                             mainDescription: worskpaceEntity.mainDescription,
                                                             sharingEnabled: worskpaceEntity.sharingEnabled,
+                                                            boards: allBoards,
                                                             lastModifiedDate: worskpaceEntity.lastModifiedDate,
                                                             isInitiallySynced: worskpaceEntity.isInitiallySynced,
                                                             isPendingDeletionOnTheServer: worskpaceEntity.isPendingDeletionOnTheServer)
+                
+                
             } catch {
                 fatalError()
             }

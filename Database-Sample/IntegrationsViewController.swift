@@ -13,6 +13,7 @@ class IntegrationsViewController: UIViewController {
     
     private var viewModel: ViewModel? = nil
     private var tokens: Set<AnyCancellable> = []
+    private var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImFmZTUyNjFkLWMwZjYtNGY1MS05MTEzLWQzOTMxOGViMzA5YiIsImVtYWlsIjoiSnVtYm9AdGVzdC5jb20iLCJzdWIiOiJhZmU1MjYxZC1jMGY2LTRmNTEtOTExMy1kMzkzMThlYjMwOWIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiSnVtYm9AdGVzdC5jb20iLCJqdGkiOiIyYmM2ODRmOC1hNGE2LTQzMTctOGE0NC1kMjAxNDg0ZWY5M2MiLCJleHAiOjE2OTAyODE3MjksImlzcyI6ImF1dGhTZXJ2ZXIiLCJhdWQiOiJSZXNvdXJjZVNlcnZlciJ9.oBFkh6NHxBt-6ulju_CIosUJeAxv73vJNboFHKjyaxc"
 
     let signInButton: UIButton = {
         let button = UIButton(type: .roundedRect)
@@ -89,12 +90,12 @@ class IntegrationsViewController: UIViewController {
         view.addSubview(insertIntoServer)
         view.addSubview(insertIntoLocal)
         view.addSubview(getAllBoards)
-
+        
         let startupUtils = StartupUtils()
         let coreDataStack = CoreDataStack()
-        let workspaceService = WorkspaceService(accessToken: startupUtils.getAccessToken(), environment: .production, jsonEncoder: JSONEncoder(), jsonDecoder: JSONDecoder())
-        let boardSyncronizer = BoardSyncronizer(coreDataStack: coreDataStack, startupUtils: startupUtils)
-        let boardsService = BoardService(accessToken: startupUtils.getAccessToken(), environment: .production, jsonEncoder: JSONEncoder(), jsonDecoder: JSONDecoder())
+        let workspaceService = WorkspaceService(accessToken: accessToken, environment: .production, jsonEncoder: JSONEncoder(), jsonDecoder: JSONDecoder())
+        let boardSyncronizer = BoardSyncronizer(coreDataStack: coreDataStack, startupUtils: startupUtils, boardCoreDataManager: BoardCoreDataManager(coreDataStack: coreDataStack))
+        let boardsService = BoardService(accessToken: accessToken, environment: .production, jsonEncoder: JSONEncoder(), jsonDecoder: JSONDecoder())
         let dataProvider = DataProvider(coreDataStack: coreDataStack)
         let authManager = AuthenticationManager(environment: .production, jsonDecoder: JSONDecoder(), jsonEncoder: JSONEncoder())
         let workspaceCoreDataManager = WorkspaceCoreDataManager(coreDataStack: coreDataStack)
@@ -123,18 +124,17 @@ class IntegrationsViewController: UIViewController {
         vm.state
             .receive(on: RunLoop.main)
             .sink { completion in } receiveValue: { event in
-            if event == .didSignedIn {
-                print("The User Did Singe In!")
-            }
-            
-            if event == .didRefreshedTheDB {
-                print("The User Did Refresh the Entire DB!")
-                dataProvider.fethAllBoardsOnBackgroundThread().forEach { model in
-                    print("Title: \(model.title), ID: \(model.remoteId)")
+                
+                switch event {
+                case .didSignedIn(let token):
+                    self.accessToken = token
+                    print("The User Did Singe In!")
+                case .didRefreshedTheDB:
+                    print("The User Did Refresh the Entire DB!")
+                    dataProvider.fethAllBoardsOnBackgroundThread().forEach { model in
+                        print("Title: \(model.title), ID: \(model.remoteId)")
+                    }
                 }
-                
-                
-            }
         }
         .store(in: &tokens)
 
@@ -149,7 +149,7 @@ class IntegrationsViewController: UIViewController {
     }
     
     @objc func signIn(_ sender: UIButton) {
-        viewModel?.signIn(email: "dudu@test.com", password: "Pass123!")
+        viewModel?.signIn(email: "jumbo@test.com", password: "Pass123!")
     }
     
     @objc func printLocalDBDidTap(_ sender: UIButton) {

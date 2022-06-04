@@ -10,18 +10,18 @@ import Combine
 
 public protocol WorkspaceAPI {
     
-    func createNewWorkspace(accessToken: String, requestBody: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error>
+    func createNewWorkspace(requestBody: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error>
     
-    func getWorkspaceById(accessToken: String, workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error>
+    func getWorkspaceById(workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error>
     
-    func getAllWorkspaces(accessToken: String, pageNumber: Int, pageSize: Int) -> AnyPublisher<AllWorkspaceResponse, Error>
+    func getAllWorkspaces(pageNumber: Int, pageSize: Int) -> AnyPublisher<AllWorkspaceResponse, Error>
     
-    func updateWorkspaceById(accessToken: String, workspaceId: String, body: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error>
+    func updateWorkspaceById(workspaceId: String, body: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error>
 
-    func deleteWorkspaceById(accessToken: String, workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error>
+    func deleteWorkspaceById(workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error>
     
-    func getWorkspaceShareUrlById(accessToken: String, workspaceId: String) -> AnyPublisher<String, Error>
+    func getWorkspaceShareUrlById(workspaceId: String) -> AnyPublisher<String, Error>
     
-    func addCurrentUserToWorkspaceByWorkspaceId(accessToken: String, workspaceId: String) -> AnyPublisher<MemberResponse, Error>
+    func addCurrentUserToWorkspaceByWorkspaceId(workspaceId: String) -> AnyPublisher<MemberResponse, Error>
 
 }

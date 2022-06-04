@@ -9,7 +9,7 @@ import Combine
 import CoreData
 
 enum ViewModelEvent {
-    case didSignedIn
+    case didSignedIn(token: String)
     case didRefreshedTheDB
 }
 
@@ -45,8 +45,7 @@ class ViewModel {
         authenticationManager.signIn(email: email, password: password)
                 .sink(receiveCompletion: { completion in }, receiveValue: { [weak self] accessTokenResponse in
                     guard let self = self else { return }
-                    self.startupUtils.saveAccessToken(token: accessTokenResponse.access_token)
-                    self.state.send(.didSignedIn)
+                    self.state.send(.didSignedIn(token: accessTokenResponse.access_token))
                 })
                 .store(in: &tokens)
     }
@@ -136,8 +135,7 @@ class ViewModel {
     }
     
     func insertIntoServer() {
-        workspaceService.createNewWorkspace(accessToken: startupUtils.getAccessToken(),
-                                            requestBody: WorkspaceRequest(title: "\(RandomWordGenerator.shared.getWord().word) \(RandomWordGenerator.shared.getWord().word)",
+        workspaceService.createNewWorkspace(requestBody: WorkspaceRequest(title: "\(RandomWordGenerator.shared.getWord().word) \(RandomWordGenerator.shared.getWord().word)",
                                                                              description: "" ,
                                                shareEnabled: false))
         .receive(on: DispatchQueue.global(qos: .userInitiated))

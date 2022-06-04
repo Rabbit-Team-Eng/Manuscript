@@ -5,34 +5,64 @@
 //  Created by Tigran Ghazinyan on 5/6/22.
 //
 
-import Foundation
+import Combine
+import UIKit
+
+enum BoardsViewControllerEvent {
+    case titleDidFetch(title: String)
+    case boardsDidFetch(boards: [BoardBusinessModel])
+    case noBoardIsCreated
+}
 
 class BoardsViewModel {
     
     private let dataProvider: DataProvider
-    private let cloudSync: CloudSync
+    let events: PassthroughSubject<BoardsViewControllerEvent, Never> = PassthroughSubject()
 
-    init(dataProvider: DataProvider, cloudSync: CloudSync) {
+    init(dataProvider: DataProvider) {
         self.dataProvider = dataProvider
-        self.cloudSync = cloudSync
-        
-        print("Already in DB: \(dataProvider.fetchAllWorkspacesOnMainThread())")
-        
-        cloudSync.syncronize()
 
         NotificationCenter.default.addObserver(self, selector: #selector(cloudSyncDidFinish), name: Notification.Name("CloudSyncDidFinish"), object: nil)
 
     }
     
-    @objc func cloudSyncDidFinish() {
-        print("cloudSyncDidFinish")
-        print("\n\nWorkspaces After the Sync: \(dataProvider.fetchAllWorkspacesOnMainThread())")
-        print("\n\nBoards After the Sync: \(dataProvider.fetchAllBoardsOnMainThread())")
+    func fetchCurrentWorkspace() {
+
+        if UserDefaults.selectedWorkspaceId == Constants.emptyString {
+            let allWorkspaces = dataProvider.fetchAllWorkspacesOnMainThread()
+
+            if let firstWorkspace = allWorkspaces.first {
+                if  let boards = firstWorkspace.boards {
+                    UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
+                    events.send(.titleDidFetch(title: firstWorkspace.title))
+                    events.send(.boardsDidFetch(boards: boards))
+                } else {
+                    events.send(.noBoardIsCreated)
+                }
+
+            }
+            
+        } else {
+            let selectedWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
+            
+            if let firstWorkspace = selectedWorksapce {
+                if let boards = firstWorkspace.boards {
+                    UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
+                    events.send(.titleDidFetch(title: firstWorkspace.title))
+                    events.send(.boardsDidFetch(boards: boards))
+                } else {
+                    events.send(.noBoardIsCreated)
+                }
+            }
+        }
     }
     
-    func fetchBoards() {
-        let x = dataProvider.fetchAllBoardsByWorkspaceIdOnMainThread(workspaceId: UserDefaults.selectedWorkspace)
-        print(x)
+    @objc func cloudSyncDidFinish() {
+        fetchCurrentWorkspace()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name:  Notification.Name("CloudSyncDidFinish") , object: nil)
     }
     
 }

@@ -35,7 +35,7 @@ class DatabaseViewModel {
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
-            self.workspaceCoreDataManager.insertIntoLocalAsyncBlocking(item: item)
+            self.workspaceCoreDataManager.insertIntoLocalOnBackgroundThread(item: item)
             self.state.send(.didInsertedNewWorkspaceIntoDatabase)
         }
 

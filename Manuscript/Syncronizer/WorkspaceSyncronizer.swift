@@ -94,8 +94,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
     }
     
     private func insertIntoServer(item: WorkspaceBusinessModel) {
-        workspaceService.createNewWorkspace(accessToken: startupUtils.getAccessToken(),
-                                            requestBody: WorkspaceRequest(title: item.title, description: item.mainDescription ?? "",
+        workspaceService.createNewWorkspace(requestBody: WorkspaceRequest(title: item.title, description: item.mainDescription ?? "",
                                                shareEnabled: false))
         .sink { completion in } receiveValue: { [weak self] workspaceResponse in
             guard let self = self, let coreDataId = item.coreDataId else { return }
@@ -121,8 +120,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
     }
     
     private func updateIntoServer(item: WorkspaceBusinessModel) {
-        workspaceService.updateWorkspaceById(accessToken: startupUtils.getAccessToken(),
-                                                workspaceId: "\(item.remoteId)", body: WorkspaceRequest(title: item.title,
+        workspaceService.updateWorkspaceById(workspaceId: "\(item.remoteId)", body: WorkspaceRequest(title: item.title,
                                                                                                         description: item.mainDescription ?? "",
                                                                                                         shareEnabled: item.sharingEnabled))
         .receive(on: DispatchQueue.global(qos: .userInitiated))
@@ -147,7 +145,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
     }
     
     private func deleteIntoServer(item: WorkspaceBusinessModel) {
-        workspaceService.deleteWorkspaceById(accessToken: startupUtils.getAccessToken(), workspaceId: "\(item.remoteId)")
+        workspaceService.deleteWorkspaceById(workspaceId: "\(item.remoteId)")
         .sink { completion in } receiveValue: { response in
             print(response)
         }

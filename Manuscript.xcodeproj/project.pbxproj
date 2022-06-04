@@ -13,6 +13,7 @@
 		096BEDA4284ADCB9001C7136 /* BoardCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */; };
 		096BEDB9284AE0F2001C7136 /* WorkspaceComparatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDB8284AE0F2001C7136 /* WorkspaceComparatorTest.swift */; };
 		096BEDBB284AE147001C7136 /* DateTimeUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDBA284AE147001C7136 /* DateTimeUtilsTest.swift */; };
+		096BEDBC284AEFBD001C7136 /* BoardCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */; };
 		097EDF19282AEC760060C8FD /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF18282AEC760060C8FD /* DatabaseViewController.swift */; };
 		097EDF1C282B1EA30060C8FD /* SimpleSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */; };
 		097EDF1E282B1EC10060C8FD /* SingleButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */; };
@@ -595,7 +596,6 @@
 				097EDF35282B63B10060C8FD /* Syncronizer */,
 				09D276202825CE6000933F16 /* Storage */,
 				09D275AC2825B93000933F16 /* Utils */,
-				09D275A92825B91B00933F16 /* UserDefaults */,
 				09D275A62825B90300933F16 /* Tasks */,
 				09D275A32825B8E900933F16 /* PropertyWrappers */,
 				09D2759C2825B8B700933F16 /* Onboarding */,
@@ -868,18 +868,11 @@
 			path = Tasks;
 			sourceTree = "<group>";
 		};
-		09D275A92825B91B00933F16 /* UserDefaults */ = {
-			isa = PBXGroup;
-			children = (
-				09D275AA2825B91F00933F16 /* UserDefaults.swift */,
-			);
-			path = UserDefaults;
-			sourceTree = "<group>";
-		};
 		09D275AC2825B93000933F16 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				09F088EA284A7F040012D83D /* Extensions */,
+				09D275AA2825B91F00933F16 /* UserDefaults.swift */,
 				09D2762B2825CE6000933F16 /* DateTimeUtils.swift */,
 				09D275AD2825B93400933F16 /* Palette.swift */,
 				09D275AF2825B94300933F16 /* StartupUtils.swift */,
@@ -1249,6 +1242,7 @@
 				09CAAA682829D91300FE0214 /* TaskService.swift in Sources */,
 				097EDF34282B63970060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09CAAA1C2829D8A000FE0214 /* TaskDB.xcdatamodeld in Sources */,
+				096BEDBC284AEFBD001C7136 /* BoardCoreDataManager.swift in Sources */,
 				09CAAA462829D90100FE0214 /* BoardResponse.swift in Sources */,
 				09CAAA432829D8FE00FE0214 /* TaskRequest.swift in Sources */,
 				09CAAA70282A073500FE0214 /* ServiceViewController.swift in Sources */,

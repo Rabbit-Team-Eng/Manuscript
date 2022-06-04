@@ -78,7 +78,7 @@ class MainInjector {
         if boardsViewModel != nil {
             return boardsViewModel!
         } else {
-            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager(), cloudSync: provideCloudSync())
+            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager())
             return boardsViewModel!
         }
     }

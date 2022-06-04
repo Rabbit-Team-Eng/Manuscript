@@ -27,7 +27,7 @@ public class WorkspaceService: WorkspaceAPI {
         self.jsonDecoder = jsonDecoder
     }
     
-    public func createNewWorkspace(accessToken: String, requestBody: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error> {
+    public func createNewWorkspace(requestBody: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error> {
 
         
         let request = CreateNewWorkspaceRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
@@ -49,7 +49,7 @@ public class WorkspaceService: WorkspaceAPI {
     }
 
     
-    public func getWorkspaceById(accessToken: String, workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error> {
+    public func getWorkspaceById(workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error> {
         
         let request = GetWorkspaceByIdRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -70,7 +70,7 @@ public class WorkspaceService: WorkspaceAPI {
             .eraseToAnyPublisher()
     }
     
-    public func getAllWorkspaces(accessToken: String, pageNumber: Int, pageSize: Int) -> AnyPublisher<AllWorkspaceResponse, Error> {
+    public func getAllWorkspaces(pageNumber: Int, pageSize: Int) -> AnyPublisher<AllWorkspaceResponse, Error> {
 
         let request = GetAllWorkspacesRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -173,7 +173,7 @@ public class WorkspaceService: WorkspaceAPI {
             .eraseToAnyPublisher()
     }
     
-    public func updateWorkspaceById(accessToken: String, workspaceId: String, body: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error> {
+    public func updateWorkspaceById(workspaceId: String, body: WorkspaceRequest) -> AnyPublisher<WorkspaceResponse, Error> {
 
         let request = UpdateWorkspaceByIdRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -193,7 +193,7 @@ public class WorkspaceService: WorkspaceAPI {
             .eraseToAnyPublisher()
     }
     
-    public func deleteWorkspaceById(accessToken: String, workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error> {
+    public func deleteWorkspaceById(workspaceId: String) -> AnyPublisher<WorkspaceResponse, Error> {
         
         let request = DeleteWorkspaceByIdRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -213,7 +213,7 @@ public class WorkspaceService: WorkspaceAPI {
             .eraseToAnyPublisher()
     }
     
-    public func getWorkspaceShareUrlById(accessToken: String, workspaceId: String) -> AnyPublisher<String, Error> {
+    public func getWorkspaceShareUrlById(workspaceId: String) -> AnyPublisher<String, Error> {
 
         let request = GetWorkspaceSharingUrlRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -233,7 +233,7 @@ public class WorkspaceService: WorkspaceAPI {
             .eraseToAnyPublisher()
     }
     
-    public func addCurrentUserToWorkspaceByWorkspaceId(accessToken: String, workspaceId: String) -> AnyPublisher<MemberResponse, Error> {
+    public func addCurrentUserToWorkspaceByWorkspaceId(workspaceId: String) -> AnyPublisher<MemberResponse, Error> {
 
         let request = GetWorkspaceSharingUrlRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
