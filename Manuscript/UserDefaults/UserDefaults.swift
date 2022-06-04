@@ -15,9 +15,10 @@ extension UserDefaults {
     @Defaults(key: "isOnboarded", defaultValue: false)
     static var isOnboarded: Bool
 
-    // TODO: Need to revisit this and make sure that the value depends on the build type
     @Defaults(key: "environment", defaultValue: ManuscriptEnvironment.production)
     static var environment: ManuscriptEnvironment
-
+    
+    @Defaults(key: "selectedWorkspace", defaultValue: Constants.emptyString)
+    static var selectedWorkspace: String
 
 }

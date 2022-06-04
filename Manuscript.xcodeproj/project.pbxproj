@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
+		096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
+		096BEDA2284ABC38001C7136 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E7284A6E070012D83D /* Constants.swift */; };
 		097EDF19282AEC760060C8FD /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF18282AEC760060C8FD /* DatabaseViewController.swift */; };
 		097EDF1C282B1EA30060C8FD /* SimpleSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */; };
 		097EDF1E282B1EC10060C8FD /* SingleButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */; };
@@ -261,6 +263,7 @@
 
 /* Begin PBXFileReference section */
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
+		096BEDA0284ABBDC001C7136 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
 		097EDF18282AEC760060C8FD /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
 		097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionHeaderView.swift; sourceTree = "<group>"; };
 		097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonContentView.swift; sourceTree = "<group>"; };
@@ -497,6 +500,7 @@
 				09D276572826FB9700933F16 /* DataSyncronizer.swift */,
 				097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */,
 				097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */,
+				096BEDA0284ABBDC001C7136 /* CloudSync.swift */,
 			);
 			path = Syncronizer;
 			sourceTree = "<group>";
@@ -1089,6 +1093,7 @@
 				09CAAA302829D8B700FE0214 /* DataSyncronizer.swift in Sources */,
 				09CAAA382829D8E600FE0214 /* ServiceConstants.swift in Sources */,
 				09CAAA4E2829D90700FE0214 /* UserResponse.swift in Sources */,
+				096BEDA2284ABC38001C7136 /* Constants.swift in Sources */,
 				09CAAA3D2829D8ED00FE0214 /* WorkspaceError.swift in Sources */,
 				097EDF26282B1F0E0060C8FD /* DatabaseSectionType.swift in Sources */,
 				09CAAA0E2829D80200FE0214 /* IntegrationsViewController.swift in Sources */,
@@ -1246,6 +1251,7 @@
 				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
 				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
 				09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */,
+				096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */,
 				09D2757C2825B7C700933F16 /* AuthenticationAPI.swift in Sources */,
 				09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */,
 				09D275B22825C81100933F16 /* BoardAPI.swift in Sources */,

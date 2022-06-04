@@ -129,7 +129,7 @@ class IntegrationsViewController: UIViewController {
             
             if event == .didRefreshedTheDB {
                 print("The User Did Refresh the Entire DB!")
-                dataProvider.getAllWorkspacesSync().forEach { model in
+                dataProvider.fethAllBoardsOnBackgroundThread().forEach { model in
                     print("Title: \(model.title), ID: \(model.remoteId)")
                 }
                 

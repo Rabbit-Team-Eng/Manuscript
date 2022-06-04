@@ -63,7 +63,7 @@ public class BoardService: BoardAPI {
             .eraseToAnyPublisher()
     }
     
-    public func getAllBoardsBusinessModel() -> AnyPublisher<[BoardBusinessModel], Error> {
+    public func getAllBoardsBusinessModel() -> AnyPublisher<[BoardBusinessModel], SyncError> {
 
         let request = GetAllBoardsRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -78,7 +78,7 @@ public class BoardService: BoardAPI {
             }
             .decode(type: AllBoardsResponse.self, decoder: jsonDecoder)
             .mapError({ error in
-                return BoardError.unableToCreateBoard(errorMessage: "Decoding error. \(error.localizedDescription)")
+                return SyncError.board
             })
             .map { response in
                 let boards = response.items

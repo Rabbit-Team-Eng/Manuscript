@@ -42,7 +42,8 @@ class DatabaseViewModel {
     }
     
     func fetchWorkspaceById(id: Int) {
-        let wc = workspaceCoreDataManager.getWorkspaceByIdSync(id: id)
-        state.send(.didFetchWorkspaceById(workspace: wc!))
+//        let wc = workspaceCoreDataManager.getWorkspaceByIdSync(id: id)
+//        let x =
+//        state.send(.didFetchWorkspaceById(workspace: wc!))
     }
 }

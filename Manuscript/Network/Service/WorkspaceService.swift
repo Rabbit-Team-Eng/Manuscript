@@ -8,6 +8,11 @@
 import Foundation
 import Combine
 
+public enum SyncError: Error {
+    case workspace
+    case board
+}
+
 public class WorkspaceService: WorkspaceAPI {
     
     private let environment: ManuscriptEnvironment
@@ -85,9 +90,8 @@ public class WorkspaceService: WorkspaceAPI {
             .eraseToAnyPublisher()
     }
     
-    func getAllWorkspacesAsBusinessObjects(accessToken: String,
-                                                  pageNumber: Int = 1,
-                                                  pageSize: Int = 100) -> AnyPublisher<[WorkspaceBusinessModel], Error> {
+    func getAllWorkspacesAsBusinessObjects(pageNumber: Int = 1,
+                                                  pageSize: Int = 100) -> AnyPublisher<[WorkspaceBusinessModel], SyncError> {
 
         let request = GetAllWorkspacesRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
 
@@ -163,7 +167,7 @@ public class WorkspaceService: WorkspaceAPI {
                 return workspaces
             }
             .mapError({ error in
-                return WorkspaceError.unableToGetAllWorkspaces(error: error)
+                return SyncError.workspace
             })
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .eraseToAnyPublisher()

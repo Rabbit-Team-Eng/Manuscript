@@ -34,7 +34,7 @@ class BoardSyncronizer: DataSyncronizer {
         }
     }
     
-    func insertIntoLocal(item: BoardBusinessModel) {
+    private func insertIntoLocal(item: BoardBusinessModel) {
         let context = coreDataStack.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
 

@@ -333,7 +333,7 @@ class AuthenticationViewController: UIViewController {
             lottieAnimationView.centerXAnchor.constraint(equalTo: mainScrollView.centerXAnchor, constant: 0),
             lottieAnimationView.leadingAnchor.constraint(equalTo: mainScrollView.leadingAnchor, constant: 0),
             lottieAnimationView.trailingAnchor.constraint(equalTo: mainScrollView.trailingAnchor, constant: 0),
-            lottieAnimationView.heightAnchor.constraint(equalToConstant: 119),
+            lottieAnimationView.heightAnchor.constraint(equalToConstant: 200),
             
             /// nameTexLabel
             nameTexLabel.topAnchor.constraint(equalTo: lottieAnimationView.bottomAnchor, constant: 27),

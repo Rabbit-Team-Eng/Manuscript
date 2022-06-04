@@ -22,6 +22,7 @@ class BoardsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Palette.lightBlack
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(signOut(_:)))
+        
     }
     
     @objc private func signOut(_ sender: UIBarButtonItem) {

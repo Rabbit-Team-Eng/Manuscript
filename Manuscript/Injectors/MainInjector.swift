@@ -16,6 +16,8 @@ class MainInjector {
     private var boardsViewModel: BoardsViewModel? = nil
     private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
+    private var boardService: BoardService? = nil
+    private var cloudSync: CloudSync? = nil
 
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -54,7 +56,7 @@ class MainInjector {
         if boardsViewModel != nil {
             return boardsViewModel!
         } else {
-            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager())
+            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager(), cloudSync: provideCloudSync())
             return boardsViewModel!
         }
     }
@@ -83,6 +85,30 @@ class MainInjector {
         } else {
             dataManager = DataProvider(coreDataStack: provideCoreDataStack())
             return dataManager!
+        }
+    }
+    
+    func provideBoardService() -> BoardService {
+        if boardService != nil {
+            return boardService!
+        } else {
+            boardService = BoardService(accessToken: startupUtils.getAccessToken(),
+                                                       environment: startupUtils.provideEnvironment(),
+                                                       jsonEncoder: jsonEncoder,
+                                                       jsonDecoder: jsonDecoder)
+            return boardService!
+        }
+    }
+    
+    func provideCloudSync() -> CloudSync {
+        if cloudSync != nil {
+            return cloudSync!
+        } else {
+            cloudSync = CloudSync(workspaceService: provideWorkspaceService(),
+                                  boardsService: provideBoardService(),
+                                  workspaceSyncronizer: provideWorkspaceSyncronizer(),
+                                  dataProvider: provideDataManager())
+            return cloudSync!
         }
     }
     

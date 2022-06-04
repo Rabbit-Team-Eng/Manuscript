@@ -52,30 +52,30 @@ class ViewModel {
     }
     
     func syncDatabaseInBackground() {
-        Publishers.Zip(workspaceService.getAllWorkspacesAsBusinessObjects(accessToken: startupUtils.getAccessToken()), boardsService.getAllBoardsBusinessModel())
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
-            .sink { completion in } receiveValue: { [weak self] (worskapcesServer, boardsServer) in
-                guard let self = self else { return }
-                
-                let currentWorkspaces = self.dataProvider.getAllWorkspacesAsyncBlock()
-                let workspacesDiff = WorkspaceComparator.compare(responseCollection: worskapcesServer, cachedCollection: currentWorkspaces)
-                
-                self.workspaceSyncronizer.syncronize(items: workspacesDiff, completion: {
-                    self.state.send(.didRefreshedTheDB)
-                })
-
-                let allBoardsCached = self.dataProvider.getAllBoardsAsyncBlock()
-                let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: allBoardsCached)
-                self.boardsSyncronizer.syncronize(items: boardsDiff, completion: {
-                
-                })
-                
-            }
-            .store(in: &tokens)
+//        Publishers.Zip(workspaceService.getAllWorkspacesAsBusinessObjects(), boardsService.getAllBoardsBusinessModel())
+//            .receive(on: DispatchQueue.global(qos: .userInitiated))
+//            .sink { completion in } receiveValue: { [weak self] (worskapcesServer, boardsServer) in
+//                guard let self = self else { return }
+//
+//                let currentWorkspaces = self.dataProvider.getAllWorkspacesAsyncBlock()
+//                let workspacesDiff = WorkspaceComparator.compare(responseCollection: worskapcesServer, cachedCollection: currentWorkspaces)
+//
+//                self.workspaceSyncronizer.syncronize(items: workspacesDiff, completion: {
+//                    self.state.send(.didRefreshedTheDB)
+//                })
+//
+//                let allBoardsCached = self.dataProvider.getAllBoardsAsyncBlock()
+//                let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: allBoardsCached)
+//                self.boardsSyncronizer.syncronize(items: boardsDiff, completion: {
+//
+//                })
+//
+//            }
+//            .store(in: &tokens)
     }
     
     func printAllLocalDB() {
-        let currentWorkspaces = self.dataProvider.getAllWorkspacesAsyncBlock()
+        let currentWorkspaces = self.dataProvider.fetchAllWorkspacesOnMainThread()
         currentWorkspaces.forEach { workspace in
             print("Local Item: \(workspace.title), id: \(workspace.remoteId)")
         }
@@ -103,7 +103,7 @@ class ViewModel {
     }
     
     func getAllBoards() {
-        let boards = dataProvider.getAllBoardsAsyncBlock()
+        let boards = dataProvider.fetchAllBoardsOnMainThread()
         boards.forEach { board in
             print("Local | Board: \(board.title)")
         }
