@@ -18,6 +18,8 @@ class MainInjector {
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
     private var boardService: BoardService? = nil
     private var cloudSync: CloudSync? = nil
+    private var boardSyncronizer: BoardSyncronizer? = nil
+    private var boardCoreDataManager: BoardCoreDataManager? = nil
 
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -29,6 +31,26 @@ class MainInjector {
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
         print("AVERAKEDABRA: ALLOC -> MainInjector")
+    }
+    
+    func provideBoardCoreDataManager() -> BoardCoreDataManager {
+        if boardCoreDataManager != nil {
+            return boardCoreDataManager!
+        } else {
+            boardCoreDataManager = BoardCoreDataManager(coreDataStack: provideCoreDataStack())
+            return boardCoreDataManager!
+        }
+    }
+    
+    func provideBoardSyncronizer() -> BoardSyncronizer {
+        if boardSyncronizer != nil {
+            return boardSyncronizer!
+        } else {
+            boardSyncronizer = BoardSyncronizer(coreDataStack: provideCoreDataStack(),
+                                                startupUtils: provideStartUpUtils(),
+                                                boardCoreDataManager: provideBoardCoreDataManager())
+            return boardSyncronizer!
+        }
     }
     
     func provideWorkspaceSyncronizer() -> WorkspaceSyncronizer {
@@ -107,7 +129,8 @@ class MainInjector {
             cloudSync = CloudSync(workspaceService: provideWorkspaceService(),
                                   boardsService: provideBoardService(),
                                   workspaceSyncronizer: provideWorkspaceSyncronizer(),
-                                  dataProvider: provideDataManager())
+                                  dataProvider: provideDataManager(), 
+                                  boardSyncronizer: provideBoardSyncronizer())
             return cloudSync!
         }
     }

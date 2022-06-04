@@ -10,6 +10,7 @@ import CoreData
 import Combine
 
 protocol Datasource {
+    
     func fetchAllWorkspacesOnMainThread() -> [WorkspaceBusinessModel]
     func fethAllWorkspacesOnBackgroundThread() -> [WorkspaceBusinessModel]
     func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel?

@@ -16,7 +16,7 @@ class WorkspaceCoreDataManager {
         self.coreDataStack = coreDataStack
     }
     
-    func insertIntoLocalAsyncBlocking(item: WorkspaceBusinessModel) {
+    func insertIntoLocalOnBackgroundThread(item: WorkspaceBusinessModel) {
         let context = self.coreDataStack.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         context.performAndWait {
@@ -36,7 +36,7 @@ class WorkspaceCoreDataManager {
         }
     }
     
-    func updateIntoLocalAsyncBlocking(item: WorkspaceBusinessModel) {
+    func updateIntoLocalInBackgrooundThread(item: WorkspaceBusinessModel) {
         
         let context = coreDataStack.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
@@ -58,7 +58,7 @@ class WorkspaceCoreDataManager {
         
     }
     
-    func deleteIntoLocalAsyncBlocking(item: WorkspaceBusinessModel) {
+    func deleteInLocalOnBackgroundThread(item: WorkspaceBusinessModel) {
         let context = coreDataStack.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
 

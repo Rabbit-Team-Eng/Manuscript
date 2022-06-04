@@ -14,13 +14,15 @@ final class CloudSync {
     private let workspaceService: WorkspaceService
     private let boardsService: BoardService
     private let workspaceSyncronizer: WorkspaceSyncronizer
+    private let boardSyncronizer: BoardSyncronizer
     private let dataProvider: DataProvider
 
-    init(workspaceService: WorkspaceService, boardsService: BoardService, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider) {
+    init(workspaceService: WorkspaceService, boardsService: BoardService, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer) {
         self.workspaceService = workspaceService
         self.boardsService = boardsService
         self.workspaceSyncronizer = workspaceSyncronizer
         self.dataProvider = dataProvider
+        self.boardSyncronizer = boardSyncronizer
     }
     
     func syncronize() {
@@ -32,16 +34,15 @@ final class CloudSync {
                 let currentWorkspaces = self.dataProvider.fethAllWorkspacesOnBackgroundThread()
                 let workspacesDiff = WorkspaceComparator.compare(responseCollection: worskapcesServer, cachedCollection: currentWorkspaces)
                 
-                self.workspaceSyncronizer.syncronize(items: workspacesDiff, completion: {
+                self.workspaceSyncronizer.syncronize(items: workspacesDiff, completion: { [weak self] in
+                    guard let self = self else { return }
                     
                     let currentBoards = self.dataProvider.fethAllBoardsOnBackgroundThread()
                     let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: currentBoards)
-                    
-                    boardsDiff.forEach { result in
-                        print("Board: \(result.businessObject.title), action: \(result.operation), target: \(result.target)")
+                    self.boardSyncronizer.syncronize(items: boardsDiff) { [weak self] in
+                        guard let self = self else { return }
+                        self.notify()
                     }
-
-
                 })
                 
             }

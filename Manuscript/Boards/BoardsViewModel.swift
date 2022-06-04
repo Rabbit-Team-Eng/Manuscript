@@ -26,7 +26,8 @@ class BoardsViewModel {
     
     @objc func cloudSyncDidFinish() {
         print("cloudSyncDidFinish")
-        print("After the Sync: \(dataProvider.fetchAllWorkspacesOnMainThread())")
+        print("\n\nWorkspaces After the Sync: \(dataProvider.fetchAllWorkspacesOnMainThread())")
+        print("\n\nBoards After the Sync: \(dataProvider.fetchAllBoardsOnMainThread())")
     }
     
     func fetchBoards() {

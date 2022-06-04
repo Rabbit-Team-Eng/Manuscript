@@ -10,15 +10,18 @@ import Combine
 
 class BoardSyncronizer: DataSyncronizer {
     
+    typealias Model = BoardBusinessModel
+    
     private let coreDataStack: CoreDataStack
     private var tokens: Set<AnyCancellable> = []
     private let startupUtils: StartupUtils
+    private let boardCoreDataManager: BoardCoreDataManager
 
-    init(coreDataStack: CoreDataStack, startupUtils: StartupUtils) {
+    init(coreDataStack: CoreDataStack, startupUtils: StartupUtils, boardCoreDataManager: BoardCoreDataManager) {
         self.coreDataStack = coreDataStack
         self.startupUtils = startupUtils
+        self.boardCoreDataManager = boardCoreDataManager
     }
-
     
     func syncronize(items: [ComparatorResult<BoardBusinessModel>], completion: @escaping () -> Void) {
         items.filter { $0.target == .local && $0.operation == .insertion }.map { $0.businessObject }.forEach { boardBusinessModelToBeInserted in
@@ -32,51 +35,31 @@ class BoardSyncronizer: DataSyncronizer {
         items.filter { $0.target == .local && $0.operation == .removal }.map { $0.businessObject }.forEach { boardBusinessModelToBeDeleted in
             deleteIntoLocal(item: boardBusinessModelToBeDeleted)
         }
+        completion()
     }
     
     private func insertIntoLocal(item: BoardBusinessModel) {
-        let context = coreDataStack.databaseContainer.newBackgroundContext()
-        context.automaticallyMergesChangesFromParent = true
-
-        context.performAndWait {
-            let boardCoreDataEntity = BoardEntity(context: context)
-            boardCoreDataEntity.remoteId = item.remoteId
-            boardCoreDataEntity.title = item.title
-            boardCoreDataEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: item.lastModifiedDate)
-            boardCoreDataEntity.assetUrl = item.assetUrl
-            boardCoreDataEntity.isPendingDeletionOnTheServer = item.isPendingDeletionOnTheServer
-            boardCoreDataEntity.isInitiallySynced = item.isInitiallySynced
-            boardCoreDataEntity.ownerWorkspaceId = item.ownerWorkspaceId
-            do {
-                try context.save()
-            } catch {
-                fatalError()
-            }
-        
-        }
+        boardCoreDataManager.insertIntoLocalOnBackgroundThread(item: item)
     }
     
-    func updateIntoLocal(item: BoardBusinessModel) {
+    private func updateIntoLocal(item: BoardBusinessModel) {
+        boardCoreDataManager.updateIntoLocalInBackgrooundThread(item: item)
+    }
+    
+    private func deleteIntoLocal(item: BoardBusinessModel) {
+        boardCoreDataManager.deleteInLocalOnBackgroundThread(item: item)
+    }
+    
+    private func insertIntoServer(item: BoardBusinessModel) {
         
     }
     
-    func deleteIntoLocal(item: BoardBusinessModel) {
+    private func updateIntoServer(item: BoardBusinessModel) {
         
     }
     
-    func insertIntoServer(item: BoardBusinessModel) {
+    private func deleteIntoServer(item: BoardBusinessModel) {
         
     }
-    
-    func updateIntoServer(item: BoardBusinessModel) {
-        
-    }
-    
-    func deleteIntoServer(item: BoardBusinessModel) {
-        
-    }
-    
-    typealias Model = BoardBusinessModel
-    
     
 }

@@ -79,17 +79,17 @@ class WorkspaceSyncronizer: DataSyncronizer {
 
     
     private func insertIntoLocal(item: WorkspaceBusinessModel) {
-        workspaceCoreDataManager.insertIntoLocalAsyncBlocking(item: item)
+        workspaceCoreDataManager.insertIntoLocalOnBackgroundThread(item: item)
         self.state.send(.done)
     }
     
     private func updateIntoLocal(item: WorkspaceBusinessModel) {
-        workspaceCoreDataManager.updateIntoLocalAsyncBlocking(item: item)
+        workspaceCoreDataManager.updateIntoLocalInBackgrooundThread(item: item)
         self.state.send(.done)
     }
     
     private func deleteIntoLocal(item: WorkspaceBusinessModel) {
-        workspaceCoreDataManager.deleteIntoLocalAsyncBlocking(item: item)
+        workspaceCoreDataManager.deleteInLocalOnBackgroundThread(item: item)
         self.state.send(.done)
     }
     
