@@ -20,6 +20,9 @@ class MainInjector {
     private var cloudSync: CloudSync? = nil
     private var boardSyncronizer: BoardSyncronizer? = nil
     private var boardCoreDataManager: BoardCoreDataManager? = nil
+    private var databaseManager: DatabaseManager? = nil
+
+    
 
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -31,6 +34,15 @@ class MainInjector {
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
         print("AVERAKEDABRA: ALLOC -> MainInjector")
+    }
+    
+    func provideDatabaseManager() -> DatabaseManager {
+        if databaseManager != nil {
+            return databaseManager!
+        } else {
+            databaseManager = DatabaseManager(coreDataStack: provideCoreDataStack())
+            return databaseManager!
+        }
     }
     
     func provideBoardCoreDataManager() -> BoardCoreDataManager {

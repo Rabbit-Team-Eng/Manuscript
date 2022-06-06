@@ -35,10 +35,18 @@ public struct BoardBusinessModel: BusinessModelProtocol {
     
     public static func == (lhs: BoardBusinessModel, rhs: BoardBusinessModel) -> Bool {
         return lhs.remoteId == rhs.remoteId
+        && lhs.ownerWorkspaceId == rhs.ownerWorkspaceId
+        && lhs.assetUrl == rhs.assetUrl
+        && lhs.title == rhs.title
+        && lhs.lastModifiedDate == rhs.lastModifiedDate
+        && lhs.isInitiallySynced == rhs.isInitiallySynced
+        && lhs.isPendingDeletionOnTheServer == rhs.isPendingDeletionOnTheServer
     }
     
     public static func < (lhs: BoardBusinessModel, rhs: BoardBusinessModel) -> Bool {
         lhs.remoteId < rhs.remoteId
+        
+        
 
     }
 }

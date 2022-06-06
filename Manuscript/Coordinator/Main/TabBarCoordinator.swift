@@ -67,6 +67,28 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         tasksCoordinator.start(with: TasksFlow.tasks)
     }
     
+    func presentCreateBoardScreen() {
+        let vc = CreateNewBoardViewController()
+        vc.modalPresentationStyle = .pageSheet
+        vc.parentCoordinator = self
+        if let sheet = vc.sheetPresentationController {
+             sheet.detents = [.medium(), .large()]
+         }
+        mainTabBarController.present(vc, animated: true, completion: nil)
+
+    }
+    
+    func presentWorspaceSelectorScreen() {
+        let vc = WorkspaceSelectorViewController()
+        vc.modalPresentationStyle = .pageSheet
+        vc.parentCoordinator = self
+        if let sheet = vc.sheetPresentationController {
+             sheet.detents = [.medium()]
+         }
+        mainTabBarController.present(vc, animated: true, completion: nil)
+
+    }
+    
     deinit {
         print("AVERAKEDABRA: RELEASE -> TabBarCoordinator")
     }

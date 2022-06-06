@@ -10,7 +10,7 @@ import UIKit
 class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
 
     // Coordinator
-    weak var parentCoordinator: TabBarCoordinator? = nil
+    weak var parentCoordinator: TabBarCoordinator?
     var childCoordinators: [Coordinator] = []
 
     // Injected
@@ -44,17 +44,19 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     func navigateToBoardsScreen() {
-        let vc = BoardsViewController(boardsViewModel: mainComponent.provideBoardsViewModel(), startUpUtils: mainComponent.provideStartUpUtils())
+        let vc = BoardsViewController(boardsViewModel: mainComponent.provideBoardsViewModel(), startUpUtils: mainComponent.provideStartUpUtils(), databaseManager: mainComponent.provideDatabaseManager())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }
+    
+    func presentCreateBoardScreen() {
+        parentCoordinator?.presentCreateBoardScreen()
 
-    func navigateToBoardDetailScreen(isTabBarOn: Bool = false) {
+    }
+    
+    func presentWorkspaceSelectorScreen() {
+        parentCoordinator?.presentWorspaceSelectorScreen()
 
-        let vc = BoardDetailViewController()
-        vc.coordinator = self
-        vc.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(vc, animated: true)
     }
     
     deinit {

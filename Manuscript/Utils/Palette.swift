@@ -15,10 +15,13 @@ struct Palette {
         static let ACCENT_BLUE = "accent_blue"
         static let LIGHT_GRAY = "light_gray"
         static let WHITE = "white"
+        static let CREATE_BOARD_BACKGROUND = "create_board_background"
+        
     }
     static let lightBlack = UIColor(named: Constants.BACKGROUND_BLACK)!
     static let gray = UIColor(named: Constants.GRAY)!
     static let blue = UIColor(named: Constants.ACCENT_BLUE)!
     static let lightGray = UIColor(named: Constants.LIGHT_GRAY)!
     static let white = UIColor(named: Constants.WHITE)!
+    static let mediumDarkGray = UIColor(named: Constants.CREATE_BOARD_BACKGROUND)!
 }

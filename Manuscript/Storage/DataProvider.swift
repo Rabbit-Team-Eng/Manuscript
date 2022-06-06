@@ -105,6 +105,9 @@ class DataProvider: Datasource {
 
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
+            let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+            boardFetchRequest.sortDescriptors = [sortDescriptor]
+            
             do {
                 let allBoards: [BoardEntity] = try context.fetch(boardFetchRequest)
                 allBoards.forEach { boardEntity in
@@ -135,8 +138,7 @@ class DataProvider: Datasource {
         // up to date with changes from the parent
         context.automaticallyMergesChangesFromParent = true
 
-        // Perform operations on the background context
-        // asynchronously
+        // Perform operations on the background context asynchronously
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
             do {
@@ -176,6 +178,7 @@ class DataProvider: Datasource {
         context.performAndWait {
             
             let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
+            
             do {
                 let allWorkspaceEntities: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
                 allWorkspaceEntities.forEach { currentWorkspaceEntity in
@@ -348,7 +351,6 @@ class DataProvider: Datasource {
         } catch let error as NSError {
             fatalError(error.localizedDescription)
         }
-        
         return allWorkspaces
     }
 }

@@ -44,5 +44,7 @@ public struct WorkspaceBusinessModel: BusinessModelProtocol {
         && lhs.sharingEnabled == rhs.sharingEnabled
         && lhs.mainDescription == rhs.mainDescription
         && lhs.lastModifiedDate == rhs.lastModifiedDate
+        && lhs.isPendingDeletionOnTheServer == rhs.isPendingDeletionOnTheServer
+        && lhs.isInitiallySynced == rhs.isInitiallySynced
     }
 }
