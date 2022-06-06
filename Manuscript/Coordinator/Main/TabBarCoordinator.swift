@@ -80,12 +80,15 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     
     func presentWorspaceSelectorScreen() {
         let vc = WorkspaceSelectorViewController(workspacesViewModel: mainInjector.provideWorkspacesViewModel())
-        vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
-        if let sheet = vc.sheetPresentationController {
+                                                 
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
              sheet.detents = [.medium()]
          }
-        mainTabBarController.present(vc, animated: true, completion: nil)
+        mainTabBarController.present(navController, animated: true, completion: nil)
 
     }
     

@@ -23,6 +23,7 @@ class BoardsViewModel {
         self.dataProvider = dataProvider
 
         NotificationCenter.default.addObserver(self, selector: #selector(cloudSyncDidFinish), name: Notification.Name("CloudSyncDidFinish"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newWorkspaceDidSwitched), name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
 
     }
     
@@ -62,6 +63,9 @@ class BoardsViewModel {
         }
     }
     
+    @objc func newWorkspaceDidSwitched() {
+        fetchCurrentWorkspace()
+    }
     
     @objc func cloudSyncDidFinish() {
         fetchCurrentWorkspace()
@@ -69,6 +73,7 @@ class BoardsViewModel {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name:  Notification.Name("CloudSyncDidFinish") , object: nil)
+        NotificationCenter.default.removeObserver(self, name:  Notification.Name("NewWorkspaceDidSwitched") , object: nil)
     }
     
 }

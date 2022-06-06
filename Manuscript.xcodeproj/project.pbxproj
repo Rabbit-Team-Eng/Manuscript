@@ -48,6 +48,7 @@
 		0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */; };
 		0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */; };
 		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
+		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
 		09CAAA0C2829D80200FE0214 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */; };
 		09CAAA0E2829D80200FE0214 /* IntegrationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0D2829D80200FE0214 /* IntegrationsViewController.swift */; };
@@ -320,6 +321,7 @@
 		0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorCell.swift; sourceTree = "<group>"; };
 		0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorSectionType.swift; sourceTree = "<group>"; };
 		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
+		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09CAAA092829D80200FE0214 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -508,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				096BEDC2284B27C7001C7136 /* BoardTransformer.swift */,
+				099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */,
 			);
 			path = DataTransformers;
 			sourceTree = "<group>";
@@ -1320,6 +1323,7 @@
 				09D275D42825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift in Sources */,
 				09D275B82825C84400933F16 /* TaskService.swift in Sources */,
 				09D275C22825C93D00933F16 /* UpdateTaskRequest.swift in Sources */,
+				099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */,
 				09D2763B2825CE6000933F16 /* MemberComparator.swift in Sources */,
 				09D275CC2825C9F500933F16 /* UpdateBoardRequest.swift in Sources */,
 				09D275E52825CBF500933F16 /* AllWorkspaceResponse.swift in Sources */,

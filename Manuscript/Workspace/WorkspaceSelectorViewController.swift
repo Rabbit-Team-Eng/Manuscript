@@ -70,11 +70,14 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = Palette.lightBlack
         view.addSubview(createNewWorkspaceButton)
         view.addSubview(myColectionView)
         view.addSubview(switchWorkspaceButton)
+        navigationController?.isNavigationBarHidden = true
         
+        createNewWorkspaceButton.addTarget(self, action: #selector(createNewWorkspaceButtonDidTap(_:)), for: .touchUpInside)
         switchWorkspaceButton.addTarget(self, action: #selector(workspaceDidSwitched(_:)), for: .touchUpInside)
         
         workspacesViewModel.events.sink { [weak self] workspaceEvent in
@@ -143,9 +146,16 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         print(model)
     }
     
+    @objc private func createNewWorkspaceButtonDidTap(_ sender: UIButton) {
+        print("New Workspace creation Flow entered")
+    }
+    
     @objc private func workspaceDidSwitched(_ sender: UIButton) {
-        guard let getModelForSelectedItem = myColectionView.indexPathsForSelectedItems?.first?.item else { return }
+        guard let getSelectedItemIndex = myColectionView.indexPathsForSelectedItems?.first?.item else { return }
+        let item = dataSource.snapshot().itemIdentifiers[getSelectedItemIndex]
+        UserDefaults.selectedWorkspaceId = item.id
         parentCoordinator?.dismissWorspaceSelectorScreen()
+        NotificationCenter.default.post(name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
     }
 
 }
