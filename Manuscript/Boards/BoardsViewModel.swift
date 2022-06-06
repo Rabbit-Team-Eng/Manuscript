@@ -62,6 +62,7 @@ class BoardsViewModel {
         }
     }
     
+    
     @objc func cloudSyncDidFinish() {
         fetchCurrentWorkspace()
     }

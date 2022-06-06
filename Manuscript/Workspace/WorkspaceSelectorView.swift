@@ -45,11 +45,23 @@ class WorkspaceSelectorView: UIView, UIContentView {
         editWorkspaceButton.addTarget(self, action: #selector(editWorkspaceButtonDidTap(_:)), for: .touchUpInside)
         applyConfiguration(configuration: configuration)
         
+        NSLayoutConstraint.activate([
+            titleTexLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            titleTexLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            titleTexLabel.trailingAnchor.constraint(equalTo: editWorkspaceButton.leadingAnchor, constant: -8),
+            titleTexLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
+            editWorkspaceButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            editWorkspaceButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
+            editWorkspaceButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            editWorkspaceButton.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        
     }
     
     @objc private func editWorkspaceButtonDidTap(_ sender: UIButton) {
         guard let delegate = delegate, let config = configuration as? WorkspaceSelectorContentConfiguration, let model = config.model else { return }
-        delegate.workspaceDidSelected(model: model)
+        delegate.workspaceDetailFlowDidSelected(model: model)
     }
     
     private func applyConfiguration(configuration: UIContentConfiguration) {
@@ -64,21 +76,7 @@ class WorkspaceSelectorView: UIView, UIContentView {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        NSLayoutConstraint.activate([
-            titleTexLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            titleTexLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            titleTexLabel.trailingAnchor.constraint(equalTo: editWorkspaceButton.leadingAnchor, constant: -8),
-            titleTexLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            
-            editWorkspaceButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            editWorkspaceButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32),
-            editWorkspaceButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            editWorkspaceButton.widthAnchor.constraint(equalToConstant: 30)
-        ])
-    }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

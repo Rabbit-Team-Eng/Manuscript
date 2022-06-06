@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtocol {
     
@@ -13,6 +14,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, WorkspaceSelectorCellModel>
 
     lazy var dataSource = createDataSource()
+    private var tokens: Set<AnyCancellable> = []
 
     weak var parentCoordinator: TabBarCoordinator? = nil
 
@@ -51,6 +53,21 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         return button
     }()
     
+    private let workspacesViewModel: WorkspacesViewModel
+
+    init(workspacesViewModel: WorkspacesViewModel) {
+        self.workspacesViewModel = workspacesViewModel
+        print("AVERAKEDABRA: ALLOC -> WorkspaceSelectorViewController")
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    deinit {
+        print("AVERAKEDABRA: RELEASE -> WorkspaceSelectorViewController")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Palette.lightBlack
@@ -58,21 +75,22 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         view.addSubview(myColectionView)
         view.addSubview(switchWorkspaceButton)
         
-        applySnapshot(items: [
-            WorkspaceSelectorCellModel(id: "0", title: "abrahamr 0", isEditable: false),
-            WorkspaceSelectorCellModel(id: "1", title: "abrahamr 1", isEditable: false),
-            WorkspaceSelectorCellModel(id: "2", title: "abrahamr 2", isEditable: false),
-            WorkspaceSelectorCellModel(id: "3", title: "abrahamr 3", isEditable: false),
-            WorkspaceSelectorCellModel(id: "4", title: "abrahamr 4", isEditable: true),
-            WorkspaceSelectorCellModel(id: "5", title: "abrahamr 5", isEditable: false),
-            WorkspaceSelectorCellModel(id: "6", title: "abrahamr 6", isEditable: false),
-            WorkspaceSelectorCellModel(id: "7", title: "abrahamr 7", isEditable: false),
-            WorkspaceSelectorCellModel(id: "8", title: "abrahamr 8", isEditable: false),
-            WorkspaceSelectorCellModel(id: "9", title: "abrahamr 9", isEditable: false),
-            WorkspaceSelectorCellModel(id: "10", title: "abrahamr 10", isEditable: false),
-
-        ], withAnimation: true)
-
+        switchWorkspaceButton.addTarget(self, action: #selector(workspaceDidSwitched(_:)), for: .touchUpInside)
+        
+        workspacesViewModel.events.sink { [weak self] workspaceEvent in
+            guard let self = self else { return }
+            switch workspaceEvent {
+            case .workspacesDidFetch(let workspaces):
+                self.applySnapshot(items: WorkspaceTransformer.transformWorkspacesToSelectorCellModel(workspaces: workspaces), withAnimation: true)
+            }
+        }
+        .store(in: &tokens)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        workspacesViewModel.fetchWorkspaces()
+        myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .top)
     }
     
     override func viewWillLayoutSubviews() {
@@ -111,7 +129,6 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
             return cell
         }
             
-        
         return dataSource
     }
     
@@ -122,8 +139,13 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         }
     }
     
-    func workspaceDidSelected(model: WorkspaceSelectorCellModel) {
+    func workspaceDetailFlowDidSelected(model: WorkspaceSelectorCellModel) {
         print(model)
+    }
+    
+    @objc private func workspaceDidSwitched(_ sender: UIButton) {
+        guard let getModelForSelectedItem = myColectionView.indexPathsForSelectedItems?.first?.item else { return }
+        parentCoordinator?.dismissWorspaceSelectorScreen()
     }
 
 }

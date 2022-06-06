@@ -79,7 +79,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func presentWorspaceSelectorScreen() {
-        let vc = WorkspaceSelectorViewController()
+        let vc = WorkspaceSelectorViewController(workspacesViewModel: mainInjector.provideWorkspacesViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -87,6 +87,10 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
          }
         mainTabBarController.present(vc, animated: true, completion: nil)
 
+    }
+    
+    func dismissWorspaceSelectorScreen() {
+        mainTabBarController.dismiss(animated: true)
     }
     
     deinit {

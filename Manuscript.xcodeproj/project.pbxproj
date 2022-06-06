@@ -47,6 +47,7 @@
 		0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */; };
 		0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */; };
 		0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */; };
+		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
 		09CAAA0C2829D80200FE0214 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */; };
 		09CAAA0E2829D80200FE0214 /* IntegrationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0D2829D80200FE0214 /* IntegrationsViewController.swift */; };
@@ -318,6 +319,7 @@
 		0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorView.swift; sourceTree = "<group>"; };
 		0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorCell.swift; sourceTree = "<group>"; };
 		0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorSectionType.swift; sourceTree = "<group>"; };
+		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09CAAA092829D80200FE0214 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -585,6 +587,7 @@
 				0989BABD284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift */,
 				0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */,
 				0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */,
+				099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */,
 			);
 			path = Workspace;
 			sourceTree = "<group>";
@@ -1324,6 +1327,7 @@
 				09D275B62825C83400933F16 /* TaskAPI.swift in Sources */,
 				09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */,
 				09D276342825CE6000933F16 /* ComparatorProtocol.swift in Sources */,
+				099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */,
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
 				097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */,
 				0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */,

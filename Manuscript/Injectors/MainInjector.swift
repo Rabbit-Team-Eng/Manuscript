@@ -14,6 +14,7 @@ class MainInjector {
     private var workspaceService: WorkspaceService? = nil
     private var dataManager: DataProvider? = nil
     private var boardsViewModel: BoardsViewModel? = nil
+    private var workspacesViewModel: WorkspacesViewModel? = nil
     private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
     private var boardService: BoardService? = nil
@@ -83,6 +84,15 @@ class MainInjector {
         } else {
             workspaceCoreDatabaseManager = WorkspaceCoreDataManager(coreDataStack: provideCoreDataStack())
             return workspaceCoreDatabaseManager!
+        }
+    }
+    
+    func provideWorkspacesViewModel() -> WorkspacesViewModel {
+        if workspacesViewModel != nil {
+            return workspacesViewModel!
+        } else {
+            workspacesViewModel = WorkspacesViewModel(dataProvider: provideDataManager())
+            return workspacesViewModel!
         }
     }
     
