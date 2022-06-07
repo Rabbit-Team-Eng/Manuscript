@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IconView: UIView, UIContentView {
+class IconSelectorView: UIView, UIContentView {
     
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,7 +37,7 @@ class IconView: UIView, UIContentView {
     
     private func applyConfiguration(configuration: UIContentConfiguration) {
         
-        guard let config = configuration as? IconContentConfiguration, let model = config.model else { return }
+        guard let config = configuration as? IconSelectorContentConfiguration, let model = config.model else { return }
         iconImageView.image = UIImage(systemName: model.iconResource)
         
     }

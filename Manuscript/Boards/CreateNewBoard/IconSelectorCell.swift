@@ -7,13 +7,13 @@
 
 import UIKit
 
-class IconCell: UICollectionViewCell {
+class IconSelectorCell: UICollectionViewCell {
     
-    var model: IconCellModel?
+    var model: IconSelectorCellModel?
 
     override func updateConfiguration(using state: UICellConfigurationState) {
         
-        let config = IconContentConfiguration(model: model)
+        let config = IconSelectorContentConfiguration(model: model)
         contentConfiguration = config
         
         if state.isSelected {

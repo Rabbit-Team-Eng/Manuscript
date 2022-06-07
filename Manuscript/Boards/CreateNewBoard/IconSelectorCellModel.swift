@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct IconCellModel: Hashable {
+struct IconSelectorCellModel: Hashable {
     let id: String
     let iconResource: String
     

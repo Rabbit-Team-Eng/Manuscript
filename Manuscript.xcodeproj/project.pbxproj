@@ -47,10 +47,10 @@
 		0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */; };
 		0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */; };
 		0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */; };
-		099A9096284FF63D00B0F4B7 /* IconCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9095284FF63D00B0F4B7 /* IconCellModel.swift */; };
-		099A9098284FF64D00B0F4B7 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9097284FF64D00B0F4B7 /* IconView.swift */; };
-		099A909A284FF66900B0F4B7 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconCell.swift */; };
-		099A909C284FF67800B0F4B7 /* IconContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconContentConfiguration.swift */; };
+		099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */; };
+		099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */; };
+		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
+		099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */; };
 		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
@@ -323,10 +323,10 @@
 		0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorView.swift; sourceTree = "<group>"; };
 		0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorCell.swift; sourceTree = "<group>"; };
 		0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorSectionType.swift; sourceTree = "<group>"; };
-		099A9095284FF63D00B0F4B7 /* IconCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCellModel.swift; sourceTree = "<group>"; };
-		099A9097284FF64D00B0F4B7 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
-		099A9099284FF66900B0F4B7 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
-		099A909B284FF67800B0F4B7 /* IconContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconContentConfiguration.swift; sourceTree = "<group>"; };
+		099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCellModel.swift; sourceTree = "<group>"; };
+		099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorView.swift; sourceTree = "<group>"; };
+		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
+		099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorContentConfiguration.swift; sourceTree = "<group>"; };
 		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -605,10 +605,10 @@
 			isa = PBXGroup;
 			children = (
 				0930A8F7284C09420049605B /* CreateNewBoardViewController.swift */,
-				099A9095284FF63D00B0F4B7 /* IconCellModel.swift */,
-				099A9097284FF64D00B0F4B7 /* IconView.swift */,
-				099A9099284FF66900B0F4B7 /* IconCell.swift */,
-				099A909B284FF67800B0F4B7 /* IconContentConfiguration.swift */,
+				099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */,
+				099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */,
+				099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */,
+				099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */,
 			);
 			path = CreateNewBoard;
 			sourceTree = "<group>";
@@ -1360,9 +1360,9 @@
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
 				097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */,
 				0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */,
-				099A9096284FF63D00B0F4B7 /* IconCellModel.swift in Sources */,
+				099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */,
 				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
-				099A909C284FF67800B0F4B7 /* IconContentConfiguration.swift in Sources */,
+				099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
 				09D2758B2825B83400933F16 /* ServiceConstants.swift in Sources */,
 				09D275BA2825C85600933F16 /* WorkspaceAPI.swift in Sources */,
@@ -1400,7 +1400,7 @@
 				09D27656282605E900933F16 /* WorkspaceEntity+CoreDataProperties.swift in Sources */,
 				09D275692825B73400933F16 /* Flowable.swift in Sources */,
 				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
-				099A909A284FF66900B0F4B7 /* IconCell.swift in Sources */,
+				099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */,
 				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
 				09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */,
 				096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */,
@@ -1415,7 +1415,7 @@
 				0989BABA284D30BB0032053C /* WorkspaceSelectorViewController.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
 				09D2757F2825B7D900933F16 /* AuthenticationError.swift in Sources */,
-				099A9098284FF64D00B0F4B7 /* IconView.swift in Sources */,
+				099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */,
 				09D276382825CE6000933F16 /* ComparatorAction.swift in Sources */,
 				09D275DC2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift in Sources */,
 				09D275F32825CC8100933F16 /* TaskRequest.swift in Sources */,

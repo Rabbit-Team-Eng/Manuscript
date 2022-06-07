@@ -7,16 +7,16 @@
 
 import UIKit
 
-struct IconContentConfiguration: UIContentConfiguration {
+struct IconSelectorContentConfiguration: UIContentConfiguration {
     
-    var model: IconCellModel?
+    var model: IconSelectorCellModel?
     
     func makeContentView() -> UIView & UIContentView {
-        let view = IconView(configuration: self)
+        let view = IconSelectorView(configuration: self)
         return view
     }
     
-    func updated(for state: UIConfigurationState) -> IconContentConfiguration {
+    func updated(for state: UIConfigurationState) -> IconSelectorContentConfiguration {
         guard let state = state as? UICellConfigurationState else { return self }
         let updatedConfiguration = self
         return updatedConfiguration

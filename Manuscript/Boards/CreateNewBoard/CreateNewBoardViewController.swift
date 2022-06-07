@@ -11,8 +11,8 @@ class CreateNewBoardViewController: UIViewController {
     
     weak var parentCoordinator: TabBarCoordinator? = nil
     
-    typealias DataSource = UICollectionViewDiffableDataSource<WorkspaceSelectorSectionType, IconCellModel>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, IconCellModel>
+    typealias DataSource = UICollectionViewDiffableDataSource<WorkspaceSelectorSectionType, IconSelectorCellModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, IconSelectorCellModel>
 
     private lazy var dataSource = createDataSource()
     
@@ -98,47 +98,47 @@ class CreateNewBoardViewController: UIViewController {
         
         applySnapshot(items: [
         
-            IconCellModel(id: "square.and.arrow.up.on.square", iconResource: "square.and.arrow.up.on.square"),
-            IconCellModel(id: "pencil.circle.fill", iconResource: "pencil.circle.fill"),
-            IconCellModel(id: "pencil.tip", iconResource: "pencil.tip"),
-            IconCellModel(id: "lasso", iconResource: "lasso"),
-            IconCellModel(id: "trash", iconResource: "trash"),
-            IconCellModel(id: "folder", iconResource: "folder"),
-            IconCellModel(id: "paperplane.circle", iconResource: "paperplane.circle"),
-            IconCellModel(id: "externaldrive.badge.minus", iconResource: "externaldrive.badge.minus"),
-            IconCellModel(id: "doc.on.clipboard.fill", iconResource: "doc.on.clipboard.fill"),
-            IconCellModel(id: "doc.text.below.ecg", iconResource: "doc.text.below.ecg"),
-            IconCellModel(id: "text.book.closed", iconResource: "text.book.closed"),
-            IconCellModel(id: "greetingcard", iconResource: "greetingcard"),
-            IconCellModel(id: "person", iconResource: "person"),
-            IconCellModel(id: "command.square.fill", iconResource: "command.square.fill"),
-            IconCellModel(id: "globe", iconResource: "globe"),
+            IconSelectorCellModel(id: "square.and.arrow.up.on.square", iconResource: "square.and.arrow.up.on.square"),
+            IconSelectorCellModel(id: "pencil.circle.fill", iconResource: "pencil.circle.fill"),
+            IconSelectorCellModel(id: "pencil.tip", iconResource: "pencil.tip"),
+            IconSelectorCellModel(id: "lasso", iconResource: "lasso"),
+            IconSelectorCellModel(id: "trash", iconResource: "trash"),
+            IconSelectorCellModel(id: "folder", iconResource: "folder"),
+            IconSelectorCellModel(id: "paperplane.circle", iconResource: "paperplane.circle"),
+            IconSelectorCellModel(id: "externaldrive.badge.minus", iconResource: "externaldrive.badge.minus"),
+            IconSelectorCellModel(id: "doc.on.clipboard.fill", iconResource: "doc.on.clipboard.fill"),
+            IconSelectorCellModel(id: "doc.text.below.ecg", iconResource: "doc.text.below.ecg"),
+            IconSelectorCellModel(id: "text.book.closed", iconResource: "text.book.closed"),
+            IconSelectorCellModel(id: "greetingcard", iconResource: "greetingcard"),
+            IconSelectorCellModel(id: "person", iconResource: "person"),
+            IconSelectorCellModel(id: "command.square.fill", iconResource: "command.square.fill"),
+            IconSelectorCellModel(id: "globe", iconResource: "globe"),
             
-            IconCellModel(id: "calendar.day.timeline.trailing", iconResource: "calendar.day.timeline.trailing"),
-            IconCellModel(id: "arrowshape.bounce.right", iconResource: "arrowshape.bounce.right"),
-            IconCellModel(id: "book.closed", iconResource: "book.closed"),
-            IconCellModel(id: "newspaper.circle", iconResource: "newspaper.circle"),
-            IconCellModel(id: "rosette", iconResource: "rosette"),
-            IconCellModel(id: "graduationcap.fill", iconResource: "graduationcap.fill"),
-            IconCellModel(id: "paperclip.badge.ellipsis", iconResource: "paperclip.badge.ellipsis"),
-            IconCellModel(id: "personalhotspot", iconResource: "personalhotspot"),
-            IconCellModel(id: "rectangle.inset.filled.and.person.filled", iconResource: "rectangle.inset.filled.and.person.filled"),
-            IconCellModel(id: "person.fill.and.arrow.left.and.arrow.right", iconResource: "person.fill.and.arrow.left.and.arrow.right"),
-            IconCellModel(id: "sun.max.fill", iconResource: "sun.max.fill"),
-            IconCellModel(id: "moon.zzz", iconResource: "moon.zzz"),
-            IconCellModel(id: "cloud.sleet.fill", iconResource: "cloud.sleet.fill"),
-            IconCellModel(id: "smoke", iconResource: "smoke"),
-            IconCellModel(id: "umbrella.fill", iconResource: "umbrella.fill"),
-            IconCellModel(id: "cursorarrow.and.square.on.square.dashed", iconResource: "cursorarrow.and.square.on.square.dashed"),
-            IconCellModel(id: "rectangle.grid.2x2", iconResource: "rectangle.grid.2x2"),
-            IconCellModel(id: "circle.grid.3x3", iconResource: "circle.grid.3x3"),
-            IconCellModel(id: "circle.hexagongrid", iconResource: "circle.hexagongrid"),
-            IconCellModel(id: "seal.fill", iconResource: "seal.fill"),
-            IconCellModel(id: "exclamationmark.triangle", iconResource: "exclamationmark.triangle"),
-            IconCellModel(id: "play.fill", iconResource: "play.fill"),
-            IconCellModel(id: "memories.badge.plus", iconResource: "memories.badge.plus"),
-            IconCellModel(id: "infinity.circle", iconResource: "infinity.circle"),
-            IconCellModel(id: "speaker.zzz.fill", iconResource: "speaker.zzz.fill"),
+            IconSelectorCellModel(id: "calendar.day.timeline.trailing", iconResource: "calendar.day.timeline.trailing"),
+            IconSelectorCellModel(id: "arrowshape.bounce.right", iconResource: "arrowshape.bounce.right"),
+            IconSelectorCellModel(id: "book.closed", iconResource: "book.closed"),
+            IconSelectorCellModel(id: "newspaper.circle", iconResource: "newspaper.circle"),
+            IconSelectorCellModel(id: "rosette", iconResource: "rosette"),
+            IconSelectorCellModel(id: "graduationcap.fill", iconResource: "graduationcap.fill"),
+            IconSelectorCellModel(id: "paperclip.badge.ellipsis", iconResource: "paperclip.badge.ellipsis"),
+            IconSelectorCellModel(id: "personalhotspot", iconResource: "personalhotspot"),
+            IconSelectorCellModel(id: "rectangle.inset.filled.and.person.filled", iconResource: "rectangle.inset.filled.and.person.filled"),
+            IconSelectorCellModel(id: "person.fill.and.arrow.left.and.arrow.right", iconResource: "person.fill.and.arrow.left.and.arrow.right"),
+            IconSelectorCellModel(id: "sun.max.fill", iconResource: "sun.max.fill"),
+            IconSelectorCellModel(id: "moon.zzz", iconResource: "moon.zzz"),
+            IconSelectorCellModel(id: "cloud.sleet.fill", iconResource: "cloud.sleet.fill"),
+            IconSelectorCellModel(id: "smoke", iconResource: "smoke"),
+            IconSelectorCellModel(id: "umbrella.fill", iconResource: "umbrella.fill"),
+            IconSelectorCellModel(id: "cursorarrow.and.square.on.square.dashed", iconResource: "cursorarrow.and.square.on.square.dashed"),
+            IconSelectorCellModel(id: "rectangle.grid.2x2", iconResource: "rectangle.grid.2x2"),
+            IconSelectorCellModel(id: "circle.grid.3x3", iconResource: "circle.grid.3x3"),
+            IconSelectorCellModel(id: "circle.hexagongrid", iconResource: "circle.hexagongrid"),
+            IconSelectorCellModel(id: "seal.fill", iconResource: "seal.fill"),
+            IconSelectorCellModel(id: "exclamationmark.triangle", iconResource: "exclamationmark.triangle"),
+            IconSelectorCellModel(id: "play.fill", iconResource: "play.fill"),
+            IconSelectorCellModel(id: "memories.badge.plus", iconResource: "memories.badge.plus"),
+            IconSelectorCellModel(id: "infinity.circle", iconResource: "infinity.circle"),
+            IconSelectorCellModel(id: "speaker.zzz.fill", iconResource: "speaker.zzz.fill"),
 
 
         ])
@@ -175,7 +175,7 @@ class CreateNewBoardViewController: UIViewController {
         }
     }
     
-    private func applySnapshot(items: [IconCellModel], animatingDifferences: Bool = false) {
+    private func applySnapshot(items: [IconSelectorCellModel], animatingDifferences: Bool = false) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -185,7 +185,7 @@ class CreateNewBoardViewController: UIViewController {
         }
     }
     
-    private func iconCellRegistration() -> UICollectionView.CellRegistration<IconCell, IconCellModel> {
+    private func iconCellRegistration() -> UICollectionView.CellRegistration<IconSelectorCell, IconSelectorCellModel> {
         return .init { cell, indexPath, itemIdentifier in
             cell.model = itemIdentifier
         }
