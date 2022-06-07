@@ -69,6 +69,7 @@ class WorkspaceSelectorView: UIView, UIContentView {
         guard let config = configuration as? WorkspaceSelectorContentConfiguration, let model = config.model else { return }
         titleTexLabel.text = model.title
         
+        
         if model.isEditable {
             editWorkspaceButton.isHidden = false
         } else {

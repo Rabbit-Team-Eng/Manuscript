@@ -13,7 +13,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     typealias DataSource = UICollectionViewDiffableDataSource<WorkspaceSelectorSectionType, WorkspaceSelectorCellModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, WorkspaceSelectorCellModel>
 
-    lazy var dataSource = createDataSource()
+    private lazy var dataSource = createDataSource()
     private var tokens: Set<AnyCancellable> = []
 
     weak var parentCoordinator: TabBarCoordinator? = nil
@@ -80,20 +80,20 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         createNewWorkspaceButton.addTarget(self, action: #selector(createNewWorkspaceButtonDidTap(_:)), for: .touchUpInside)
         switchWorkspaceButton.addTarget(self, action: #selector(workspaceDidSwitched(_:)), for: .touchUpInside)
         
-        workspacesViewModel.events.sink { [weak self] workspaceEvent in
-            guard let self = self else { return }
+        workspacesViewModel.events.sink { [weak self] workspaceEvent in guard let self = self else { return }
+            
             switch workspaceEvent {
             case .workspacesDidFetch(let workspaces):
                 self.applySnapshot(items: WorkspaceTransformer.transformWorkspacesToSelectorCellModel(workspaces: workspaces), withAnimation: true)
             }
         }
         .store(in: &tokens)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         workspacesViewModel.fetchWorkspaces()
-        myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .top)
     }
     
     override func viewWillLayoutSubviews() {
@@ -110,7 +110,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
             myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             myColectionView.bottomAnchor.constraint(equalTo: switchWorkspaceButton.topAnchor, constant: -32),
 
-            switchWorkspaceButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            switchWorkspaceButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
             switchWorkspaceButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             switchWorkspaceButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             switchWorkspaceButton.heightAnchor.constraint(equalToConstant: 50),
@@ -121,7 +121,15 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: withAnimation)
+        
+        dataSource.apply(snapshot, animatingDifferences: withAnimation) { [weak self] in
+            guard let self = self else { return }
+            let firstItemIndexPathInCollectionView = IndexPath(item: 0, section: 0)
+            if self.myColectionView.indexPathsForSelectedItems?.first == nil {
+                self.myColectionView.selectItem(at: firstItemIndexPathInCollectionView, animated: false, scrollPosition: .top)
+            }
+        }
+      
     }
     
     private func createDataSource() -> DataSource {
@@ -137,8 +145,8 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     
     private func workspaceSelectorCellRegistration() -> UICollectionView.CellRegistration<WorkspaceSelectorCell, WorkspaceSelectorCellModel> {
         return .init { [weak self] cell, indexPath, itemIdentifier in
-            let config = WorkspaceSelectorContentConfiguration(model: itemIdentifier, delegate: self)
-            cell.contentConfiguration = config
+            cell.model = itemIdentifier
+            cell.delegate = self
         }
     }
     
@@ -154,6 +162,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         guard let getSelectedItemIndex = myColectionView.indexPathsForSelectedItems?.first?.item else { return }
         let item = dataSource.snapshot().itemIdentifiers[getSelectedItemIndex]
         UserDefaults.selectedWorkspaceId = item.id
+        print("workspaceDidSwitched: \(item.id) | \(item.title)")
         parentCoordinator?.dismissWorspaceSelectorScreen()
         NotificationCenter.default.post(name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
     }

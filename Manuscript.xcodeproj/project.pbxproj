@@ -47,6 +47,10 @@
 		0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */; };
 		0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */; };
 		0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */; };
+		099A9096284FF63D00B0F4B7 /* IconCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9095284FF63D00B0F4B7 /* IconCellModel.swift */; };
+		099A9098284FF64D00B0F4B7 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9097284FF64D00B0F4B7 /* IconView.swift */; };
+		099A909A284FF66900B0F4B7 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconCell.swift */; };
+		099A909C284FF67800B0F4B7 /* IconContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconContentConfiguration.swift */; };
 		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
@@ -271,7 +275,6 @@
 		09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
 		09F088E8284A6E070012D83D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E7284A6E070012D83D /* Constants.swift */; };
 		09F088E9284A71010012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
-		09F088EC284A7F270012D83D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088EB284A7F270012D83D /* UIView+Extensions.swift */; };
 		09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088ED284A7F420012D83D /* UITextField+Extensions.swift */; };
 		09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088EF284A7F640012D83D /* UIFont+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -320,6 +323,10 @@
 		0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorView.swift; sourceTree = "<group>"; };
 		0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorCell.swift; sourceTree = "<group>"; };
 		0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorSectionType.swift; sourceTree = "<group>"; };
+		099A9095284FF63D00B0F4B7 /* IconCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCellModel.swift; sourceTree = "<group>"; };
+		099A9097284FF64D00B0F4B7 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		099A9099284FF66900B0F4B7 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
+		099A909B284FF67800B0F4B7 /* IconContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconContentConfiguration.swift; sourceTree = "<group>"; };
 		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -458,7 +465,6 @@
 		09F088E32849954B0012D83D /* 107115-id-authentication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107115-id-authentication.json"; sourceTree = "<group>"; };
 		09F088E5284A57580012D83D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		09F088E7284A6E070012D83D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		09F088EB284A7F270012D83D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		09F088ED284A7F420012D83D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		09F088EF284A7F640012D83D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -595,6 +601,26 @@
 			path = Workspace;
 			sourceTree = "<group>";
 		};
+		099A9093284FBCED00B0F4B7 /* CreateNewBoard */ = {
+			isa = PBXGroup;
+			children = (
+				0930A8F7284C09420049605B /* CreateNewBoardViewController.swift */,
+				099A9095284FF63D00B0F4B7 /* IconCellModel.swift */,
+				099A9097284FF64D00B0F4B7 /* IconView.swift */,
+				099A9099284FF66900B0F4B7 /* IconCell.swift */,
+				099A909B284FF67800B0F4B7 /* IconContentConfiguration.swift */,
+			);
+			path = CreateNewBoard;
+			sourceTree = "<group>";
+		};
+		099A9094284FBCF800B0F4B7 /* MainBoards */ = {
+			isa = PBXGroup;
+			children = (
+				09D275452825B62D00933F16 /* BoardsViewController.swift */,
+			);
+			path = MainBoards;
+			sourceTree = "<group>";
+		};
 		09CAAA082829D80200FE0214 /* Database-Sample */ = {
 			isa = PBXGroup;
 			children = (
@@ -700,8 +726,8 @@
 		09D275422825B61E00933F16 /* Boards */ = {
 			isa = PBXGroup;
 			children = (
-				0930A8F7284C09420049605B /* CreateNewBoardViewController.swift */,
-				09D275452825B62D00933F16 /* BoardsViewController.swift */,
+				099A9094284FBCF800B0F4B7 /* MainBoards */,
+				099A9093284FBCED00B0F4B7 /* CreateNewBoard */,
 				09D276432825DA5800933F16 /* BoardsViewModel.swift */,
 			);
 			path = Boards;
@@ -1038,7 +1064,6 @@
 		09F088EA284A7F040012D83D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				09F088EB284A7F270012D83D /* UIView+Extensions.swift */,
 				09F088ED284A7F420012D83D /* UITextField+Extensions.swift */,
 				09F088EF284A7F640012D83D /* UIFont+Extensions.swift */,
 			);
@@ -1335,7 +1360,9 @@
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
 				097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */,
 				0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */,
+				099A9096284FF63D00B0F4B7 /* IconCellModel.swift in Sources */,
 				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
+				099A909C284FF67800B0F4B7 /* IconContentConfiguration.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
 				09D2758B2825B83400933F16 /* ServiceConstants.swift in Sources */,
 				09D275BA2825C85600933F16 /* WorkspaceAPI.swift in Sources */,
@@ -1372,8 +1399,8 @@
 				09D275B02825B94300933F16 /* StartupUtils.swift in Sources */,
 				09D27656282605E900933F16 /* WorkspaceEntity+CoreDataProperties.swift in Sources */,
 				09D275692825B73400933F16 /* Flowable.swift in Sources */,
-				09F088EC284A7F270012D83D /* UIView+Extensions.swift in Sources */,
 				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
+				099A909A284FF66900B0F4B7 /* IconCell.swift in Sources */,
 				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
 				09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */,
 				096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */,
@@ -1388,6 +1415,7 @@
 				0989BABA284D30BB0032053C /* WorkspaceSelectorViewController.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
 				09D2757F2825B7D900933F16 /* AuthenticationError.swift in Sources */,
+				099A9098284FF64D00B0F4B7 /* IconView.swift in Sources */,
 				09D276382825CE6000933F16 /* ComparatorAction.swift in Sources */,
 				09D275DC2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift in Sources */,
 				09D275F32825CC8100933F16 /* TaskRequest.swift in Sources */,

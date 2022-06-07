@@ -137,10 +137,12 @@ class AuthenticationViewController: UIViewController {
     }()
     
     private let primaryButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = Palette.blue
-        button.layer.cornerRadius = 16
-        button.setTitle("Sign In", for: .normal)
+        let button = UIButton(type: .system)
+        button.configuration = .filled()
+        button.configuration?.title = "Sign In"
+        button.contentHorizontalAlignment = .center
+        button.configuration?.baseBackgroundColor = Palette.blue
+        button.setTitleColor(Palette.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -259,30 +261,25 @@ class AuthenticationViewController: UIViewController {
     }
     
     @objc private func forgetPasswordButtonDidTap(_ sender: UIButton) {
-        sender.showAnimation { [weak self] in
-            guard let self = self else { return }
-            self.coordinator?.navigateToForgotPasswordScreen()
-        }
+        self.coordinator?.navigateToForgotPasswordScreen()
+
     }
     
     @objc private func primaryButtonDidTap(_ sender: UIButton) {
         
-        sender.showAnimation { [weak self] in
-            guard let self = self,
-                  let name = self.enterNameTextField.text,
-                  let email = self.enterEmailTextField.text,
-                  let password = self.enterPasswordTextField.text
-            else { return }
-            
-            self.activityIndicator.startAnimating()
-            
-            if self.stateSegmentedControl.selectedSegmentIndex == 0 {
-                self.authenticationViewModel.signIn(email: email, password: password)
-            }
-            
-            if self.stateSegmentedControl.selectedSegmentIndex == 1 {
-                self.authenticationViewModel.createNewUser(name: name, email: email, password: password)
-            }
+        guard let name = self.enterNameTextField.text,
+              let email = self.enterEmailTextField.text,
+              let password = self.enterPasswordTextField.text
+        else { return }
+        
+        self.activityIndicator.startAnimating()
+        
+        if self.stateSegmentedControl.selectedSegmentIndex == 0 {
+            self.authenticationViewModel.signIn(email: email, password: password)
+        }
+        
+        if self.stateSegmentedControl.selectedSegmentIndex == 1 {
+            self.authenticationViewModel.createNewUser(name: name, email: email, password: password)
         }
     }
 

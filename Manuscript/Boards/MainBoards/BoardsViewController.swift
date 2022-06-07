@@ -64,10 +64,12 @@ class BoardsViewController: UIViewController {
     }()
     
     private let createBoardButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = Palette.blue
-        button.layer.cornerRadius = 16
-        button.setTitle("Create Board", for: .normal)
+        let button = UIButton(type: .system)
+        button.configuration = .filled()
+        button.configuration?.title = "Create New Board"
+        button.contentHorizontalAlignment = .center
+        button.configuration?.baseBackgroundColor = Palette.blue
+        button.setTitleColor(Palette.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -122,11 +124,10 @@ class BoardsViewController: UIViewController {
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
 
-        let layout = UICollectionViewCompositionalLayout{ sectionIndex, layoutEnvironment in
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+            
             return self.createBoardsSection()
         }
-        
-        layout.configuration = UICollectionViewCompositionalLayoutConfiguration()
         return layout
     }
     
@@ -219,12 +220,11 @@ class BoardsViewController: UIViewController {
     }
     
     @objc private func createBoardButtonDidTap(_ sender: UIButton) {
-        sender.showAnimation { [weak self] in
-
-        }
+        coordinator?.presentCreateBoardScreen()
     }
     
     @objc private func signOut(_ sender: UIBarButtonItem) {
+        UserDefaults.selectedWorkspaceId = ""
         startUpUtils.deleteAcessToken()
         databaseManager.clearDatabase()
         coordinator?.signeOut()
@@ -235,7 +235,6 @@ class BoardsViewController: UIViewController {
         self.boardsViewModel = boardsViewModel
         self.startUpUtils = startUpUtils
         self.databaseManager = databaseManager
-        UserDefaults.selectedWorkspaceId = ""
         print("AVERAKEDABRA: ALLOC -> BoardsViewController")
         super.init(nibName: nil, bundle: nil)
     }

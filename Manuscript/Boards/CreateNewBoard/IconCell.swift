@@ -1,30 +1,29 @@
 //
-//  WorkspaceSelectorCell.swift
+//  IconCell.swift
 //  Manuscript
 //
-//  Created by Tigran Ghazinyan on 6/5/22.
+//  Created by Tigran Ghazinyan on 6/7/22.
 //
 
 import UIKit
 
-class WorkspaceSelectorCell: UICollectionViewListCell {
+class IconCell: UICollectionViewCell {
     
-    var model: WorkspaceSelectorCellModel?
-    weak var delegate: WorkspaceSelectorProtocol?
+    var model: IconCellModel?
 
     override func updateConfiguration(using state: UICellConfigurationState) {
         
-        let config = WorkspaceSelectorContentConfiguration(model: model, delegate: delegate)
+        let config = IconContentConfiguration(model: model)
         contentConfiguration = config
         
         if state.isSelected {
             var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
-            newBgConfiguration.backgroundColor = Palette.gray
+            newBgConfiguration.backgroundColor = Palette.lightBlack
             newBgConfiguration.cornerRadius = 13
             backgroundConfiguration = newBgConfiguration
         } else {
             var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
-            newBgConfiguration.backgroundColor = Palette.lightBlack
+            newBgConfiguration.backgroundColor = Palette.gray
             backgroundConfiguration = newBgConfiguration
         }
     }

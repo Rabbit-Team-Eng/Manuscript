@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WorkspaceTransformer {
+struct WorkspaceTransformer {
     
     static func transformWorkspacesToSelectorCellModel(workspaces: [WorkspaceBusinessModel]) -> [WorkspaceSelectorCellModel] {
         let firstSelectedWorkspace = workspaces.filter { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }
