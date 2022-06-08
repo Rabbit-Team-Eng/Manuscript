@@ -15,6 +15,7 @@ class CreateNewBoardViewController: UIViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, IconSelectorCellModel>
 
     private lazy var dataSource = createDataSource()
+    private let boardsViewModel: BoardsViewModel
     
     private let titleTexLabel: UILabel = {
         let label = UILabel()
@@ -96,6 +97,8 @@ class CreateNewBoardViewController: UIViewController {
 
         view.backgroundColor = Palette.mediumDarkGray
         
+        createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
+        
         applySnapshot(items: [
         
             IconSelectorCellModel(id: "square.and.arrow.up.on.square", iconResource: "square.and.arrow.up.on.square"),
@@ -146,8 +149,9 @@ class CreateNewBoardViewController: UIViewController {
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
 
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            // TODO: This frikcin thing was causing a memory leak and controller was staying in memory. For now just fatalError will be thrown.
+            guard let self = self else { fatalError() }
             return self.createIconsSection()
         }
         return layout
@@ -190,6 +194,14 @@ class CreateNewBoardViewController: UIViewController {
             cell.model = itemIdentifier
         }
     }
+    
+    @objc private func createNewBoardButtonDidTap(_ sender: UIButton) {
+        guard let title = enterNameTextField.text,
+        let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
+        let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
+        
+        boardsViewModel.createNewBoard(title: title, icon: icon, ownerWorkspaceId: Int32(UserDefaults.selectedWorkspaceId)!)
+    }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -226,6 +238,20 @@ class CreateNewBoardViewController: UIViewController {
             createNewBoardeButton.heightAnchor.constraint(equalToConstant: 50),
 
         ])
+    }
+    
+    init(boardsViewModel: BoardsViewModel) {
+        self.boardsViewModel = boardsViewModel
+        print("AVERAKEDABRA: ALLOC -> CreateNewBoardViewController")
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    deinit {
+        print("AVERAKEDABRA: RELEASE -> CreateNewBoardViewController")
     }
 
 }

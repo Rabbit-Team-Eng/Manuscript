@@ -68,7 +68,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func presentCreateBoardScreen() {
-        let vc = CreateNewBoardViewController()
+        let vc = CreateNewBoardViewController(boardsViewModel: mainInjector.provideBoardsViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -93,6 +93,10 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func dismissWorspaceSelectorScreen() {
+        mainTabBarController.dismiss(animated: true)
+    }
+    
+    func dismissBoardCreationScreen() {
         mainTabBarController.dismiss(animated: true)
     }
     

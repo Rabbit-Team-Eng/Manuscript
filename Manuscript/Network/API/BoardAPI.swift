@@ -10,7 +10,7 @@ import Combine
 
 public protocol BoardAPI {
     
-    func createNewBoard(accessToken: String, requestBody: BoardRequest) -> AnyPublisher<BoardResponse, Error>
+    func createNewBoard(requestBody: BoardRequest) -> AnyPublisher<BoardResponse, Error>
     
     func getAllBoards() -> AnyPublisher<AllBoardsResponse, Error>
     

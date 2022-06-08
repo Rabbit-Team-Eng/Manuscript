@@ -51,6 +51,7 @@
 		099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */; };
 		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
 		099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */; };
+		099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909E28500F0800B0F4B7 /* BoardCreator.swift */; };
 		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
@@ -327,6 +328,7 @@
 		099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorView.swift; sourceTree = "<group>"; };
 		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
 		099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorContentConfiguration.swift; sourceTree = "<group>"; };
+		099A909E28500F0800B0F4B7 /* BoardCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreator.swift; sourceTree = "<group>"; };
 		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -619,6 +621,14 @@
 				09D275452825B62D00933F16 /* BoardsViewController.swift */,
 			);
 			path = MainBoards;
+			sourceTree = "<group>";
+		};
+		099A909D28500EF500B0F4B7 /* Creators */ = {
+			isa = PBXGroup;
+			children = (
+				099A909E28500F0800B0F4B7 /* BoardCreator.swift */,
+			);
+			path = Creators;
 			sourceTree = "<group>";
 		};
 		09CAAA082829D80200FE0214 /* Database-Sample */ = {
@@ -1003,6 +1013,7 @@
 		09D276202825CE6000933F16 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				099A909D28500EF500B0F4B7 /* Creators */,
 				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
 				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,
 				097EDF31282B63530060C8FD /* Manager */,
@@ -1432,6 +1443,7 @@
 				09D275592825B6CE00933F16 /* TabBarCoordinator.swift in Sources */,
 				09D2764F282605E900933F16 /* TaskEntity+CoreDataClass.swift in Sources */,
 				09D275C42825C95900933F16 /* GetAllTaskRequest.swift in Sources */,
+				099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */,
 				09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */,
 				09DCED0E282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */,
 				09D275AE2825B93400933F16 /* Palette.swift in Sources */,

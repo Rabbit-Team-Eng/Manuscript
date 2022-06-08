@@ -22,7 +22,7 @@ public class BoardService: BoardAPI {
         self.jsonDecoder = jsonDecoder
     }
     
-    public func createNewBoard(accessToken: String, requestBody: BoardRequest) -> AnyPublisher<BoardResponse, Error> {
+    public func createNewBoard(requestBody: BoardRequest) -> AnyPublisher<BoardResponse, Error> {
 
         let request = CreateNewBoardRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         

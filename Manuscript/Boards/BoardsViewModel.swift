@@ -12,19 +12,28 @@ enum BoardsViewControllerEvent {
     case titleDidFetch(title: String)
     case boardsDidFetch(boards: [BoardBusinessModel])
     case noBoardIsCreated
+    case newBoardDidCreated
 }
 
 class BoardsViewModel {
     
     private let dataProvider: DataProvider
+    private let boardCreator: BoardCreator
+    private let cloudSync: CloudSync
     let events: PassthroughSubject<BoardsViewControllerEvent, Never> = PassthroughSubject()
 
-    init(dataProvider: DataProvider) {
+    init(dataProvider: DataProvider, boardCreator: BoardCreator, cloudSync: CloudSync) {
         self.dataProvider = dataProvider
+        self.boardCreator = boardCreator
+        self.cloudSync = cloudSync
 
         NotificationCenter.default.addObserver(self, selector: #selector(cloudSyncDidFinish), name: Notification.Name("CloudSyncDidFinish"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newWorkspaceDidSwitched), name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
 
+    }
+    
+    func syncTheCloud() {
+        cloudSync.syncronize()
     }
     
     func fetchCurrentWorkspace() {
@@ -63,11 +72,27 @@ class BoardsViewModel {
         }
     }
     
+    func createNewBoard(title: String, icon: String, ownerWorkspaceId: Int32) {
+        let newBoard = BoardBusinessModel(remoteId: -990,
+                                          title: title,
+                                          assetUrl: icon,
+                                          ownerWorkspaceId: ownerWorkspaceId,
+                                          lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                          isInitiallySynced: false,
+                                          isPendingDeletionOnTheServer: false)
+        
+        boardCreator.createNewBoard(board: newBoard) { [weak self] in guard let self = self else { return }
+            self.events.send(.newBoardDidCreated)
+            self.fetchCurrentWorkspace()
+        }
+    }
+    
     @objc func newWorkspaceDidSwitched() {
         fetchCurrentWorkspace()
     }
     
-    @objc func cloudSyncDidFinish() {
+    @objc private func cloudSyncDidFinish() {
+        print("============================The Local Database Did Sync with the Cloud============================")
         fetchCurrentWorkspace()
     }
     

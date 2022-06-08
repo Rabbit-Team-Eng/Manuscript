@@ -91,7 +91,8 @@ class BoardsViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(signOut(_:)))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
-            UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:)))
+            UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),
+            UIBarButtonItem(image: UIImage(systemName: "cloud"), style: .plain, target: self, action: #selector(cloudSyncButtonDidTap(_:)))
         ]
         createBoardButton.addTarget(self, action: #selector(createBoardButtonDidTap(_:)), for: .touchUpInside)
 
@@ -107,11 +108,17 @@ class BoardsViewController: UIViewController {
                 self.determineBoardPlaceholder(hasBoards: false)
             case .boardsDidFetch(let boards):
                 self.determineBoardPlaceholder(hasBoards: true, boards: boards)
-                print(boards)
+            case .newBoardDidCreated:
+                self.coordinator?.dismissBoardCreationScreen()
             }
         }
         .store(in: &tokens)
 
+    }
+    
+    @objc private func cloudSyncButtonDidTap(_ sender: UIBarButtonItem) {
+        print("---------------Clicked---------------")
+        boardsViewModel.syncTheCloud()
     }
     
     @objc private func openWorkspaceSelector(_ sender: UIBarButtonItem) {

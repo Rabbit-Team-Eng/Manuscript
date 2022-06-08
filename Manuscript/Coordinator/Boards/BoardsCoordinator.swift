@@ -59,6 +59,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
 
     }
     
+    func dismissBoardCreationScreen() {
+        parentCoordinator?.dismissBoardCreationScreen()
+    }
+    
     deinit {
         print("AVERAKEDABRA: RELEASE -> BoardsCoordinator")
     }

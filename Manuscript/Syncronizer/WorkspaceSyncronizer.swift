@@ -49,6 +49,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
                 completion()
             }
         }
+        
         .store(in: &tokens)
         
         items.filter { $0.target == .local && $0.operation == .insertion }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeInserted in
@@ -113,8 +114,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
                         fatalError()
                     }
                 }
-            }
-            
+            }  
         }
         .store(in: &tokens)
     }

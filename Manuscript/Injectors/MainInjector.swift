@@ -22,8 +22,7 @@ class MainInjector {
     private var boardSyncronizer: BoardSyncronizer? = nil
     private var boardCoreDataManager: BoardCoreDataManager? = nil
     private var databaseManager: DatabaseManager? = nil
-
-    
+    private var boardCreator: BoardCreator? = nil
 
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -35,6 +34,15 @@ class MainInjector {
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
         print("AVERAKEDABRA: ALLOC -> MainInjector")
+    }
+    
+    func provideBoardCreator() -> BoardCreator {
+        if boardCreator != nil {
+            return boardCreator!
+        } else {
+            boardCreator = BoardCreator(boardService: provideBoardService(), database: provideCoreDataStack())
+            return boardCreator!
+        }
     }
     
     func provideDatabaseManager() -> DatabaseManager {
@@ -61,7 +69,8 @@ class MainInjector {
         } else {
             boardSyncronizer = BoardSyncronizer(coreDataStack: provideCoreDataStack(),
                                                 startupUtils: provideStartUpUtils(),
-                                                boardCoreDataManager: provideBoardCoreDataManager())
+                                                boardCoreDataManager: provideBoardCoreDataManager(),
+                                                boardService: provideBoardService())
             return boardSyncronizer!
         }
     }
@@ -100,7 +109,7 @@ class MainInjector {
         if boardsViewModel != nil {
             return boardsViewModel!
         } else {
-            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager())
+            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager(), boardCreator: provideBoardCreator(), cloudSync: provideCloudSync())
             return boardsViewModel!
         }
     }
@@ -151,7 +160,7 @@ class MainInjector {
             cloudSync = CloudSync(workspaceService: provideWorkspaceService(),
                                   boardsService: provideBoardService(),
                                   workspaceSyncronizer: provideWorkspaceSyncronizer(),
-                                  dataProvider: provideDataManager(), 
+                                  dataProvider: provideDataManager(),
                                   boardSyncronizer: provideBoardSyncronizer())
             return cloudSync!
         }
