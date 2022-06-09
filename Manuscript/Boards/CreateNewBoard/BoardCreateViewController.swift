@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateNewBoardViewController: UIViewController {
+class BoardCreateViewController: UIViewController {
     
     weak var parentCoordinator: TabBarCoordinator? = nil
     
@@ -16,6 +16,17 @@ class CreateNewBoardViewController: UIViewController {
 
     private lazy var dataSource = createDataSource()
     private let boardsViewModel: BoardsViewModel
+    
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.configuration = .plain()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.configuration?.baseBackgroundColor = Palette.blue
+        button.setTitleColor(Palette.white, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     private let titleTexLabel: UILabel = {
         let label = UILabel()
@@ -86,8 +97,8 @@ class CreateNewBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        view.addSubview(closeButton)
         view.addSubview(titleTexLabel)
         view.addSubview(nameTextLabel)
         view.addSubview(enterNameTextField)
@@ -98,6 +109,7 @@ class CreateNewBoardViewController: UIViewController {
         view.backgroundColor = Palette.mediumDarkGray
         
         createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
         applySnapshot(items: [
         
@@ -195,6 +207,10 @@ class CreateNewBoardViewController: UIViewController {
         }
     }
     
+    @objc private func dismissScreen(_ sender: UIButton) {
+        parentCoordinator?.dismissBoardCreationScreen()
+    }
+    
     @objc private func createNewBoardButtonDidTap(_ sender: UIButton) {
         guard let title = enterNameTextField.text,
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
@@ -209,9 +225,14 @@ class CreateNewBoardViewController: UIViewController {
         NSLayoutConstraint.activate([
             titleTexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
             titleTexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
-            titleTexLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            titleTexLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -32),
             titleTexLabel.heightAnchor.constraint(equalToConstant: 24),
             
+            closeButton.centerYAnchor.constraint(equalTo: titleTexLabel.centerYAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            closeButton.heightAnchor.constraint(equalToConstant: 24),
+            closeButton.widthAnchor.constraint(equalToConstant: 24),
+
             nameTextLabel.topAnchor.constraint(equalTo: titleTexLabel.bottomAnchor, constant: 24),
             nameTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
             nameTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),

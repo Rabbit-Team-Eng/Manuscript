@@ -24,7 +24,7 @@ struct BoardCellModel: Hashable {
 }
 
 
-class BoardsViewController: UIViewController {
+class BoardsViewController: UIViewController, UICollectionViewDelegate {
 
     weak var coordinator: BoardsCoordinator? = nil
     
@@ -88,14 +88,14 @@ class BoardsViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = Palette.lightBlack
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(signOut(_:)))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(signOut(_:)))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
             UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),
             UIBarButtonItem(image: UIImage(systemName: "cloud"), style: .plain, target: self, action: #selector(cloudSyncButtonDidTap(_:)))
         ]
         createBoardButton.addTarget(self, action: #selector(createBoardButtonDidTap(_:)), for: .touchUpInside)
-
+        myColectionView.delegate = self
         boardsViewModel.events
             .receive(on: RunLoop.main)
             .sink { completion in } receiveValue: { [weak self] event in
@@ -237,6 +237,10 @@ class BoardsViewController: UIViewController {
         coordinator?.signeOut()
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.remoteId else { return }
+        coordinator?.navigateToBoardDetail(withId: selectedBoardId)
+    }
 
     init(boardsViewModel: BoardsViewModel, startUpUtils: StartupUtils, databaseManager: DatabaseManager) {
         self.boardsViewModel = boardsViewModel

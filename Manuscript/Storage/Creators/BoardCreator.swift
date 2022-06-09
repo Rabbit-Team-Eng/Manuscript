@@ -6,11 +6,15 @@
 //
 
 import CoreData
+import Combine
 
-struct BoardCreator {
+
+class BoardCreator {
     
     private let boardService: BoardService
     private let database: CoreDataStack
+    
+    private var tokens: Set<AnyCancellable> = []
     
     init(boardService: BoardService, database: CoreDataStack) {
         self.boardService = boardService
@@ -40,10 +44,37 @@ struct BoardCreator {
                 let worskpaceEntity = workspace.first!
                 worskpaceEntity.addToBoards(boardEntity)
                 try context.save()
+                self.insertIntoServer(item: board, coreDataId: boardEntity.objectID)
                 completion()
             } catch {
                 fatalError()
             }
         }
+    }
+    
+    private func insertIntoServer(item: BoardBusinessModel, coreDataId: NSManagedObjectID?) {
+        
+        boardService.createNewBoard(requestBody: BoardRequest(workspaceId: Int(item.ownerWorkspaceId), assetUrl: item.assetUrl, title: item.title))
+            .sink { completion in } receiveValue: { [weak self] boardResponse in
+                
+                guard let self = self, let coreDataId = coreDataId else { return }
+                let context = self.database.databaseContainer.newBackgroundContext()
+                context.automaticallyMergesChangesFromParent = true
+                
+                context.performAndWait {
+                    if let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                        boardToBeUpdated.remoteId = Int32(boardResponse.id)
+                        boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
+                        boardToBeUpdated.isInitiallySynced = true
+                        do {
+                            try context.save()
+                        } catch {
+                            fatalError()
+                        }
+                    }
+                }
+            }
+            .store(in: &self.tokens)
+
     }
 }

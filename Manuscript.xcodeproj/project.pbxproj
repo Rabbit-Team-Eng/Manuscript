@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0930A8F8284C09420049605B /* CreateNewBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0930A8F7284C09420049605B /* CreateNewBoardViewController.swift */; };
+		0930A8F8284C09420049605B /* BoardCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0930A8F7284C09420049605B /* BoardCreateViewController.swift */; };
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
 		096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
 		096BEDA2284ABC38001C7136 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E7284A6E070012D83D /* Constants.swift */; };
@@ -52,6 +52,8 @@
 		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
 		099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */; };
 		099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909E28500F0800B0F4B7 /* BoardCreator.swift */; };
+		099A90A82851658300B0F4B7 /* WorksapceCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A90A72851658300B0F4B7 /* WorksapceCreateViewController.swift */; };
+		099A90AA2851929100B0F4B7 /* TaskCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */; };
 		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
@@ -266,6 +268,7 @@
 		09DCED0C282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */; };
 		09DCED0E282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */; };
 		09DCED0F282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */; };
+		09DD9D1F2851A54400CA6774 /* BoardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD9D1E2851A54400CA6774 /* BoardDetailViewController.swift */; };
 		09EDE715284701CC009B23A9 /* DatabaseEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF23282B1EFB0060C8FD /* DatabaseEventProtocol.swift */; };
 		09EDE716284701D8009B23A9 /* DatabaseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF2B282B1F200060C8FD /* DatabaseItem.swift */; };
 		09EDE717284701E1009B23A9 /* DatabaseSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF25282B1F0E0060C8FD /* DatabaseSectionType.swift */; };
@@ -291,7 +294,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0930A8F7284C09420049605B /* CreateNewBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewBoardViewController.swift; sourceTree = "<group>"; };
+		0930A8F7284C09420049605B /* BoardCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreateViewController.swift; sourceTree = "<group>"; };
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
 		096BEDA0284ABBDC001C7136 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
 		096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCoreDataManager.swift; sourceTree = "<group>"; };
@@ -329,6 +332,8 @@
 		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
 		099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorContentConfiguration.swift; sourceTree = "<group>"; };
 		099A909E28500F0800B0F4B7 /* BoardCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreator.swift; sourceTree = "<group>"; };
+		099A90A72851658300B0F4B7 /* WorksapceCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceCreateViewController.swift; sourceTree = "<group>"; };
+		099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateViewController.swift; sourceTree = "<group>"; };
 		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -464,6 +469,7 @@
 		09DCED07282C242900A2884B /* SingleInputFieldContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldContentView.swift; sourceTree = "<group>"; };
 		09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldCellConfiguration.swift; sourceTree = "<group>"; };
 		09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldButtonCell.swift; sourceTree = "<group>"; };
+		09DD9D1E2851A54400CA6774 /* BoardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDetailViewController.swift; sourceTree = "<group>"; };
 		09F088E32849954B0012D83D /* 107115-id-authentication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107115-id-authentication.json"; sourceTree = "<group>"; };
 		09F088E5284A57580012D83D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		09F088E7284A6E070012D83D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -592,6 +598,7 @@
 		0989BAB8284D2F970032053C /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
+				099A90A62851657400B0F4B7 /* WorkspaceCreate */,
 				0989BAB9284D30BB0032053C /* WorkspaceSelectorViewController.swift */,
 				0989BABB284D3CA00032053C /* WorkspaceSelectorCellModel.swift */,
 				0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */,
@@ -606,7 +613,7 @@
 		099A9093284FBCED00B0F4B7 /* CreateNewBoard */ = {
 			isa = PBXGroup;
 			children = (
-				0930A8F7284C09420049605B /* CreateNewBoardViewController.swift */,
+				0930A8F7284C09420049605B /* BoardCreateViewController.swift */,
 				099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */,
 				099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */,
 				099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */,
@@ -629,6 +636,14 @@
 				099A909E28500F0800B0F4B7 /* BoardCreator.swift */,
 			);
 			path = Creators;
+			sourceTree = "<group>";
+		};
+		099A90A62851657400B0F4B7 /* WorkspaceCreate */ = {
+			isa = PBXGroup;
+			children = (
+				099A90A72851658300B0F4B7 /* WorksapceCreateViewController.swift */,
+			);
+			path = WorkspaceCreate;
 			sourceTree = "<group>";
 		};
 		09CAAA082829D80200FE0214 /* Database-Sample */ = {
@@ -736,6 +751,7 @@
 		09D275422825B61E00933F16 /* Boards */ = {
 			isa = PBXGroup;
 			children = (
+				09DD9D1D2851A53500CA6774 /* BoardDetail */,
 				099A9094284FBCF800B0F4B7 /* MainBoards */,
 				099A9093284FBCED00B0F4B7 /* CreateNewBoard */,
 				09D276432825DA5800933F16 /* BoardsViewModel.swift */,
@@ -947,6 +963,7 @@
 			isa = PBXGroup;
 			children = (
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
+				099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1061,6 +1078,14 @@
 				09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */,
 			);
 			path = SingleInputField;
+			sourceTree = "<group>";
+		};
+		09DD9D1D2851A53500CA6774 /* BoardDetail */ = {
+			isa = PBXGroup;
+			children = (
+				09DD9D1E2851A54400CA6774 /* BoardDetailViewController.swift */,
+			);
+			path = BoardDetail;
 			sourceTree = "<group>";
 		};
 		09EDE71D2848896B009B23A9 /* Lotties */ = {
@@ -1380,6 +1405,7 @@
 				09D275C82825C98000933F16 /* GetTaskByIdRequest.swift in Sources */,
 				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
 				09D276332825CE6000933F16 /* DataProvider.swift in Sources */,
+				099A90A82851658300B0F4B7 /* WorksapceCreateViewController.swift in Sources */,
 				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */,
 				09DCED08282C242900A2884B /* SingleInputFieldContentView.swift in Sources */,
@@ -1434,8 +1460,9 @@
 				096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */,
 				09D275B42825C82000933F16 /* BoardService.swift in Sources */,
 				09D2763A2825CE6000933F16 /* BoardComparator.swift in Sources */,
+				099A90AA2851929100B0F4B7 /* TaskCreateViewController.swift in Sources */,
 				09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */,
-				0930A8F8284C09420049605B /* CreateNewBoardViewController.swift in Sources */,
+				0930A8F8284C09420049605B /* BoardCreateViewController.swift in Sources */,
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
 				09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */,
 				09EDE715284701CC009B23A9 /* DatabaseEventProtocol.swift in Sources */,
@@ -1486,6 +1513,7 @@
 				09D2763C2825CE6000933F16 /* DateTimeUtils.swift in Sources */,
 				09D276412825CE6000933F16 /* WorkspaceBusinessModel.swift in Sources */,
 				09D275872825B80700933F16 /* UserRequest.swift in Sources */,
+				09DD9D1F2851A54400CA6774 /* BoardDetailViewController.swift in Sources */,
 				09D2755B2825B6DA00933F16 /* TabBarFlow.swift in Sources */,
 				09D276362825CE6000933F16 /* TaskComparator.swift in Sources */,
 				09D276112825CE2300933F16 /* CoreDataStack.swift in Sources */,

@@ -16,6 +16,10 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     // Local Scope
     private let mainInjector: MainInjector
     private var tokens: Set<AnyCancellable> = []
+    
+    // children
+    var boardsCoordinator: BoardsCoordinator!
+    var tasksCoordinator: TasksCoordinator!
 
     private let mainTabBarController: UITabBarController = UITabBarController()
 
@@ -48,8 +52,8 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
 
     private func addAllTabBarControllers() {
-        let boardsCoordinator = BoardsCoordinator(mainComponent: mainInjector)
-        let tasksCoordinator = TasksCoordinator(mainComponent: mainInjector)
+        boardsCoordinator = BoardsCoordinator(mainComponent: mainInjector)
+        tasksCoordinator = TasksCoordinator(mainComponent: mainInjector)
 
         boardsCoordinator.parentCoordinator = self
         tasksCoordinator.parentCoordinator = self
@@ -68,7 +72,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func presentCreateBoardScreen() {
-        let vc = CreateNewBoardViewController(boardsViewModel: mainInjector.provideBoardsViewModel())
+        let vc = BoardCreateViewController(boardsViewModel: mainInjector.provideBoardsViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -76,6 +80,16 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
          }
         mainTabBarController.present(vc, animated: true, completion: nil)
 
+    }
+    
+    func presentCreateTaskScreen(withSelectedBoardId: String? = nil) {
+        let vc = TaskCreateViewController()
+        vc.modalPresentationStyle = .pageSheet
+        vc.coordinator = self
+        if let sheet = vc.sheetPresentationController {
+             sheet.detents = [.medium(), .large()]
+         }
+        mainTabBarController.present(vc, animated: true, completion: nil)
     }
     
     func presentWorspaceSelectorScreen() {
@@ -92,12 +106,22 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
 
     }
     
+    func dismissTaskCreationSheet() {
+        mainTabBarController.dismiss(animated: true)
+    }
+    
     func dismissWorspaceSelectorScreen() {
         mainTabBarController.dismiss(animated: true)
     }
     
     func dismissBoardCreationScreen() {
         mainTabBarController.dismiss(animated: true)
+    }
+    
+    func navigateToWorkspaceCreateViewConntroller() {
+        mainTabBarController.dismiss(animated: true) {
+            self.boardsCoordinator.pushCreateWorksapceViewController()
+        }
     }
     
     deinit {

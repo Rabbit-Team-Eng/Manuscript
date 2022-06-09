@@ -30,6 +30,10 @@ class TasksCoordinator: Coordinator, RootProvider, FlowStarter {
     func provideRootViewController() -> UIViewController {
         return navigationController
     }
+    
+    func presentTaskCreationSheet() {
+        parentCoordinator?.presentCreateTaskScreen()
+    }
 
     func startNewFlow(flow: Flowable) {
 

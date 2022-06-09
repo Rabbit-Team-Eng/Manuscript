@@ -155,7 +155,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     }
     
     @objc private func createNewWorkspaceButtonDidTap(_ sender: UIButton) {
-        print("New Workspace creation Flow entered")
+        parentCoordinator?.navigateToWorkspaceCreateViewConntroller()
     }
     
     @objc private func workspaceDidSwitched(_ sender: UIButton) {

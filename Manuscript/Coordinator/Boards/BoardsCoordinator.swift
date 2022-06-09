@@ -63,6 +63,22 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         parentCoordinator?.dismissBoardCreationScreen()
     }
     
+    func pushCreateWorksapceViewController() {
+        let vc = WorksapceCreateViewController(workspacesViewModel: mainComponent.provideWorkspacesViewModel())
+        vc.hidesBottomBarWhenPushed = true
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func navigateToBoardDetail(withId: String) {
+        let vc = BoardDetailViewController(boardId: withId)
+        vc.coordinator = self
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func presentCreateTaskSheet(boardId: String) {
+        parentCoordinator?.presentCreateTaskScreen()
+    }
+    
     deinit {
         print("AVERAKEDABRA: RELEASE -> BoardsCoordinator")
     }
