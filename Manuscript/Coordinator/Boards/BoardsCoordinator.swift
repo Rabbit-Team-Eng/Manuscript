@@ -70,7 +70,7 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
     
     func navigateToBoardDetail(withId: String) {
-        let vc = BoardDetailViewController(boardId: withId)
+        let vc = BoardDetailViewController(boardId: withId, boardViewModel: mainComponent.provideBoardsViewModel())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

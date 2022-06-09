@@ -68,6 +68,7 @@ class BoardCreator {
                         boardToBeUpdated.isInitiallySynced = true
                         do {
                             try context.save()
+                            self.notify()
                         } catch {
                             fatalError()
                         }
@@ -76,5 +77,11 @@ class BoardCreator {
             }
             .store(in: &self.tokens)
 
+    }
+    
+    private func notify() {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
+        }
     }
 }

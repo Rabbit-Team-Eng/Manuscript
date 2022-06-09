@@ -29,6 +29,33 @@ class DataProvider: Datasource {
         self.coreDataStack = coreDataStack
     }
     
+    func fetchCurrentBoardWithRemoteId(id: String) -> BoardBusinessModel {
+
+        let context = coreDataStack.databaseContainer.viewContext
+        var returningBoard: BoardBusinessModel? = nil
+        context.automaticallyMergesChangesFromParent = true
+
+        context.performAndWait {
+            let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
+            boardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
+            do {
+                let boardEntity: BoardEntity = try context.fetch(boardFetchRequest).first!
+                let boardModel = BoardBusinessModel(remoteId: boardEntity.remoteId,
+                                                     coreDataId: boardEntity.objectID,
+                                                     title: boardEntity.title,
+                                                     assetUrl: boardEntity.assetUrl,
+                                                     ownerWorkspaceId: boardEntity.ownerWorkspaceId,
+                                                     lastModifiedDate: boardEntity.lastModifiedDate,
+                                                     isInitiallySynced: boardEntity.isInitiallySynced,
+                                                     isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
+                returningBoard = boardModel
+            } catch {
+                
+            }
+        }
+        return returningBoard!
+    }
+    
     func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel? {
         var searchingWorkspace: WorkspaceBusinessModel? = nil
         
@@ -105,9 +132,6 @@ class DataProvider: Datasource {
 
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
-            let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-            boardFetchRequest.sortDescriptors = [sortDescriptor]
-            
             do {
                 let allBoards: [BoardEntity] = try context.fetch(boardFetchRequest)
                 allBoards.forEach { boardEntity in

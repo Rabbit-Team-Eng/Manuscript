@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Combine
 
 class BoardDetailViewController: UIViewController {
     
     weak var coordinator: BoardsCoordinator? = nil
 
     private let boardId: String
+    private let boardViewModel: BoardsViewModel
+    private var tokens: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,23 @@ class BoardDetailViewController: UIViewController {
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewTaskButtonDidTap(_:))),
             UIBarButtonItem(image: UIImage(systemName: "slider.vertical.3"), style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
         ]
+        
+        boardViewModel.events
+            .receive(on: RunLoop.main)
+            .sink { [weak self] event in guard let self = self else { return }
+            
+            if case .boardDetailDidFetch(let board) = event {
+                self.navigationItem.title = board.title
+            }
+
+        }
+        .store(in: &tokens)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        boardViewModel.fetchCurrentBoard(id: boardId)
     }
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
@@ -31,8 +51,9 @@ class BoardDetailViewController: UIViewController {
         
     }
     
-    init(boardId: String) {
+    init(boardId: String, boardViewModel: BoardsViewModel) {
         self.boardId = boardId
+        self.boardViewModel = boardViewModel
         super.init(nibName: nil, bundle: nil)
     }
 

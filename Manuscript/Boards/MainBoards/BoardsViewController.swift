@@ -14,12 +14,14 @@ struct BoardCellModel: Hashable {
     let boardTitle: String
     let numberOfTasks: Int
     let imageIcon: String
+    let isSynced: Bool
     
-    init(remoteId: String, boardTitle: String, numberOfTasks: Int, imageIcon: String) {
+    init(remoteId: String, boardTitle: String, numberOfTasks: Int, imageIcon: String, isSynced: Bool) {
         self.remoteId = remoteId
         self.boardTitle = boardTitle
         self.numberOfTasks = numberOfTasks
         self.imageIcon = imageIcon
+        self.isSynced = isSynced
     }
 }
 
@@ -96,21 +98,26 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         ]
         createBoardButton.addTarget(self, action: #selector(createBoardButtonDidTap(_:)), for: .touchUpInside)
         myColectionView.delegate = self
+        
         boardsViewModel.events
             .receive(on: RunLoop.main)
-            .sink { completion in } receiveValue: { [weak self] event in
-            guard let self = self else { return }
-            
-            switch event {
-            case .titleDidFetch(let title):
-                self.navigationController?.navigationBar.topItem?.title = title
-            case .noBoardIsCreated:
-                self.determineBoardPlaceholder(hasBoards: false)
-            case .boardsDidFetch(let boards):
-                self.determineBoardPlaceholder(hasBoards: true, boards: boards)
-            case .newBoardDidCreated:
-                self.coordinator?.dismissBoardCreationScreen()
-            }
+            .sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
+                
+                if case .titleDidFetch(let title) = event {
+                    self.navigationItem.title = title
+                }
+                
+                if case .noBoardIsCreated = event {
+                    self.determineBoardPlaceholder(hasBoards: false)
+                }
+                
+                if case .boardsDidFetch(let boards) = event {
+                    self.determineBoardPlaceholder(hasBoards: true, boards: boards)
+                }
+                
+                if case .newBoardDidCreated = event {
+                    self.coordinator?.dismissBoardCreationScreen()
+                }
         }
         .store(in: &tokens)
 
@@ -217,7 +224,9 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         boardsViewModel.fetchCurrentWorkspace()
-        lottieAnimationView.play()
+        if lottieAnimationView.isDescendant(of: view) {
+            lottieAnimationView.play()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -267,6 +276,13 @@ class BoardCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    lazy var syncIndicatorImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "circle.fill")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     lazy var titleLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 2
@@ -301,14 +317,21 @@ class BoardCollectionViewCell: UICollectionViewCell {
         numberOfTasksLabel.text = "\(cellModel.numberOfTasks) Tasks"
         titleLabel.text = cellModel.boardTitle
         iconImageView.image = UIImage(systemName: cellModel.imageIcon)
+        
+        if cellModel.isSynced {
+            syncIndicatorImageView.tintColor = Palette.mediumDarkGray
+        } else {
+            syncIndicatorImageView.tintColor = Palette.magenta
+        }
     }
     
     func commonInitilization() {
         layer.cornerRadius = 22
-        backgroundColor = UIColor(hex: "#252525")
+        backgroundColor = Palette.mediumDarkGray
         contentView.addSubview(titleLabel)
         contentView.addSubview(numberOfTasksLabel)
         contentView.addSubview(iconImageView)
+        contentView.addSubview(syncIndicatorImageView)
     }
     
     override func layoutSubviews() {
@@ -328,7 +351,12 @@ class BoardCollectionViewCell: UICollectionViewCell {
             iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             iconImageView.heightAnchor.constraint(equalToConstant: 50),
-            iconImageView.widthAnchor.constraint(equalToConstant: 50)
+            iconImageView.widthAnchor.constraint(equalToConstant: 50),
+            
+            syncIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            syncIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            syncIndicatorImageView.heightAnchor.constraint(equalToConstant: 10),
+            syncIndicatorImageView.widthAnchor.constraint(equalToConstant: 10),
 
         ])
     }
