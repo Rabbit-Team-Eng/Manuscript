@@ -15,4 +15,10 @@ struct WorkspaceTransformer {
         let correctOrderedWorksapces = firstSelectedWorkspace + allTheOthers.sorted()
         return correctOrderedWorksapces.map { WorkspaceSelectorCellModel(id: "\($0.remoteId)", title: $0.title, isEditable: false) }
     }
+    
+    static func transformWorkspacesToSelectorCellModel(workspace: WorkspaceBusinessModel) -> [WorkspaceDetailCellModel] {
+        let generalInformation = GeneralInfoCellModel(title: workspace.title, description: workspace.mainDescription ?? "", isEditable: true)
+        return [WorkspaceDetailCellModel(id: "\(workspace.remoteId)", generalInformationCellModel: generalInformation)]
+    }
+    
 }

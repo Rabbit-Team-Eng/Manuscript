@@ -9,7 +9,7 @@ import UIKit
 
 struct GeneralInfoCellConfiguration: UIContentConfiguration {
     
-    var model: WorksapceGeneralInfoCellModel?
+    var model: GeneralInfoCellModel?
     weak var delegate: WorkspaceDetailActionsProtocol?
     
     func makeContentView() -> UIView & UIContentView {

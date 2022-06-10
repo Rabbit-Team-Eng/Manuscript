@@ -10,7 +10,7 @@ import UIKit
 class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
     
     weak var delegate: WorkspaceDetailActionsProtocol?
-    private var model: WorksapceGeneralInfoCellModel?
+    private var model: GeneralInfoCellModel?
     var configuration: UIContentConfiguration
     
     let titleTextField: UITextField = {
@@ -48,7 +48,7 @@ class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
         addSubview(titleTextField)
         addSubview(descriptionTextField)
         
-        backgroundColor = Palette.mediumDarkGray
+        backgroundColor = Palette.lightBlack
         
         NSLayoutConstraint.activate([
             titleTextField.topAnchor.constraint(equalTo: topAnchor, constant: 16),
@@ -71,7 +71,7 @@ class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func applyConfigurationModel(model: WorksapceGeneralInfoCellModel) {
+    private func applyConfigurationModel(model: GeneralInfoCellModel) {
         titleTextField.text = model.title
         descriptionTextField.text = model.description
         titleTextField.isUserInteractionEnabled = model.isEditable

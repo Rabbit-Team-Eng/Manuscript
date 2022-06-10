@@ -20,13 +20,14 @@
 		096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */; };
 		096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */; };
 		096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */; };
-		096EF7CC2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CB2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift */; };
+		096EF7CC2853EA1E003BEC41 /* GeneralInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */; };
 		096EF7CE2853EA2F003BEC41 /* WorksapceDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CD2853EA2F003BEC41 /* WorksapceDetailState.swift */; };
 		096EF7D12853EA93003BEC41 /* GeneralInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D02853EA93003BEC41 /* GeneralInfoCell.swift */; };
 		096EF7D32853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D22853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift */; };
 		096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D42853EB32003BEC41 /* GeneralInfoContentView.swift */; };
 		096EF7D72853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D62853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift */; };
 		096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D82853EB81003BEC41 /* WorkspaceDetailAction.swift */; };
+		096EF7DB2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7DA2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift */; };
 		097EDF19282AEC760060C8FD /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF18282AEC760060C8FD /* DatabaseViewController.swift */; };
 		097EDF1C282B1EA30060C8FD /* SimpleSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */; };
 		097EDF1E282B1EC10060C8FD /* SingleButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */; };
@@ -315,13 +316,14 @@
 		096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailSection.swift; sourceTree = "<group>"; };
 		096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailCellModel.swift; sourceTree = "<group>"; };
-		096EF7CB2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceGeneralInfoCellModel.swift; sourceTree = "<group>"; };
+		096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCellModel.swift; sourceTree = "<group>"; };
 		096EF7CD2853EA2F003BEC41 /* WorksapceDetailState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailState.swift; sourceTree = "<group>"; };
 		096EF7D02853EA93003BEC41 /* GeneralInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCell.swift; sourceTree = "<group>"; };
 		096EF7D22853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCellConfiguration.swift; sourceTree = "<group>"; };
 		096EF7D42853EB32003BEC41 /* GeneralInfoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoContentView.swift; sourceTree = "<group>"; };
 		096EF7D62853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailActionsProtocol.swift; sourceTree = "<group>"; };
 		096EF7D82853EB81003BEC41 /* WorkspaceDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailAction.swift; sourceTree = "<group>"; };
+		096EF7DA2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoSectionHeaderView.swift; sourceTree = "<group>"; };
 		097EDF18282AEC760060C8FD /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
 		097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionHeaderView.swift; sourceTree = "<group>"; };
 		097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonContentView.swift; sourceTree = "<group>"; };
@@ -563,10 +565,11 @@
 		096EF7CF2853EA4E003BEC41 /* GeneralInformation */ = {
 			isa = PBXGroup;
 			children = (
-				096EF7CB2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift */,
+				096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */,
 				096EF7D02853EA93003BEC41 /* GeneralInfoCell.swift */,
 				096EF7D22853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift */,
 				096EF7D42853EB32003BEC41 /* GeneralInfoContentView.swift */,
+				096EF7DA2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift */,
 			);
 			path = GeneralInformation;
 			sourceTree = "<group>";
@@ -1451,7 +1454,7 @@
 				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
 				09D276332825CE6000933F16 /* DataProvider.swift in Sources */,
 				096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */,
-				096EF7CC2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift in Sources */,
+				096EF7CC2853EA1E003BEC41 /* GeneralInfoCellModel.swift in Sources */,
 				099A90A82851658300B0F4B7 /* WorksapceDetailViewController.swift in Sources */,
 				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */,
@@ -1559,6 +1562,7 @@
 				09D275E12825CBE800933F16 /* WorkspaceRequest.swift in Sources */,
 				09D275A02825B8C300933F16 /* OnboardingViewModel.swift in Sources */,
 				09D275F02825CC6800933F16 /* AllBoardsResponse.swift in Sources */,
+				096EF7DB2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift in Sources */,
 				09D275C62825C96C00933F16 /* DeleteTaskRequest.swift in Sources */,
 				09D2763C2825CE6000933F16 /* DateTimeUtils.swift in Sources */,
 				09D276412825CE6000933F16 /* WorkspaceBusinessModel.swift in Sources */,

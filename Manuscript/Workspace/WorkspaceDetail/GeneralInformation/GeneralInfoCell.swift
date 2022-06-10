@@ -9,7 +9,7 @@ import UIKit
 
 class GeneralInfoCell: UICollectionViewCell {
     
-    var model: WorksapceGeneralInfoCellModel?
+    var model: GeneralInfoCellModel?
     weak var delegate: WorkspaceDetailActionsProtocol?
     
     override func updateConfiguration(using state: UICellConfigurationState) {

@@ -10,9 +10,9 @@ import Foundation
 struct WorkspaceDetailCellModel: Hashable {
     let id: String
     let section: WorksapceDetailSection
-    let generalInformationCellModel: WorksapceGeneralInfoCellModel?
+    let generalInformationCellModel: GeneralInfoCellModel?
     
-    init(id: String, generalInformationCellModel: WorksapceGeneralInfoCellModel) {
+    init(id: String, generalInformationCellModel: GeneralInfoCellModel) {
         self.id = id
         self.section = .generalInformationSection
         self.generalInformationCellModel = generalInformationCellModel

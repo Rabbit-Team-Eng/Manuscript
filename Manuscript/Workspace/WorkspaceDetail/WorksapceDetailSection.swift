@@ -9,16 +9,16 @@ import Foundation
 
 enum WorksapceDetailSection: Hashable {
     case generalInformationSection
-    case sharing
-    case members
+    case sharingSection
+    case membersSection
 
     var sectionHeaderTitle: String? {
         switch self {
         case .generalInformationSection:
             return "General Information"
-        case .sharing:
+        case .sharingSection:
             return "Sharing"
-        case .members:
+        case .membersSection:
             return "Members"
         default:
             return nil
@@ -27,7 +27,7 @@ enum WorksapceDetailSection: Hashable {
     
     var sectionFooterTitle: String? {
         switch self {
-        case .members:
+        case .membersSection:
             return "See More"
         default:
             return nil
