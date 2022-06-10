@@ -18,6 +18,15 @@
 		096BEDC0284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */; };
 		096BEDC3284B27C7001C7136 /* BoardTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC2284B27C7001C7136 /* BoardTransformer.swift */; };
 		096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */; };
+		096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */; };
+		096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */; };
+		096EF7CC2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CB2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift */; };
+		096EF7CE2853EA2F003BEC41 /* WorksapceDetailState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CD2853EA2F003BEC41 /* WorksapceDetailState.swift */; };
+		096EF7D12853EA93003BEC41 /* GeneralInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D02853EA93003BEC41 /* GeneralInfoCell.swift */; };
+		096EF7D32853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D22853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift */; };
+		096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D42853EB32003BEC41 /* GeneralInfoContentView.swift */; };
+		096EF7D72853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D62853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift */; };
+		096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7D82853EB81003BEC41 /* WorkspaceDetailAction.swift */; };
 		097EDF19282AEC760060C8FD /* DatabaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF18282AEC760060C8FD /* DatabaseViewController.swift */; };
 		097EDF1C282B1EA30060C8FD /* SimpleSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */; };
 		097EDF1E282B1EC10060C8FD /* SingleButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */; };
@@ -304,6 +313,15 @@
 		096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107448-human-in-vr-glasses-in-metaverse.json"; sourceTree = "<group>"; };
 		096BEDC2284B27C7001C7136 /* BoardTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTransformer.swift; sourceTree = "<group>"; };
 		096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailSection.swift; sourceTree = "<group>"; };
+		096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailCellModel.swift; sourceTree = "<group>"; };
+		096EF7CB2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceGeneralInfoCellModel.swift; sourceTree = "<group>"; };
+		096EF7CD2853EA2F003BEC41 /* WorksapceDetailState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailState.swift; sourceTree = "<group>"; };
+		096EF7D02853EA93003BEC41 /* GeneralInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCell.swift; sourceTree = "<group>"; };
+		096EF7D22853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCellConfiguration.swift; sourceTree = "<group>"; };
+		096EF7D42853EB32003BEC41 /* GeneralInfoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoContentView.swift; sourceTree = "<group>"; };
+		096EF7D62853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailActionsProtocol.swift; sourceTree = "<group>"; };
+		096EF7D82853EB81003BEC41 /* WorkspaceDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailAction.swift; sourceTree = "<group>"; };
 		097EDF18282AEC760060C8FD /* DatabaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewController.swift; sourceTree = "<group>"; };
 		097EDF1B282B1EA30060C8FD /* SimpleSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSectionHeaderView.swift; sourceTree = "<group>"; };
 		097EDF1D282B1EC10060C8FD /* SingleButtonContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleButtonContentView.swift; sourceTree = "<group>"; };
@@ -529,6 +547,30 @@
 			path = DataTransformers;
 			sourceTree = "<group>";
 		};
+		096EF7C62853B388003BEC41 /* WorkspaceSelector */ = {
+			isa = PBXGroup;
+			children = (
+				0989BAB9284D30BB0032053C /* WorkspaceSelectorViewController.swift */,
+				0989BABB284D3CA00032053C /* WorkspaceSelectorCellModel.swift */,
+				0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */,
+				0989BABD284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift */,
+				0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */,
+				0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */,
+			);
+			path = WorkspaceSelector;
+			sourceTree = "<group>";
+		};
+		096EF7CF2853EA4E003BEC41 /* GeneralInformation */ = {
+			isa = PBXGroup;
+			children = (
+				096EF7CB2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift */,
+				096EF7D02853EA93003BEC41 /* GeneralInfoCell.swift */,
+				096EF7D22853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift */,
+				096EF7D42853EB32003BEC41 /* GeneralInfoContentView.swift */,
+			);
+			path = GeneralInformation;
+			sourceTree = "<group>";
+		};
 		097EDF1A282B1E810060C8FD /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -598,13 +640,8 @@
 		0989BAB8284D2F970032053C /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
-				099A90A62851657400B0F4B7 /* WorkspaceCreate */,
-				0989BAB9284D30BB0032053C /* WorkspaceSelectorViewController.swift */,
-				0989BABB284D3CA00032053C /* WorkspaceSelectorCellModel.swift */,
-				0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */,
-				0989BABD284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift */,
-				0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */,
-				0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */,
+				096EF7C62853B388003BEC41 /* WorkspaceSelector */,
+				099A90A62851657400B0F4B7 /* WorkspaceDetail */,
 				099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */,
 			);
 			path = Workspace;
@@ -638,12 +675,18 @@
 			path = Creators;
 			sourceTree = "<group>";
 		};
-		099A90A62851657400B0F4B7 /* WorkspaceCreate */ = {
+		099A90A62851657400B0F4B7 /* WorkspaceDetail */ = {
 			isa = PBXGroup;
 			children = (
+				096EF7CF2853EA4E003BEC41 /* GeneralInformation */,
 				099A90A72851658300B0F4B7 /* WorksapceDetailViewController.swift */,
+				096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */,
+				096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */,
+				096EF7CD2853EA2F003BEC41 /* WorksapceDetailState.swift */,
+				096EF7D62853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift */,
+				096EF7D82853EB81003BEC41 /* WorkspaceDetailAction.swift */,
 			);
-			path = WorkspaceCreate;
+			path = WorkspaceDetail;
 			sourceTree = "<group>";
 		};
 		09CAAA082829D80200FE0214 /* Database-Sample */ = {
@@ -1400,11 +1443,15 @@
 				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
 				099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
+				096EF7D12853EA93003BEC41 /* GeneralInfoCell.swift in Sources */,
+				096EF7CE2853EA2F003BEC41 /* WorksapceDetailState.swift in Sources */,
 				09D2758B2825B83400933F16 /* ServiceConstants.swift in Sources */,
 				09D275BA2825C85600933F16 /* WorkspaceAPI.swift in Sources */,
 				09D275C82825C98000933F16 /* GetTaskByIdRequest.swift in Sources */,
 				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
 				09D276332825CE6000933F16 /* DataProvider.swift in Sources */,
+				096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */,
+				096EF7CC2853EA1E003BEC41 /* WorksapceGeneralInfoCellModel.swift in Sources */,
 				099A90A82851658300B0F4B7 /* WorksapceDetailViewController.swift in Sources */,
 				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */,
@@ -1424,6 +1471,7 @@
 				09D275992825B89700933F16 /* AuthenticationManager.swift in Sources */,
 				09D27655282605E900933F16 /* WorkspaceEntity+CoreDataClass.swift in Sources */,
 				09D275FB2825CCC000933F16 /* BoardError.swift in Sources */,
+				096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */,
 				09D2763F2825CE6000933F16 /* TaskBusinessModel.swift in Sources */,
 				09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */,
 				09D27654282605E900933F16 /* MemberEntity+CoreDataProperties.swift in Sources */,
@@ -1480,6 +1528,7 @@
 				09D2763D2825CE6000933F16 /* BoardBusinessModel.swift in Sources */,
 				096BEDA4284ADCB9001C7136 /* BoardCoreDataManager.swift in Sources */,
 				09D276372825CE6000933F16 /* WorkspaceComparator.swift in Sources */,
+				096EF7D32853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift in Sources */,
 				09D275742825B78000933F16 /* AuthenticationInjector.swift in Sources */,
 				09D275252825B4B800933F16 /* SceneDelegate.swift in Sources */,
 				09D275852825B80100933F16 /* ResetPasswordRequestModel.swift in Sources */,
@@ -1492,6 +1541,7 @@
 				09D2763E2825CE6000933F16 /* MemberBusinessModel.swift in Sources */,
 				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
 				09EDE718284701E8009B23A9 /* DatabaseAction.swift in Sources */,
+				096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */,
 				09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */,
 				09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */,
 				09D275892825B80C00933F16 /* UserResponse.swift in Sources */,
@@ -1520,10 +1570,12 @@
 				0989BABE284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift in Sources */,
 				097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
+				096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */,
 				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,
 				097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
 				09D275D82825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift in Sources */,
+				096EF7D72853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift in Sources */,
 				09D275FD2825CCCC00933F16 /* TaskError.swift in Sources */,
 				09D27651282605E900933F16 /* BoardEntity+CoreDataClass.swift in Sources */,
 			);

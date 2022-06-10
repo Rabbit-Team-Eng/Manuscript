@@ -7,12 +7,6 @@
 
 import UIKit
 
-enum WorksapceDetailState {
-    case create
-    case edit(workspace: WorkspaceBusinessModel)
-    case view(workspace: WorkspaceBusinessModel)
-}
-
 class WorksapceDetailViewController: UIViewController {
     
     private let workspacesViewModel: WorkspacesViewModel
