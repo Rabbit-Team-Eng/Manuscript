@@ -118,9 +118,9 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         mainTabBarController.dismiss(animated: true)
     }
     
-    func navigateToWorkspaceCreateViewConntroller() {
+    func navigateToWorkspaceDetail(worksapceDetailState: WorksapceDetailState) {
         mainTabBarController.dismiss(animated: true) {
-            self.boardsCoordinator.pushCreateWorksapceViewController()
+            self.boardsCoordinator.navigateToWorksapceDetail(worksapceDetailState: worksapceDetailState)
         }
     }
     

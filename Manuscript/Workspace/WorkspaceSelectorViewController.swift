@@ -15,6 +15,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
 
     private lazy var dataSource = createDataSource()
     private var tokens: Set<AnyCancellable> = []
+    private var currentWorksapces: [WorkspaceBusinessModel] = []
 
     weak var parentCoordinator: TabBarCoordinator? = nil
 
@@ -84,6 +85,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
             
             switch workspaceEvent {
             case .workspacesDidFetch(let workspaces):
+                self.currentWorksapces = workspaces
                 self.applySnapshot(items: WorkspaceTransformer.transformWorkspacesToSelectorCellModel(workspaces: workspaces), withAnimation: true)
             }
         }
@@ -151,11 +153,12 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     }
     
     func workspaceDetailFlowDidSelected(model: WorkspaceSelectorCellModel) {
-        print(model)
+        guard let selectedWorkspace = currentWorksapces.first(where: {  "\($0.remoteId)" == model.id }) else { return }
+        parentCoordinator?.navigateToWorkspaceDetail(worksapceDetailState: .edit(workspace: selectedWorkspace))
     }
     
     @objc private func createNewWorkspaceButtonDidTap(_ sender: UIButton) {
-        parentCoordinator?.navigateToWorkspaceCreateViewConntroller()
+        parentCoordinator?.navigateToWorkspaceDetail(worksapceDetailState: .create)
     }
     
     @objc private func workspaceDidSwitched(_ sender: UIButton) {

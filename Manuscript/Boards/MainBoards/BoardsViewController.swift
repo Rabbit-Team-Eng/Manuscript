@@ -90,6 +90,8 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         super.viewDidLoad()
 
         view.backgroundColor = Palette.lightBlack
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(signOut(_:)))
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),

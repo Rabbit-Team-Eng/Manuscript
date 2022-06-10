@@ -63,9 +63,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         parentCoordinator?.dismissBoardCreationScreen()
     }
     
-    func pushCreateWorksapceViewController() {
-        let vc = WorksapceCreateViewController(workspacesViewModel: mainComponent.provideWorkspacesViewModel())
+    func navigateToWorksapceDetail(worksapceDetailState: WorksapceDetailState) {
+        let vc = WorksapceDetailViewController(workspacesViewModel: mainComponent.provideWorkspacesViewModel(), worksapceDetailState: worksapceDetailState)
         vc.hidesBottomBarWhenPushed = true
+        vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }
     
@@ -73,6 +74,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         let vc = BoardDetailViewController(boardId: withId, boardViewModel: mainComponent.provideBoardsViewModel())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func goBackFromWorkspaceCreationScreen() {
+        navigationController.popViewController(animated: true)
     }
     
     func presentCreateTaskSheet(boardId: String) {

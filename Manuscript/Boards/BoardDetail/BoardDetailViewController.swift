@@ -20,6 +20,8 @@ class BoardDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Palette.lightBlack
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.backward.square"), style: .plain, target: self, action: #selector(backButtonDidTap(_:)))
+ 
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewTaskButtonDidTap(_:))),
             UIBarButtonItem(image: UIImage(systemName: "slider.vertical.3"), style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
@@ -42,6 +44,11 @@ class BoardDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         boardViewModel.fetchCurrentBoard(id: boardId)
     }
+    
+    @objc private func backButtonDidTap(_ sender: UIBarButtonItem) {
+        coordinator?.goBackFromWorkspaceCreationScreen()
+    }
+    
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
         coordinator?.presentCreateTaskSheet(boardId: boardId)

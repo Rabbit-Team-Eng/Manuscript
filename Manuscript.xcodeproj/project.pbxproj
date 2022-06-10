@@ -52,7 +52,7 @@
 		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
 		099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */; };
 		099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909E28500F0800B0F4B7 /* BoardCreator.swift */; };
-		099A90A82851658300B0F4B7 /* WorksapceCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A90A72851658300B0F4B7 /* WorksapceCreateViewController.swift */; };
+		099A90A82851658300B0F4B7 /* WorksapceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A90A72851658300B0F4B7 /* WorksapceDetailViewController.swift */; };
 		099A90AA2851929100B0F4B7 /* TaskCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */; };
 		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
@@ -332,7 +332,7 @@
 		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
 		099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorContentConfiguration.swift; sourceTree = "<group>"; };
 		099A909E28500F0800B0F4B7 /* BoardCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreator.swift; sourceTree = "<group>"; };
-		099A90A72851658300B0F4B7 /* WorksapceCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceCreateViewController.swift; sourceTree = "<group>"; };
+		099A90A72851658300B0F4B7 /* WorksapceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailViewController.swift; sourceTree = "<group>"; };
 		099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateViewController.swift; sourceTree = "<group>"; };
 		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
@@ -641,7 +641,7 @@
 		099A90A62851657400B0F4B7 /* WorkspaceCreate */ = {
 			isa = PBXGroup;
 			children = (
-				099A90A72851658300B0F4B7 /* WorksapceCreateViewController.swift */,
+				099A90A72851658300B0F4B7 /* WorksapceDetailViewController.swift */,
 			);
 			path = WorkspaceCreate;
 			sourceTree = "<group>";
@@ -1405,7 +1405,7 @@
 				09D275C82825C98000933F16 /* GetTaskByIdRequest.swift in Sources */,
 				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
 				09D276332825CE6000933F16 /* DataProvider.swift in Sources */,
-				099A90A82851658300B0F4B7 /* WorksapceCreateViewController.swift in Sources */,
+				099A90A82851658300B0F4B7 /* WorksapceDetailViewController.swift in Sources */,
 				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */,
 				09DCED08282C242900A2884B /* SingleInputFieldContentView.swift in Sources */,

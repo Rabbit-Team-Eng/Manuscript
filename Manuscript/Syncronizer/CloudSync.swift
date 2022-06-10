@@ -28,8 +28,7 @@ final class CloudSync {
     func syncronize() {
         Publishers.Zip(workspaceService.getAllWorkspacesAsBusinessObjects(), boardsService.getAllBoardsBusinessModel())
             .receive(on: DispatchQueue.global(qos: .userInitiated))
-            .sink { completion in } receiveValue: { [weak self] (worskapcesServer, boardsServer) in
-                guard let self = self else { return }
+            .sink { completion in } receiveValue: { [weak self] (worskapcesServer, boardsServer) in guard let self = self else { return }
                 
                 let currentWorkspaces = self.dataProvider.fethAllWorkspacesOnBackgroundThread()
                 let workspacesDiff = WorkspaceComparator.compare(responseCollection: worskapcesServer, cachedCollection: currentWorkspaces)
@@ -44,7 +43,6 @@ final class CloudSync {
                         self.notify()
                     }
                 })
-                
             }
             .store(in: &tokens)
     }
