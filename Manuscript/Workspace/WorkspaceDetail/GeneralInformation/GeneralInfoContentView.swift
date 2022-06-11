@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
+class GeneralInfoContentView: UIView, UIContentView {
     
     weak var delegate: WorkspaceDetailActionsProtocol?
     private var model: GeneralInfoCellModel?
@@ -41,9 +41,6 @@ class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
         self.configuration = configuration
         self.model = configuration.model
         super.init(frame: .zero)
-        
-        titleTextField.delegate = self
-        descriptionTextField.delegate = self
         
         addSubview(titleTextField)
         addSubview(descriptionTextField)

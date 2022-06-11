@@ -1,5 +1,5 @@
 //
-//  GeneralInfoSectionHeaderView.swift
+//  ManageAccessSectionHeaderView.swift
 //  Manuscript
 //
 //  Created by Tigran Ghazinyan on 6/10/22.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class GeneralInfoSectionHeaderView: UICollectionReusableView {
+class ManageAccessSectionHeaderView: UICollectionReusableView {
     
-    static var reuseIdentifier: String { return String(describing: GeneralInfoSectionHeaderView.self) }
+    static var reuseIdentifier: String { return String(describing: ManageAccessSectionHeaderView.self) }
     
     let titleLabel: UILabel = {
         let label = UILabel()

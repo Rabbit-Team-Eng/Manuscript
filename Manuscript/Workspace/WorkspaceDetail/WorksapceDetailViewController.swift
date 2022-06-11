@@ -31,6 +31,8 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
             switch section {
             case .generalInformationSection:
                 return self.createGeneralInfoSectionLayout()
+            case .sharingSection:
+                return self.createManageAcessSectionLayout()
             default:
                 fatalError()
             }
@@ -38,6 +40,27 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
         
         layout.configuration = UICollectionViewCompositionalLayoutConfiguration()
         return layout
+    }
+    
+    func createManageAcessSectionLayout() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(64))
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        layoutGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(20))
+        
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        sectionHeader.pinToVisibleBounds = true
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.boundarySupplementaryItems = [sectionHeader]
+        return layoutSection
     }
     
     func applySnapshot(items: [WorkspaceDetailCellModel], animatingDifferences: Bool = false) {
@@ -48,15 +71,18 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
 
         }
         
-        if case .view(let workspace) = worksapceDetailState {
-            snapshot.appendSections([.generalInformationSection])
+        if case .view = worksapceDetailState {
+            snapshot.appendSections([.generalInformationSection, .sharingSection])
         }
                 
         items.forEach { item in
             
             if item.generalInformationCellModel != nil {
                 snapshot.appendItems([item], toSection: .generalInformationSection)
-                return
+            }
+            
+            if item.manageAccessCellModel != nil {
+                snapshot.appendItems([item], toSection: .sharingSection)
             }
         }
         
@@ -75,11 +101,13 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(30)
         )
+        
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerFooterSize,
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
+        
         sectionHeader.pinToVisibleBounds = true
         layoutSection.boundarySupplementaryItems = [sectionHeader]
         return layoutSection
@@ -92,20 +120,31 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     
     func generalInfoCellRegistration() -> UICollectionView.CellRegistration<GeneralInfoCell, WorkspaceDetailCellModel> {
         return .init { [weak self] cell, indexPath, itemIdentifier in
-            guard let self = self else {return}
+            guard let self = self else { return }
             cell.model = itemIdentifier.generalInformationCellModel
+            cell.delegate = self
+        }
+    }
+    
+    func manageAccessCellRegistration() -> UICollectionView.CellRegistration<ManageAccessCell, WorkspaceDetailCellModel> {
+        return .init { [weak self] cell, indexPath, itemIdentifier in
+            guard let self = self else { return }
+            cell.model = itemIdentifier.manageAccessCellModel
             cell.delegate = self
         }
     }
     
     func createDataSource() -> DataSource {
         let generalInfoCell = generalInfoCellRegistration()
+        let manageAccessCell = manageAccessCellRegistration()
         
         let dataSource = DataSource(collectionView: myColectionView) { collectionView, indexPath, itemIdentifier in
             
             switch itemIdentifier.section {
             case .generalInformationSection:
                 return collectionView.dequeueConfiguredReusableCell(using: generalInfoCell, for: indexPath, item: itemIdentifier)
+            case .sharingSection:
+                return collectionView.dequeueConfiguredReusableCell(using: manageAccessCell, for: indexPath, item: itemIdentifier)
             default:
                 fatalError()
             }
@@ -117,6 +156,10 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
             switch section {
             case .generalInformationSection:
                 let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: GeneralInfoSectionHeaderView.reuseIdentifier, for: indexPath) as? GeneralInfoSectionHeaderView
+                view?.titleLabel.text = section.sectionHeaderTitle
+                return view
+            case .sharingSection:
+                let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ManageAccessSectionHeaderView.reuseIdentifier, for: indexPath) as? ManageAccessSectionHeaderView
                 view?.titleLabel.text = section.sectionHeaderTitle
                 return view
             default:
@@ -147,11 +190,14 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = Palette.gray
+        view.backgroundColor = Palette.lightBlack
         view.addSubview(myColectionView)
         view.addSubview(primaryBottomButton)
 
         myColectionView.register(GeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: GeneralInfoSectionHeaderView.reuseIdentifier)
+        
+        myColectionView.register(ManageAccessSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ManageAccessSectionHeaderView.reuseIdentifier)
+        
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.backward.square"), style: .plain, target: self, action: #selector(backButtonDidTap(_:)))
         
@@ -176,7 +222,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
             myColectionView.topAnchor.constraint(equalTo: navigationController?.navigationBar.bottomAnchor ?? view.safeAreaLayoutGuide.topAnchor, constant: 16),
             myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            myColectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            myColectionView.bottomAnchor.constraint(equalTo: primaryBottomButton.topAnchor, constant: -32),
             
             primaryBottomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
             primaryBottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

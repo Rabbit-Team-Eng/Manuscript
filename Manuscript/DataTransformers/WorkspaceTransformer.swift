@@ -18,7 +18,11 @@ struct WorkspaceTransformer {
     
     static func transformWorkspacesToSelectorCellModel(workspace: WorkspaceBusinessModel) -> [WorkspaceDetailCellModel] {
         let generalInformation = GeneralInfoCellModel(title: workspace.title, description: workspace.mainDescription ?? "", isEditable: true, needPlaceholders: false)
-        return [WorkspaceDetailCellModel(id: "\(workspace.remoteId)", generalInformationCellModel: generalInformation)]
+        let manageAccess = ManageAcessCellModel(title: "Manage Access")
+        return [
+            WorkspaceDetailCellModel(id: "\(workspace.remoteId)", generalInformationCellModel: generalInformation),
+            WorkspaceDetailCellModel(id: "1", manageAccessCellModel: manageAccess)
+        ]
     }
     
 }
