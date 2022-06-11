@@ -154,7 +154,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     
     func workspaceDetailFlowDidSelected(model: WorkspaceSelectorCellModel) {
         guard let selectedWorkspace = currentWorksapces.first(where: {  "\($0.remoteId)" == model.id }) else { return }
-        parentCoordinator?.navigateToWorkspaceDetail(worksapceDetailState: .edit(workspace: selectedWorkspace))
+        parentCoordinator?.navigateToWorkspaceDetail(worksapceDetailState: .view(workspace: selectedWorkspace))
     }
     
     @objc private func createNewWorkspaceButtonDidTap(_ sender: UIButton) {

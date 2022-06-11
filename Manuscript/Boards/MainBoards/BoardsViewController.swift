@@ -41,7 +41,14 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     private lazy var myColectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.backgroundColor = Palette.lightBlack
+        collectionView.refreshControl = refreshController
         return collectionView
+    }()
+    
+    private let refreshController: UIRefreshControl = {
+        let refreshController = UIRefreshControl()
+        refreshController.attributedTitle = NSAttributedString("Refreshing the entire DB!")
+        return refreshController
     }()
     
     private lazy var dataSource = createDataSource()
@@ -96,8 +103,9 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
             UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),
-            UIBarButtonItem(image: UIImage(systemName: "cloud"), style: .plain, target: self, action: #selector(cloudSyncButtonDidTap(_:)))
         ]
+        
+        refreshController.addTarget(self, action: #selector(refreshControllerDidCalled(_:)), for: .valueChanged)
         createBoardButton.addTarget(self, action: #selector(createBoardButtonDidTap(_:)), for: .touchUpInside)
         myColectionView.delegate = self
         
@@ -115,6 +123,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                 
                 if case .boardsDidFetch(let boards) = event {
                     self.determineBoardPlaceholder(hasBoards: true, boards: boards)
+                    self.refreshController.endRefreshing()
                 }
                 
                 if case .newBoardDidCreated = event {
@@ -125,7 +134,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
 
     }
     
-    @objc private func cloudSyncButtonDidTap(_ sender: UIBarButtonItem) {
+    @objc private func refreshControllerDidCalled(_ sender: UIBarButtonItem) {
         print("---------------Clicked---------------")
         boardsViewModel.syncTheCloud()
     }

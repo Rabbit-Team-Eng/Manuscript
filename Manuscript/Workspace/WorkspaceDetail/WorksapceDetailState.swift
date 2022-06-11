@@ -9,6 +9,5 @@ import Foundation
 
 enum WorksapceDetailState {
     case create
-    case edit(workspace: WorkspaceBusinessModel)
     case view(workspace: WorkspaceBusinessModel)
 }

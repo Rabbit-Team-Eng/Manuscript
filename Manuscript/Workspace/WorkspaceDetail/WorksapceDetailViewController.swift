@@ -22,7 +22,10 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     }()
     
     func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            
+            guard let self = self else { fatalError() }
+            
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
             
             switch section {
@@ -40,8 +43,15 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     func applySnapshot(items: [WorkspaceDetailCellModel], animatingDifferences: Bool = false) {
         var snapshot = Snapshot()
         
-        snapshot.appendSections([.generalInformationSection])
+        if case .create = worksapceDetailState {
+            snapshot.appendSections([.generalInformationSection])
+
+        }
         
+        if case .view(let workspace) = worksapceDetailState {
+            snapshot.appendSections([.generalInformationSection])
+        }
+                
         items.forEach { item in
             
             if item.generalInformationCellModel != nil {
@@ -121,27 +131,39 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     private let worksapceDetailState: WorksapceDetailState
     
     weak var coordinator: BoardsCoordinator? = nil
+    
+    private let primaryBottomButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.configuration = .filled()
+        button.configuration?.title = "Create New Workspace"
+        button.contentHorizontalAlignment = .center
+        button.configuration?.baseBackgroundColor = Palette.mediumDarkGray
+        button.setTitleColor(Palette.white, for: .normal)
+        button.configuration?.cornerStyle = .large
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = Palette.gray
         view.addSubview(myColectionView)
+        view.addSubview(primaryBottomButton)
+
         myColectionView.register(GeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: GeneralInfoSectionHeaderView.reuseIdentifier)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.backward.square"), style: .plain, target: self, action: #selector(backButtonDidTap(_:)))
         
         if case .create = worksapceDetailState {
             navigationItem.title = "Create new workspace"
+            primaryBottomButton.setTitle("Create New Worksapce", for: .normal)
+            applySnapshot(items: [WorkspaceDetailCellModel(id: "0", generalInformationCellModel: GeneralInfoCellModel(title: "", description: "", isEditable: true))])
         }
         
         if case .view(let workspace) = worksapceDetailState {
             navigationItem.title = workspace.title
-            applySnapshot(items: WorkspaceTransformer.transformWorkspacesToSelectorCellModel(workspace: workspace))
-        }
-        
-        if case .edit(let workspace) = worksapceDetailState {
-            navigationItem.title = workspace.title
+            primaryBottomButton.setTitle("Leave / Delete Worksapce", for: .normal)
             applySnapshot(items: WorkspaceTransformer.transformWorkspacesToSelectorCellModel(workspace: workspace))
         }
         
@@ -154,7 +176,12 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
             myColectionView.topAnchor.constraint(equalTo: navigationController?.navigationBar.bottomAnchor ?? view.safeAreaLayoutGuide.topAnchor, constant: 16),
             myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            myColectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+            myColectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            
+            primaryBottomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
+            primaryBottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            primaryBottomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            primaryBottomButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
     }

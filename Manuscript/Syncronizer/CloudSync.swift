@@ -40,6 +40,8 @@ final class CloudSync {
                     let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: currentBoards)
                     self.boardSyncronizer.syncronize(items: boardsDiff) { [weak self] in
                         guard let self = self else { return }
+                        
+                        
                         self.notify()
                     }
                 })

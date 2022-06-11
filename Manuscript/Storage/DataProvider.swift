@@ -70,7 +70,8 @@ class DataProvider: Datasource {
                 let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
                 let worskpaceEntity = workspace.first!
                 var allBoards: [BoardBusinessModel] = []
-                
+                var allMembers: [MemberBusinessModel] = []
+
                 worskpaceEntity.boards?.forEach({ boardEntity in
                       
                     if let board = boardEntity as? BoardEntity {
@@ -105,12 +106,30 @@ class DataProvider: Datasource {
                     
                 })
                 
+                worskpaceEntity.members?.forEach { memberEntity in
+                    if let member = memberEntity as? MemberEntity {
+                        allMembers.append(MemberBusinessModel(remoteId: member.remoteId,
+                                                           firstName: member.firstName,
+                                                           lastName: member.lastName,
+                                                           avatarUrl: member.avatarUrl,
+                                                           email: member.email,
+                                                           isWorkspaceOwner: member.isWorkspaceOwner,
+                                                           ownerWorkspaceId: member.ownerWorkspaceId,
+                                                           lastModifiedDate: member.lastModifiedDate,
+                                                           isInitiallySynced: member.isInitiallySynced,
+                                                           isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
+                        )
+                    }
+                }
+                
+                
                 searchingWorkspace = WorkspaceBusinessModel(remoteId: worskpaceEntity.remoteId,
                                                             coreDataId: worskpaceEntity.objectID,
                                                             title: worskpaceEntity.title,
                                                             mainDescription: worskpaceEntity.mainDescription,
                                                             sharingEnabled: worskpaceEntity.sharingEnabled,
                                                             boards: allBoards,
+                                                            members: allMembers,
                                                             lastModifiedDate: worskpaceEntity.lastModifiedDate,
                                                             isInitiallySynced: worskpaceEntity.isInitiallySynced,
                                                             isPendingDeletionOnTheServer: worskpaceEntity.isPendingDeletionOnTheServer)
