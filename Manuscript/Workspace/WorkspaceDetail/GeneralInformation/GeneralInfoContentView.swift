@@ -76,6 +76,11 @@ class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
         descriptionTextField.text = model.description
         titleTextField.isUserInteractionEnabled = model.isEditable
         descriptionTextField.isUserInteractionEnabled = model.isEditable
+        
+        if model.needPlaceholders {
+            titleTextField.placeholder = "Enter title"
+            descriptionTextField.placeholder = "Enter desciption"
+        }
     }
 
 

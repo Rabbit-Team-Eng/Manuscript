@@ -158,7 +158,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
         if case .create = worksapceDetailState {
             navigationItem.title = "Create new workspace"
             primaryBottomButton.setTitle("Create New Worksapce", for: .normal)
-            applySnapshot(items: [WorkspaceDetailCellModel(id: "0", generalInformationCellModel: GeneralInfoCellModel(title: "", description: "", isEditable: true))])
+            applySnapshot(items: [WorkspaceDetailCellModel(id: "0", generalInformationCellModel: GeneralInfoCellModel(title: "", description: "", isEditable: true, needPlaceholders: true))])
         }
         
         if case .view(let workspace) = worksapceDetailState {

@@ -100,6 +100,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(signOut(_:)))
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
             UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),

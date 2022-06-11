@@ -11,4 +11,5 @@ struct GeneralInfoCellModel: Hashable {
     let title: String
     let description: String
     let isEditable: Bool
+    let needPlaceholders: Bool
 }
