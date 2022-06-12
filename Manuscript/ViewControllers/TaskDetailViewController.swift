@@ -110,12 +110,35 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
             
             var newSnapshot = self.dataSource.snapshot().itemIdentifiers.filter { $0.section != .prioritySection }
             
-            newSnapshot.append(
-                TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Low",
-                                                                                                               description: "Low priority task which will go to the end of your task list",
-                                                                                          priority: .low, isHighlighted: true))
-            
-            )
+            if priority == .low {
+                newSnapshot.append(
+                    TaskDetailCellModel(id: "0", priorityCellModel: PrioritySelectorCellModel(title: "Low",
+                                                                                              description: "Low priority task which will go to the end of your task list",
+                                                                                              priority: .low,
+                                                                                              isHighlighted: true))
+                
+                )
+                
+            } else if priority == .medium {
+                newSnapshot.append(
+                    TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
+                                                                                              description: "Medium priority is a regular task which will be in your task list",
+                                                                                              priority: .medium,
+                                                                                              isHighlighted: true))
+                
+                )
+                
+            } else if priority == .high {
+                newSnapshot.append(
+                    TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "High",
+                                                                                              description: "High priority task will go to top of your list and you will get notifications frequently",
+                                                                                              priority: .high,
+                                                                                              isHighlighted: true))
+                
+                )
+                
+            }
+
             
             self.applySnapshot(items: newSnapshot)
 
@@ -457,6 +480,7 @@ extension TaskDetailViewController: UICollectionViewDelegate {
         // TODO: We should crate enums for each section instead of using integers, Overall need to refactor
         // ordering logic for the collection view
         if indexPath.section != 1 { return false } else { return true }
+        
     }
     
 }
@@ -466,6 +490,7 @@ extension TaskDetailViewController: PrioritySelectionActionsProtocol {
     func actionDidHappen(action: PrioritySelectionAction) {
         
         if case .priorityShouldChange(let currentPriority) = action {
+            boardViewModel.selectedPriority = currentPriority
             coordinator?.openPrioritySelectionSheet(withSelectedPriority: currentPriority)
         }
     }

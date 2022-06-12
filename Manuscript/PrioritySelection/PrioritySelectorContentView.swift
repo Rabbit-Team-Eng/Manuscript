@@ -53,13 +53,12 @@ class PrioritySelectorContentView: UIView, UIContentView {
         addSubview(descriptionTextLabel)
         applyConfiguration(configuration: configuration)
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(priorityDidSelected(_:))))
                 
         NSLayoutConstraint.activate([
             iconImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            iconImageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 32),
-            iconImageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 32),
+            iconImageView.widthAnchor.constraint(equalToConstant: 32),
+            iconImageView.heightAnchor.constraint(equalToConstant: 32),
             
             titleTextLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
             titleTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -105,6 +104,7 @@ class PrioritySelectorContentView: UIView, UIContentView {
         }
         
         if model.isHighlighted {
+            addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(priorityDidSelected(_:))))
             layer.cornerRadius = 18
             backgroundColor = highlightColor
         }
@@ -117,3 +117,4 @@ class PrioritySelectorContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

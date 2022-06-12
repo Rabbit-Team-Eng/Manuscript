@@ -23,6 +23,8 @@ class BoardsViewModel {
     private let cloudSync: CloudSync
     let events: PassthroughSubject<BoardsViewControllerEvent, Never> = PassthroughSubject()
     
+    public var selectedPriority: PrioritySelectorCellModel? = nil
+    
     let priorirtySetEvenet: PassthroughSubject<Priority, Never> = PassthroughSubject()
 
 
@@ -40,8 +42,8 @@ class BoardsViewModel {
         cloudSync.syncronize()
     }
     
-    func newPriorityDidSet() {
-        priorirtySetEvenet.send(.medium)
+    func newPriorityDidSet(priority: Priority) {
+        priorirtySetEvenet.send(priority)
     }
     
     func fetchCurrentBoard(id: String) {
