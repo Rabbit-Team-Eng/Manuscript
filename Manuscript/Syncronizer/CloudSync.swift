@@ -41,7 +41,8 @@ final class CloudSync {
                     self.boardSyncronizer.syncronize(items: boardsDiff) { [weak self] in
                         guard let self = self else { return }
                         
-                        
+                        print("DEBUG_LOG: ==================================== DB SYNCED ====================================")
+
                         self.notify()
                     }
                 })

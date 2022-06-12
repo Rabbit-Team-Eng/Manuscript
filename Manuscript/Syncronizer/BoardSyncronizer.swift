@@ -23,8 +23,6 @@ class BoardSyncronizer: DataSyncronizer {
     private let boardCoreDataManager: BoardCoreDataManager
     private let boardService: BoardService
 
-    private let state: CurrentValueSubject<BoardSyncronizerState, Never> = CurrentValueSubject(.initial)
-
     init(coreDataStack: CoreDataStack, startupUtils: StartupUtils, boardCoreDataManager: BoardCoreDataManager, boardService: BoardService) {
         self.coreDataStack = coreDataStack
         self.startupUtils = startupUtils
@@ -34,29 +32,8 @@ class BoardSyncronizer: DataSyncronizer {
     
     func syncronize(items: [ComparatorResult<BoardBusinessModel>], completion: @escaping () -> Void) {
         
-        print("DEBUG_LOG: Number of items is \(items.count)")
-        
-        if items.count == 0 {
-            completion()
-            return
-        }
-        var index = 0
-        
-        let x = state.sink { completion in } receiveValue: { workspaceSyncronizerState in
-                        
-            if workspaceSyncronizerState == .done {
-                index += 1
-            }
-            
-            print("DEBUG_LOG: Index is \(index)")
+        let group = DispatchGroup()
 
-            
-            if index == items.count {
-                print("DEBUG_LOG: Sync DB Completion did send!")
-                index = 0
-                completion()
-            }
-        }
         
         items.filter { $0.target == .local && $0.operation == .insertion }.map { $0.businessObject }.forEach { boardBusinessModelToBeInserted in
             insertIntoLocal(item: boardBusinessModelToBeInserted)
@@ -71,26 +48,32 @@ class BoardSyncronizer: DataSyncronizer {
         }
         
         items.filter { $0.target == .server && $0.operation == .insertion }.map { $0.businessObject }.forEach { boardBusinessModelToBeInserted in
-            insertIntoServer(item: boardBusinessModelToBeInserted)
+            group.enter()
+            insertIntoServer(item: boardBusinessModelToBeInserted) {
+                defer {
+                    group.leave()
+                }
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.global(qos: .userInitiated)) {
+            completion()
         }
     }
     
     private func insertIntoLocal(item: BoardBusinessModel) {
         boardCoreDataManager.insertIntoLocalOnBackgroundThread(item: item)
-        self.state.send(.done)
     }
     
     private func updateIntoLocal(item: BoardBusinessModel) {
         boardCoreDataManager.updateIntoLocalInBackgrooundThread(item: item)
-        self.state.send(.done)
     }
     
     private func deleteIntoLocal(item: BoardBusinessModel) {
         boardCoreDataManager.deleteInLocalOnBackgroundThread(item: item)
-        self.state.send(.done)
     }
     
-    private func insertIntoServer(item: BoardBusinessModel) {
+    private func insertIntoServer(item: BoardBusinessModel, completion: @escaping () -> Void) {
         boardService.createNewBoard(requestBody: BoardRequest(workspaceId: Int(item.ownerWorkspaceId), assetUrl: item.assetUrl, title: item.title))
             .sink { completion in } receiveValue: { [weak self] boardResponse in
                 
@@ -105,7 +88,7 @@ class BoardSyncronizer: DataSyncronizer {
                         boardToBeUpdated.isInitiallySynced = true
                         do {
                             try context.save()
-                            self.state.send(.done)
+                            completion()
                         } catch {
                             fatalError()
                         }

@@ -23,7 +23,6 @@ class WorkspaceSyncronizer: DataSyncronizer {
     private let startupUtils: StartupUtils
     private let workspaceCoreDataManager: WorkspaceCoreDataManager
     
-    private let state: CurrentValueSubject<WorkspaceSyncronizerState, Never> = CurrentValueSubject(.initial)
 
     init(coreDataStack: CoreDataStack, workspaceService: WorkspaceService, startupUtils: StartupUtils, workspaceCoreDataManager: WorkspaceCoreDataManager) {
         self.coreDataStack = coreDataStack
@@ -33,25 +32,8 @@ class WorkspaceSyncronizer: DataSyncronizer {
     }
     
     func syncronize(items: [ComparatorResult<Model>], completion: @escaping () -> Void) {
-        if items.count == 0 {
-            completion()
-            return
-        }
-        var index = 0
-        
-        state.sink { completion in } receiveValue: { workspaceSyncronizerState in
+        let group = DispatchGroup()
             
-            if workspaceSyncronizerState == .done {
-                index += 1
-            }
-            
-            if index == items.count {
-                completion()
-            }
-        }
-        
-        .store(in: &tokens)
-        
         items.filter { $0.target == .local && $0.operation == .insertion }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeInserted in
             insertIntoLocal(item: workspaceBusinessModelToBeInserted)
         }
@@ -65,15 +47,28 @@ class WorkspaceSyncronizer: DataSyncronizer {
         }
         
         items.filter { $0.target == .server && $0.operation == .insertion }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeInserted in
-            insertIntoServer(item: workspaceBusinessModelToBeInserted)
+            group.enter()
+            insertIntoServer(item: workspaceBusinessModelToBeInserted) {
+                group.leave()
+            }
         }
         
         items.filter { $0.target == .server && $0.operation == .update }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeInserted in
-            updateIntoServer(item: workspaceBusinessModelToBeInserted)
+            group.enter()
+            updateIntoServer(item: workspaceBusinessModelToBeInserted) {
+                group.leave()
+            }
         }
         
         items.filter { $0.target == .server && $0.operation == .removal }.map { $0.businessObject }.forEach { workspaceBusinessModelToBeDeleted in
-            deleteIntoServer(item: workspaceBusinessModelToBeDeleted)
+            group.enter()
+            deleteIntoServer(item: workspaceBusinessModelToBeDeleted) {
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: DispatchQueue.global(qos: .userInitiated)) {
+            completion()
         }
     }
 
@@ -81,20 +76,17 @@ class WorkspaceSyncronizer: DataSyncronizer {
     
     private func insertIntoLocal(item: WorkspaceBusinessModel) {
         workspaceCoreDataManager.insertIntoLocalOnBackgroundThread(item: item)
-        self.state.send(.done)
     }
     
     private func updateIntoLocal(item: WorkspaceBusinessModel) {
         workspaceCoreDataManager.updateIntoLocalInBackgrooundThread(item: item)
-        self.state.send(.done)
     }
     
     private func deleteIntoLocal(item: WorkspaceBusinessModel) {
         workspaceCoreDataManager.deleteInLocalOnBackgroundThread(item: item)
-        self.state.send(.done)
     }
     
-    private func insertIntoServer(item: WorkspaceBusinessModel) {
+    private func insertIntoServer(item: WorkspaceBusinessModel, completion: @escaping () -> Void) {
         workspaceService.createNewWorkspace(requestBody: WorkspaceRequest(title: item.title, description: item.mainDescription ?? "",
                                                shareEnabled: false))
         .sink { completion in } receiveValue: { [weak self] workspaceResponse in
@@ -109,7 +101,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
                     worskaceToBeUpdated.isInitiallySynced = true
                     do {
                         try context.save()
-                        self.state.send(.done)
+                        completion()
                     } catch {
                         fatalError()
                     }
@@ -119,7 +111,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
         .store(in: &tokens)
     }
     
-    private func updateIntoServer(item: WorkspaceBusinessModel) {
+    private func updateIntoServer(item: WorkspaceBusinessModel, completion: @escaping () -> Void) {
         workspaceService.updateWorkspaceById(workspaceId: "\(item.remoteId)", body: WorkspaceRequest(title: item.title,
                                                                                                         description: item.mainDescription ?? "",
                                                                                                         shareEnabled: item.sharingEnabled))
@@ -134,6 +126,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
                     worskaceToBeUpdated.lastModifiedDate = workspaceResponse.lastModifiedDate
                     do {
                         try context.save()
+                        completion()
                     } catch {
                         fatalError()
                     }
@@ -144,10 +137,11 @@ class WorkspaceSyncronizer: DataSyncronizer {
         .store(in: &tokens)
     }
     
-    private func deleteIntoServer(item: WorkspaceBusinessModel) {
+    private func deleteIntoServer(item: WorkspaceBusinessModel, completion: @escaping () -> Void) {
         workspaceService.deleteWorkspaceById(workspaceId: "\(item.remoteId)")
         .sink { completion in } receiveValue: { response in
             print(response)
+            completion()
         }
         .store(in: &tokens)
     }
