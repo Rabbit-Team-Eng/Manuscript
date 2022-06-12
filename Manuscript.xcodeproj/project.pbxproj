@@ -12,6 +12,13 @@
 		092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FF285584750032B2D5 /* BoardSelectorView.swift */; };
 		092F5202285585040032B2D5 /* BoardSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5201285585040032B2D5 /* BoardSelectorCell.swift */; };
 		092F5205285586440032B2D5 /* TaskCreateSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5204285586440032B2D5 /* TaskCreateSectionType.swift */; };
+		092F520828558E240032B2D5 /* TaskGeneralInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F520728558E240032B2D5 /* TaskGeneralInfoCellModel.swift */; };
+		092F520A28558E350032B2D5 /* TaskGeneralInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F520928558E350032B2D5 /* TaskGeneralInfoCell.swift */; };
+		092F520C28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F520B28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift */; };
+		092F520E28558E550032B2D5 /* TaskGeneralInfoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F520D28558E550032B2D5 /* TaskGeneralInfoContentView.swift */; };
+		092F521028558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F520F28558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift */; };
+		092F521228558FA60032B2D5 /* TaskCreateActionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */; };
+		092F521428558FC50032B2D5 /* TaskCreateAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F521328558FC50032B2D5 /* TaskCreateAction.swift */; };
 		0930A8F8284C09420049605B /* BoardCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0930A8F7284C09420049605B /* BoardCreateViewController.swift */; };
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
 		096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
@@ -319,6 +326,13 @@
 		092F51FF285584750032B2D5 /* BoardSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorView.swift; sourceTree = "<group>"; };
 		092F5201285585040032B2D5 /* BoardSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorCell.swift; sourceTree = "<group>"; };
 		092F5204285586440032B2D5 /* TaskCreateSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateSectionType.swift; sourceTree = "<group>"; };
+		092F520728558E240032B2D5 /* TaskGeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGeneralInfoCellModel.swift; sourceTree = "<group>"; };
+		092F520928558E350032B2D5 /* TaskGeneralInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGeneralInfoCell.swift; sourceTree = "<group>"; };
+		092F520B28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGeneralInfoConfiguration.swift; sourceTree = "<group>"; };
+		092F520D28558E550032B2D5 /* TaskGeneralInfoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGeneralInfoContentView.swift; sourceTree = "<group>"; };
+		092F520F28558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGeneralInfoSectionHeaderView.swift; sourceTree = "<group>"; };
+		092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateActionProtocol.swift; sourceTree = "<group>"; };
+		092F521328558FC50032B2D5 /* TaskCreateAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateAction.swift; sourceTree = "<group>"; };
 		0930A8F7284C09420049605B /* BoardCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreateViewController.swift; sourceTree = "<group>"; };
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
 		096BEDA0284ABBDC001C7136 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
@@ -546,9 +560,10 @@
 		092F51FA285583AD0032B2D5 /* Create */ = {
 			isa = PBXGroup;
 			children = (
+				092F520628558DFF0032B2D5 /* GeneralInformation */,
+				092F5203285585640032B2D5 /* BoardSelector */,
 				092F5204285586440032B2D5 /* TaskCreateSectionType.swift */,
 				099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */,
-				092F5203285585640032B2D5 /* BoardSelector */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -562,6 +577,18 @@
 				092F5201285585040032B2D5 /* BoardSelectorCell.swift */,
 			);
 			path = BoardSelector;
+			sourceTree = "<group>";
+		};
+		092F520628558DFF0032B2D5 /* GeneralInformation */ = {
+			isa = PBXGroup;
+			children = (
+				092F520728558E240032B2D5 /* TaskGeneralInfoCellModel.swift */,
+				092F520928558E350032B2D5 /* TaskGeneralInfoCell.swift */,
+				092F520B28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift */,
+				092F520D28558E550032B2D5 /* TaskGeneralInfoContentView.swift */,
+				092F520F28558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift */,
+			);
+			path = GeneralInformation;
 			sourceTree = "<group>";
 		};
 		09323AEA284583BE00006C1D /* Utilities */ = {
@@ -1064,6 +1091,8 @@
 			children = (
 				092F51FA285583AD0032B2D5 /* Create */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
+				092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */,
+				092F521328558FC50032B2D5 /* TaskCreateAction.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1479,6 +1508,7 @@
 				09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */,
 				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
 				09D276122825CE2300933F16 /* TaskDB.xcdatamodeld in Sources */,
+				092F521428558FC50032B2D5 /* TaskCreateAction.swift in Sources */,
 				0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */,
 				09D275F92825CCB300933F16 /* WorkspaceError.swift in Sources */,
 				09D275D42825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift in Sources */,
@@ -1492,6 +1522,7 @@
 				09D275B62825C83400933F16 /* TaskAPI.swift in Sources */,
 				09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */,
 				09D276342825CE6000933F16 /* ComparatorProtocol.swift in Sources */,
+				092F521028558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift in Sources */,
 				099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */,
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
 				097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */,
@@ -1499,6 +1530,7 @@
 				099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */,
 				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
 				099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */,
+				092F520C28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
 				096EF7D12853EA93003BEC41 /* GeneralInfoCell.swift in Sources */,
 				096EF7CE2853EA2F003BEC41 /* WorksapceDetailState.swift in Sources */,
@@ -1572,6 +1604,7 @@
 				096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */,
 				09D275B42825C82000933F16 /* BoardService.swift in Sources */,
 				09D2763A2825CE6000933F16 /* BoardComparator.swift in Sources */,
+				092F520828558E240032B2D5 /* TaskGeneralInfoCellModel.swift in Sources */,
 				099A90AA2851929100B0F4B7 /* TaskCreateViewController.swift in Sources */,
 				09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */,
 				0930A8F8284C09420049605B /* BoardCreateViewController.swift in Sources */,
@@ -1586,6 +1619,7 @@
 				099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */,
 				09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */,
 				09DCED0E282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */,
+				092F520A28558E350032B2D5 /* TaskGeneralInfoCell.swift in Sources */,
 				09D275AE2825B93400933F16 /* Palette.swift in Sources */,
 				09D2753B2825B5D700933F16 /* AuthenticationEvent.swift in Sources */,
 				09D27653282605E900933F16 /* MemberEntity+CoreDataClass.swift in Sources */,
@@ -1622,6 +1656,7 @@
 				09D275762825B78600933F16 /* MainInjector.swift in Sources */,
 				09D276582826FB9700933F16 /* DataSyncronizer.swift in Sources */,
 				09D275A82825B90900933F16 /* TasksViewController.swift in Sources */,
+				092F520E28558E550032B2D5 /* TaskGeneralInfoContentView.swift in Sources */,
 				09D275782825B78C00933F16 /* OnboardingInjector.swift in Sources */,
 				09D275E12825CBE800933F16 /* WorkspaceRequest.swift in Sources */,
 				09D275A02825B8C300933F16 /* OnboardingViewModel.swift in Sources */,
@@ -1629,6 +1664,7 @@
 				096EF7DB2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift in Sources */,
 				09D275C62825C96C00933F16 /* DeleteTaskRequest.swift in Sources */,
 				09D2763C2825CE6000933F16 /* DateTimeUtils.swift in Sources */,
+				092F521228558FA60032B2D5 /* TaskCreateActionProtocol.swift in Sources */,
 				09D276412825CE6000933F16 /* WorkspaceBusinessModel.swift in Sources */,
 				09D275872825B80700933F16 /* UserRequest.swift in Sources */,
 				09DD9D1F2851A54400CA6774 /* BoardDetailViewController.swift in Sources */,
