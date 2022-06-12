@@ -40,17 +40,17 @@ class BoardSelectorView: UIView, UIContentView {
         applyConfiguration(configuration: configuration)
         
         NSLayoutConstraint.activate([
-//            titleTexLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleTexLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleTexLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+//            titleTexLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleTexLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
             titleTexLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            titleTexLabel.heightAnchor.constraint(equalToConstant: 30),
-//            titleTexLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            titleTexLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             
+
             iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            iconImageView.widthAnchor.constraint(equalToConstant: 30),
-            iconImageView.heightAnchor.constraint(equalToConstant: 30)
+            iconImageView.widthAnchor.constraint(equalToConstant: 25),
+            iconImageView.heightAnchor.constraint(equalToConstant: 25)
         ])
         
     }
