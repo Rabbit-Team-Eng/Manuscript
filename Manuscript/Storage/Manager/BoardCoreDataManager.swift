@@ -38,7 +38,6 @@ class BoardCoreDataManager {
                 let worskpaceEntity = workspace.first!
                 worskpaceEntity.addToBoards(boardEntity)
                 try context.save()
-                print("DEBUG_LOG: Saved the Item Into Core Data!")
             } catch {
                 fatalError()
             }

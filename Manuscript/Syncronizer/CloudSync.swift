@@ -27,31 +27,30 @@ final class CloudSync {
     
     func syncronize() {
         
-
         workspaceService.getAllWorkspacesAsBusinessObjects()
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { completion in } receiveValue: { [weak self] allWorkspaces in guard let self = self else { return }
                 
-                let group = DispatchGroup()
+                let dispatchers = DispatchGroup()
                 
                 let currentWorkspaces = self.dataProvider.fethAllWorkspacesOnBackgroundThread()
                 let workspacesDiff = WorkspaceComparator.compare(responseCollection: allWorkspaces, cachedCollection: currentWorkspaces)
                 
-                group.enter()
+                dispatchers.enter()
                 self.workspaceSyncronizer.syncronize(items: workspacesDiff) {
-                    group.leave()
+                    dispatchers.leave()
                 }
                 
                 let currentBoards = self.dataProvider.fethAllBoardsOnBackgroundThread()
                 let boardsServer = allWorkspaces.compactMap { $0.boards }.flatMap { $0 }
                 let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: currentBoards)
                 
-                group.enter()
+                dispatchers.enter()
                 self.boardSyncronizer.syncronize(items: boardsDiff) {
-                    group.leave()
+                    dispatchers.leave()
                 }
                 
-                group.notify(queue: .main) {
+                dispatchers.notify(queue: .main) {
                     print("\n========================== Database did finish syncronization with the server ==========================\n")
                     NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
                 }
