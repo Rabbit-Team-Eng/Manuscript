@@ -50,9 +50,7 @@ class BoardSyncronizer: DataSyncronizer {
         items.filter { $0.target == .server && $0.operation == .insertion }.map { $0.businessObject }.forEach { boardBusinessModelToBeInserted in
             group.enter()
             insertIntoServer(item: boardBusinessModelToBeInserted) {
-                defer {
-                    group.leave()
-                }
+                group.leave()
             }
         }
         

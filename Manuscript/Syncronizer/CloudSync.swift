@@ -26,33 +26,37 @@ final class CloudSync {
     }
     
     func syncronize() {
-        Publishers.Zip(workspaceService.getAllWorkspacesAsBusinessObjects(), boardsService.getAllBoardsBusinessModel())
+        
+        let group = DispatchGroup()
+
+        workspaceService.getAllWorkspacesAsBusinessObjects()
             .receive(on: DispatchQueue.global(qos: .userInitiated))
-            .sink { completion in } receiveValue: { [weak self] (worskapcesServer, boardsServer) in guard let self = self else { return }
+            .sink { completion in } receiveValue: { [weak self] allWorkspaces in guard let self = self else { return }
                 
                 let currentWorkspaces = self.dataProvider.fethAllWorkspacesOnBackgroundThread()
-                let workspacesDiff = WorkspaceComparator.compare(responseCollection: worskapcesServer, cachedCollection: currentWorkspaces)
+                let workspacesDiff = WorkspaceComparator.compare(responseCollection: allWorkspaces, cachedCollection: currentWorkspaces)
                 
-                self.workspaceSyncronizer.syncronize(items: workspacesDiff, completion: { [weak self] in
-                    guard let self = self else { return }
-                    
-                    let currentBoards = self.dataProvider.fethAllBoardsOnBackgroundThread()
-                    let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: currentBoards)
-                    self.boardSyncronizer.syncronize(items: boardsDiff) { [weak self] in
-                        guard let self = self else { return }
-                        
-                        print("DEBUG_LOG: ==================================== DB SYNCED ====================================")
+                group.enter()
+                self.workspaceSyncronizer.syncronize(items: workspacesDiff) {
+                    group.leave()
+                }
+                
+                let currentBoards = self.dataProvider.fethAllBoardsOnBackgroundThread()
+                let boardsServer = allWorkspaces.compactMap { $0.boards }.flatMap { $0 }
+                let boardsDiff = BoardComparator.compare(responseCollection: boardsServer, cachedCollection: currentBoards)
+                
+                group.enter()
+                self.boardSyncronizer.syncronize(items: boardsDiff) {
+                    group.leave()
+                }
+                
+                group.notify(queue: .main) {
+                    NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
+                }
 
-                        self.notify()
-                    }
-                })
-            }
-            .store(in: &tokens)
+        }
+        .store(in: &tokens)
     }
     
-    private func notify() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
-        }
-    }
+
 }
