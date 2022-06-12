@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BoardSelectorCell: UICollectionViewListCell {
+class BoardSelectorCell: UICollectionViewCell {
     
     var model: BoardSelectorCellModel?
 

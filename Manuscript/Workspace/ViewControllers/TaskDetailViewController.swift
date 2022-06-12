@@ -116,8 +116,30 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
 
         myColectionView.register(TaskGeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier)
         
+        let creationConstraints = [
+            closeButton.centerYAnchor.constraint(equalTo: titleTexLabel.centerYAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            closeButton.heightAnchor.constraint(equalToConstant: 24),
+            closeButton.widthAnchor.constraint(equalToConstant: 24),
+            
+            titleTexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+            titleTexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            titleTexLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            titleTexLabel.heightAnchor.constraint(equalToConstant: 24),
+
+            myColectionView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 16),
+            myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            myColectionView.bottomAnchor.constraint(equalTo: createNewTaskButton.topAnchor, constant: -32),
+            
+            createNewTaskButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
+            createNewTaskButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            createNewTaskButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            createNewTaskButton.heightAnchor.constraint(equalToConstant: 50)
+            
+        ]
         
-        NSLayoutConstraint.activate([
+        let editConstraints = [
             closeButton.centerYAnchor.constraint(equalTo: titleTexLabel.centerYAnchor),
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             closeButton.heightAnchor.constraint(equalToConstant: 24),
@@ -143,21 +165,24 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
             deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
             deleteButton.heightAnchor.constraint(equalToConstant: 50),
             
-        ])
+        ]
         
         
         if taskDetailState == .creation {
-
+//            NSLayoutConstraint.activate(creationConstraints)
+            NSLayoutConstraint.activate(editConstraints)
+//            deleteButton.removeFromSuperview()
         }
         
         if taskDetailState == .edit {
+            NSLayoutConstraint.activate(editConstraints)
 
         }
         
         var localSnapshot: [TaskCreateCellModel] = []
         
         
-        if let selectedWorkspace = workspace {
+        if let selectedWorkspace = workspace, let board = selectedBoard {
             localSnapshot.append(
                 TaskCreateCellModel(id: "0",
                                     generalInformationCellModel: TaskGeneralInfoCellModel(title: "",
@@ -165,12 +190,22 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
                                                                                           isEditable: true,
                                                                                           needPlaceholders: true)))
             
-            selectedWorkspace.boards?.forEach({ board in
-                localSnapshot.append(TaskCreateCellModel(id: "\(board.remoteId)",
-                                                         boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
-                                                                                                        iconResource: board.assetUrl)))
+            let selectedBoard  = TaskCreateCellModel(id: "\(board.remoteId)",
+                                                     boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
+                                                                                                    iconResource: board.assetUrl))
+            localSnapshot.append(contentsOf: [selectedBoard])
 
-            })
+            if let otherBoards = selectedWorkspace.boards?.filter { "\($0.remoteId)" != "\(selectedBoard.id)"}.map { board in
+                TaskCreateCellModel(id: "\(board.remoteId)",
+                                                         boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
+                                                                                                        iconResource: board.assetUrl))
+            } {
+                localSnapshot.append(contentsOf: otherBoards)
+            }
+            
+            
+            
+
         }
         
         applySnapshot(items: localSnapshot)
@@ -196,7 +231,10 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
             }
         }
         
-        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
+            guard let self = self else { return }
+            self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: true, scrollPosition: .top)
+        }
     }
     
     @objc private func closeScreen(_ sender: UIButton) {

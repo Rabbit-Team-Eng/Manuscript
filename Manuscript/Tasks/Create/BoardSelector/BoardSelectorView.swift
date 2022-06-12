@@ -14,7 +14,6 @@ class BoardSelectorView: UIView, UIContentView {
         label.textAlignment = .left
         label.textColor = .white
         label.font = UIFont.preferredFont(for: .headline, weight: .regular)
-        label.numberOfLines = 2
         label.adjustsFontForContentSizeCategory = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
