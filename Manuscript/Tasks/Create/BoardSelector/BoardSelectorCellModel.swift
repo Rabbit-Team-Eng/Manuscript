@@ -8,7 +8,6 @@
 import Foundation
 
 struct BoardSelectorCellModel: Hashable {
-    let id: String
     let title: String
     let iconResource: String
     

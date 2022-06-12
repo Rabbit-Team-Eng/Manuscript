@@ -10,10 +10,10 @@ import Foundation
 struct TaskCreateCellModel: Hashable {
     let id: String
     let section: TaskCreateSectionType
-    let generalInformationCellModel: GeneralInfoCellModel?
+    let generalInformationCellModel: TaskGeneralInfoCellModel?
     let boardSelectorCellModel: BoardSelectorCellModel?
 
-    init(id: String, generalInformationCellModel: GeneralInfoCellModel) {
+    init(id: String, generalInformationCellModel: TaskGeneralInfoCellModel) {
         self.id = id
         self.section = .generalInformationSection
         self.generalInformationCellModel = generalInformationCellModel
@@ -22,7 +22,7 @@ struct TaskCreateCellModel: Hashable {
     
     init(id: String, boardSelectorCellModel: BoardSelectorCellModel) {
         self.id = id
-        self.section = .boardSelector
+        self.section = .boardSelectorSection
         self.generalInformationCellModel = nil
         self.boardSelectorCellModel = boardSelectorCellModel
     }

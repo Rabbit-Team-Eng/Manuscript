@@ -7,7 +7,25 @@
 
 import Foundation
 
-enum TaskCreateSectionType {
+enum TaskCreateSectionType: Hashable {
     case generalInformationSection
-    case boardSelector
+    case boardSelectorSection
+    
+    var sectionHeaderTitle: String? {
+        switch self {
+        case .generalInformationSection:
+            return "General Information"
+        case .boardSelectorSection:
+            return "Select Board"
+        default:
+            return nil
+        }
+    }
+    
+    var sectionFooterTitle: String? {
+        switch self {
+        default:
+            return nil
+        }
+    }
 }

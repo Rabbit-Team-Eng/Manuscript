@@ -8,5 +8,5 @@
 import Foundation
 
 protocol TaskCreateActionProtocol: NSObject {
-    func actionDidHappen(action: WorkspaceDetailAction)
+    func actionDidHappen(action: TaskCreateAction)
 }

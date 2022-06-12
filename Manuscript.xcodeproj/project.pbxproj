@@ -567,6 +567,8 @@
 				092F5204285586440032B2D5 /* TaskCreateSectionType.swift */,
 				099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */,
 				092F5215285591210032B2D5 /* TaskCreateCellModel.swift */,
+				092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */,
+				092F521328558FC50032B2D5 /* TaskCreateAction.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -1094,8 +1096,6 @@
 			children = (
 				092F51FA285583AD0032B2D5 /* Create */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
-				092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */,
-				092F521328558FC50032B2D5 /* TaskCreateAction.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";

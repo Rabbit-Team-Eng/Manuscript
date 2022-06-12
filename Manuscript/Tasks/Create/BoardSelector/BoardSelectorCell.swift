@@ -23,7 +23,7 @@ class BoardSelectorCell: UICollectionViewListCell {
             backgroundConfiguration = newBgConfiguration
         } else {
             var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
-            newBgConfiguration.backgroundColor = Palette.mediumDarkGray
+            newBgConfiguration.backgroundColor = Palette.lightBlack
             backgroundConfiguration = newBgConfiguration
         }
     }
