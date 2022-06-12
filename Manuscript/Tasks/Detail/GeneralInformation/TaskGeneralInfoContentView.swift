@@ -9,7 +9,7 @@ import UIKit
 
 class TaskGeneralInfoContentView: UIView, UIContentView {
     
-    weak var delegate: TaskCreateActionProtocol?
+    weak var delegate: TaskDetailActionProtocol?
     private var model: TaskGeneralInfoCellModel?
     var configuration: UIContentConfiguration
     

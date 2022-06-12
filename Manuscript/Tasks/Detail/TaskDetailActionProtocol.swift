@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol TaskCreateActionProtocol: NSObject {
-    func actionDidHappen(action: TaskCreateAction)
+protocol TaskDetailActionProtocol: NSObject {
+    func actionDidHappen(action: TaskDetailAction)
 }

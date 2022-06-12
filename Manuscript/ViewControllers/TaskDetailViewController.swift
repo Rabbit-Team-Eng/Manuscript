@@ -12,16 +12,16 @@ enum TaskDetailState {
     case edit
 }
 
-class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
+class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
     
     weak var coordinator: TabBarCoordinator? = nil
 
-    func actionDidHappen(action: TaskCreateAction) {
+    func actionDidHappen(action: TaskDetailAction) {
         
     }
     
-    typealias DataSource = UICollectionViewDiffableDataSource<TaskCreateSectionType, TaskCreateCellModel>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<TaskCreateSectionType, TaskCreateCellModel>
+    typealias DataSource = UICollectionViewDiffableDataSource<TaskDetailSectionType, TaskDetailCellModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel>
     
     lazy var dataSource = createDataSource()
     
@@ -179,24 +179,24 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
 
         }
         
-        var localSnapshot: [TaskCreateCellModel] = []
+        var localSnapshot: [TaskDetailCellModel] = []
         
         
         if let selectedWorkspace = workspace, let board = selectedBoard {
             localSnapshot.append(
-                TaskCreateCellModel(id: "0",
+                TaskDetailCellModel(id: "0",
                                     generalInformationCellModel: TaskGeneralInfoCellModel(title: "",
                                                                                           description: "",
                                                                                           isEditable: true,
                                                                                           needPlaceholders: true)))
             
-            let selectedBoard  = TaskCreateCellModel(id: "\(board.remoteId)",
+            let selectedBoard  = TaskDetailCellModel(id: "\(board.remoteId)",
                                                      boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
                                                                                                     iconResource: board.assetUrl))
             localSnapshot.append(contentsOf: [selectedBoard])
 
             if let otherBoards = selectedWorkspace.boards?.filter({ "\($0.remoteId)" != "\(selectedBoard.id)"}).map({ board in
-                TaskCreateCellModel(id: "\(board.remoteId)",
+                TaskDetailCellModel(id: "\(board.remoteId)",
                                     boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
                                                                                    iconResource: board.assetUrl))
             }) {
@@ -208,13 +208,13 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
 
         } else {
             localSnapshot.append(
-                TaskCreateCellModel(id: "0",
+                TaskDetailCellModel(id: "0",
                                     generalInformationCellModel: TaskGeneralInfoCellModel(title: "",
                                                                                           description: "",
                                                                                           isEditable: true,
                                                                                           needPlaceholders: true)))
             
-            if let boards = workspace?.boards?.compactMap({ TaskCreateCellModel(id: "\($0.remoteId)", boardSelectorCellModel:
+            if let boards = workspace?.boards?.compactMap({ TaskDetailCellModel(id: "\($0.remoteId)", boardSelectorCellModel:
                                                                                     BoardSelectorCellModel(title: $0.title, iconResource: $0.assetUrl))}) {
                 localSnapshot.append(contentsOf: boards)
 
@@ -229,7 +229,7 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
     }
     
     
-    func applySnapshot(items: [TaskCreateCellModel], animatingDifferences: Bool = false) {
+    func applySnapshot(items: [TaskDetailCellModel], animatingDifferences: Bool = false) {
         var snapshot = Snapshot()
         
         snapshot.appendSections([.generalInformationSection])
@@ -332,7 +332,7 @@ extension TaskDetailViewController {
         return layoutSection
     }
     
-    func generalInfoCellRegistration() -> UICollectionView.CellRegistration<TaskGeneralInfoCell, TaskCreateCellModel> {
+    func generalInfoCellRegistration() -> UICollectionView.CellRegistration<TaskGeneralInfoCell, TaskDetailCellModel> {
         return .init { [weak self] cell, indexPath, itemIdentifier in
             guard let self = self else { return }
             cell.model = itemIdentifier.generalInformationCellModel
@@ -340,7 +340,7 @@ extension TaskDetailViewController {
         }
     }
     
-    func boardSelectorCellRegistration() -> UICollectionView.CellRegistration<BoardSelectorCell, TaskCreateCellModel> {
+    func boardSelectorCellRegistration() -> UICollectionView.CellRegistration<BoardSelectorCell, TaskDetailCellModel> {
         return .init { [weak self] cell, indexPath, itemIdentifier in
             guard let self = self else { return }
             cell.model = itemIdentifier.boardSelectorCellModel

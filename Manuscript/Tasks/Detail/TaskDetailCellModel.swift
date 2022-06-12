@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct TaskCreateCellModel: Hashable {
+struct TaskDetailCellModel: Hashable {
     let id: String
-    let section: TaskCreateSectionType
+    let section: TaskDetailSectionType
     let generalInformationCellModel: TaskGeneralInfoCellModel?
     let boardSelectorCellModel: BoardSelectorCellModel?
 

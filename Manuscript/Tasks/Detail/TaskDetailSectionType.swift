@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TaskCreateSectionType: Hashable {
+enum TaskDetailSectionType: Hashable {
     case generalInformationSection
     case boardSelectorSection
     

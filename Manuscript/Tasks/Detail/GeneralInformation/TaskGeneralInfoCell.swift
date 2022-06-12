@@ -10,7 +10,7 @@ import UIKit
 class TaskGeneralInfoCell: UICollectionViewCell {
     
     var model: TaskGeneralInfoCellModel?
-    weak var delegate: TaskCreateActionProtocol?
+    weak var delegate: TaskDetailActionProtocol?
     
     override func updateConfiguration(using state: UICellConfigurationState) {
         var newConfiguration = TaskGeneralInfoConfiguration().updated(for: state)

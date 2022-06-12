@@ -10,7 +10,7 @@ import UIKit
 struct TaskGeneralInfoConfiguration: UIContentConfiguration {
     
     var model: TaskGeneralInfoCellModel?
-    weak var delegate: TaskCreateActionProtocol?
+    weak var delegate: TaskDetailActionProtocol?
     
     func makeContentView() -> UIView & UIContentView {
         let view = TaskGeneralInfoContentView(configuration: self)

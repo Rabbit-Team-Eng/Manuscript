@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TaskCreateAction {
+enum TaskDetailAction {
     case titleDidUpdated
     case descriptionDidUpdated
 }
