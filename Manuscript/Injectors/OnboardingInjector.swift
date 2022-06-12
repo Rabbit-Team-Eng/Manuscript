@@ -17,7 +17,6 @@ class OnboardingInjector {
 
     init(applicationInjector: ApplicationInjector) {
         self.startupUtils = applicationInjector.provideStartupUtils()
-        print("AVERAKEDABRA: ALLOC -> OnboardingInjector")
     }
 
     func provideOnboardingViewModel() -> OnboardingViewModel {
@@ -30,6 +29,6 @@ class OnboardingInjector {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> OnboardingInjector")
+
     }
 }

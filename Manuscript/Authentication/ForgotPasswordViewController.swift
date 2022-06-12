@@ -44,7 +44,6 @@ class ForgotPasswordViewController: UIViewController {
 
     init(authenticationViewModel: AuthenticationViewModel) {
         self.authenticationViewModel = authenticationViewModel
-        print("AVERAKEDABRA: ALLOC -> ForgotPasswordViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -53,6 +52,6 @@ class ForgotPasswordViewController: UIViewController {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> ForgotPasswordViewController")
+
     }
 }

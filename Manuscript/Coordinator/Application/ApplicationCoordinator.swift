@@ -18,12 +18,11 @@ class ApplicationCoordinator: Coordinator, FlowFinisher {
         self.applicationMainWindow = applicationMainWindow
         self.injector = ApplicationInjector()
         self.startupUtils = injector.provideStartupUtils()
-        print("AVERAKEDABRA: ALLOC -> ApplicationCoordinator")
     }
 
     func start(with flow: Flowable) {
         if startupUtils.getAccessToken() != "" {
-            print("Access Token: \(startupUtils.getAccessToken())")
+            print("\nAccess Token: \(startupUtils.getAccessToken())\n")
             handleFlow(flow: ApplicationFlow.main(mainFLow: TabBarFlow.boards))
         } else {
             if startupUtils.isOnboarded() {
@@ -84,6 +83,6 @@ class ApplicationCoordinator: Coordinator, FlowFinisher {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> ApplicationCoordinator")
+
     }
 }

@@ -69,7 +69,7 @@ class BoardDetailViewController: UIViewController {
     }
     
     deinit {
-        print("AVERAKEDABRA: RELEASE -> BoardDetailViewController")
+
     }
 
 }

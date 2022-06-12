@@ -20,7 +20,6 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
 
     init(mainComponent: MainInjector) {
         self.mainComponent = mainComponent
-        print("AVERAKEDABRA: ALLOC -> BoardsCoordinator")
     }
 
     func start(with flow: Flowable) {
@@ -85,7 +84,7 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
     
     deinit {
-        print("AVERAKEDABRA: RELEASE -> BoardsCoordinator")
+        
     }
 
 }

@@ -33,14 +33,14 @@ class TasksViewController: UIViewController {
     }
 
     init() {
-        print("AVERAKEDABRA: ALLOC -> TasksViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
     deinit {
-        print("AVERAKEDABRA: RELEASE -> TasksViewController")
+
     }
 }

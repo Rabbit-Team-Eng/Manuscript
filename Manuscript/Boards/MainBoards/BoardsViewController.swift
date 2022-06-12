@@ -136,7 +136,6 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func refreshControllerDidCalled(_ sender: UIBarButtonItem) {
-        print("---------------Clicked---------------")
         boardsViewModel.syncTheCloud()
     }
     
@@ -267,7 +266,6 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         self.boardsViewModel = boardsViewModel
         self.startUpUtils = startUpUtils
         self.databaseManager = databaseManager
-        print("AVERAKEDABRA: ALLOC -> BoardsViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -275,7 +273,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         fatalError()
     }
     deinit {
-        print("AVERAKEDABRA: RELEASE -> BoardsViewController")
+
     }
 }
 

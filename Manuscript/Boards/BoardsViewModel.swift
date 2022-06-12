@@ -102,7 +102,6 @@ class BoardsViewModel {
     }
     
     @objc private func cloudSyncDidFinish() {
-        print("============================The Local Database Did Sync with the Cloud============================")
         fetchCurrentWorkspace()
     }
     

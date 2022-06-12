@@ -20,7 +20,6 @@ class AuthenticationViewModel {
     init(startupUtils: StartupUtils, authenticationManager: AuthenticationManager) {
         self.startupUtils = startupUtils
         self.authenticationManager = authenticationManager
-        print("AVERAKEDABRA: ALLOC -> AuthenticationViewModel")
     }
 
     func createNewUser(name: String, email: String, password: String) {
@@ -57,6 +56,6 @@ class AuthenticationViewModel {
     }
     
     deinit {
-        print("AVERAKEDABRA: RELEASE -> AuthenticationViewModel")
+
     }
 }

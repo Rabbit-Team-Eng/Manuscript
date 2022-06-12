@@ -263,7 +263,7 @@ class BoardCreateViewController: UIViewController {
     
     init(boardsViewModel: BoardsViewModel) {
         self.boardsViewModel = boardsViewModel
-        print("AVERAKEDABRA: ALLOC -> CreateNewBoardViewController")
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -272,7 +272,7 @@ class BoardCreateViewController: UIViewController {
     }
     
     deinit {
-        print("AVERAKEDABRA: RELEASE -> CreateNewBoardViewController")
+
     }
 
 }

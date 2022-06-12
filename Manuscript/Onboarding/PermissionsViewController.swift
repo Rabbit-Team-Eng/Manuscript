@@ -44,14 +44,14 @@ class PermissionsViewController: UIViewController {
 
     init(onboardingViewModel: OnboardingViewModel) {
         self.onboardingViewModel = onboardingViewModel
-        print("AVERAKEDABRA: ALLOC -> PermissionsViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
     deinit {
-        print("AVERAKEDABRA: RELEASE -> PermissionsViewController")
+
     }
 }

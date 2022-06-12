@@ -19,7 +19,6 @@ class AuthenticationCoordinator: Coordinator, RootProvider, FlowStarter {
 
     init(applicationInjector: ApplicationInjector) {
         self.authenticationComponent = AuthenticationInjector(applicationInjector: applicationInjector)
-        print("AVERAKEDABRA: ALLOC -> AuthenticationCoordinator")
     }
 
     func start(with flow: Flowable) {
@@ -68,6 +67,6 @@ class AuthenticationCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> AuthenticationCoordinator")
+
     }
 }

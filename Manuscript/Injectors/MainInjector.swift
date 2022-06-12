@@ -33,7 +33,6 @@ class MainInjector {
         self.startupUtils = applicationInjector.provideStartupUtils()
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
-        print("AVERAKEDABRA: ALLOC -> MainInjector")
     }
     
     func provideBoardCreator() -> BoardCreator {
@@ -171,6 +170,6 @@ class MainInjector {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> MainInjector")
+
     }
 }

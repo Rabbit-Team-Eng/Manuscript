@@ -26,7 +26,6 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     init(applicationInjector: ApplicationInjector) {
         self.mainInjector = MainInjector(applicationInjector: applicationInjector)
         super.init()
-        print("AVERAKEDABRA: ALLOC -> TabBarCoordinator")
         mainTabBarController.delegate = self
         
         let cloud = mainInjector.provideCloudSync()
@@ -125,6 +124,6 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     deinit {
-        print("AVERAKEDABRA: RELEASE -> TabBarCoordinator")
+        
     }
 }

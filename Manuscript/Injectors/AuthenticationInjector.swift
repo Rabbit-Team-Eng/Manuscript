@@ -22,7 +22,6 @@ class AuthenticationInjector {
         self.startupUtils = applicationInjector.provideStartupUtils()
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
-        print("AVERAKEDABRA: ALLOC -> AuthenticationComponent")
     }
 
     func provideAuthenticationViewModel() -> AuthenticationViewModel {
@@ -44,6 +43,6 @@ class AuthenticationInjector {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> AuthenticationComponent")
+
     }
 }

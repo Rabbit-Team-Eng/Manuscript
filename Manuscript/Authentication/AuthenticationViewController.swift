@@ -386,7 +386,7 @@ class AuthenticationViewController: UIViewController {
     
     init(authenticationViewModel: AuthenticationViewModel) {
         self.authenticationViewModel = authenticationViewModel
-        print("AVERAKEDABRA: ALLOC -> AuthenticationViewController")
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -395,6 +395,6 @@ class AuthenticationViewController: UIViewController {
     }
     
     deinit {
-        print("AVERAKEDABRA: RELEASE -> AuthenticationViewController")
+
     }
 }

@@ -13,7 +13,6 @@ class OnboardingViewModel {
 
     init(startupUtils: StartupUtils) {
         self.startupUtils = startupUtils
-        print("AVERAKEDABRA: ALLOC -> OnboardingViewModel")
     }
 
     func onboardingDidFinish() {
@@ -21,6 +20,6 @@ class OnboardingViewModel {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> OnboardingViewModel")
+
     }
 }

@@ -26,11 +26,11 @@ class ApplicationInjector {
     }
 
     init() {
-        print("AVERAKEDABRA: ALLOC -> ApplicationComponent")
+
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> ApplicationComponent")
+
     }
 }
 

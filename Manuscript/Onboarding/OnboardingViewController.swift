@@ -22,7 +22,6 @@ class OnboardingViewController: UIViewController {
 
     init(onboardingViewModel: OnboardingViewModel) {
         self.onboardingViewModel = onboardingViewModel
-        print("AVERAKEDABRA: ALLOC -> OnboardingViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,7 +51,8 @@ class OnboardingViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
     deinit {
-        print("AVERAKEDABRA: RELEASE -> OnboardingViewController")
+
     }
 }

@@ -19,7 +19,6 @@ class OnboardingCoordinator: Coordinator, RootProvider, FlowStarter {
 
     init(applicationInjector: ApplicationInjector) {
         self.onboardingInjector = OnboardingInjector(applicationInjector: applicationInjector)
-        print("AVERAKEDABRA: ALLOC -> OnboardingCoordinator")
     }
 
     func start(with flow: Flowable) {
@@ -60,6 +59,6 @@ class OnboardingCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     deinit {
-        print("AVERAKEDABRA: RELEASE -> OnboardingCoordinator")
+
     }
 }

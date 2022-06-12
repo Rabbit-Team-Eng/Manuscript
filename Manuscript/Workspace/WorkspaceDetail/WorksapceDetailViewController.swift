@@ -239,7 +239,6 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     init(workspacesViewModel: WorkspacesViewModel, worksapceDetailState: WorksapceDetailState) {
         self.workspacesViewModel = workspacesViewModel
         self.worksapceDetailState = worksapceDetailState
-        print("AVERAKEDABRA: ALLOC -> WorksapceDetailViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -247,7 +246,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
         fatalError()
     }
     deinit {
-        print("AVERAKEDABRA: RELEASE -> WorksapceDetailViewController")
+
     }
 
 }

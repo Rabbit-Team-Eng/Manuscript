@@ -58,15 +58,15 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
 
     init(workspacesViewModel: WorkspacesViewModel) {
         self.workspacesViewModel = workspacesViewModel
-        print("AVERAKEDABRA: ALLOC -> WorkspaceSelectorViewController")
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
     deinit {
-        print("AVERAKEDABRA: RELEASE -> WorkspaceSelectorViewController")
+
     }
     
     override func viewDidLoad() {
