@@ -8,6 +8,6 @@
 import Foundation
 
 enum TaskCreateSectionType {
-    case main
     case generalInformationSection
+    case boardSelector
 }

@@ -19,6 +19,7 @@
 		092F521028558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F520F28558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift */; };
 		092F521228558FA60032B2D5 /* TaskCreateActionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */; };
 		092F521428558FC50032B2D5 /* TaskCreateAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F521328558FC50032B2D5 /* TaskCreateAction.swift */; };
+		092F5216285591210032B2D5 /* TaskCreateCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5215285591210032B2D5 /* TaskCreateCellModel.swift */; };
 		0930A8F8284C09420049605B /* BoardCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0930A8F7284C09420049605B /* BoardCreateViewController.swift */; };
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
 		096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
@@ -333,6 +334,7 @@
 		092F520F28558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGeneralInfoSectionHeaderView.swift; sourceTree = "<group>"; };
 		092F521128558FA60032B2D5 /* TaskCreateActionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateActionProtocol.swift; sourceTree = "<group>"; };
 		092F521328558FC50032B2D5 /* TaskCreateAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateAction.swift; sourceTree = "<group>"; };
+		092F5215285591210032B2D5 /* TaskCreateCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateCellModel.swift; sourceTree = "<group>"; };
 		0930A8F7284C09420049605B /* BoardCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreateViewController.swift; sourceTree = "<group>"; };
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
 		096BEDA0284ABBDC001C7136 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				092F5203285585640032B2D5 /* BoardSelector */,
 				092F5204285586440032B2D5 /* TaskCreateSectionType.swift */,
 				099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */,
+				092F5215285591210032B2D5 /* TaskCreateCellModel.swift */,
 			);
 			path = Create;
 			sourceTree = "<group>";
@@ -1507,6 +1510,7 @@
 				09D275D02825CA2900933F16 /* DeleteBoardRequest.swift in Sources */,
 				09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */,
 				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
+				092F5216285591210032B2D5 /* TaskCreateCellModel.swift in Sources */,
 				09D276122825CE2300933F16 /* TaskDB.xcdatamodeld in Sources */,
 				092F521428558FC50032B2D5 /* TaskCreateAction.swift in Sources */,
 				0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */,
