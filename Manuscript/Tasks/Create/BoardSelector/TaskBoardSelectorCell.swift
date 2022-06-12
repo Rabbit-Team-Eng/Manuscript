@@ -19,11 +19,11 @@ class TaskBoardSelectorCell: UICollectionViewListCell {
         if state.isSelected {
             var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
             newBgConfiguration.backgroundColor = Palette.gray
-            newBgConfiguration.cornerRadius = 13
+            newBgConfiguration.cornerRadius = 9
             backgroundConfiguration = newBgConfiguration
         } else {
             var newBgConfiguration = UIBackgroundConfiguration.listGroupedCell()
-            newBgConfiguration.backgroundColor = Palette.lightBlack
+            newBgConfiguration.backgroundColor = Palette.mediumDarkGray
             backgroundConfiguration = newBgConfiguration
         }
     }
