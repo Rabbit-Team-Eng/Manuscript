@@ -117,7 +117,7 @@ public class WorkspaceService: WorkspaceAPI {
                                                            avatarUrl: memberResponse.avatarUrl ?? "null",
                                                            email: memberResponse.email,
                                                            isWorkspaceOwner: memberResponse.isWorkspaceOwner,
-                                                           ownerWorkspaceId: Int32(workspaceResponse.id),
+                                                           ownerWorkspaceId: Int64(workspaceResponse.id),
                                                            lastModifiedDate: memberResponse.lastModifiedDate,
                                                            isInitiallySynced: true,
                                                            isPendingDeletionOnTheServer: false))
@@ -127,22 +127,22 @@ public class WorkspaceService: WorkspaceAPI {
                         var tasks: [TaskBusinessModel] = []
 
                         boardResponse.tasks?.forEach { taskResponse in
-                            tasks.append(TaskBusinessModel(remoteId: Int32(taskResponse.id),
+                            tasks.append(TaskBusinessModel(remoteId: Int64(taskResponse.id),
                                                            title: taskResponse.title,
                                                            detail: taskResponse.detail,
                                                            dueDate: taskResponse.doeDate,
-                                                           ownerBoardId: Int32(taskResponse.boardId),
+                                                           ownerBoardId: Int64(taskResponse.boardId),
                                                            status: taskResponse.status ?? "",
-                                                           workspaceId: Int32(taskResponse.workspaceId),
+                                                           workspaceId: Int64(taskResponse.workspaceId),
                                                            lastModifiedDate: taskResponse.lastModifiedDate,
                                                            isInitiallySynced: true,
                                                            isPendingDeletionOnTheServer: false))
                         }
 
-                        boards.append(BoardBusinessModel(remoteId: Int32(boardResponse.id),
+                        boards.append(BoardBusinessModel(remoteId: Int64(boardResponse.id),
                                                          title: boardResponse.title,
                                                          assetUrl: boardResponse.assetUrl ?? "null",
-                                                         ownerWorkspaceId: Int32(boardResponse.workspaceId),
+                                                         ownerWorkspaceId: Int64(boardResponse.workspaceId),
                                                          lastModifiedDate: boardResponse.lastModifiedDate,
                                                          tasks: tasks,
                                                          isInitiallySynced: true,
@@ -152,7 +152,7 @@ public class WorkspaceService: WorkspaceAPI {
                     }
 
 
-                    let workspaceBO = WorkspaceBusinessModel(remoteId: Int32(workspaceResponse.id),
+                    let workspaceBO = WorkspaceBusinessModel(remoteId: Int64(workspaceResponse.id),
                                                              title: workspaceResponse.title,
                                                              mainDescription: workspaceResponse.description,
                                                              sharingEnabled: workspaceResponse.shareEnabled,

@@ -43,7 +43,7 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     func navigateToBoardsScreen() {
-        let vc = BoardsViewController(boardsViewModel: mainComponent.provideBoardsViewModel(), startUpUtils: mainComponent.provideStartUpUtils(), databaseManager: mainComponent.provideDatabaseManager())
+        let vc = BoardsViewController(boardsViewModel: mainComponent.provideBoardsViewModel(), startUpUtils: mainComponent.provideStartUpUtils(), databaseManager: mainComponent.provideDatabaseManager(), dataProvider: mainComponent.provideDataManager())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }
@@ -69,8 +69,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func navigateToBoardDetail(withId: String) {
-        let vc = BoardDetailViewController(boardId: withId, boardViewModel: mainComponent.provideBoardsViewModel())
+    func navigateToBoardDetail(selectedBoard: BoardBusinessModel, selectedWorkspace: WorkspaceBusinessModel) {
+        let vc = BoardDetailViewController(selectedWorkspace: selectedWorkspace,
+                                           selectedBoard: selectedBoard,
+                                           boardViewModel: mainComponent.provideBoardsViewModel())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }
@@ -79,8 +81,8 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.popViewController(animated: true)
     }
     
-    func presentCreateTaskSheet(boardId: String) {
-        parentCoordinator?.presentCreateTaskScreen()
+    func presentCreateTaskSheet(workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?) {
+        parentCoordinator?.presentTaskDetailScreen(taskDetailState: .creation, workspaceBusinessModel: workspaceBusinessModel, selectedBoard: selectedBoard)
     }
     
     deinit {

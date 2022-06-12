@@ -37,6 +37,8 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     typealias DataSource = UICollectionViewDiffableDataSource<BoardViewControllerSection, BoardCellModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<BoardViewControllerSection, BoardCellModel>
     
+    private let dataProvider: DataProvider
+    
     // TODO: Check how to avoid lazy
     private lazy var myColectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: createCompositionalLayout())
@@ -259,11 +261,14 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.remoteId else { return }
-        coordinator?.navigateToBoardDetail(withId: selectedBoardId)
+        let currentWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
+        let currentBoard = dataProvider.fetchCurrentBoardWithRemoteId(id: selectedBoardId)
+        coordinator?.navigateToBoardDetail(selectedBoard: currentBoard, selectedWorkspace: currentWorksapce)
     }
 
-    init(boardsViewModel: BoardsViewModel, startUpUtils: StartupUtils, databaseManager: DatabaseManager) {
+    init(boardsViewModel: BoardsViewModel, startUpUtils: StartupUtils, databaseManager: DatabaseManager, dataProvider: DataProvider) {
         self.boardsViewModel = boardsViewModel
+        self.dataProvider = dataProvider
         self.startUpUtils = startUpUtils
         self.databaseManager = databaseManager
         super.init(nibName: nil, bundle: nil)

@@ -26,7 +26,7 @@ class WorkspaceCoreDataManager {
             workspaceCoreDataEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: item.lastModifiedDate)
             workspaceCoreDataEntity.isInitiallySynced = item.isInitiallySynced
             workspaceCoreDataEntity.isPendingDeletionOnTheServer = item.isPendingDeletionOnTheServer
-            workspaceCoreDataEntity.mainDescription = item.mainDescription
+            workspaceCoreDataEntity.mainDescription = item.mainDescription ?? ""
             workspaceCoreDataEntity.sharingEnabled = item.sharingEnabled
             do {
                 try context.save()
@@ -45,7 +45,7 @@ class WorkspaceCoreDataManager {
            
             if let objectId = item.coreDataId, let workspaceCoreDataEntity = try? context.existingObject(with: objectId) as? WorkspaceEntity {
                 workspaceCoreDataEntity.title = item.title
-                workspaceCoreDataEntity.mainDescription = item.mainDescription
+                workspaceCoreDataEntity.mainDescription = item.mainDescription ?? ""
                 workspaceCoreDataEntity.sharingEnabled = item.sharingEnabled
                 workspaceCoreDataEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: item.lastModifiedDate)
                 do {

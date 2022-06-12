@@ -84,10 +84,10 @@ public class BoardService: BoardAPI {
                 let boards = response.items
                 var ret: [BoardBusinessModel] = []
                 boards.forEach { response in
-                    ret.append(BoardBusinessModel(remoteId: Int32(response.id),
+                    ret.append(BoardBusinessModel(remoteId: Int64(response.id),
                                                   title: response.title,
                                                   assetUrl: response.assetUrl ?? "",
-                                                  ownerWorkspaceId: Int32(response.workspaceId),
+                                                  ownerWorkspaceId: Int64(response.workspaceId),
                                                   lastModifiedDate: response.lastModifiedDate,
                                                   isInitiallySynced: true,
                                                   isPendingDeletionOnTheServer: false))

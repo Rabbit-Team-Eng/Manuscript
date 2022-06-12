@@ -11,7 +11,7 @@ import CoreData
 public struct WorkspaceBusinessModel: BusinessModelProtocol {
 
     public let mainDescription: String?
-    public let remoteId: Int32
+    public let remoteId: Int64
     public var coreDataId: NSManagedObjectID?
     public let lastModifiedDate: Date
     public let isInitiallySynced: Bool
@@ -21,7 +21,7 @@ public struct WorkspaceBusinessModel: BusinessModelProtocol {
     public let boards: [BoardBusinessModel]?
     public let members: [MemberBusinessModel]?
     
-    public init(remoteId: Int32, coreDataId: NSManagedObjectID? = nil, title: String, mainDescription: String? = nil, sharingEnabled: Bool, boards: [BoardBusinessModel]? = nil, members: [MemberBusinessModel]? = nil, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
+    public init(remoteId: Int64, coreDataId: NSManagedObjectID? = nil, title: String, mainDescription: String? = nil, sharingEnabled: Bool, boards: [BoardBusinessModel]? = nil, members: [MemberBusinessModel]? = nil, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
         self.remoteId = remoteId
         self.coreDataId = coreDataId
         self.title = title

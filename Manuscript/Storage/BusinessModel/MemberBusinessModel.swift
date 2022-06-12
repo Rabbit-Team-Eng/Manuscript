@@ -11,18 +11,18 @@ import CoreData
 public struct MemberBusinessModel: BusinessModelProtocol {
     public var coreDataId: NSManagedObjectID? = nil
     
-    public var remoteId: Int32
+    public var remoteId: Int64
     public let firstName: String
     public let lastName: String
     public let avatarUrl: String
     public let email: String
     public let isWorkspaceOwner: Bool
     public let isInitiallySynced: Bool
-    public let ownerWorkspaceId: Int32
+    public let ownerWorkspaceId: Int64
     public let lastModifiedDate: Date
     public let isPendingDeletionOnTheServer: Bool
 
-    public init(remoteId: Int32, firstName: String, lastName: String, avatarUrl: String, email: String, isWorkspaceOwner: Bool, ownerWorkspaceId: Int32, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
+    public init(remoteId: Int64, firstName: String, lastName: String, avatarUrl: String, email: String, isWorkspaceOwner: Bool, ownerWorkspaceId: Int64, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
         self.remoteId = remoteId
         self.firstName = firstName
         self.lastName = lastName

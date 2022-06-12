@@ -81,7 +81,7 @@ class BoardSyncronizer: DataSyncronizer {
                 
                 context.performAndWait {
                     if let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
-                        boardToBeUpdated.remoteId = Int32(boardResponse.id)
+                        boardToBeUpdated.remoteId = Int64(boardResponse.id)
                         boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
                         boardToBeUpdated.isInitiallySynced = true
                         do {

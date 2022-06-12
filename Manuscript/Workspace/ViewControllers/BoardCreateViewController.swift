@@ -216,7 +216,7 @@ class BoardCreateViewController: UIViewController {
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
         
-        boardsViewModel.createNewBoard(title: title, icon: icon, ownerWorkspaceId: Int32(UserDefaults.selectedWorkspaceId)!)
+        boardsViewModel.createNewBoard(title: title, icon: icon, ownerWorkspaceId: Int64(UserDefaults.selectedWorkspaceId)!)
     }
 
     override func viewWillLayoutSubviews() {

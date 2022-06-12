@@ -26,6 +26,7 @@ class BoardCoreDataManager {
             boardEntity.isInitiallySynced = item.isInitiallySynced
             boardEntity.isPendingDeletionOnTheServer = item.isPendingDeletionOnTheServer
             boardEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: item.lastModifiedDate)
+            boardEntity.mainDescription = ""
             boardEntity.ownerWorkspaceId = item.ownerWorkspaceId
             boardEntity.remoteId = item.remoteId
             boardEntity.title = item.title

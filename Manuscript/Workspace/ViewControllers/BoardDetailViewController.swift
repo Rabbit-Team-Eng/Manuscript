@@ -12,7 +12,8 @@ class BoardDetailViewController: UIViewController {
     
     weak var coordinator: BoardsCoordinator? = nil
 
-    private let boardId: String
+    private let selectedWorkspace: WorkspaceBusinessModel
+    private let selectedBoard: BoardBusinessModel
     private let boardViewModel: BoardsViewModel
     private var tokens: Set<AnyCancellable> = []
 
@@ -27,22 +28,14 @@ class BoardDetailViewController: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "slider.vertical.3"), style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
         ]
         
-        boardViewModel.events
-            .receive(on: RunLoop.main)
-            .sink { [weak self] event in guard let self = self else { return }
-            
-            if case .boardDetailDidFetch(let board) = event {
-                self.navigationItem.title = board.title
-            }
-
-        }
-        .store(in: &tokens)
+        
+        self.navigationItem.title = selectedBoard.title
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        boardViewModel.fetchCurrentBoard(id: boardId)
+        
     }
     
     @objc private func backButtonDidTap(_ sender: UIBarButtonItem) {
@@ -51,15 +44,16 @@ class BoardDetailViewController: UIViewController {
     
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateTaskSheet(boardId: boardId)
+        coordinator?.presentCreateTaskSheet(workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard)
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIBarButtonItem) {
         
     }
     
-    init(boardId: String, boardViewModel: BoardsViewModel) {
-        self.boardId = boardId
+    init(selectedWorkspace: WorkspaceBusinessModel, selectedBoard: BoardBusinessModel, boardViewModel: BoardsViewModel) {
+        self.selectedWorkspace = selectedWorkspace
+        self.selectedBoard = selectedBoard
         self.boardViewModel = boardViewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -30,8 +30,8 @@ class TasksCoordinator: Coordinator, RootProvider, FlowStarter {
         return navigationController
     }
     
-    func presentTaskCreationSheet() {
-        parentCoordinator?.presentCreateTaskScreen()
+    func presentTaskDetailSheet(taskDetailState: TaskDetailState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?) {
+        parentCoordinator?.presentTaskDetailScreen(taskDetailState: taskDetailState, workspaceBusinessModel: workspaceBusinessModel, selectedBoard: selectedBoard)
     }
 
     func startNewFlow(flow: Flowable) {
@@ -39,7 +39,7 @@ class TasksCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     func navigateToTasksScreen() {
-        let vc = TasksViewController()
+        let vc = TasksViewController(dataProvider: mainComponent.provideDataManager())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

@@ -63,22 +63,20 @@ class BoardsViewModel {
         } else {
             let selectedWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
             
-            if let firstWorkspace = selectedWorksapce {
-                events.send(.titleDidFetch(title: firstWorkspace.title))
-                UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
+            events.send(.titleDidFetch(title: selectedWorksapce.title))
+            UserDefaults.selectedWorkspaceId = "\(selectedWorksapce.remoteId)"
 
-                if let boards = firstWorkspace.boards {
-                    if boards.count == 0 {
-                        events.send(.noBoardIsCreated)
-                    } else {
-                        events.send(.boardsDidFetch(boards: boards))
-                    }
+            if let boards = selectedWorksapce.boards {
+                if boards.count == 0 {
+                    events.send(.noBoardIsCreated)
+                } else {
+                    events.send(.boardsDidFetch(boards: boards))
                 }
             }
         }
     }
     
-    func createNewBoard(title: String, icon: String, ownerWorkspaceId: Int32) {
+    func createNewBoard(title: String, icon: String, ownerWorkspaceId: Int64) {
         let newBoard = BoardBusinessModel(remoteId: -990,
                                           title: title,
                                           assetUrl: icon,

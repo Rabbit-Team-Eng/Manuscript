@@ -2,7 +2,7 @@
 //  MemberEntity+CoreDataProperties.swift
 //  Manuscript
 //
-//  Created by Tigran Ghazinyan on 5/6/22.
+//  Created by Tigran Ghazinyan on 6/11/22.
 //
 //
 
@@ -24,8 +24,8 @@ extension MemberEntity {
     @NSManaged public var isWorkspaceOwner: Bool
     @NSManaged public var lastModifiedDate: String
     @NSManaged public var lastName: String
-    @NSManaged public var ownerWorkspaceId: Int32
-    @NSManaged public var remoteId: Int32
+    @NSManaged public var ownerWorkspaceId: Int64
+    @NSManaged public var remoteId: Int64
     @NSManaged public var ownerWorkspace: WorkspaceEntity?
 
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BoardEntity" representedClassName="BoardEntity" syncable="YES">
         <attribute name="assetUrl" optional="YES" attributeType="String"/>
         <attribute name="isInitiallySynced" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isPendingDeletionOnTheServer" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" attributeType="String"/>
-        <attribute name="ownerWorkspaceId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="remoteId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mainDescription" attributeType="String"/>
+        <attribute name="ownerWorkspaceId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="remoteId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="ownerWorkspace" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkspaceEntity" inverseName="boards" inverseEntity="WorkspaceEntity"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TaskEntity" inverseName="ownerBoard" inverseEntity="TaskEntity"/>
@@ -20,8 +21,8 @@
         <attribute name="isWorkspaceOwner" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" attributeType="String"/>
         <attribute name="lastName" attributeType="String"/>
-        <attribute name="ownerWorkspaceId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="remoteId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ownerWorkspaceId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="remoteId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="ownerWorkspace" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkspaceEntity" inverseName="members" inverseEntity="WorkspaceEntity"/>
     </entity>
     <entity name="TaskEntity" representedClassName="TaskEntity" syncable="YES">
@@ -30,8 +31,8 @@
         <attribute name="isInitiallySynced" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isPendingDeletionOnTheServer" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" attributeType="String"/>
-        <attribute name="ownerBoardId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="remoteId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ownerBoardId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="remoteId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="status" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="workspaceId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -42,7 +43,7 @@
         <attribute name="isPendingDeletionOnTheServer" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" attributeType="String"/>
         <attribute name="mainDescription" optional="YES" attributeType="String"/>
-        <attribute name="remoteId" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="remoteId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sharingEnabled" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="boards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BoardEntity" inverseName="ownerWorkspace" inverseEntity="BoardEntity"/>
@@ -50,7 +51,7 @@
     </entity>
     <fetchRequest name="AllWorkspacesFetchRequest" entity="WorkspaceEntity"/>
     <elements>
-        <element name="BoardEntity" positionX="154.7373046875" positionY="-17.98114013671875" width="128" height="164"/>
+        <element name="BoardEntity" positionX="154.7373046875" positionY="-17.98114013671875" width="128" height="179"/>
         <element name="MemberEntity" positionX="189.0435791015625" positionY="218.296875" width="128" height="194"/>
         <element name="TaskEntity" positionX="452.68798828125" positionY="-33.20613098144531" width="128" height="194"/>
         <element name="WorkspaceEntity" positionX="-63" positionY="-18" width="128" height="164"/>

@@ -13,7 +13,7 @@ protocol Datasource {
     
     func fetchAllWorkspacesOnMainThread() -> [WorkspaceBusinessModel]
     func fethAllWorkspacesOnBackgroundThread() -> [WorkspaceBusinessModel]
-    func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel?
+    func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel
     
     func fetchAllBoardsOnMainThread() -> [BoardBusinessModel]
     func fethAllBoardsOnBackgroundThread() -> [BoardBusinessModel]
@@ -56,7 +56,7 @@ class DataProvider: Datasource {
         return returningBoard!
     }
     
-    func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel? {
+    func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel {
         var searchingWorkspace: WorkspaceBusinessModel? = nil
         
         let context = coreDataStack.databaseContainer.viewContext
@@ -139,8 +139,8 @@ class DataProvider: Datasource {
                 fatalError()
             }
         }
-        
-        return searchingWorkspace
+        // todo: handle error case
+        return searchingWorkspace!
     }
     
     func fetchAllBoardsOnMainThread() -> [BoardBusinessModel] {

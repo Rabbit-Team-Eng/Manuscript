@@ -2,7 +2,7 @@
 //  TaskEntity+CoreDataProperties.swift
 //  Manuscript
 //
-//  Created by Tigran Ghazinyan on 5/6/22.
+//  Created by Tigran Ghazinyan on 6/11/22.
 //
 //
 
@@ -21,11 +21,11 @@ extension TaskEntity {
     @NSManaged public var isInitiallySynced: Bool
     @NSManaged public var isPendingDeletionOnTheServer: Bool
     @NSManaged public var lastModifiedDate: String
-    @NSManaged public var ownerBoardId: Int32
-    @NSManaged public var remoteId: Int32
+    @NSManaged public var ownerBoardId: Int64
+    @NSManaged public var remoteId: Int64
     @NSManaged public var status: String
     @NSManaged public var title: String
-    @NSManaged public var workspaceId: Int32
+    @NSManaged public var workspaceId: Int64
     @NSManaged public var ownerBoard: BoardEntity?
 
 }

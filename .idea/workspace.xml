@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="03b41037-da4a-4b13-91c8-2bf667f7434d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Manuscript.xcodeproj/project.xcworkspace/xcuserdata/tigranes.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Manuscript/Resources/Assets.xcassets/red.colorset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Manuscript/ViewControllers/WorkspaceManager.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript.xcodeproj/xcuserdata/tigranes.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript.xcodeproj/xcuserdata/tigranes.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript.xcodeproj/xcuserdata/tigranes.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript.xcodeproj/xcuserdata/tigranes.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Boards/BoardDetail/BoardDetailViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/ViewControllers/BoardDetailViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Boards/BoardsViewModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Boards/BoardsViewModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Boards/CreateNewBoard/BoardCreateViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/ViewControllers/BoardCreateViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Boards/MainBoards/BoardsViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Boards/MainBoards/BoardsViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Coordinator/Boards/BoardsCoordinator.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Coordinator/Boards/BoardsCoordinator.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Coordinator/Main/TabBarCoordinator.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Coordinator/Main/TabBarCoordinator.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Coordinator/Tasks/TasksCoordinator.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Coordinator/Tasks/TasksCoordinator.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Network/Service/BoardService.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Network/Service/BoardService.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Network/Service/WorkspaceService.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Network/Service/WorkspaceService.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/BoardBusinessModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/BoardBusinessModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/BusinessModelProtocol.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/BusinessModelProtocol.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/MemberBusinessModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/MemberBusinessModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/TaskBusinessModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/TaskBusinessModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/WorkspaceBusinessModel.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/BusinessModel/WorkspaceBusinessModel.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Creators/BoardCreator.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Creators/BoardCreator.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/DataProvider.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/DataProvider.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Entitites/BoardEntity+CoreDataProperties.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Entitites/BoardEntity+CoreDataProperties.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Entitites/MemberEntity+CoreDataProperties.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Entitites/MemberEntity+CoreDataProperties.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Entitites/TaskEntity+CoreDataProperties.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Entitites/TaskEntity+CoreDataProperties.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Entitites/WorkspaceEntity+CoreDataProperties.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Entitites/WorkspaceEntity+CoreDataProperties.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Manager/BoardCoreDataManager.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Manager/BoardCoreDataManager.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/Manager/WorkspaceCoreDataManager.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/Manager/WorkspaceCoreDataManager.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Storage/TaskDB.xcdatamodeld/TaskDB.xcdatamodel/contents" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Storage/TaskDB.xcdatamodeld/TaskDB.xcdatamodel/contents" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Syncronizer/BoardSyncronizer.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Syncronizer/BoardSyncronizer.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Syncronizer/WorkspaceSyncronizer.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Syncronizer/WorkspaceSyncronizer.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Tasks/Create/BoardSelector/BoardSelectorView.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Tasks/Create/BoardSelector/BoardSelectorView.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Tasks/Create/TaskCreateViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/ViewControllers/TaskDetailViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Tasks/TasksViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Tasks/TasksViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Utils/Palette.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/Utils/Palette.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Workspace/WorkspaceDetail/WorksapceDetailViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/ViewControllers/WorksapceDetailViewController.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Manuscript/Workspace/WorkspaceSelector/WorkspaceSelectorViewController.swift" beforeDir="false" afterPath="$PROJECT_DIR$/Manuscript/ViewControllers/WorkspaceSelectorViewController.swift" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_FACDD058-5582-4F3A-B770-D2FB529B7627" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="AppCode" />
+    <option name="majorVersion" value="2021" />
+    <option name="minorVersion" value="3.3" />
+  </component>
+  <component name="ProjectId" id="2AT8z25v8Day5bgnDabFteIYIrm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager" selected="Application.Manuscript">
+    <list>
+      <item itemvalue="Application.Manuscript" />
+      <item itemvalue="Application.Database-Sample" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="03b41037-da4a-4b13-91c8-2bf667f7434d" name="Changes" comment="" />
+      <created>1655022473654</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655022473654</updated>
+      <workItem from="1655022474745" duration="134000" />
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -9,7 +9,7 @@ public protocol BusinessModelProtocol: Comparable {
     var lastModifiedDate: Date { get }
     var isInitiallySynced: Bool { get }
     var isPendingDeletionOnTheServer: Bool { get }
-    var remoteId: Int32 { get }
+    var remoteId: Int64 { get }
     var coreDataId: NSManagedObjectID? { get set }
 
 }

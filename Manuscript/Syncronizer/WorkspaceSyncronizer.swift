@@ -96,7 +96,7 @@ class WorkspaceSyncronizer: DataSyncronizer {
 
             context.performAndWait {
                 if let worskaceToBeUpdated = try? context.existingObject(with: coreDataId) as? WorkspaceEntity {
-                    worskaceToBeUpdated.remoteId = Int32(workspaceResponse.id)
+                    worskaceToBeUpdated.remoteId = Int64(workspaceResponse.id)
                     worskaceToBeUpdated.lastModifiedDate = workspaceResponse.lastModifiedDate
                     worskaceToBeUpdated.isInitiallySynced = true
                     do {
