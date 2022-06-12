@@ -128,6 +128,7 @@ public class WorkspaceService: WorkspaceAPI {
 
                         boardResponse.tasks?.forEach { taskResponse in
                             tasks.append(TaskBusinessModel(remoteId: Int64(taskResponse.id),
+                                                           assigneeUserId: taskResponse.assigneeId ?? "",
                                                            title: taskResponse.title,
                                                            detail: taskResponse.detail,
                                                            dueDate: taskResponse.doeDate,

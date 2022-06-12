@@ -80,6 +80,7 @@ class DataProvider: Datasource {
                         board.tasks?.forEach({ taskEntity in
                             if let task = taskEntity as? TaskEntity {
                                 allTasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                                  assigneeUserId: task.assigneeUserId,
                                                                   title: task.title,
                                                                   detail: task.detail,
                                                                   dueDate: task.dueDate,
@@ -235,6 +236,7 @@ class DataProvider: Datasource {
                             board.tasks?.forEach { taskEntity in
                                 if let task = taskEntity as? TaskEntity {
                                     tasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                                   assigneeUserId: task.assigneeUserId,
                                                                    title: task.title,
                                                                    detail: task.detail,
                                                                    dueDate: task.dueDate,
@@ -338,6 +340,7 @@ class DataProvider: Datasource {
                         board.tasks?.forEach { taskEntity in
                             if let task = taskEntity as? TaskEntity {
                                 tasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                               assigneeUserId: task.assigneeUserId,
                                                                title: task.title,
                                                                detail: task.detail,
                                                                dueDate: task.dueDate,

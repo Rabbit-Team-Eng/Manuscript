@@ -22,7 +22,7 @@ public class TaskService: TaskAPI {
         self.jsonDecoder = jsonDecoder
     }
     
-    public func createTask(accessToken: String, requestBody: TaskRequest) -> AnyPublisher<TaskResponse, Error> {
+    public func createTask(requestBody: TaskRequest) -> AnyPublisher<TaskResponse, Error> {
         
         let request = CreateNewTaskRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -43,7 +43,7 @@ public class TaskService: TaskAPI {
             .eraseToAnyPublisher()
     }
     
-    public func getAllTasks(accessToken: String) -> AnyPublisher<AllTaskResponse, Error> {
+    public func getAllTasks() -> AnyPublisher<AllTaskResponse, Error> {
         
         let request = GetAllTaskRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -64,7 +64,7 @@ public class TaskService: TaskAPI {
             .eraseToAnyPublisher()
     }
     
-    public func updateTaskById(accessToken: String, requestBody: TaskRequest, taskId: String) -> AnyPublisher<TaskResponse, Error> {
+    public func updateTaskById(requestBody: TaskRequest, taskId: String) -> AnyPublisher<TaskResponse, Error> {
         
         let request = UpdateTaskRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -85,7 +85,7 @@ public class TaskService: TaskAPI {
             .eraseToAnyPublisher()
     }
     
-    public func deleteTaskById(accessToken: String, taskId: String) -> AnyPublisher<TaskResponse, Error> {
+    public func deleteTaskById(taskId: String) -> AnyPublisher<TaskResponse, Error> {
         
         let request = DeleteTaskRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         

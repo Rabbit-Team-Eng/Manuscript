@@ -91,6 +91,10 @@ class BoardsViewModel {
         }
     }
     
+    func createNewTask() {
+        
+    }
+    
     @objc func boardDidCreatedAndSyncedWithServer() {
         fetchCurrentWorkspace()
     }

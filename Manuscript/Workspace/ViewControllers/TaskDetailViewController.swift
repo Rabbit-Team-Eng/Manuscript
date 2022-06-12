@@ -74,7 +74,7 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
     private let deleteButton: UIButton = {
         let button = UIButton(type: .system)
         button.configuration = .plain()
-        button.setTitle("Delete board", for: .normal)
+        button.setTitle("Delete Task", for: .normal)
         button.contentHorizontalAlignment = .center
         button.configuration?.baseBackgroundColor = Palette.blue
         button.setTitleColor(Palette.red, for: .normal)
@@ -195,17 +195,32 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
                                                                                                     iconResource: board.assetUrl))
             localSnapshot.append(contentsOf: [selectedBoard])
 
-            if let otherBoards = selectedWorkspace.boards?.filter { "\($0.remoteId)" != "\(selectedBoard.id)"}.map { board in
+            if let otherBoards = selectedWorkspace.boards?.filter({ "\($0.remoteId)" != "\(selectedBoard.id)"}).map({ board in
                 TaskCreateCellModel(id: "\(board.remoteId)",
-                                                         boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
-                                                                                                        iconResource: board.assetUrl))
-            } {
+                                    boardSelectorCellModel: BoardSelectorCellModel(title: board.title,
+                                                                                   iconResource: board.assetUrl))
+            }) {
                 localSnapshot.append(contentsOf: otherBoards)
             }
             
             
             
 
+        } else {
+            localSnapshot.append(
+                TaskCreateCellModel(id: "0",
+                                    generalInformationCellModel: TaskGeneralInfoCellModel(title: "",
+                                                                                          description: "",
+                                                                                          isEditable: true,
+                                                                                          needPlaceholders: true)))
+            
+            if let boards = workspace?.boards?.compactMap({ TaskCreateCellModel(id: "\($0.remoteId)", boardSelectorCellModel:
+                                                                                    BoardSelectorCellModel(title: $0.title, iconResource: $0.assetUrl))}) {
+                localSnapshot.append(contentsOf: boards)
+
+                
+            }
+            
         }
         
         applySnapshot(items: localSnapshot)
@@ -233,7 +248,10 @@ class TaskDetailViewController: UIViewController, TaskCreateActionProtocol {
         
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
             guard let self = self else { return }
-            self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: true, scrollPosition: .top)
+            
+            if self.selectedBoard != nil {
+                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: true, scrollPosition: .top)
+            }
         }
     }
     

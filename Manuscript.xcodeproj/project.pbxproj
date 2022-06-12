@@ -79,6 +79,7 @@
 		0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */; };
 		0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */; };
 		0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */; };
+		0992815D28565AC000F3EA66 /* TaskCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992815C28565AC000F3EA66 /* TaskCreator.swift */; };
 		099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */; };
 		099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */; };
 		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
@@ -388,6 +389,7 @@
 		0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorView.swift; sourceTree = "<group>"; };
 		0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorCell.swift; sourceTree = "<group>"; };
 		0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorSectionType.swift; sourceTree = "<group>"; };
+		0992815C28565AC000F3EA66 /* TaskCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreator.swift; sourceTree = "<group>"; };
 		099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCellModel.swift; sourceTree = "<group>"; };
 		099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorView.swift; sourceTree = "<group>"; };
 		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 			isa = PBXGroup;
 			children = (
 				093945992855DDC400A0F963 /* TaskDetailViewController.swift */,
+				09D275A72825B90900933F16 /* TasksViewController.swift */,
 				0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
 				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
@@ -741,12 +744,21 @@
 		0989BAB8284D2F970032053C /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
+				0992815E28566F0100F3EA66 /* ViewModels */,
 				093945982855DDC400A0F963 /* ViewControllers */,
 				096EF7C62853B388003BEC41 /* WorkspaceSelector */,
 				099A90A62851657400B0F4B7 /* WorkspaceDetail */,
-				099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */,
 			);
 			path = Workspace;
+			sourceTree = "<group>";
+		};
+		0992815E28566F0100F3EA66 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */,
+				09D276432825DA5800933F16 /* BoardsViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		099A9093284FBCED00B0F4B7 /* CreateNewBoard */ = {
@@ -772,6 +784,7 @@
 			isa = PBXGroup;
 			children = (
 				099A909E28500F0800B0F4B7 /* BoardCreator.swift */,
+				0992815C28565AC000F3EA66 /* TaskCreator.swift */,
 			);
 			path = Creators;
 			sourceTree = "<group>";
@@ -898,7 +911,6 @@
 				09DD9D1D2851A53500CA6774 /* BoardDetail */,
 				099A9094284FBCF800B0F4B7 /* MainBoards */,
 				099A9093284FBCED00B0F4B7 /* CreateNewBoard */,
-				09D276432825DA5800933F16 /* BoardsViewModel.swift */,
 			);
 			path = Boards;
 			sourceTree = "<group>";
@@ -1107,7 +1119,6 @@
 			isa = PBXGroup;
 			children = (
 				092F51FA285583AD0032B2D5 /* Create */,
-				09D275A72825B90900933F16 /* TasksViewController.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1603,6 +1614,7 @@
 				09D275B22825C81100933F16 /* BoardAPI.swift in Sources */,
 				09D276442825DA5800933F16 /* BoardsViewModel.swift in Sources */,
 				09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */,
+				0992815D28565AC000F3EA66 /* TaskCreator.swift in Sources */,
 				09D275602825B6F800933F16 /* OnboardingFlow.swift in Sources */,
 				09DCED0B282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */,
 				09D275EE2825CC5D00933F16 /* BoardResponse.swift in Sources */,

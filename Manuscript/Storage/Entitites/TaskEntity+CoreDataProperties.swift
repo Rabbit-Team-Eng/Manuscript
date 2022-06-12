@@ -2,7 +2,7 @@
 //  TaskEntity+CoreDataProperties.swift
 //  Manuscript
 //
-//  Created by Tigran Ghazinyan on 6/11/22.
+//  Created by Tigran Ghazinyan on 6/12/22.
 //
 //
 
@@ -26,6 +26,7 @@ extension TaskEntity {
     @NSManaged public var status: String
     @NSManaged public var title: String
     @NSManaged public var workspaceId: Int64
+    @NSManaged public var assigneeUserId: String
     @NSManaged public var ownerBoard: BoardEntity?
 
 }

@@ -9,13 +9,13 @@ import Foundation
 
 public struct TaskRequest: Codable {
 
-    public var boardId: Int
+    public var boardId: Int64
     public var title: String
     public var detail: String
     public var doeDate: String?
     public var assigneeId: String?
 
-    public init(boardId: Int, title: String, detail: String, doeDate: String? = nil, assigneeId: String? = nil) {
+    public init(boardId: Int64, title: String, detail: String, doeDate: String? = nil, assigneeId: String? = nil) {
         self.boardId = boardId
         self.title = title
         self.detail = detail

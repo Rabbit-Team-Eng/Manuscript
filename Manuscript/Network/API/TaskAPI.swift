@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 public protocol TaskAPI {
-    func createTask(accessToken: String, requestBody: TaskRequest) -> AnyPublisher<TaskResponse, Error>
-    func getAllTasks(accessToken: String) -> AnyPublisher<AllTaskResponse, Error>
-    func updateTaskById(accessToken: String, requestBody: TaskRequest, taskId: String) -> AnyPublisher<TaskResponse, Error>
-    func deleteTaskById(accessToken: String, taskId: String) -> AnyPublisher<TaskResponse, Error>
+    func createTask(requestBody: TaskRequest) -> AnyPublisher<TaskResponse, Error>
+    func getAllTasks() -> AnyPublisher<AllTaskResponse, Error>
+    func updateTaskById(requestBody: TaskRequest, taskId: String) -> AnyPublisher<TaskResponse, Error>
+    func deleteTaskById(taskId: String) -> AnyPublisher<TaskResponse, Error>
 }
