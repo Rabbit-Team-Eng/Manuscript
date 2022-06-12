@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		092F51FC285583FC0032B2D5 /* TaskBoardSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FB285583FC0032B2D5 /* TaskBoardSelectorCellModel.swift */; };
-		092F51FE285584410032B2D5 /* TaskBoardSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FD285584410032B2D5 /* TaskBoardSelectorContentConfiguration.swift */; };
-		092F5200285584750032B2D5 /* TaskBoardSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FF285584750032B2D5 /* TaskBoardSelectorView.swift */; };
-		092F5202285585040032B2D5 /* TaskBoardSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5201285585040032B2D5 /* TaskBoardSelectorCell.swift */; };
-		092F5205285586440032B2D5 /* TaskBoardSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5204285586440032B2D5 /* TaskBoardSelectorSectionType.swift */; };
+		092F51FC285583FC0032B2D5 /* BoardSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FB285583FC0032B2D5 /* BoardSelectorCellModel.swift */; };
+		092F51FE285584410032B2D5 /* BoardSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FD285584410032B2D5 /* BoardSelectorContentConfiguration.swift */; };
+		092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FF285584750032B2D5 /* BoardSelectorView.swift */; };
+		092F5202285585040032B2D5 /* BoardSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5201285585040032B2D5 /* BoardSelectorCell.swift */; };
+		092F5205285586440032B2D5 /* TaskCreateSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5204285586440032B2D5 /* TaskCreateSectionType.swift */; };
 		0930A8F8284C09420049605B /* BoardCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0930A8F7284C09420049605B /* BoardCreateViewController.swift */; };
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
 		096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
@@ -314,11 +314,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		092F51FB285583FC0032B2D5 /* TaskBoardSelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBoardSelectorCellModel.swift; sourceTree = "<group>"; };
-		092F51FD285584410032B2D5 /* TaskBoardSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBoardSelectorContentConfiguration.swift; sourceTree = "<group>"; };
-		092F51FF285584750032B2D5 /* TaskBoardSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBoardSelectorView.swift; sourceTree = "<group>"; };
-		092F5201285585040032B2D5 /* TaskBoardSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBoardSelectorCell.swift; sourceTree = "<group>"; };
-		092F5204285586440032B2D5 /* TaskBoardSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBoardSelectorSectionType.swift; sourceTree = "<group>"; };
+		092F51FB285583FC0032B2D5 /* BoardSelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorCellModel.swift; sourceTree = "<group>"; };
+		092F51FD285584410032B2D5 /* BoardSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorContentConfiguration.swift; sourceTree = "<group>"; };
+		092F51FF285584750032B2D5 /* BoardSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorView.swift; sourceTree = "<group>"; };
+		092F5201285585040032B2D5 /* BoardSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorCell.swift; sourceTree = "<group>"; };
+		092F5204285586440032B2D5 /* TaskCreateSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateSectionType.swift; sourceTree = "<group>"; };
 		0930A8F7284C09420049605B /* BoardCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreateViewController.swift; sourceTree = "<group>"; };
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
 		096BEDA0284ABBDC001C7136 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
@@ -546,6 +546,7 @@
 		092F51FA285583AD0032B2D5 /* Create */ = {
 			isa = PBXGroup;
 			children = (
+				092F5204285586440032B2D5 /* TaskCreateSectionType.swift */,
 				099A90A92851929100B0F4B7 /* TaskCreateViewController.swift */,
 				092F5203285585640032B2D5 /* BoardSelector */,
 			);
@@ -555,11 +556,10 @@
 		092F5203285585640032B2D5 /* BoardSelector */ = {
 			isa = PBXGroup;
 			children = (
-				092F51FB285583FC0032B2D5 /* TaskBoardSelectorCellModel.swift */,
-				092F51FD285584410032B2D5 /* TaskBoardSelectorContentConfiguration.swift */,
-				092F51FF285584750032B2D5 /* TaskBoardSelectorView.swift */,
-				092F5201285585040032B2D5 /* TaskBoardSelectorCell.swift */,
-				092F5204285586440032B2D5 /* TaskBoardSelectorSectionType.swift */,
+				092F51FB285583FC0032B2D5 /* BoardSelectorCellModel.swift */,
+				092F51FD285584410032B2D5 /* BoardSelectorContentConfiguration.swift */,
+				092F51FF285584750032B2D5 /* BoardSelectorView.swift */,
+				092F5201285585040032B2D5 /* BoardSelectorCell.swift */,
 			);
 			path = BoardSelector;
 			sourceTree = "<group>";
@@ -1516,7 +1516,7 @@
 				09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */,
 				09D275942825B85D00933F16 /* ResetPasswordRequest.swift in Sources */,
 				09D27652282605E900933F16 /* BoardEntity+CoreDataProperties.swift in Sources */,
-				092F51FE285584410032B2D5 /* TaskBoardSelectorContentConfiguration.swift in Sources */,
+				092F51FE285584410032B2D5 /* BoardSelectorContentConfiguration.swift in Sources */,
 				09D276402825CE6000933F16 /* BusinessModelProtocol.swift in Sources */,
 				09D2753D2825B5DF00933F16 /* AuthenticationViewController.swift in Sources */,
 				09D275902825B85000933F16 /* ForgotPasswordRequest.swift in Sources */,
@@ -1531,7 +1531,7 @@
 				09D27655282605E900933F16 /* WorkspaceEntity+CoreDataClass.swift in Sources */,
 				09D275FB2825CCC000933F16 /* BoardError.swift in Sources */,
 				096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */,
-				092F5200285584750032B2D5 /* TaskBoardSelectorView.swift in Sources */,
+				092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */,
 				09D2763F2825CE6000933F16 /* TaskBusinessModel.swift in Sources */,
 				09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */,
 				09D27654282605E900933F16 /* MemberEntity+CoreDataProperties.swift in Sources */,
@@ -1551,7 +1551,7 @@
 				096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */,
 				09D2757C2825B7C700933F16 /* AuthenticationAPI.swift in Sources */,
 				09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */,
-				092F5205285586440032B2D5 /* TaskBoardSelectorSectionType.swift in Sources */,
+				092F5205285586440032B2D5 /* TaskCreateSectionType.swift in Sources */,
 				09D275B22825C81100933F16 /* BoardAPI.swift in Sources */,
 				09D276442825DA5800933F16 /* BoardsViewModel.swift in Sources */,
 				09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */,
@@ -1564,7 +1564,7 @@
 				096EF7E028542CBC003BEC41 /* ManageAcessCellModel.swift in Sources */,
 				099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */,
 				09D276382825CE6000933F16 /* ComparatorAction.swift in Sources */,
-				092F5202285585040032B2D5 /* TaskBoardSelectorCell.swift in Sources */,
+				092F5202285585040032B2D5 /* BoardSelectorCell.swift in Sources */,
 				09D275DC2825CB6E00933F16 /* CreateNewWorkspaceRequest.swift in Sources */,
 				09D275F32825CC8100933F16 /* TaskRequest.swift in Sources */,
 				096EF7DE28542C96003BEC41 /* ManageAcessCell.swift in Sources */,
@@ -1607,7 +1607,7 @@
 				09D2763E2825CE6000933F16 /* MemberBusinessModel.swift in Sources */,
 				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
 				09EDE718284701E8009B23A9 /* DatabaseAction.swift in Sources */,
-				092F51FC285583FC0032B2D5 /* TaskBoardSelectorCellModel.swift in Sources */,
+				092F51FC285583FC0032B2D5 /* BoardSelectorCellModel.swift in Sources */,
 				096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */,
 				09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */,
 				09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */,

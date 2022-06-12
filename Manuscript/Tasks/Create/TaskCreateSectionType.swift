@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum TaskBoardSelectorSectionType {
+enum TaskCreateSectionType {
     case main
 }

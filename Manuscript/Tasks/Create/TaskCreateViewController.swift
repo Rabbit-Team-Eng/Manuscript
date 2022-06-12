@@ -11,8 +11,8 @@ class TaskCreateViewController: UIViewController {
     
     weak var coordinator: TabBarCoordinator? = nil
     
-    typealias DataSource = UICollectionViewDiffableDataSource<TaskBoardSelectorSectionType, TaskBoardSelectorCellModel>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<TaskBoardSelectorSectionType, TaskBoardSelectorCellModel>
+    typealias DataSource = UICollectionViewDiffableDataSource<TaskCreateSectionType, BoardSelectorCellModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<TaskCreateSectionType, BoardSelectorCellModel>
 
     // TODO: Check how to avoid lazy
     private lazy var myColectionView: UICollectionView = {
@@ -39,13 +39,13 @@ class TaskCreateViewController: UIViewController {
         return dataSource
     }
     
-    private func boardSelectorCellRegistration() -> UICollectionView.CellRegistration<TaskBoardSelectorCell, TaskBoardSelectorCellModel> {
+    private func boardSelectorCellRegistration() -> UICollectionView.CellRegistration<BoardSelectorCell, BoardSelectorCellModel> {
         return .init { cell, indexPath, itemIdentifier in
             cell.model = itemIdentifier
         }
     }
     
-    private func applySnapshot(items: [TaskBoardSelectorCellModel], withAnimation: Bool) {
+    private func applySnapshot(items: [BoardSelectorCellModel], withAnimation: Bool) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -158,12 +158,12 @@ class TaskCreateViewController: UIViewController {
         view.addSubview(createNewTaskButton)
         
         applySnapshot(items: [
-            TaskBoardSelectorCellModel(id: "0", title: "dgfdfg", iconResource: "trash"),
-            TaskBoardSelectorCellModel(id: "1", title: "dgfdfg", iconResource: "trash"),
-            TaskBoardSelectorCellModel(id: "2", title: "dgfdfg", iconResource: "trash"),
-            TaskBoardSelectorCellModel(id: "3", title: "dgfdfg", iconResource: "trash"),
-            TaskBoardSelectorCellModel(id: "4", title: "dgfdfg", iconResource: "trash"),
-            TaskBoardSelectorCellModel(id: "5", title: "dgfdfg", iconResource: "trash"),
+            BoardSelectorCellModel(id: "0", title: "dgfdfg", iconResource: "trash"),
+            BoardSelectorCellModel(id: "1", title: "dgfdfg", iconResource: "trash"),
+            BoardSelectorCellModel(id: "2", title: "dgfdfg", iconResource: "trash"),
+            BoardSelectorCellModel(id: "3", title: "dgfdfg", iconResource: "trash"),
+            BoardSelectorCellModel(id: "4", title: "dgfdfg", iconResource: "trash"),
+            BoardSelectorCellModel(id: "5", title: "dgfdfg", iconResource: "trash"),
         ], withAnimation: true)
 
     }

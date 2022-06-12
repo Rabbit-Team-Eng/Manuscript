@@ -7,13 +7,13 @@
 
 import UIKit
 
-class TaskBoardSelectorCell: UICollectionViewListCell {
+class BoardSelectorCell: UICollectionViewListCell {
     
-    var model: TaskBoardSelectorCellModel?
+    var model: BoardSelectorCellModel?
 
     override func updateConfiguration(using state: UICellConfigurationState) {
         
-        let config = TaskBoardSelectorContentConfiguration(model: model)
+        let config = BoardSelectorContentConfiguration(model: model)
         contentConfiguration = config
         
         if state.isSelected {

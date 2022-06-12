@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TaskBoardSelectorView: UIView, UIContentView {
+class BoardSelectorView: UIView, UIContentView {
         
     private let titleTexLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +55,7 @@ class TaskBoardSelectorView: UIView, UIContentView {
     
     private func applyConfiguration(configuration: UIContentConfiguration) {
         
-        guard let config = configuration as? TaskBoardSelectorContentConfiguration, let model = config.model else { return }
+        guard let config = configuration as? BoardSelectorContentConfiguration, let model = config.model else { return }
         titleTexLabel.text = model.title
         iconImageView.image = UIImage(systemName: model.iconResource)
 

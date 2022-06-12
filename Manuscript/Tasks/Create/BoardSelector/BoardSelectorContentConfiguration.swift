@@ -7,16 +7,16 @@
 
 import UIKit
 
-struct TaskBoardSelectorContentConfiguration: UIContentConfiguration {
+struct BoardSelectorContentConfiguration: UIContentConfiguration {
     
-    var model: TaskBoardSelectorCellModel?
+    var model: BoardSelectorCellModel?
     
     func makeContentView() -> UIView & UIContentView {
-        let view = TaskBoardSelectorView(configuration: self)
+        let view = BoardSelectorView(configuration: self)
         return view
     }
     
-    func updated(for state: UIConfigurationState) -> TaskBoardSelectorContentConfiguration {
+    func updated(for state: UIConfigurationState) -> BoardSelectorContentConfiguration {
         guard let state = state as? UICellConfigurationState else { return self }
         var updatedConfiguration = self
         return updatedConfiguration

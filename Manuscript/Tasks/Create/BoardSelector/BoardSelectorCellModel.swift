@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TaskBoardSelectorCellModel: Hashable {
+struct BoardSelectorCellModel: Hashable {
     let id: String
     let title: String
     let iconResource: String
