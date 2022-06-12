@@ -10,6 +10,6 @@ import Foundation
 struct PrioritySelectorCellModel: Hashable {
     let title: String
     let description: String
-    let priority: Priority
+    var priority: Priority
     let isHighlighted: Bool
 }

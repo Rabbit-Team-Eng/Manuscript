@@ -106,24 +106,23 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func openPrioritySelectionSheet(withSelectedPriority: PrioritySelectorCellModel) {
-        mainTabBarController.dismiss(animated: true) { [weak self] in guard let self = self else { return }
-            self.presentPrioritySelectionSheet()
+        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskDetailViewController {
+            
+            let vc = PrioritySelectorViewController(boardViewModel: mainInjector.provideBoardsViewModel())
+            vc.parentCoordinator = self
+            
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .pageSheet
+            
+            if let sheet = navController.sheetPresentationController {
+                sheet.detents = [.large()]
+            }
+            taskDetailViewController.present(navController, animated: true, completion: nil)
+            
         }
+        
     }
     
-    private func presentPrioritySelectionSheet() {
-        let vc = PrioritySelectorViewController(boardViewModel: mainInjector.provideBoardsViewModel())
-        vc.parentCoordinator = self
-                                                 
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .pageSheet
-
-        if let sheet = navController.sheetPresentationController {
-             sheet.detents = [.medium()]
-         }
-        mainTabBarController.present(navController, animated: true, completion: nil)
-
-    }
     
     func dismissTaskCreationSheet() {
         mainTabBarController.dismiss(animated: true)
@@ -131,6 +130,12 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     
     func dismissWorspaceSelectorScreen() {
         mainTabBarController.dismiss(animated: true)
+    }
+    
+    func dismissPrioritySheet() {
+        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskDetailViewController {
+            taskDetailViewController.dismiss(animated: true)
+        }
     }
     
     func dismissBoardCreationScreen() {

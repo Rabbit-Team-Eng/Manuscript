@@ -22,6 +22,9 @@ class BoardsViewModel {
     private let boardCreator: BoardCreator
     private let cloudSync: CloudSync
     let events: PassthroughSubject<BoardsViewControllerEvent, Never> = PassthroughSubject()
+    
+    let priorirtySetEvenet: PassthroughSubject<Priority, Never> = PassthroughSubject()
+
 
     init(dataProvider: DataProvider, boardCreator: BoardCreator, cloudSync: CloudSync) {
         self.dataProvider = dataProvider
@@ -35,6 +38,10 @@ class BoardsViewModel {
     
     func syncTheCloud() {
         cloudSync.syncronize()
+    }
+    
+    func newPriorityDidSet() {
+        priorirtySetEvenet.send(.medium)
     }
     
     func fetchCurrentBoard(id: String) {

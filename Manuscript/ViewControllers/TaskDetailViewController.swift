@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum TaskDetailState {
     case creation
@@ -27,6 +28,7 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
     
     let workspace: WorkspaceBusinessModel?
     let boardViewModel: BoardsViewModel
+    var tokens: Set<AnyCancellable> = []
     
     lazy var myColectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
@@ -103,6 +105,26 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        boardViewModel.priorirtySetEvenet.sink { completion in } receiveValue: { [weak self] priority in guard let self = self else { return }
+            
+            var newSnapshot = self.dataSource.snapshot().itemIdentifiers.filter { $0.section != .prioritySection }
+            
+            newSnapshot.append(
+                TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Low",
+                                                                                                               description: "Low priority task which will go to the end of your task list",
+                                                                                          priority: .low, isHighlighted: true))
+            
+            )
+            
+            self.applySnapshot(items: newSnapshot)
+
+            
+            
+        }
+        .store(in: &tokens)
+
+        
         view.backgroundColor = Palette.lightBlack
         
         closeButton.addTarget(self, action: #selector(closeScreen(_:)), for: .touchUpInside)
@@ -270,7 +292,7 @@ extension TaskDetailViewController {
             guard let self = self else { return }
             
             if self.selectedBoard != nil {
-                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: true, scrollPosition: .top)
+                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: false, scrollPosition: [])
             }
         }
     }
