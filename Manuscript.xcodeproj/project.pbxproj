@@ -80,6 +80,14 @@
 		0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */; };
 		0992815D28565AC000F3EA66 /* TaskCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992815C28565AC000F3EA66 /* TaskCreator.swift */; };
 		099281602856740800F3EA66 /* PrioritySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */; };
+		099281632856769300F3EA66 /* PrioritySelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099281622856769300F3EA66 /* PrioritySelectorCell.swift */; };
+		099281652856769900F3EA66 /* PrioritySelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099281642856769900F3EA66 /* PrioritySelectorCellModel.swift */; };
+		09928167285676A300F3EA66 /* PrioritySelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09928166285676A300F3EA66 /* PrioritySelectorContentConfiguration.swift */; };
+		09928169285676A900F3EA66 /* PrioritySelectorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09928168285676A900F3EA66 /* PrioritySelectorContentView.swift */; };
+		0992816B2856776C00F3EA66 /* WorkspaceSelectorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992816A2856776C00F3EA66 /* WorkspaceSelectorProtocol.swift */; };
+		0992816D285677A900F3EA66 /* PrioritySelectionActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992816C285677A900F3EA66 /* PrioritySelectionActionsProtocol.swift */; };
+		0992816F285677BB00F3EA66 /* PrioritySelectionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0992816E285677BB00F3EA66 /* PrioritySelectionAction.swift */; };
+		099281712856784400F3EA66 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099281702856784400F3EA66 /* Priority.swift */; };
 		099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */; };
 		099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */; };
 		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
@@ -390,6 +398,14 @@
 		0989BAC3284D40960032053C /* WorkspaceSelectorSectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorSectionType.swift; sourceTree = "<group>"; };
 		0992815C28565AC000F3EA66 /* TaskCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreator.swift; sourceTree = "<group>"; };
 		0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectorViewController.swift; sourceTree = "<group>"; };
+		099281622856769300F3EA66 /* PrioritySelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectorCell.swift; sourceTree = "<group>"; };
+		099281642856769900F3EA66 /* PrioritySelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectorCellModel.swift; sourceTree = "<group>"; };
+		09928166285676A300F3EA66 /* PrioritySelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectorContentConfiguration.swift; sourceTree = "<group>"; };
+		09928168285676A900F3EA66 /* PrioritySelectorContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectorContentView.swift; sourceTree = "<group>"; };
+		0992816A2856776C00F3EA66 /* WorkspaceSelectorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorProtocol.swift; sourceTree = "<group>"; };
+		0992816C285677A900F3EA66 /* PrioritySelectionActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectionActionsProtocol.swift; sourceTree = "<group>"; };
+		0992816E285677BB00F3EA66 /* PrioritySelectionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrioritySelectionAction.swift; sourceTree = "<group>"; };
+		099281702856784400F3EA66 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		099A9095284FF63D00B0F4B7 /* IconSelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCellModel.swift; sourceTree = "<group>"; };
 		099A9097284FF64D00B0F4B7 /* IconSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorView.swift; sourceTree = "<group>"; };
 		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
@@ -647,6 +663,7 @@
 				0989BABD284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift */,
 				0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */,
 				0989BAC1284D3FBD0032053C /* WorkspaceSelectorCell.swift */,
+				0992816A2856776C00F3EA66 /* WorkspaceSelectorProtocol.swift */,
 			);
 			path = WorkspaceSelector;
 			sourceTree = "<group>";
@@ -759,6 +776,20 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		099281612856766000F3EA66 /* PrioritySelection */ = {
+			isa = PBXGroup;
+			children = (
+				099281622856769300F3EA66 /* PrioritySelectorCell.swift */,
+				099281642856769900F3EA66 /* PrioritySelectorCellModel.swift */,
+				09928166285676A300F3EA66 /* PrioritySelectorContentConfiguration.swift */,
+				09928168285676A900F3EA66 /* PrioritySelectorContentView.swift */,
+				0992816C285677A900F3EA66 /* PrioritySelectionActionsProtocol.swift */,
+				0992816E285677BB00F3EA66 /* PrioritySelectionAction.swift */,
+				099281702856784400F3EA66 /* Priority.swift */,
+			);
+			path = PrioritySelection;
+			sourceTree = "<group>";
+		};
 		099A9093284FBCED00B0F4B7 /* CreateNewBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -849,6 +880,7 @@
 				0989BAB8284D2F970032053C /* Workspace */,
 				09D275422825B61E00933F16 /* Boards */,
 				09D275A62825B90300933F16 /* Tasks */,
+				099281612856766000F3EA66 /* PrioritySelection */,
 				09D276202825CE6000933F16 /* Storage */,
 				097EDF35282B63B10060C8FD /* Syncronizer */,
 				09D275472825B64600933F16 /* Coordinator */,
@@ -1534,10 +1566,12 @@
 				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
 				092F5216285591210032B2D5 /* TaskDetailCellModel.swift in Sources */,
 				09D276122825CE2300933F16 /* TaskDB.xcdatamodeld in Sources */,
+				09928167285676A300F3EA66 /* PrioritySelectorContentConfiguration.swift in Sources */,
 				092F521428558FC50032B2D5 /* TaskDetailAction.swift in Sources */,
 				0989BAC2284D3FBD0032053C /* WorkspaceSelectorCell.swift in Sources */,
 				09D275F92825CCB300933F16 /* WorkspaceError.swift in Sources */,
 				09D275D42825CA5E00933F16 /* UpdateWorkspaceByIdRequest.swift in Sources */,
+				0992816B2856776C00F3EA66 /* WorkspaceSelectorProtocol.swift in Sources */,
 				09D275B82825C84400933F16 /* TaskService.swift in Sources */,
 				09D275C22825C93D00933F16 /* UpdateTaskRequest.swift in Sources */,
 				099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */,
@@ -1554,6 +1588,8 @@
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
 				097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */,
 				0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */,
+				0992816D285677A900F3EA66 /* PrioritySelectionActionsProtocol.swift in Sources */,
+				099281712856784400F3EA66 /* Priority.swift in Sources */,
 				099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */,
 				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
 				099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */,
@@ -1587,6 +1623,7 @@
 				09D275962825B86300933F16 /* SignInUserRequest.swift in Sources */,
 				09D275992825B89700933F16 /* AuthenticationManager.swift in Sources */,
 				09D27655282605E900933F16 /* WorkspaceEntity+CoreDataClass.swift in Sources */,
+				099281652856769900F3EA66 /* PrioritySelectorCellModel.swift in Sources */,
 				09D275FB2825CCC000933F16 /* BoardError.swift in Sources */,
 				096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */,
 				092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */,
@@ -1605,6 +1642,7 @@
 				09D275692825B73400933F16 /* Flowable.swift in Sources */,
 				09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */,
 				099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */,
+				09928169285676A900F3EA66 /* PrioritySelectorContentView.swift in Sources */,
 				09D275A52825B8F400933F16 /* Defaults.swift in Sources */,
 				09D275F72825CC9B00933F16 /* TaskResponse.swift in Sources */,
 				096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */,
@@ -1632,6 +1670,7 @@
 				096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */,
 				09D275B42825C82000933F16 /* BoardService.swift in Sources */,
 				09D2763A2825CE6000933F16 /* BoardComparator.swift in Sources */,
+				0992816F285677BB00F3EA66 /* PrioritySelectionAction.swift in Sources */,
 				092F520828558E240032B2D5 /* TaskGeneralInfoCellModel.swift in Sources */,
 				09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */,
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
@@ -1703,6 +1742,7 @@
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
 				0939459F2855DDC400A0F963 /* TaskDetailViewController.swift in Sources */,
 				096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */,
+				099281632856769300F3EA66 /* PrioritySelectorCell.swift in Sources */,
 				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,
 				097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,

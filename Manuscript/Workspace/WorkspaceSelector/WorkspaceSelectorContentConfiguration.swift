@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol WorkspaceSelectorProtocol: NSObject {
-    func workspaceDetailFlowDidSelected(model: WorkspaceSelectorCellModel)
-}
-
 struct WorkspaceSelectorContentConfiguration: UIContentConfiguration {
     
     var model: WorkspaceSelectorCellModel?

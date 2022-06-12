@@ -12,12 +12,14 @@ struct TaskDetailCellModel: Hashable {
     let section: TaskDetailSectionType
     let generalInformationCellModel: TaskGeneralInfoCellModel?
     let boardSelectorCellModel: BoardSelectorCellModel?
+    let priorityCellModel: PrioritySelectorCellModel?
 
     init(id: String, generalInformationCellModel: TaskGeneralInfoCellModel) {
         self.id = id
         self.section = .generalInformationSection
         self.generalInformationCellModel = generalInformationCellModel
         self.boardSelectorCellModel = nil
+        self.priorityCellModel = nil
     }
     
     init(id: String, boardSelectorCellModel: BoardSelectorCellModel) {
@@ -25,5 +27,14 @@ struct TaskDetailCellModel: Hashable {
         self.section = .boardSelectorSection
         self.generalInformationCellModel = nil
         self.boardSelectorCellModel = boardSelectorCellModel
+        self.priorityCellModel = nil
+    }
+    
+    init(id: String, priorityCellModel: PrioritySelectorCellModel) {
+        self.id = id
+        self.section = .prioritySection
+        self.generalInformationCellModel = nil
+        self.boardSelectorCellModel = nil
+        self.priorityCellModel = priorityCellModel
     }
 }

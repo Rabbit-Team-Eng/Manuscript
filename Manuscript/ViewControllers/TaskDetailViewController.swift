@@ -113,7 +113,7 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
         view.addSubview(myColectionView)
         view.addSubview(deleteButton)
 
-
+        myColectionView.delegate = self
         myColectionView.register(TaskGeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier)
         
         let creationConstraints = [
@@ -223,36 +223,13 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
             
         }
         
+        localSnapshot.append(TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "High",
+                                                                                                       description: "High priority task will go to top of your list and you will get notifications frequently",
+                                                                                                       priority: .high, isHighlighted: true)))
+        
         applySnapshot(items: localSnapshot)
         
         
-    }
-    
-    
-    func applySnapshot(items: [TaskDetailCellModel], animatingDifferences: Bool = false) {
-        var snapshot = Snapshot()
-        
-        snapshot.appendSections([.generalInformationSection])
-        snapshot.appendSections([.boardSelectorSection])
-        
-        items.forEach { item in
-            
-            if item.generalInformationCellModel != nil {
-                snapshot.appendItems([item], toSection: .generalInformationSection)
-            }
-            
-            if item.boardSelectorCellModel != nil {
-                snapshot.appendItems([item], toSection: .boardSelectorSection)
-            }
-        }
-        
-        dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
-            guard let self = self else { return }
-            
-            if self.selectedBoard != nil {
-                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: true, scrollPosition: .top)
-            }
-        }
     }
     
     @objc private func closeScreen(_ sender: UIButton) {
@@ -266,10 +243,40 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
 
 extension TaskDetailViewController {
     
-    func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+    
+    func applySnapshot(items: [TaskDetailCellModel], animatingDifferences: Bool = false) {
+        var snapshot = Snapshot()
+        
+        snapshot.appendSections([.generalInformationSection])
+        snapshot.appendSections([.boardSelectorSection])
+        snapshot.appendSections([.prioritySection])
 
-            guard let self = self else { fatalError() }
+        items.forEach { item in
+            
+            if item.generalInformationCellModel != nil {
+                snapshot.appendItems([item], toSection: .generalInformationSection)
+            }
+            
+            if item.boardSelectorCellModel != nil {
+                snapshot.appendItems([item], toSection: .boardSelectorSection)
+            }
+            
+            if item.priorityCellModel != nil {
+                snapshot.appendItems([item], toSection: .prioritySection)
+            }
+        }
+        
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
+            guard let self = self else { return }
+            
+            if self.selectedBoard != nil {
+                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: true, scrollPosition: .top)
+            }
+        }
+    }
+    
+    func createCompositionalLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { [unowned self] sectionIndex, layoutEnvironment in
 
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
 
@@ -278,6 +285,8 @@ extension TaskDetailViewController {
                 return self.createGeneralInfoSectionLayout()
             case .boardSelectorSection:
                 return self.createBoardSelectorSectionLayout()
+            case .prioritySection:
+                return self.createPrioritySelectorSectionLayout()
             default:
                 fatalError()
             }
@@ -332,10 +341,39 @@ extension TaskDetailViewController {
         return layoutSection
     }
     
+    func createPrioritySelectorSectionLayout() -> NSCollectionLayoutSection {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(110))
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        layoutGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(20))
+        
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        sectionHeader.pinToVisibleBounds = true
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.boundarySupplementaryItems = [sectionHeader]
+        return layoutSection
+    }
+    
     func generalInfoCellRegistration() -> UICollectionView.CellRegistration<TaskGeneralInfoCell, TaskDetailCellModel> {
         return .init { [weak self] cell, indexPath, itemIdentifier in
             guard let self = self else { return }
             cell.model = itemIdentifier.generalInformationCellModel
+            cell.delegate = self
+        }
+    }
+    
+    func prioritySelectorCellRegistration() -> UICollectionView.CellRegistration<PrioritySelectorCell, TaskDetailCellModel> {
+        return .init { [weak self] cell, indexPath, itemIdentifier in
+            guard let self = self else { return }
+            cell.model = itemIdentifier.priorityCellModel
             cell.delegate = self
         }
     }
@@ -350,7 +388,8 @@ extension TaskDetailViewController {
     func createDataSource() -> DataSource {
         let generalInfoCell = generalInfoCellRegistration()
         let manageAccessCell = boardSelectorCellRegistration()
-        
+        let priorityCell = prioritySelectorCellRegistration()
+
         let dataSource = DataSource(collectionView: myColectionView) { collectionView, indexPath, itemIdentifier in
             
             switch itemIdentifier.section {
@@ -358,6 +397,8 @@ extension TaskDetailViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: generalInfoCell, for: indexPath, item: itemIdentifier)
             case .boardSelectorSection:
                 return collectionView.dequeueConfiguredReusableCell(using: manageAccessCell, for: indexPath, item: itemIdentifier)
+            case .prioritySection:
+                return collectionView.dequeueConfiguredReusableCell(using: priorityCell, for: indexPath, item: itemIdentifier)
             default:
                 fatalError()
             }
@@ -375,6 +416,10 @@ extension TaskDetailViewController {
                 let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier, for: indexPath) as? TaskGeneralInfoSectionHeaderView
                 view?.titleLabel.text = section.sectionHeaderTitle
                 return view
+            case .prioritySection:
+                let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier, for: indexPath) as? TaskGeneralInfoSectionHeaderView
+                view?.titleLabel.text = section.sectionHeaderTitle
+                return view
             default:
                 fatalError()
 
@@ -382,4 +427,26 @@ extension TaskDetailViewController {
         }
         return dataSource
     }
+}
+
+extension TaskDetailViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        // TODO: We should crate enums for each section instead of using integers, Overall need to refactor
+        // ordering logic for the collection view
+        if indexPath.section != 1 { return false } else { return true }
+    }
+    
+}
+
+extension TaskDetailViewController: PrioritySelectionActionsProtocol {
+    
+    func actionDidHappen(action: PrioritySelectionAction) {
+        
+        if case .priorityShouldChange(let currentPriority) = action {
+            coordinator?.openPrioritySelectionSheet(withSelectedPriority: currentPriority)
+        }
+    }
+    
+    
 }

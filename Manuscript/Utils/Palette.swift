@@ -18,6 +18,7 @@ struct Palette {
         static let CREATE_BOARD_BACKGROUND = "create_board_background"
         static let NOT_SYNCED_MAGENTA = "not_synced_magenta"
         static let RED = "red"
+        static let GREEN = "green"
 
     }
     static let lightBlack = UIColor(named: Constants.BACKGROUND_BLACK)!
@@ -28,4 +29,5 @@ struct Palette {
     static let mediumDarkGray = UIColor(named: Constants.CREATE_BOARD_BACKGROUND)!
     static let magenta = UIColor(named: Constants.NOT_SYNCED_MAGENTA)!
     static let red = UIColor(named: Constants.RED)!
+    static let green = UIColor(named: Constants.GREEN)!
 }

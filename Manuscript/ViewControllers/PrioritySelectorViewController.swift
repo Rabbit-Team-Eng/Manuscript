@@ -9,10 +9,11 @@ import UIKit
 
 class PrioritySelectorViewController: UIViewController {
     
+    weak var parentCoordinator: TabBarCoordinator? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .red
         
     }
     

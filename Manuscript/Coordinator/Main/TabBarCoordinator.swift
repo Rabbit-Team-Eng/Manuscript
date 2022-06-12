@@ -105,6 +105,26 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
 
     }
     
+    func openPrioritySelectionSheet(withSelectedPriority: PrioritySelectorCellModel) {
+        mainTabBarController.dismiss(animated: true) { [weak self] in guard let self = self else { return }
+            self.presentPrioritySelectionSheet()
+        }
+    }
+    
+    private func presentPrioritySelectionSheet() {
+        let vc = PrioritySelectorViewController(boardViewModel: mainInjector.provideBoardsViewModel())
+        vc.parentCoordinator = self
+                                                 
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+             sheet.detents = [.medium()]
+         }
+        mainTabBarController.present(navController, animated: true, completion: nil)
+
+    }
+    
     func dismissTaskCreationSheet() {
         mainTabBarController.dismiss(animated: true)
     }
