@@ -13,6 +13,7 @@ enum BoardsViewControllerEvent {
     case boardsDidFetch(boards: [BoardBusinessModel])
     case noBoardIsCreated
     case newBoardDidCreated
+    case taskJustCreatedLocally(board: BoardBusinessModel)
     case boardDetailDidFetch(board: BoardBusinessModel)
 }
 
@@ -20,6 +21,7 @@ class BoardsViewModel {
     
     private let dataProvider: DataProvider
     private let boardCreator: BoardCreator
+    private let taskCreator: TaskCreator
     private let cloudSync: CloudSync
     let events: PassthroughSubject<BoardsViewControllerEvent, Never> = PassthroughSubject()
     
@@ -28,14 +30,16 @@ class BoardsViewModel {
     let priorirtySetEvenet: PassthroughSubject<Priority, Never> = PassthroughSubject()
 
 
-    init(dataProvider: DataProvider, boardCreator: BoardCreator, cloudSync: CloudSync) {
+    init(dataProvider: DataProvider, boardCreator: BoardCreator, taskCreator: TaskCreator, cloudSync: CloudSync) {
         self.dataProvider = dataProvider
         self.boardCreator = boardCreator
+        self.taskCreator = taskCreator
         self.cloudSync = cloudSync
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(cloudSyncDidFinish), name: Notification.Name("CloudSyncDidFinish"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newWorkspaceDidSwitched), name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(boardDidCreatedAndSyncedWithServer), name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(taskDidCreatedAndSyncedWithServer), name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
     }
     
     func syncTheCloud() {
@@ -100,8 +104,11 @@ class BoardsViewModel {
         }
     }
     
-    func createNewTask() {
-        
+    func createNewTask(task: TaskBusinessModel) {
+        taskCreator.createNewTask(task: task) { [weak self] in guard let self = self else { return }
+            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
+            self.events.send(.taskJustCreatedLocally(board: board))
+        }
     }
     
     @objc func boardDidCreatedAndSyncedWithServer() {
@@ -116,11 +123,15 @@ class BoardsViewModel {
         fetchCurrentWorkspace()
     }
     
+    @objc private func taskDidCreatedAndSyncedWithServer() {
+        fetchCurrentWorkspace()
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name:  Notification.Name("CloudSyncDidFinish") , object: nil)
         NotificationCenter.default.removeObserver(self, name:  Notification.Name("NewWorkspaceDidSwitched") , object: nil)
         NotificationCenter.default.removeObserver(self, name:  Notification.Name("BoardDidCreatedAndSyncedWithServer") , object: nil)
-
+        NotificationCenter.default.removeObserver(self, name:  Notification.Name("TaskDidCreatedAndSyncedWithServer") , object: nil)
     }
     
 }

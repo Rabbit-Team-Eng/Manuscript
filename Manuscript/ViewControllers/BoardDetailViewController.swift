@@ -12,8 +12,8 @@ class BoardDetailViewController: UIViewController {
     
     weak var coordinator: BoardsCoordinator? = nil
 
-    private let selectedWorkspace: WorkspaceBusinessModel
-    private let selectedBoard: BoardBusinessModel
+    private var selectedWorkspace: WorkspaceBusinessModel
+    private var selectedBoard: BoardBusinessModel
     private let boardViewModel: BoardsViewModel
     private var tokens: Set<AnyCancellable> = []
 
@@ -30,6 +30,19 @@ class BoardDetailViewController: UIViewController {
         
         
         self.navigationItem.title = selectedBoard.title
+        
+        boardViewModel.events.sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
+            
+            if case .boardsDidFetch(let boards) = event {
+                print(boards.first { $0.remoteId == self.selectedBoard.remoteId } ?? "error===============================")
+            }
+            
+            if case .taskJustCreatedLocally(let board) = event {
+                self.coordinator?.dismissTaskCreationScreen()
+            }
+        }
+        .store(in: &tokens)
+
         
     }
     

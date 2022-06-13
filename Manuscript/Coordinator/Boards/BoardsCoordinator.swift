@@ -62,6 +62,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         parentCoordinator?.dismissBoardCreationScreen()
     }
     
+    func dismissTaskCreationScreen() {
+        parentCoordinator?.dismissTaskCreationSheet()
+    }
+    
     func navigateToWorksapceDetail(worksapceDetailState: WorksapceDetailState) {
         let vc = WorksapceDetailViewController(workspacesViewModel: mainComponent.provideWorkspacesViewModel(), worksapceDetailState: worksapceDetailState)
         vc.hidesBottomBarWhenPushed = true

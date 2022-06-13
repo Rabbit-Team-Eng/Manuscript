@@ -157,6 +157,8 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
         view.addSubview(createNewTaskButton)
         view.addSubview(myColectionView)
         view.addSubview(deleteButton)
+        
+        createNewTaskButton.addTarget(self, action: #selector(createNewTaskButtonDidTap(_:)), for: .touchUpInside)
 
         myColectionView.delegate = self
         myColectionView.register(TaskGeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier)
@@ -281,6 +283,22 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
         coordinator?.dismissTaskCreationSheet()
     }
     
+    @objc private func createNewTaskButtonDidTap(_ sender: UIButton) {
+        let model = TaskBusinessModel(remoteId: -999,
+                                      assigneeUserId: "im idin",
+                                      title: "buhaah",
+                                      detail: "d",
+                                      dueDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                      ownerBoardId: selectedBoard!.remoteId,
+                                      status: "new",
+                                      workspaceId: workspace!.remoteId,
+                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                      isInitiallySynced: false,
+                                      isPendingDeletionOnTheServer: false)
+        
+        boardViewModel.createNewTask(task: model)
+    }
+    
 
 
 
@@ -314,7 +332,7 @@ extension TaskDetailViewController {
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
             guard let self = self else { return }
             
-            if self.selectedBoard != nil {
+            if self.selectedBoard != nil && self.myColectionView.indexPathsForSelectedItems == [] {
                 self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: false, scrollPosition: [])
             }
         }

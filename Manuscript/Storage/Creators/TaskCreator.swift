@@ -31,11 +31,13 @@ class TaskCreator {
             let taskEntity = TaskEntity(context: context)
             
 
+            taskEntity.assigneeUserId = task.assigneeUserId
             taskEntity.detail = task.detail ?? ""
             taskEntity.dueDate = task.dueDate
             taskEntity.isInitiallySynced = task.isInitiallySynced
             taskEntity.isPendingDeletionOnTheServer = task.isPendingDeletionOnTheServer
             taskEntity.ownerBoardId = task.ownerBoardId
+            taskEntity.workspaceId = task.workspaceId
             taskEntity.remoteId = task.remoteId
             taskEntity.status = task.status
             taskEntity.title = task.title

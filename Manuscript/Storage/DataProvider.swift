@@ -56,6 +56,36 @@ class DataProvider: Datasource {
         return returningBoard!
     }
     
+    func fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: String) -> BoardBusinessModel {
+
+        let context = coreDataStack.databaseContainer.newBackgroundContext()
+
+        // If needed, ensure the background context stays
+        // up to date with changes from the parent
+        var returningBoard: BoardBusinessModel? = nil
+        context.automaticallyMergesChangesFromParent = true
+
+        context.performAndWait {
+            let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
+            boardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
+            do {
+                let boardEntity: BoardEntity = try context.fetch(boardFetchRequest).first!
+                let boardModel = BoardBusinessModel(remoteId: boardEntity.remoteId,
+                                                     coreDataId: boardEntity.objectID,
+                                                     title: boardEntity.title,
+                                                     assetUrl: boardEntity.assetUrl,
+                                                     ownerWorkspaceId: boardEntity.ownerWorkspaceId,
+                                                     lastModifiedDate: boardEntity.lastModifiedDate,
+                                                     isInitiallySynced: boardEntity.isInitiallySynced,
+                                                     isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
+                returningBoard = boardModel
+            } catch {
+                
+            }
+        }
+        return returningBoard!
+    }
+    
     func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel {
         var searchingWorkspace: WorkspaceBusinessModel? = nil
         

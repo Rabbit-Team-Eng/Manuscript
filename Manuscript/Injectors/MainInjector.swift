@@ -12,6 +12,7 @@ class MainInjector {
     // Local Scope
     private var coreDataStack: CoreDataStack? = nil
     private var workspaceService: WorkspaceService? = nil
+    private var taskService: TaskService? = nil
     private var dataManager: DataProvider? = nil
     private var boardsViewModel: BoardsViewModel? = nil
     private var workspacesViewModel: WorkspacesViewModel? = nil
@@ -23,6 +24,7 @@ class MainInjector {
     private var boardCoreDataManager: BoardCoreDataManager? = nil
     private var databaseManager: DatabaseManager? = nil
     private var boardCreator: BoardCreator? = nil
+    private var taskCreator: TaskCreator? = nil
 
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -33,6 +35,24 @@ class MainInjector {
         self.startupUtils = applicationInjector.provideStartupUtils()
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
+    }
+    
+    func provideTaskService() -> TaskService {
+        if taskService != nil {
+            return taskService!
+        } else {
+            taskService = TaskService(accessToken: startupUtils.getAccessToken(), environment: startupUtils.provideEnvironment(), jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
+            return taskService!
+        }
+    }
+    
+    func provideTaskCreator() -> TaskCreator {
+        if taskCreator != nil {
+            return taskCreator!
+        } else {
+            taskCreator = TaskCreator(taskService: provideTaskService(), database: provideCoreDataStack())
+            return taskCreator!
+        }
     }
     
     func provideBoardCreator() -> BoardCreator {
@@ -108,7 +128,7 @@ class MainInjector {
         if boardsViewModel != nil {
             return boardsViewModel!
         } else {
-            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager(), boardCreator: provideBoardCreator(), cloudSync: provideCloudSync())
+            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager(), boardCreator: provideBoardCreator(), taskCreator: provideTaskCreator(), cloudSync: provideCloudSync())
             return boardsViewModel!
         }
     }
