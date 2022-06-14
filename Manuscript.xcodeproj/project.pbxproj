@@ -10,6 +10,7 @@
 		0919BCA92857FEFD00DB53C2 /* TaskComparatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0919BCA82857FEFD00DB53C2 /* TaskComparatorTest.swift */; };
 		0919BCAB2858020000DB53C2 /* TaskTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0919BCAA2858020000DB53C2 /* TaskTransformer.swift */; };
 		0919BCAD2858138E00DB53C2 /* PriorityTypeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0919BCAC2858138E00DB53C2 /* PriorityTypeConverter.swift */; };
+		0919BCB02858625600DB53C2 /* IconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0919BCAF2858625600DB53C2 /* IconProvider.swift */; };
 		092F51FC285583FC0032B2D5 /* BoardSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FB285583FC0032B2D5 /* BoardSelectorCellModel.swift */; };
 		092F51FE285584410032B2D5 /* BoardSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FD285584410032B2D5 /* BoardSelectorContentConfiguration.swift */; };
 		092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F51FF285584750032B2D5 /* BoardSelectorView.swift */; };
@@ -346,6 +347,7 @@
 		0919BCA82857FEFD00DB53C2 /* TaskComparatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskComparatorTest.swift; sourceTree = "<group>"; };
 		0919BCAA2858020000DB53C2 /* TaskTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTransformer.swift; sourceTree = "<group>"; };
 		0919BCAC2858138E00DB53C2 /* PriorityTypeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityTypeConverter.swift; sourceTree = "<group>"; };
+		0919BCAF2858625600DB53C2 /* IconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconProvider.swift; sourceTree = "<group>"; };
 		092F51FB285583FC0032B2D5 /* BoardSelectorCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorCellModel.swift; sourceTree = "<group>"; };
 		092F51FD285584410032B2D5 /* BoardSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorContentConfiguration.swift; sourceTree = "<group>"; };
 		092F51FF285584750032B2D5 /* BoardSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSelectorView.swift; sourceTree = "<group>"; };
@@ -601,6 +603,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0919BCAE2858623D00DB53C2 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				0919BCAF2858625600DB53C2 /* IconProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
 		092F51FA285583AD0032B2D5 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +915,7 @@
 				097EDF35282B63B10060C8FD /* Syncronizer */,
 				09D275472825B64600933F16 /* Coordinator */,
 				09D275702825B77500933F16 /* Injectors */,
+				0919BCAE2858623D00DB53C2 /* Providers */,
 				096BEDC1284B27B0001C7136 /* DataTransformers */,
 				09D275AC2825B93000933F16 /* Utils */,
 				09D275A32825B8E900933F16 /* PropertyWrappers */,
@@ -1608,6 +1619,7 @@
 				09D275E52825CBF500933F16 /* AllWorkspaceResponse.swift in Sources */,
 				09D2756B2825B73A00933F16 /* FlowFinisher.swift in Sources */,
 				09D275B62825C83400933F16 /* TaskAPI.swift in Sources */,
+				0919BCB02858625600DB53C2 /* IconProvider.swift in Sources */,
 				09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */,
 				09D276342825CE6000933F16 /* ComparatorProtocol.swift in Sources */,
 				092F521028558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift in Sources */,
