@@ -146,7 +146,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func createNewBoard(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateBoardScreen()
+        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoard: nil)
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -249,7 +249,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func createBoardButtonDidTap(_ sender: UIButton) {
-        coordinator?.presentCreateBoardScreen()
+        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoard: nil)
     }
     
     @objc private func signOut(_ sender: UIBarButtonItem) {

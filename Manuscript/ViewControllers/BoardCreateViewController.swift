@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum BoardSheetState {
+    case creation
+    case edit
+}
+
 class BoardCreateViewController: UIViewController {
     
     weak var parentCoordinator: TabBarCoordinator? = nil
@@ -35,7 +40,6 @@ class BoardCreateViewController: UIViewController {
         label.font = UIFont.preferredFont(for: .title2, weight: .bold)
         label.numberOfLines = 2
         label.adjustsFontForContentSizeCategory = true
-        label.text = "Create new board"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -87,10 +91,20 @@ class BoardCreateViewController: UIViewController {
     private let createNewBoardeButton: UIButton = {
         let button = UIButton(type: .system)
         button.configuration = .filled()
-        button.configuration?.title = "Create New Board"
         button.contentHorizontalAlignment = .center
         button.configuration?.baseBackgroundColor = Palette.blue
         button.setTitleColor(Palette.white, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let deleteButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.configuration = .plain()
+        button.setTitle("Delete Current Board", for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.configuration?.baseBackgroundColor = Palette.blue
+        button.setTitleColor(Palette.red, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -108,55 +122,22 @@ class BoardCreateViewController: UIViewController {
 
         view.backgroundColor = Palette.mediumDarkGray
         
+        if boardSheetState == .creation {
+            titleTexLabel.text = "Create new board"
+            createNewBoardeButton.configuration?.title = "Create New Board"
+        }
+        
+        if boardSheetState == .edit {
+            titleTexLabel.text = "Edit Board"
+            enterNameTextField.text = selectedBoard?.title ?? ""
+            createNewBoardeButton.configuration?.title = "Save the changes"
+            view.addSubview(deleteButton)
+        }
+        
         createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
-        applySnapshot(items: [
-        
-            IconSelectorCellModel(id: "square.and.arrow.up.on.square", iconResource: "square.and.arrow.up.on.square"),
-            IconSelectorCellModel(id: "pencil.circle.fill", iconResource: "pencil.circle.fill"),
-            IconSelectorCellModel(id: "pencil.tip", iconResource: "pencil.tip"),
-            IconSelectorCellModel(id: "lasso", iconResource: "lasso"),
-            IconSelectorCellModel(id: "trash", iconResource: "trash"),
-            IconSelectorCellModel(id: "folder", iconResource: "folder"),
-            IconSelectorCellModel(id: "paperplane.circle", iconResource: "paperplane.circle"),
-            IconSelectorCellModel(id: "externaldrive.badge.minus", iconResource: "externaldrive.badge.minus"),
-            IconSelectorCellModel(id: "doc.on.clipboard.fill", iconResource: "doc.on.clipboard.fill"),
-            IconSelectorCellModel(id: "doc.text.below.ecg", iconResource: "doc.text.below.ecg"),
-            IconSelectorCellModel(id: "text.book.closed", iconResource: "text.book.closed"),
-            IconSelectorCellModel(id: "greetingcard", iconResource: "greetingcard"),
-            IconSelectorCellModel(id: "person", iconResource: "person"),
-            IconSelectorCellModel(id: "command.square.fill", iconResource: "command.square.fill"),
-            IconSelectorCellModel(id: "globe", iconResource: "globe"),
-            
-            IconSelectorCellModel(id: "calendar.day.timeline.trailing", iconResource: "calendar.day.timeline.trailing"),
-            IconSelectorCellModel(id: "arrowshape.bounce.right", iconResource: "arrowshape.bounce.right"),
-            IconSelectorCellModel(id: "book.closed", iconResource: "book.closed"),
-            IconSelectorCellModel(id: "newspaper.circle", iconResource: "newspaper.circle"),
-            IconSelectorCellModel(id: "rosette", iconResource: "rosette"),
-            IconSelectorCellModel(id: "graduationcap.fill", iconResource: "graduationcap.fill"),
-            IconSelectorCellModel(id: "paperclip.badge.ellipsis", iconResource: "paperclip.badge.ellipsis"),
-            IconSelectorCellModel(id: "personalhotspot", iconResource: "personalhotspot"),
-            IconSelectorCellModel(id: "rectangle.inset.filled.and.person.filled", iconResource: "rectangle.inset.filled.and.person.filled"),
-            IconSelectorCellModel(id: "person.fill.and.arrow.left.and.arrow.right", iconResource: "person.fill.and.arrow.left.and.arrow.right"),
-            IconSelectorCellModel(id: "sun.max.fill", iconResource: "sun.max.fill"),
-            IconSelectorCellModel(id: "moon.zzz", iconResource: "moon.zzz"),
-            IconSelectorCellModel(id: "cloud.sleet.fill", iconResource: "cloud.sleet.fill"),
-            IconSelectorCellModel(id: "smoke", iconResource: "smoke"),
-            IconSelectorCellModel(id: "umbrella.fill", iconResource: "umbrella.fill"),
-            IconSelectorCellModel(id: "cursorarrow.and.square.on.square.dashed", iconResource: "cursorarrow.and.square.on.square.dashed"),
-            IconSelectorCellModel(id: "rectangle.grid.2x2", iconResource: "rectangle.grid.2x2"),
-            IconSelectorCellModel(id: "circle.grid.3x3", iconResource: "circle.grid.3x3"),
-            IconSelectorCellModel(id: "circle.hexagongrid", iconResource: "circle.hexagongrid"),
-            IconSelectorCellModel(id: "seal.fill", iconResource: "seal.fill"),
-            IconSelectorCellModel(id: "exclamationmark.triangle", iconResource: "exclamationmark.triangle"),
-            IconSelectorCellModel(id: "play.fill", iconResource: "play.fill"),
-            IconSelectorCellModel(id: "memories.badge.plus", iconResource: "memories.badge.plus"),
-            IconSelectorCellModel(id: "infinity.circle", iconResource: "infinity.circle"),
-            IconSelectorCellModel(id: "speaker.zzz.fill", iconResource: "speaker.zzz.fill"),
-
-
-        ])
+        applySnapshot(items: IconProvider.provideIcons(selectedIcon: selectedBoard?.assetUrl))
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -222,48 +203,16 @@ class BoardCreateViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        NSLayoutConstraint.activate([
-            titleTexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
-            titleTexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
-            titleTexLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -32),
-            titleTexLabel.heightAnchor.constraint(equalToConstant: 24),
-            
-            closeButton.centerYAnchor.constraint(equalTo: titleTexLabel.centerYAnchor),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            closeButton.heightAnchor.constraint(equalToConstant: 24),
-            closeButton.widthAnchor.constraint(equalToConstant: 24),
-
-            nameTextLabel.topAnchor.constraint(equalTo: titleTexLabel.bottomAnchor, constant: 24),
-            nameTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
-            nameTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            nameTextLabel.heightAnchor.constraint(equalToConstant: 15),
-
-            enterNameTextField.topAnchor.constraint(equalTo: nameTextLabel.bottomAnchor, constant: 8),
-            enterNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            enterNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            enterNameTextField.heightAnchor.constraint(equalToConstant: 50),
-            
-            iconTextLabel.topAnchor.constraint(equalTo: enterNameTextField.bottomAnchor, constant: 16),
-            iconTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
-            iconTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            iconTextLabel.heightAnchor.constraint(equalToConstant: 24),
-            
-            myColectionView.topAnchor.constraint(equalTo: iconTextLabel.bottomAnchor, constant: 16),
-            myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            myColectionView.bottomAnchor.constraint(equalTo: createNewBoardeButton.topAnchor, constant: -32),
-            
-            createNewBoardeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
-            createNewBoardeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            createNewBoardeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            createNewBoardeButton.heightAnchor.constraint(equalToConstant: 50),
-
-        ])
+        NSLayoutConstraint.activate(getConstraintsForState(state: boardSheetState))
     }
     
-    init(boardsViewModel: BoardsViewModel) {
-        self.boardsViewModel = boardsViewModel
+    private let boardSheetState: BoardSheetState
+    private let selectedBoard: BoardBusinessModel?
 
+    init(boardSheetState: BoardSheetState, selectedBoard: BoardBusinessModel?, boardsViewModel: BoardsViewModel) {
+        self.selectedBoard = selectedBoard
+        self.boardSheetState = boardSheetState
+        self.boardsViewModel = boardsViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -274,5 +223,154 @@ class BoardCreateViewController: UIViewController {
     deinit {
 
     }
+    
+    private func getConstraintsForState(state: BoardSheetState) -> [NSLayoutConstraint] {
+        
+        switch state {
+        case .creation:
+            
+            return [
+                titleTexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
+                titleTexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+                titleTexLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -32),
+                titleTexLabel.heightAnchor.constraint(equalToConstant: 24),
+                
+                closeButton.centerYAnchor.constraint(equalTo: titleTexLabel.centerYAnchor),
+                closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                closeButton.heightAnchor.constraint(equalToConstant: 24),
+                closeButton.widthAnchor.constraint(equalToConstant: 24),
+                
+                nameTextLabel.topAnchor.constraint(equalTo: titleTexLabel.bottomAnchor, constant: 24),
+                nameTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+                nameTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                nameTextLabel.heightAnchor.constraint(equalToConstant: 15),
+                
+                enterNameTextField.topAnchor.constraint(equalTo: nameTextLabel.bottomAnchor, constant: 8),
+                enterNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                enterNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                enterNameTextField.heightAnchor.constraint(equalToConstant: 50),
+                
+                iconTextLabel.topAnchor.constraint(equalTo: enterNameTextField.bottomAnchor, constant: 16),
+                iconTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+                iconTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                iconTextLabel.heightAnchor.constraint(equalToConstant: 24),
+                
+                myColectionView.topAnchor.constraint(equalTo: iconTextLabel.bottomAnchor, constant: 16),
+                myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                myColectionView.bottomAnchor.constraint(equalTo: createNewBoardeButton.topAnchor, constant: -32),
+                
+                createNewBoardeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
+                createNewBoardeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                createNewBoardeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                createNewBoardeButton.heightAnchor.constraint(equalToConstant: 50),
+            ]
 
+        case .edit:
+            
+            return [
+                titleTexLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
+                titleTexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+                titleTexLabel.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -32),
+                titleTexLabel.heightAnchor.constraint(equalToConstant: 24),
+                
+                closeButton.centerYAnchor.constraint(equalTo: titleTexLabel.centerYAnchor),
+                closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                closeButton.heightAnchor.constraint(equalToConstant: 24),
+                closeButton.widthAnchor.constraint(equalToConstant: 24),
+                
+                nameTextLabel.topAnchor.constraint(equalTo: titleTexLabel.bottomAnchor, constant: 24),
+                nameTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+                nameTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                nameTextLabel.heightAnchor.constraint(equalToConstant: 15),
+                
+                enterNameTextField.topAnchor.constraint(equalTo: nameTextLabel.bottomAnchor, constant: 8),
+                enterNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                enterNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                enterNameTextField.heightAnchor.constraint(equalToConstant: 50),
+                
+                iconTextLabel.topAnchor.constraint(equalTo: enterNameTextField.bottomAnchor, constant: 16),
+                iconTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+                iconTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                iconTextLabel.heightAnchor.constraint(equalToConstant: 24),
+                
+                myColectionView.topAnchor.constraint(equalTo: iconTextLabel.bottomAnchor, constant: 16),
+                myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                myColectionView.bottomAnchor.constraint(equalTo: createNewBoardeButton.topAnchor, constant: -32),
+                
+                createNewBoardeButton.bottomAnchor.constraint(equalTo: deleteButton.topAnchor, constant: -32),
+                createNewBoardeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                createNewBoardeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                createNewBoardeButton.heightAnchor.constraint(equalToConstant: 50),
+                
+                deleteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
+                deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+                deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                deleteButton.heightAnchor.constraint(equalToConstant: 50),
+                
+            ]
+        }
+    }
+
+}
+
+
+struct IconProvider {
+    
+    static func provideIcons(selectedIcon: String?) -> [IconSelectorCellModel] {
+        let icons = [
+            
+            IconSelectorCellModel(id: "square.and.arrow.up.on.square", iconResource: "square.and.arrow.up.on.square"),
+            IconSelectorCellModel(id: "pencil.circle.fill", iconResource: "pencil.circle.fill"),
+            IconSelectorCellModel(id: "pencil.tip", iconResource: "pencil.tip"),
+            IconSelectorCellModel(id: "lasso", iconResource: "lasso"),
+            IconSelectorCellModel(id: "trash", iconResource: "trash"),
+            IconSelectorCellModel(id: "folder", iconResource: "folder"),
+            IconSelectorCellModel(id: "paperplane.circle", iconResource: "paperplane.circle"),
+            IconSelectorCellModel(id: "externaldrive.badge.minus", iconResource: "externaldrive.badge.minus"),
+            IconSelectorCellModel(id: "doc.on.clipboard.fill", iconResource: "doc.on.clipboard.fill"),
+            IconSelectorCellModel(id: "doc.text.below.ecg", iconResource: "doc.text.below.ecg"),
+            IconSelectorCellModel(id: "text.book.closed", iconResource: "text.book.closed"),
+            IconSelectorCellModel(id: "greetingcard", iconResource: "greetingcard"),
+            IconSelectorCellModel(id: "person", iconResource: "person"),
+            IconSelectorCellModel(id: "command.square.fill", iconResource: "command.square.fill"),
+            IconSelectorCellModel(id: "globe", iconResource: "globe"),
+            IconSelectorCellModel(id: "calendar.day.timeline.trailing", iconResource: "calendar.day.timeline.trailing"),
+            IconSelectorCellModel(id: "arrowshape.bounce.right", iconResource: "arrowshape.bounce.right"),
+            IconSelectorCellModel(id: "book.closed", iconResource: "book.closed"),
+            IconSelectorCellModel(id: "newspaper.circle", iconResource: "newspaper.circle"),
+            IconSelectorCellModel(id: "rosette", iconResource: "rosette"),
+            IconSelectorCellModel(id: "graduationcap.fill", iconResource: "graduationcap.fill"),
+            IconSelectorCellModel(id: "paperclip.badge.ellipsis", iconResource: "paperclip.badge.ellipsis"),
+            IconSelectorCellModel(id: "personalhotspot", iconResource: "personalhotspot"),
+            IconSelectorCellModel(id: "rectangle.inset.filled.and.person.filled", iconResource: "rectangle.inset.filled.and.person.filled"),
+            IconSelectorCellModel(id: "person.fill.and.arrow.left.and.arrow.right", iconResource: "person.fill.and.arrow.left.and.arrow.right"),
+            IconSelectorCellModel(id: "sun.max.fill", iconResource: "sun.max.fill"),
+            IconSelectorCellModel(id: "moon.zzz", iconResource: "moon.zzz"),
+            IconSelectorCellModel(id: "cloud.sleet.fill", iconResource: "cloud.sleet.fill"),
+            IconSelectorCellModel(id: "smoke", iconResource: "smoke"),
+            IconSelectorCellModel(id: "umbrella.fill", iconResource: "umbrella.fill"),
+            IconSelectorCellModel(id: "cursorarrow.and.square.on.square.dashed", iconResource: "cursorarrow.and.square.on.square.dashed"),
+            IconSelectorCellModel(id: "rectangle.grid.2x2", iconResource: "rectangle.grid.2x2"),
+            IconSelectorCellModel(id: "circle.grid.3x3", iconResource: "circle.grid.3x3"),
+            IconSelectorCellModel(id: "circle.hexagongrid", iconResource: "circle.hexagongrid"),
+            IconSelectorCellModel(id: "seal.fill", iconResource: "seal.fill"),
+            IconSelectorCellModel(id: "exclamationmark.triangle", iconResource: "exclamationmark.triangle"),
+            IconSelectorCellModel(id: "play.fill", iconResource: "play.fill"),
+            IconSelectorCellModel(id: "memories.badge.plus", iconResource: "memories.badge.plus"),
+            IconSelectorCellModel(id: "infinity.circle", iconResource: "infinity.circle"),
+            IconSelectorCellModel(id: "speaker.zzz.fill", iconResource: "speaker.zzz.fill"),
+
+
+        ]
+        
+        if let selectedIcon = selectedIcon {
+            var allOtherIcon =  icons.filter { $0.iconResource != selectedIcon }
+            allOtherIcon.insert(IconSelectorCellModel(id: selectedIcon, iconResource: selectedIcon), at: 0)
+            return allOtherIcon
+        }
+        
+        return icons
+    }
 }

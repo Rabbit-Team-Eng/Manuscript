@@ -48,8 +48,8 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func presentCreateBoardScreen() {
-        parentCoordinator?.presentCreateBoardScreen()
+    func presentCreateBoardScreen(state: BoardSheetState, selectedBoard: BoardBusinessModel?) {
+        parentCoordinator?.presentCreateBoardScreen(state: state, selectedBoard: selectedBoard)
 
     }
     

@@ -110,7 +110,7 @@ class BoardDetailViewController: UIViewController {
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIBarButtonItem) {
-        
+        coordinator?.presentCreateBoardScreen(state: .edit, selectedBoard: selectedBoard)
     }
     
     init(selectedWorkspace: WorkspaceBusinessModel, selectedBoard: BoardBusinessModel, boardViewModel: BoardsViewModel) {
@@ -135,27 +135,32 @@ extension BoardDetailViewController {
     
     func applySnapshot(items: [TaskCellModel], animatingDifferences: Bool = false) {
         var snapshot = Snapshot()
+        
+        let priorities = items.compactMap({ $0.priority })
+        
+        if priorities.contains(Priority.high) {
+            snapshot.appendSections([.highPrioritySection])
+        }
+        
+        if priorities.contains(Priority.medium) {
+            snapshot.appendSections([.mediumPrioritySection])
+        }
+        
+        if priorities.contains(Priority.low) {
+            snapshot.appendSections([.lowPrioritySection])
+        }
 
         items.forEach { item in
             
             if item.priority == .high {
-                if !snapshot.sectionIdentifiers.contains(.highPrioritySection) {
-                    snapshot.appendSections([.highPrioritySection])
-                }
                 snapshot.appendItems([item], toSection: .highPrioritySection)
             }
             
             if item.priority == .medium {
-                if !snapshot.sectionIdentifiers.contains(.mediumPrioritySection) {
-                    snapshot.appendSections([.mediumPrioritySection])
-                }
                 snapshot.appendItems([item], toSection: .mediumPrioritySection)
             }
             
             if item.priority == .low {
-                if !snapshot.sectionIdentifiers.contains(.lowPrioritySection) {
-                    snapshot.appendSections([.lowPrioritySection])
-                }
                 snapshot.appendItems([item], toSection: .lowPrioritySection)
             }
         }

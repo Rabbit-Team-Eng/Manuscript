@@ -70,15 +70,14 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         tasksCoordinator.start(with: TasksFlow.tasks)
     }
     
-    func presentCreateBoardScreen() {
-        let vc = BoardCreateViewController(boardsViewModel: mainInjector.provideBoardsViewModel())
+    func presentCreateBoardScreen(state: BoardSheetState, selectedBoard: BoardBusinessModel?) {
+        let vc = BoardCreateViewController(boardSheetState: state, selectedBoard: selectedBoard, boardsViewModel: mainInjector.provideBoardsViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
              sheet.detents = [.medium(), .large()]
          }
         mainTabBarController.present(vc, animated: true, completion: nil)
-
     }
     
     func presentTaskDetailScreen(taskDetailState: TaskDetailState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?) {
