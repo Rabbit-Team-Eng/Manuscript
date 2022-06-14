@@ -16,9 +16,24 @@ enum TaskDetailState {
 class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
     
     weak var coordinator: TabBarCoordinator? = nil
+    
+    private var newTitle: String = ""
+    private var newDescription: String = ""
+    private var selectedPriority: Priority?
+    private var selectedBoardId: String?
 
     func actionDidHappen(action: TaskDetailAction) {
         
+        if case .titleDidUpdated(let title) = action {
+            newTitle = title
+            print(newTitle)
+        }
+        
+        if case .descriptionDidUpdated(let description) = action {
+            newDescription = description
+            print(newDescription)
+
+        }
     }
     
     typealias DataSource = UICollectionViewDiffableDataSource<TaskDetailSectionType, TaskDetailCellModel>
@@ -111,6 +126,7 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
             var newSnapshot = self.dataSource.snapshot().itemIdentifiers.filter { $0.section != .prioritySection }
             
             if priority == .low {
+                self.selectedPriority = .low
                 newSnapshot.append(
                     TaskDetailCellModel(id: "0", priorityCellModel: PrioritySelectorCellModel(title: "Low",
                                                                                               description: "Low priority task which will go to the end of your task list",
@@ -120,6 +136,7 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
                 )
                 
             } else if priority == .medium {
+                self.selectedPriority = .medium
                 newSnapshot.append(
                     TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
                                                                                               description: "Medium priority is a regular task which will be in your task list",
@@ -129,6 +146,7 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
                 )
                 
             } else if priority == .high {
+                self.selectedPriority = .high
                 newSnapshot.append(
                     TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "High",
                                                                                               description: "High priority task will go to top of your list and you will get notifications frequently",
@@ -284,19 +302,24 @@ class TaskDetailViewController: UIViewController, TaskDetailActionProtocol {
     }
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIButton) {
-        let model = TaskBusinessModel(remoteId: -999,
-                                      assigneeUserId: "im idin",
-                                      title: "buhaah",
-                                      detail: "d",
-                                      dueDate: DateTimeUtils.convertDateToServerString(date: Date()),
-                                      ownerBoardId: selectedBoard!.remoteId,
-                                      status: "new",
-                                      workspaceId: workspace!.remoteId,
-                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-                                      isInitiallySynced: false,
-                                      isPendingDeletionOnTheServer: false)
         
-        boardViewModel.createNewTask(task: model)
+        if let selectedPriority = selectedPriority {
+            let model = TaskBusinessModel(remoteId: -999,
+                                          assigneeUserId: "im idin",
+                                          title: newTitle,
+                                          detail: newDescription,
+                                          dueDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                          ownerBoardId: Int64(selectedBoardId!)!,
+                                          status: "new",
+                                          workspaceId: workspace!.remoteId,
+                                          lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                          isInitiallySynced: false,
+                                          isPendingDeletionOnTheServer: false,
+                                          priority: selectedPriority)
+            
+            boardViewModel.createNewTask(task: model)
+        }
+     
     }
     
 
@@ -495,8 +518,8 @@ extension TaskDetailViewController {
 extension TaskDetailViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // TODO: We should crate enums for each section instead of using integers, Overall need to refactor
-        // ordering logic for the collection view
+
+        selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.id
         if indexPath.section != 1 { return false } else { return true }
         
     }
@@ -515,3 +538,4 @@ extension TaskDetailViewController: PrioritySelectionActionsProtocol {
     
     
 }
+

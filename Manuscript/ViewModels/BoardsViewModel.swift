@@ -92,6 +92,7 @@ class BoardsViewModel {
     func createNewBoard(title: String, icon: String, ownerWorkspaceId: Int64) {
         let newBoard = BoardBusinessModel(remoteId: -990,
                                           title: title,
+                                          detailDescription: "null",
                                           assetUrl: icon,
                                           ownerWorkspaceId: ownerWorkspaceId,
                                           lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),

@@ -8,11 +8,6 @@
 import CoreData
 import Combine
 
-enum BoardSyncronizerState {
-    case initial
-    case done
-}
-
 class BoardSyncronizer: DataSyncronizer {
     
     typealias Model = BoardBusinessModel

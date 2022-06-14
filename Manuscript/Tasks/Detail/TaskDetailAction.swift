@@ -8,6 +8,6 @@
 import Foundation
 
 enum TaskDetailAction {
-    case titleDidUpdated
-    case descriptionDidUpdated
+    case titleDidUpdated(text: String)
+    case descriptionDidUpdated(text: String)
 }

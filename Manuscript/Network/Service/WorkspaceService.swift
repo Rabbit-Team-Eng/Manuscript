@@ -134,14 +134,17 @@ public class WorkspaceService: WorkspaceAPI {
                                                            dueDate: taskResponse.doeDate,
                                                            ownerBoardId: Int64(taskResponse.boardId),
                                                            status: taskResponse.status ?? "",
-                                                           workspaceId: Int64(taskResponse.workspaceId),
+//                                                           workspaceId: Int64(taskResponse.workspaceId),
+                                                           workspaceId: workspaceResponse.id,
                                                            lastModifiedDate: taskResponse.lastModifiedDate,
                                                            isInitiallySynced: true,
-                                                           isPendingDeletionOnTheServer: false))
+                                                           isPendingDeletionOnTheServer: false,
+                                                           priority: PriorityTypeConverter.getEnum(priority: taskResponse.priority)))
                         }
 
                         boards.append(BoardBusinessModel(remoteId: Int64(boardResponse.id),
                                                          title: boardResponse.title,
+                                                         detailDescription: boardResponse.mainDescription ?? "null",
                                                          assetUrl: boardResponse.assetUrl ?? "null",
                                                          ownerWorkspaceId: Int64(boardResponse.workspaceId),
                                                          lastModifiedDate: boardResponse.lastModifiedDate,

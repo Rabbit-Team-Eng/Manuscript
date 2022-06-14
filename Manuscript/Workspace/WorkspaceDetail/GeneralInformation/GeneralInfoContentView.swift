@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GeneralInfoContentView: UIView, UIContentView {
+class GeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
     
     weak var delegate: WorkspaceDetailActionsProtocol?
     private var model: GeneralInfoCellModel?
@@ -45,6 +45,9 @@ class GeneralInfoContentView: UIView, UIContentView {
         addSubview(titleTextField)
         addSubview(descriptionTextField)
         
+        titleTextField.delegate = self
+        descriptionTextField.delegate = self
+        
         backgroundColor = Palette.lightBlack
         
         NSLayoutConstraint.activate([
@@ -62,6 +65,17 @@ class GeneralInfoContentView: UIView, UIContentView {
         if let configModel = configuration.model { applyConfigurationModel(model: configModel) }
 
         
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField == titleTextField {
+            delegate?.actionDidHappen(action: .titleDidUpdated(title: textField.text ?? "null"))
+        }
+        
+        if textField == descriptionTextField {
+            delegate?.actionDidHappen(action: .descriptionDidUpdated(description: textField.text ?? "null"))
+
+        }
     }
     
     required init?(coder: NSCoder) {

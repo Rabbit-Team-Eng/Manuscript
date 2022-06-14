@@ -40,14 +40,36 @@ class DataProvider: Datasource {
             boardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
             do {
                 let boardEntity: BoardEntity = try context.fetch(boardFetchRequest).first!
+                
+                var allTasks: [TaskBusinessModel] = []
+                
+                boardEntity.tasks?.forEach({ taskEntity in
+                    if let task = taskEntity as? TaskEntity {
+                        allTasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                          assigneeUserId: task.assigneeUserId,
+                                                          title: task.title,
+                                                          detail: task.detail,
+                                                          dueDate: task.dueDate,
+                                                          ownerBoardId: task.ownerBoardId,
+                                                          status: task.status,
+                                                          workspaceId: task.workspaceId,
+                                                          lastModifiedDate: task.lastModifiedDate,
+                                                          isInitiallySynced: task.isInitiallySynced,
+                                                          isPendingDeletionOnTheServer: task.isInitiallySynced,
+                                                          priority: PriorityTypeConverter.getEnum(priority: task.priority))) 
+                    }
+                })
+                
                 let boardModel = BoardBusinessModel(remoteId: boardEntity.remoteId,
-                                                     coreDataId: boardEntity.objectID,
-                                                     title: boardEntity.title,
-                                                     assetUrl: boardEntity.assetUrl,
-                                                     ownerWorkspaceId: boardEntity.ownerWorkspaceId,
-                                                     lastModifiedDate: boardEntity.lastModifiedDate,
-                                                     isInitiallySynced: boardEntity.isInitiallySynced,
-                                                     isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
+                                                    coreDataId: boardEntity.objectID,
+                                                    title: boardEntity.title,
+                                                    detailDescription: boardEntity.mainDescription,
+                                                    assetUrl: boardEntity.assetUrl,
+                                                    ownerWorkspaceId: boardEntity.ownerWorkspaceId,
+                                                    lastModifiedDate: boardEntity.lastModifiedDate,
+                                                    tasks: allTasks,
+                                                    isInitiallySynced: boardEntity.isInitiallySynced,
+                                                    isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
                 returningBoard = boardModel
             } catch {
                 
@@ -70,14 +92,35 @@ class DataProvider: Datasource {
             boardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
             do {
                 let boardEntity: BoardEntity = try context.fetch(boardFetchRequest).first!
+                var allTasks: [TaskBusinessModel] = []
+                
+                boardEntity.tasks?.forEach({ taskEntity in
+                    if let task = taskEntity as? TaskEntity {
+                        allTasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                          assigneeUserId: task.assigneeUserId,
+                                                          title: task.title,
+                                                          detail: task.detail,
+                                                          dueDate: task.dueDate,
+                                                          ownerBoardId: task.ownerBoardId,
+                                                          status: task.status,
+                                                          workspaceId: task.workspaceId,
+                                                          lastModifiedDate: task.lastModifiedDate,
+                                                          isInitiallySynced: task.isInitiallySynced,
+                                                          isPendingDeletionOnTheServer: task.isInitiallySynced,
+                                                          priority: PriorityTypeConverter.getEnum(priority: task.priority)))
+                    }
+                })
+                
                 let boardModel = BoardBusinessModel(remoteId: boardEntity.remoteId,
-                                                     coreDataId: boardEntity.objectID,
-                                                     title: boardEntity.title,
-                                                     assetUrl: boardEntity.assetUrl,
-                                                     ownerWorkspaceId: boardEntity.ownerWorkspaceId,
-                                                     lastModifiedDate: boardEntity.lastModifiedDate,
-                                                     isInitiallySynced: boardEntity.isInitiallySynced,
-                                                     isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
+                                                    coreDataId: boardEntity.objectID,
+                                                    title: boardEntity.title,
+                                                    detailDescription: boardEntity.mainDescription,
+                                                    assetUrl: boardEntity.assetUrl,
+                                                    ownerWorkspaceId: boardEntity.ownerWorkspaceId,
+                                                    lastModifiedDate: boardEntity.lastModifiedDate,
+                                                    tasks: allTasks,
+                                                    isInitiallySynced: boardEntity.isInitiallySynced,
+                                                    isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
                 returningBoard = boardModel
             } catch {
                 
@@ -119,13 +162,15 @@ class DataProvider: Datasource {
                                                                   workspaceId: task.workspaceId,
                                                                   lastModifiedDate: task.lastModifiedDate,
                                                                   isInitiallySynced: task.isInitiallySynced,
-                                                                  isPendingDeletionOnTheServer: task.isInitiallySynced))
+                                                                  isPendingDeletionOnTheServer: task.isInitiallySynced,
+                                                                  priority: PriorityTypeConverter.getEnum(priority: task.priority)))
                             }
                         })
                         
                         allBoards.append(BoardBusinessModel(remoteId: board.remoteId,
                                                          coreDataId: board.objectID,
-                                                         title: board.title,
+                                                            title: board.title,
+                                                            detailDescription: board.mainDescription,
                                                          assetUrl: board.assetUrl,
                                                          ownerWorkspaceId: board.ownerWorkspaceId,
                                                          lastModifiedDate: board.lastModifiedDate,
@@ -188,6 +233,7 @@ class DataProvider: Datasource {
                     let boardsModel = BoardBusinessModel(remoteId: boardEntity.remoteId,
                                                          coreDataId: boardEntity.objectID,
                                                          title: boardEntity.title,
+                                                         detailDescription: boardEntity.mainDescription,
                                                          assetUrl: boardEntity.assetUrl,
                                                          ownerWorkspaceId: boardEntity.ownerWorkspaceId,
                                                          lastModifiedDate: boardEntity.lastModifiedDate,
@@ -220,7 +266,7 @@ class DataProvider: Datasource {
                 allBoards.forEach { boardEntity in
                     let boardsModel = BoardBusinessModel(remoteId: boardEntity.remoteId,
                                                          coreDataId: boardEntity.objectID,
-                                                         title: boardEntity.title,
+                                                         title: boardEntity.title, detailDescription: boardEntity.mainDescription,
                                                          assetUrl: boardEntity.assetUrl,
                                                          ownerWorkspaceId: boardEntity.ownerWorkspaceId,
                                                          lastModifiedDate: boardEntity.lastModifiedDate,
@@ -235,6 +281,46 @@ class DataProvider: Datasource {
         }
         
         return allBoardsModels
+        
+    }
+    
+    func fethAllTasksOnBackgroundThread() -> [TaskBusinessModel] {
+        var allTasksModels: [TaskBusinessModel] = []
+        let context = coreDataStack.databaseContainer.newBackgroundContext()
+
+        // If needed, ensure the background context stays
+        // up to date with changes from the parent
+        context.automaticallyMergesChangesFromParent = true
+
+        // Perform operations on the background context asynchronously
+        context.performAndWait {
+            let boardFetchRequest: NSFetchRequest<TaskEntity> = NSFetchRequest(entityName: "TaskEntity")
+            do {
+                let allTasks: [TaskEntity] = try context.fetch(boardFetchRequest)
+                allTasks.forEach { taskEntity in
+                    let taskModel = TaskBusinessModel(remoteId: taskEntity.remoteId,
+                                                      coreDataId: taskEntity.objectID,
+                                                      assigneeUserId: taskEntity.assigneeUserId,
+                                                      title: taskEntity.title,
+                                                      detail: taskEntity.detail,
+                                                      dueDate: taskEntity.dueDate,
+                                                      ownerBoardId: taskEntity.ownerBoardId,
+                                                      status: taskEntity.status,
+                                                      workspaceId: taskEntity.workspaceId,
+                                                      lastModifiedDate: taskEntity.lastModifiedDate,
+                                                      isInitiallySynced: taskEntity.isInitiallySynced,
+                                                      isPendingDeletionOnTheServer: taskEntity.isPendingDeletionOnTheServer,
+                                                      priority: PriorityTypeConverter.getEnum(priority: taskEntity.priority))
+                    
+                    allTasksModels.append(taskModel)
+                    
+                }
+            } catch {
+                
+            }
+        }
+        
+        return allTasksModels
         
     }
     
@@ -275,13 +361,13 @@ class DataProvider: Datasource {
                                                                    workspaceId: task.workspaceId,
                                                                    lastModifiedDate: task.lastModifiedDate,
                                                                    isInitiallySynced: task.isInitiallySynced,
-                                                                   isPendingDeletionOnTheServer: task.isInitiallySynced))
+                                                                   isPendingDeletionOnTheServer: task.isInitiallySynced, priority: .medium))
                                 }
                             }
                             
                             boards.append(BoardBusinessModel(remoteId: board.remoteId,
                                                              coreDataId: board.objectID,
-                                                             title: board.title,
+                                                             title: board.title, detailDescription: board.mainDescription,
                                                              assetUrl: board.assetUrl,
                                                              ownerWorkspaceId: board.ownerWorkspaceId,
                                                              lastModifiedDate: board.lastModifiedDate,
@@ -338,7 +424,8 @@ class DataProvider: Datasource {
             returningBoards = try mainThread.fetch(boardsFetchRequest).map({ boardEntity in
                 BoardBusinessModel(remoteId: boardEntity.remoteId,
                                                           coreDataId: boardEntity.objectID,
-                                                          title: boardEntity.title,
+                                   title: boardEntity.title,
+                                   detailDescription: boardEntity.mainDescription,
                                                           assetUrl: boardEntity.assetUrl,
                                                           ownerWorkspaceId: boardEntity.ownerWorkspaceId,
                                                           lastModifiedDate: boardEntity.lastModifiedDate,
@@ -379,13 +466,14 @@ class DataProvider: Datasource {
                                                                workspaceId: task.workspaceId,
                                                                lastModifiedDate: task.lastModifiedDate,
                                                                isInitiallySynced: task.isInitiallySynced,
-                                                               isPendingDeletionOnTheServer: task.isInitiallySynced))
+                                                               isPendingDeletionOnTheServer: task.isInitiallySynced,
+                                                               priority: PriorityTypeConverter.getEnum(priority: task.priority)))
                             }
                         }
                         
                         boards.append(BoardBusinessModel(remoteId: board.remoteId,
                                                          coreDataId: board.objectID,
-                                                         title: board.title,
+                                                         title: board.title, detailDescription: board.mainDescription,
                                                          assetUrl: board.assetUrl,
                                                          ownerWorkspaceId: board.ownerWorkspaceId,
                                                          lastModifiedDate: board.lastModifiedDate,

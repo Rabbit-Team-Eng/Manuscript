@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Priority {
+public enum Priority {
     case low
     case medium
     case high

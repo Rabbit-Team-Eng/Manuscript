@@ -86,7 +86,7 @@ public class BoardService: BoardAPI {
                 boards.forEach { response in
                     ret.append(BoardBusinessModel(remoteId: Int64(response.id),
                                                   title: response.title,
-                                                  assetUrl: response.assetUrl ?? "",
+                                                  detailDescription: response.mainDescription ?? "null", assetUrl: response.assetUrl ?? "",
                                                   ownerWorkspaceId: Int64(response.workspaceId),
                                                   lastModifiedDate: response.lastModifiedDate,
                                                   isInitiallySynced: true,

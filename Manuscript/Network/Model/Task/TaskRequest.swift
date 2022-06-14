@@ -14,12 +14,7 @@ public struct TaskRequest: Codable {
     public var detail: String
     public var doeDate: String?
     public var assigneeId: String?
+    public var priority: String?
+    public var status: String?
 
-    public init(boardId: Int64, title: String, detail: String, doeDate: String? = nil, assigneeId: String? = nil) {
-        self.boardId = boardId
-        self.title = title
-        self.detail = detail
-        self.doeDate = doeDate
-        self.assigneeId = assigneeId
-    }
 }

@@ -33,6 +33,7 @@
         <attribute name="isPendingDeletionOnTheServer" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" attributeType="String"/>
         <attribute name="ownerBoardId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="priority" attributeType="String"/>
         <attribute name="remoteId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="status" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
@@ -54,7 +55,7 @@
     <elements>
         <element name="BoardEntity" positionX="154.7373046875" positionY="-17.98114013671875" width="128" height="179"/>
         <element name="MemberEntity" positionX="189.0435791015625" positionY="218.296875" width="128" height="194"/>
-        <element name="TaskEntity" positionX="452.68798828125" positionY="-33.20613098144531" width="128" height="209"/>
+        <element name="TaskEntity" positionX="452.68798828125" positionY="-33.20613098144531" width="128" height="224"/>
         <element name="WorkspaceEntity" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

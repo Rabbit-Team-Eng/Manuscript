@@ -18,6 +18,8 @@ class MainInjector {
     private var workspacesViewModel: WorkspacesViewModel? = nil
     private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
+    private var taskSyncronizer: TaskSyncronizer? = nil
+    private var taskCoreDataManager: TaskCoreDataManager? = nil
     private var boardService: BoardService? = nil
     private var cloudSync: CloudSync? = nil
     private var boardSyncronizer: BoardSyncronizer? = nil
@@ -91,6 +93,28 @@ class MainInjector {
                                                 boardCoreDataManager: provideBoardCoreDataManager(),
                                                 boardService: provideBoardService())
             return boardSyncronizer!
+        }
+    }
+    
+    func provideTaskCoreDataManager() -> TaskCoreDataManager {
+        if taskCoreDataManager != nil {
+            return taskCoreDataManager!
+        } else {
+            taskCoreDataManager = TaskCoreDataManager(coreDataStack: provideCoreDataStack())
+            return taskCoreDataManager!
+        }
+    }
+    
+
+    func provideTaskSyncronizer() -> TaskSyncronizer {
+        if taskSyncronizer != nil {
+            return taskSyncronizer!
+        } else {
+            taskSyncronizer = TaskSyncronizer(coreDataStack: provideCoreDataStack(),
+                                              startupUtils: provideStartUpUtils(),
+                                              taskCoreDataManager: provideTaskCoreDataManager(),
+                                              taskService: provideTaskService())
+            return taskSyncronizer!
         }
     }
     
@@ -180,7 +204,8 @@ class MainInjector {
                                   boardsService: provideBoardService(),
                                   workspaceSyncronizer: provideWorkspaceSyncronizer(),
                                   dataProvider: provideDataManager(),
-                                  boardSyncronizer: provideBoardSyncronizer())
+                                  boardSyncronizer: provideBoardSyncronizer(),
+                                  taskSyncronizer: provideTaskSyncronizer())
             return cloudSync!
         }
     }

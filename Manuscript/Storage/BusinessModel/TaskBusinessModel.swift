@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 public struct TaskBusinessModel: BusinessModelProtocol {
-    public var coreDataId: NSManagedObjectID? = nil
+    public var coreDataId: NSManagedObjectID?
 
     public let remoteId: Int64
     public let assigneeUserId: String
@@ -22,9 +22,11 @@ public struct TaskBusinessModel: BusinessModelProtocol {
     public let status: String
     public let workspaceId: Int64
     public let isPendingDeletionOnTheServer: Bool
+    public let priority: Priority
 
-    public init(remoteId: Int64, assigneeUserId: String, title: String, detail: String?, dueDate: String, ownerBoardId: Int64, status: String, workspaceId: Int64, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
+    public init(remoteId: Int64, coreDataId: NSManagedObjectID? = nil, assigneeUserId: String, title: String, detail: String?, dueDate: String, ownerBoardId: Int64, status: String, workspaceId: Int64, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool, priority: Priority) {
         self.remoteId = remoteId
+        self.coreDataId = coreDataId
         self.assigneeUserId = assigneeUserId
         self.title = title
         self.detail = detail
@@ -35,6 +37,23 @@ public struct TaskBusinessModel: BusinessModelProtocol {
         self.isInitiallySynced = isInitiallySynced
         self.lastModifiedDate = DateTimeUtils.convertServerStringToDate(stringDate: lastModifiedDate)
         self.isPendingDeletionOnTheServer = isPendingDeletionOnTheServer
+        self.priority = priority
+    }
+    
+    public static func == (lhs: TaskBusinessModel, rhs: TaskBusinessModel) -> Bool {
+        return lhs.remoteId == rhs.remoteId
+        && lhs.assigneeUserId == rhs.assigneeUserId
+        && lhs.title == rhs.title
+        && lhs.isInitiallySynced == rhs.isInitiallySynced
+        && lhs.lastModifiedDate == rhs.lastModifiedDate
+        && lhs.detail == rhs.detail
+//        && lhs.dueDate == rhs.dueDate
+        && lhs.ownerBoardId == rhs.ownerBoardId
+        && lhs.status == rhs.status
+        && lhs.workspaceId == rhs.workspaceId
+        && lhs.isPendingDeletionOnTheServer == rhs.isPendingDeletionOnTheServer
+        && lhs.priority == rhs.priority
+
     }
     
     public static func < (lhs: TaskBusinessModel, rhs: TaskBusinessModel) -> Bool {

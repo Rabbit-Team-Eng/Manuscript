@@ -29,6 +29,7 @@ class BoardCreator {
         context.performAndWait {
             let boardEntity = BoardEntity(context: context)
             boardEntity.assetUrl = board.assetUrl
+            boardEntity.mainDescription = board.detailDescription
             boardEntity.isInitiallySynced = board.isInitiallySynced
             boardEntity.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
             boardEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)

@@ -41,6 +41,7 @@ class TaskCreator {
             taskEntity.remoteId = task.remoteId
             taskEntity.status = task.status
             taskEntity.title = task.title
+            taskEntity.priority = PriorityTypeConverter.getString(priority: task.priority)
             taskEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: task.lastModifiedDate)
 
             
@@ -65,8 +66,10 @@ class TaskCreator {
         taskService.createTask(requestBody: TaskRequest(boardId: item.ownerBoardId,
                                                         title: item.title,
                                                         detail: item.detail ?? "",
-                                                        doeDate: nil,
-                                                        assigneeId: item.assigneeUserId))
+                                                        doeDate: item.dueDate,
+                                                        assigneeId: item.assigneeUserId,
+                                                        priority: "\(item.priority)",
+                                                        status: item.status))
         .sink { completion in } receiveValue: { [weak self] taskResponse in
             guard let self = self, let coreDataId = coreDataId else { return }
             let context = self.database.databaseContainer.newBackgroundContext()
@@ -77,6 +80,7 @@ class TaskCreator {
                     taskToBeUpdated.remoteId = Int64(taskResponse.id)
                     taskToBeUpdated.lastModifiedDate = taskResponse.lastModifiedDate
                     taskToBeUpdated.isInitiallySynced = true
+                    
                     do {
                         try context.save()
                         self.notify()

@@ -12,6 +12,7 @@ public struct BoardResponse: Codable, Syncable {
     public var workspaceId: Int
     public var assetUrl: String? = nil
     public var title: String
+    public var mainDescription: String? = nil
     public var tasks: [TaskResponse]? = nil
     public var lastModifiedDate: String
 

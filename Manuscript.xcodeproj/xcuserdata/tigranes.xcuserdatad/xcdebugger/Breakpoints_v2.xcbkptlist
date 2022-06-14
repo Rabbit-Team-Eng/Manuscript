@@ -55,16 +55,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5BB7D365-B00F-4930-A11E-AD56D9045B78"
+            uuid = "CB4C8886-3B4B-40CF-9EBE-6D3F15D2EA5F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Manuscript/Storage/Comparator/ComparatorProtocol.swift"
+            filePath = "Manuscript/Storage/DataProvider.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "compare(responseCollection:cachedCollection:)"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "fetchCurrentBoardWithRemoteId(id:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D83DFBEC-F3E0-4414-9864-A7B0958A18C8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Manuscript/Syncronizer/CloudSync.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "syncronize()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

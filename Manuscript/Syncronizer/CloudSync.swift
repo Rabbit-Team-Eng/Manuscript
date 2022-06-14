@@ -15,14 +15,16 @@ final class CloudSync {
     private let boardsService: BoardService
     private let workspaceSyncronizer: WorkspaceSyncronizer
     private let boardSyncronizer: BoardSyncronizer
+    private let taskSyncronizer: TaskSyncronizer
     private let dataProvider: DataProvider
 
-    init(workspaceService: WorkspaceService, boardsService: BoardService, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer) {
+    init(workspaceService: WorkspaceService, boardsService: BoardService, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer, taskSyncronizer: TaskSyncronizer) {
         self.workspaceService = workspaceService
         self.boardsService = boardsService
         self.workspaceSyncronizer = workspaceSyncronizer
         self.dataProvider = dataProvider
         self.boardSyncronizer = boardSyncronizer
+        self.taskSyncronizer = taskSyncronizer
     }
     
     func syncronize() {
@@ -47,6 +49,15 @@ final class CloudSync {
                 
                 dispatchers.enter()
                 self.boardSyncronizer.syncronize(items: boardsDiff) {
+                    dispatchers.leave()
+                }
+                
+                let currentTasks = self.dataProvider.fethAllTasksOnBackgroundThread()
+                let serverTasks = boardsServer.compactMap { $0.tasks }.flatMap { $0 }
+                let tasksDiff = TaskComparator.compare(responseCollection: serverTasks, cachedCollection: currentTasks)
+                
+                dispatchers.enter()
+                self.taskSyncronizer.syncronize(items: tasksDiff) {
                     dispatchers.leave()
                 }
                 

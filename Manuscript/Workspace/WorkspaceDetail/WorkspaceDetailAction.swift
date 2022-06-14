@@ -8,6 +8,6 @@
 import Foundation
 
 enum WorkspaceDetailAction {
-    case titleDidUpdated
-    case descriptionDidUpdated
+    case titleDidUpdated(title: String)
+    case descriptionDidUpdated(description: String)
 }
