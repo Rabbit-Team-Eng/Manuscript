@@ -137,7 +137,7 @@ class BoardCreateViewController: UIViewController {
         createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
-        applySnapshot(items: IconProvider.provideIcons(selectedIcon: selectedBoard?.assetUrl))
+        applySnapshot(items: IconProvider.icons(selectedIcon: selectedBoard?.assetUrl))
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -318,7 +318,7 @@ class BoardCreateViewController: UIViewController {
 
 struct IconProvider {
     
-    static func provideIcons(selectedIcon: String?) -> [IconSelectorCellModel] {
+    static func icons(selectedIcon: String?) -> [IconSelectorCellModel] {
         let icons = [
             
             IconSelectorCellModel(id: "square.and.arrow.up.on.square", iconResource: "square.and.arrow.up.on.square"),
