@@ -125,16 +125,18 @@ class BoardCreateViewController: UIViewController {
         if boardSheetState == .creation {
             titleTexLabel.text = "Create new board"
             createNewBoardeButton.configuration?.title = "Create New Board"
+            createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
         }
         
         if boardSheetState == .edit {
             titleTexLabel.text = "Edit Board"
             enterNameTextField.text = selectedBoard?.title ?? ""
             createNewBoardeButton.configuration?.title = "Save the changes"
+            createNewBoardeButton.addTarget(self, action: #selector(editCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
+            deleteButton.addTarget(self, action: #selector(deletCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
             view.addSubview(deleteButton)
         }
         
-        createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
         applySnapshot(items: IconProvider.icons(selectedIcon: selectedBoard?.assetUrl))
@@ -192,12 +194,48 @@ class BoardCreateViewController: UIViewController {
         parentCoordinator?.dismissBoardCreationScreen()
     }
     
+    @objc private func deletCurrentBoardButtonDidTap(_ sender: UIButton) {
+        if let selectedBoard = selectedBoard {
+            let toBeRemovedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
+                                                      coreDataId: selectedBoard.coreDataId,
+                                                      title: selectedBoard.title,
+                                                      detailDescription: selectedBoard.detailDescription,
+                                                      assetUrl: selectedBoard.assetUrl,
+                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
+                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
+                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
+            
+            boardsViewModel.deleteBoard(board: toBeRemovedBoard)
+        }
+    }
+    
     @objc private func createNewBoardButtonDidTap(_ sender: UIButton) {
         guard let title = enterNameTextField.text,
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
         
         boardsViewModel.createNewBoard(title: title, icon: icon, ownerWorkspaceId: Int64(UserDefaults.selectedWorkspaceId)!)
+    }
+    
+    @objc private func editCurrentBoardButtonDidTap(_ sender: UIButton) {
+        guard let title = enterNameTextField.text,
+        let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
+        let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
+        
+        if let selectedBoard = selectedBoard {
+            let toBeUpdatedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
+                                                      coreDataId: selectedBoard.coreDataId,
+                                                      title: title,
+                                                      detailDescription: "",
+                                                      assetUrl: icon,
+                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
+                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
+                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
+            
+            boardsViewModel.editBoard(board: toBeUpdatedBoard)
+        }
     }
 
     override func viewWillLayoutSubviews() {

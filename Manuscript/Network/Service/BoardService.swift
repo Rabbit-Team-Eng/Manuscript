@@ -116,11 +116,11 @@ public class BoardService: BoardAPI {
             .mapError({ error in
                 return BoardError.unableToGetAllBoard(errorMessage: "Decoding error.")
             })
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.global(qos: .userInteractive))
             .eraseToAnyPublisher()
     }
     
-    public func updateBoardById(accessToken: String, requestBody: BoardRequest, boardId: String) -> AnyPublisher<BoardResponse, Error> {
+    public func updateBoardById(requestBody: BoardRequest, boardId: Int64) -> AnyPublisher<BoardResponse, Error> {
         
         let request = UpdateBoardRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -137,11 +137,11 @@ public class BoardService: BoardAPI {
             .mapError({ error in
                 return BoardError.unableToGetAllBoard(errorMessage: "Decoding error.")
             })
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.global(qos: .userInteractive))
             .eraseToAnyPublisher()
     }
     
-    public func deleteBoardById(accessToken: String, boardId: String) -> AnyPublisher<BoardResponse, Error> {
+    public func deleteBoardById(boardId: Int64) -> AnyPublisher<Int, Error> {
         
         let request = DeleteBoardRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
@@ -149,14 +149,14 @@ public class BoardService: BoardAPI {
         
         return URLSession.shared
             .dataTaskPublisher(for: request.getRequest(boardId: boardId))
-            .tryMap() { element -> Data in
+            .tryMap() { element -> Int in
                 guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     fatalError("Bad Response, code is: \(String(describing: (element.response as? HTTPURLResponse)?.statusCode))")
                 }
                 
-                return element.data
+                return httpResponse.statusCode
             }
-            .decode(type: BoardResponse.self, decoder: jsonDecoder)
+//            .decode(type: BoardResponse.self, decoder: jsonDecoder)
             .mapError({ error in
                 return BoardError.unableToDecodeResponse(errorMessage: "Decoding error")
             })

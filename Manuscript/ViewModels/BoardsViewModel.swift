@@ -13,6 +13,8 @@ enum BoardsViewControllerEvent {
     case boardsDidFetch(boards: [BoardBusinessModel])
     case noBoardIsCreated
     case newBoardDidCreated
+    case currentBoardDidEdit(board: BoardBusinessModel)
+    case currentBoardDidRemoved
     case taskJustCreatedLocally(board: BoardBusinessModel)
     case boardDetailDidFetch(board: BoardBusinessModel)
 }
@@ -89,6 +91,13 @@ class BoardsViewModel {
         }
     }
     
+    func deleteBoard(board: BoardBusinessModel) {
+        boardCreator.removeBoard(board: board) { [weak self] in guard let self = self else { return }
+            self.events.send(.currentBoardDidRemoved)
+            self.fetchCurrentWorkspace()
+        }
+    }
+    
     func createNewBoard(title: String, icon: String, ownerWorkspaceId: Int64) {
         let newBoard = BoardBusinessModel(remoteId: -990,
                                           title: title,
@@ -101,6 +110,14 @@ class BoardsViewModel {
         
         boardCreator.createNewBoard(board: newBoard) { [weak self] in guard let self = self else { return }
             self.events.send(.newBoardDidCreated)
+            self.fetchCurrentWorkspace()
+        }
+    }
+    
+    func editBoard(board: BoardBusinessModel) {
+        
+        boardCreator.editBoard(board: board) { [weak self] in guard let self = self else { return }
+            self.events.send(.currentBoardDidEdit(board: board))
             self.fetchCurrentWorkspace()
         }
     }

@@ -16,9 +16,9 @@ public protocol BoardAPI {
     
     func getAllBoardsWithPredicate(accessToken: String, workspaceId: String, pageNumber: Int, pageSize: Int) -> AnyPublisher<AllBoardsResponse, Error>
     
-    func updateBoardById(accessToken: String, requestBody: BoardRequest, boardId: String) -> AnyPublisher<BoardResponse, Error>
+    func updateBoardById(requestBody: BoardRequest, boardId: Int64) -> AnyPublisher<BoardResponse, Error>
     
-    func deleteBoardById(accessToken: String, boardId: String) -> AnyPublisher<BoardResponse, Error>
+    func deleteBoardById(boardId: Int64) -> AnyPublisher<Int, Error>
     
 }
   

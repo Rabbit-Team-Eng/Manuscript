@@ -21,7 +21,7 @@ struct DeleteBoardRequest {
         self.jsonDecoder = jsonDecoder
     }
     
-    func getRequest(boardId: String) -> URLRequest {
+    func getRequest(boardId: Int64) -> URLRequest {
         let urlString = "\(environment.rawValue)\(Endpoint.board)/\(boardId)"
         var request = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = ServiceConstants.DELETE

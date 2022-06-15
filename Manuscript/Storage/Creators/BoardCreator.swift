@@ -69,7 +69,11 @@ class BoardCreator {
                         boardToBeUpdated.isInitiallySynced = true
                         do {
                             try context.save()
-                            self.notify()
+                            
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
+                            }
+                            
                         } catch {
                             fatalError()
                         }
@@ -77,12 +81,108 @@ class BoardCreator {
                 }
             }
             .store(in: &self.tokens)
+    }
+    
+    func editBoard(board: BoardBusinessModel, completion: @escaping () -> Void) {
+        let context = self.database.databaseContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            if let coreDataId = board.coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                boardToBeUpdated.title = board.title
+                boardToBeUpdated.assetUrl = board.assetUrl
+                completion()
+                editBoardInServer(worskapceId: board.ownerWorkspaceId, assetUrl: board.assetUrl, title: board.title, boardId: board.remoteId, coreDataId: board.coreDataId)
+                do {
+                    try context.save()
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    private func editBoardInServer(worskapceId: Int64, assetUrl: String, title: String, boardId: Int64, coreDataId: NSManagedObjectID?) {
+        boardService.updateBoardById(requestBody: BoardRequest(workspaceId: Int(worskapceId), assetUrl: assetUrl, title: title), boardId: boardId)
+            .sink { completion in } receiveValue: { boardResponse in
+                
+                
+                let context = self.database.databaseContainer.newBackgroundContext()
+                context.automaticallyMergesChangesFromParent = true
+                
+                context.performAndWait {
+                    if let coreDataId = coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                        boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
+                        do {
+                            try context.save()
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
+                            }
+                        } catch {
+                            fatalError()
+                        }
+                    }
+                }
+                
+                
+            }
+            .store(in: &tokens)
+    }
+    
+    func removeBoard(board: BoardBusinessModel, completion: @escaping () -> Void) {
+        let context = self.database.databaseContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            if let coreDataId = board.coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                boardToBeRemoved.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+                boardToBeRemoved.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
+                
+                boardToBeRemoved.tasks?.forEach({ boardTaskEntity in
+                    if let task = boardTaskEntity as? TaskEntity {
+                        task.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+                        task.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
+                    }
+                })
+                completion()
+                do {
+                    try context.save()
+                    self.removeFromServer(boardId: board.remoteId, coreDataId: coreDataId)
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    private func removeFromServer(boardId: Int64, coreDataId: NSManagedObjectID?) {
+        boardService.deleteBoardById(boardId: boardId)
+            .sink { completion in } receiveValue: { statusCode in
+
+                let context = self.database.databaseContainer.newBackgroundContext()
+                context.automaticallyMergesChangesFromParent = true
+                
+                context.performAndWait {
+                    if let coreDataId = coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                       
+                        context.delete(boardToBeRemoved)
+                        do {
+                            try context.save()
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
+                            }
+                        } catch {
+                            fatalError()
+                        }
+                    }
+                }
+                
+                
+                
+            }
+            .store(in: &tokens)
 
     }
     
-    private func notify() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-        }
-    }
+
 }

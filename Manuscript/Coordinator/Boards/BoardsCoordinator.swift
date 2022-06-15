@@ -58,6 +58,11 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
 
     }
     
+    func dismissAllPresentedControllers() {
+        parentCoordinator?.dismissBoardCreationScreen()
+        navigateBack()
+    }
+    
     func dismissBoardCreationScreen() {
         parentCoordinator?.dismissBoardCreationScreen()
     }

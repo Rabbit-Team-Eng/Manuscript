@@ -120,6 +120,10 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                     self.navigationItem.title = title
                 }
                 
+                if case .currentBoardDidRemoved = event {
+                    self.coordinator?.dismissAllPresentedControllers()
+                }
+                
                 if case .noBoardIsCreated = event {
                     self.determineBoardPlaceholder(hasBoards: false)
                 }

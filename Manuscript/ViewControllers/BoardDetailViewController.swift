@@ -51,7 +51,13 @@ class BoardDetailViewController: UIViewController {
         boardViewModel.events.sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
             
             if case .boardsDidFetch(let boards) = event {
-                print(boards.first { $0.remoteId == self.selectedBoard.remoteId } ?? "error===============================")
+                print(boards.first { $0.remoteId == self.selectedBoard.remoteId } ?? "We need to handle this error when deleting board!")
+            }
+            
+            if case .currentBoardDidEdit(let board) = event {
+                self.selectedBoard = board
+                self.navigationItem.title = board.title
+                self.coordinator?.dismissBoardCreationScreen()
             }
             
             if case .taskJustCreatedLocally(let board) = event {
