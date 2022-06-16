@@ -71,7 +71,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func presentCreateBoardScreen(state: BoardSheetState, selectedBoard: BoardBusinessModel?) {
-        let vc = BoardCreateViewController(boardSheetState: state, selectedBoard: selectedBoard, boardsViewModel: mainInjector.provideBoardsViewModel())
+        let vc = BoardCreateEditViewController(boardSheetState: state, selectedBoard: selectedBoard, boardsViewModel: mainInjector.provideBoardsViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -80,8 +80,8 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         mainTabBarController.present(vc, animated: true, completion: nil)
     }
     
-    func presentTaskDetailScreen(taskDetailState: TaskDetailState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?) {
-        let vc = TaskDetailViewController(taskDetailState: .creation, workspace: workspaceBusinessModel, selectedBoard: selectedBoard, boardViewModel: mainInjector.provideBoardsViewModel())
+    func presentTaskDetailScreen(taskDetailState: TaskSheetState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?, selectedTask: TaskBusinessModel?) {
+        let vc = TaskCreateEditViewController(state: taskDetailState, selectedWorkspace: workspaceBusinessModel, selectedBoard: selectedBoard, selectedTask: selectedTask, boardViewModel: mainInjector.provideBoardsViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.coordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -105,7 +105,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func openPrioritySelectionSheet(withSelectedPriority: PrioritySelectorCellModel) {
-        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskDetailViewController {
+        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskCreateEditViewController {
             
             let vc = PrioritySelectorViewController(boardViewModel: mainInjector.provideBoardsViewModel())
             vc.parentCoordinator = self
@@ -132,7 +132,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func dismissPrioritySheet() {
-        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskDetailViewController {
+        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskCreateEditViewController {
             taskDetailViewController.dismiss(animated: true)
         }
     }

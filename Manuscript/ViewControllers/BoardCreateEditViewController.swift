@@ -12,7 +12,7 @@ enum BoardSheetState {
     case edit
 }
 
-class BoardCreateViewController: UIViewController {
+class BoardCreateEditViewController: UIViewController {
     
     weak var parentCoordinator: TabBarCoordinator? = nil
     

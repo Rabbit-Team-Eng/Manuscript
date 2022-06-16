@@ -25,8 +25,8 @@
 		092F521428558FC50032B2D5 /* TaskDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F521328558FC50032B2D5 /* TaskDetailAction.swift */; };
 		092F5216285591210032B2D5 /* TaskDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5215285591210032B2D5 /* TaskDetailCellModel.swift */; };
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
-		0939459F2855DDC400A0F963 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093945992855DDC400A0F963 /* TaskDetailViewController.swift */; };
-		093945A02855DDC400A0F963 /* BoardCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */; };
+		0939459F2855DDC400A0F963 /* TaskCreateEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */; };
+		093945A02855DDC400A0F963 /* BoardCreateEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */; };
 		093945A12855DDC400A0F963 /* WorksapceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */; };
 		093945A22855DDC400A0F963 /* WorkspaceSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */; };
 		093945A32855DDC400A0F963 /* BoardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */; };
@@ -362,8 +362,8 @@
 		092F521328558FC50032B2D5 /* TaskDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailAction.swift; sourceTree = "<group>"; };
 		092F5215285591210032B2D5 /* TaskDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailCellModel.swift; sourceTree = "<group>"; };
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
-		093945992855DDC400A0F963 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
-		0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCreateViewController.swift; sourceTree = "<group>"; };
+		093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCreateEditViewController.swift; sourceTree = "<group>"; };
+		0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCreateEditViewController.swift; sourceTree = "<group>"; };
 		0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorksapceDetailViewController.swift; sourceTree = "<group>"; };
 		0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorViewController.swift; sourceTree = "<group>"; };
 		0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardDetailViewController.swift; sourceTree = "<group>"; };
@@ -658,10 +658,10 @@
 		093945982855DDC400A0F963 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				093945992855DDC400A0F963 /* TaskDetailViewController.swift */,
+				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
+				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
 				09D275452825B62D00933F16 /* BoardsViewController.swift */,
-				0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */,
 				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
 				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
@@ -1672,7 +1672,7 @@
 				096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */,
 				092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */,
 				09D2763F2825CE6000933F16 /* TaskBusinessModel.swift in Sources */,
-				093945A02855DDC400A0F963 /* BoardCreateViewController.swift in Sources */,
+				093945A02855DDC400A0F963 /* BoardCreateEditViewController.swift in Sources */,
 				09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */,
 				09D27654282605E900933F16 /* MemberEntity+CoreDataProperties.swift in Sources */,
 				09D275DA2825CB5A00933F16 /* GetWorkspaceByIdRequest.swift in Sources */,
@@ -1787,7 +1787,7 @@
 				0989BABE284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift in Sources */,
 				097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
-				0939459F2855DDC400A0F963 /* TaskDetailViewController.swift in Sources */,
+				0939459F2855DDC400A0F963 /* TaskCreateEditViewController.swift in Sources */,
 				096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */,
 				099281632856769300F3EA66 /* PrioritySelectorCell.swift in Sources */,
 				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,

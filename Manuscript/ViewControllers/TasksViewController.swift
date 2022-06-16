@@ -30,7 +30,7 @@ class TasksViewController: UIViewController {
     
     @objc private func createNewTask(_ sender: UIBarButtonItem) {
         let worksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
-        coordinator?.presentTaskDetailSheet(taskDetailState: .creation, workspaceBusinessModel: worksapce, selectedBoard: nil)
+        coordinator?.presentTaskDetailSheet(taskDetailState: .creation, workspaceBusinessModel: worksapce, selectedBoard: nil, selectedTask: nil)
     }
 
     private let dataProvider: DataProvider

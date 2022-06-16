@@ -30,8 +30,8 @@ class TasksCoordinator: Coordinator, RootProvider, FlowStarter {
         return navigationController
     }
     
-    func presentTaskDetailSheet(taskDetailState: TaskDetailState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?) {
-        parentCoordinator?.presentTaskDetailScreen(taskDetailState: taskDetailState, workspaceBusinessModel: workspaceBusinessModel, selectedBoard: selectedBoard)
+    func presentTaskDetailSheet(taskDetailState: TaskSheetState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?, selectedTask: TaskBusinessModel?) {
+        parentCoordinator?.presentTaskDetailScreen(taskDetailState: taskDetailState, workspaceBusinessModel: workspaceBusinessModel, selectedBoard: selectedBoard, selectedTask: selectedTask)
     }
 
     func startNewFlow(flow: Flowable) {

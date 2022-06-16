@@ -51,6 +51,9 @@ class TaskCellContentView: UIView, UIContentView {
         addSubview(titleTextLabel)
         addSubview(iconImageView)
         addSubview(descriptionTextLabel)
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(itemDidSelected(_:))))
+        
         applyConfiguration(configuration: configuration)
         
                 
@@ -71,6 +74,12 @@ class TaskCellContentView: UIView, UIContentView {
             descriptionTextLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
         ])
         
+    }
+    
+    @objc private func itemDidSelected(_ sender: UIView) {
+        if let task = model, let delegate = delegate {
+            delegate.taskDidSelected(task: task)
+        }
     }
     
     
