@@ -67,6 +67,14 @@ class BoardDetailViewController: UIViewController {
                 }
   
             }
+            
+            if case .taskJustEditedLocally(let board) = event {
+                if let tasks = board.tasks {
+                    self.selectedBoard = board
+                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
+                    self.coordinator?.dismissTaskCreationScreen()
+                }
+            }
         }
         .store(in: &tokens)
         

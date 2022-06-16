@@ -16,6 +16,7 @@ enum BoardsViewControllerEvent {
     case currentBoardDidEdit(board: BoardBusinessModel)
     case currentBoardDidRemoved
     case taskJustCreatedLocally(board: BoardBusinessModel)
+    case taskJustEditedLocally(board: BoardBusinessModel)
     case boardDetailDidFetch(board: BoardBusinessModel)
 }
 
@@ -119,6 +120,13 @@ class BoardsViewModel {
         boardCreator.editBoard(board: board) { [weak self] in guard let self = self else { return }
             self.events.send(.currentBoardDidEdit(board: board))
             self.fetchCurrentWorkspace()
+        }
+    }
+    
+    func editCurrentTask(task: TaskBusinessModel) {
+        taskCreator.editTask(task: task) { [weak self] in guard let self = self else { return }
+            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
+            self.events.send(.taskJustEditedLocally(board: board))
         }
     }
     

@@ -176,8 +176,6 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
         view.addSubview(createNewTaskButton)
         view.addSubview(myColectionView)
         
-        createNewTaskButton.addTarget(self, action: #selector(createNewTaskButtonDidTap(_:)), for: .touchUpInside)
-
         myColectionView.delegate = self
         myColectionView.register(TaskGeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier)
         
@@ -236,12 +234,15 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
         if state == .creation {
             createNewTaskButton.configuration?.title = "Create New Task"
             titleTexLabel.text = "Create new Task"
+            createNewTaskButton.addTarget(self, action: #selector(createNewTaskButtonDidTap(_:)), for: .touchUpInside)
             NSLayoutConstraint.activate(creationConstraints)
         }
         
         if state == .edit {
             createNewTaskButton.configuration?.title = "Edit current Task"
             titleTexLabel.text = "Edit current Task"
+            createNewTaskButton.addTarget(self, action: #selector(editCurrentTaskButtonDidTap(_:)), for: .touchUpInside)
+
             view.addSubview(deleteButton)
             NSLayoutConstraint.activate(editConstraints)
 
@@ -349,6 +350,23 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
      
     }
     
+    @objc private func editCurrentTaskButtonDidTap(_ sender: UIButton) {
+        if let selectedTask = selectedTask {
+            boardViewModel.editCurrentTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
+                                                                   coreDataId: selectedTask.coreDataId,
+                                                                   assigneeUserId: selectedTask.assigneeUserId,
+                                                                   title: newTitle,
+                                                                   detail: newDescription,
+                                                                   dueDate: selectedTask.dueDate,
+                                                                   ownerBoardId: selectedTask.ownerBoardId,
+                                                                   status: selectedTask.status,
+                                                                   workspaceId: selectedTask.workspaceId,
+                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
+                                                                   isInitiallySynced: true,
+                                                                   isPendingDeletionOnTheServer: false,
+                                                                   priority: selectedTask.priority))
+        }
+    }
 
 
 

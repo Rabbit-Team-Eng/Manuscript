@@ -22,6 +22,96 @@ class TaskCreator {
         self.database = database
     }
     
+    func editTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
+        let context = self.database.databaseContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            if let coreDataId = task.coreDataId, let taskToBeUpdated = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                taskToBeUpdated.title = task.title
+                taskToBeUpdated.detail = task.detail ?? ""
+                taskToBeUpdated.dueDate = task.dueDate
+                taskToBeUpdated.assigneeUserId = task.assigneeUserId
+                taskToBeUpdated.status = task.status
+                taskToBeUpdated.priority = PriorityTypeConverter.getString(priority: task.priority)
+                taskToBeUpdated.ownerBoardId = task.ownerBoardId
+                
+                if taskToBeUpdated.ownerBoardId != task.ownerBoardId {
+                    
+                    let newBoardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
+                    newBoardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(task.ownerBoardId))")
+                    
+                    let oldBoardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
+                    oldBoardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(taskToBeUpdated.ownerBoardId))")
+                    
+                    do {
+                        
+                        let newBoard: [BoardEntity] = try context.fetch(newBoardFetchRequest)
+                        let newBoardEntity = newBoard.first!
+                        newBoardEntity.addToTasks(taskToBeUpdated)
+                        
+                        let oldBoard: [BoardEntity] = try context.fetch(oldBoardFetchRequest)
+                        let oldBoardEntity = oldBoard.first!
+                        oldBoardEntity.removeFromTasks(taskToBeUpdated)
+                        
+                    } catch {
+                        fatalError()
+                    }
+                }
+                
+                do {
+                    try context.save()
+                    completion()
+                    editTaskInServer(taskId: task.remoteId,
+                                          ownerBoardId: task.ownerBoardId,
+                                          title: task.title,
+                                          detail: task.detail ?? "",
+                                          doeDate: task.dueDate,
+                                          priority: PriorityTypeConverter.getString(priority: task.priority),
+                                          assigneeId: task.assigneeUserId,
+                                          status: task.status,
+                                          coreDataId: task.coreDataId)
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    private func editTaskInServer(taskId: Int64, ownerBoardId: Int64, title: String, detail: String, doeDate: String, priority: String, assigneeId: String, status: String, coreDataId: NSManagedObjectID?) {
+        
+        taskService.updateTaskById(requestBody: TaskRequest(boardId: ownerBoardId,
+                                                            title: title,
+                                                            detail: detail,
+                                                            doeDate: doeDate,
+                                                            assigneeId: assigneeId,
+                                                            priority: priority,
+                                                            status: status),
+                                   taskId: "\(taskId)")
+        .sink { completion in } receiveValue: { taskResponse in
+            let context = self.database.databaseContainer.newBackgroundContext()
+            context.automaticallyMergesChangesFromParent = true
+            
+            context.performAndWait {
+                if let coreDataId = coreDataId, let taskToBeUpdated = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                    taskToBeUpdated.lastModifiedDate = taskResponse.lastModifiedDate
+                    
+                    do {
+                        try context.save()
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
+                        }
+                    } catch {
+                        fatalError()
+                    }
+
+                }
+            }
+        }
+        .store(in: &tokens)
+
+    }
+    
     func createNewTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
         
         let context = self.database.databaseContainer.newBackgroundContext()
