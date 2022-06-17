@@ -242,6 +242,7 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
             createNewTaskButton.configuration?.title = "Edit current Task"
             titleTexLabel.text = "Edit current Task"
             createNewTaskButton.addTarget(self, action: #selector(editCurrentTaskButtonDidTap(_:)), for: .touchUpInside)
+            deleteButton.addTarget(self, action: #selector(deleteCurrentTaskButtonDidTap(_:)), for: .touchUpInside)
 
             view.addSubview(deleteButton)
             NSLayoutConstraint.activate(editConstraints)
@@ -348,6 +349,24 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
             boardViewModel.createNewTask(task: model)
         }
      
+    }
+    
+    @objc private func deleteCurrentTaskButtonDidTap(_ sender: UIButton) {
+        if let selectedTask = selectedTask {
+            boardViewModel.deleteTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
+                                                                   coreDataId: selectedTask.coreDataId,
+                                                                   assigneeUserId: selectedTask.assigneeUserId,
+                                                                   title: newTitle,
+                                                                   detail: newDescription,
+                                                                   dueDate: selectedTask.dueDate,
+                                                                   ownerBoardId: Int64(selectedBoardId!)!,
+                                                                   status: selectedTask.status,
+                                                                   workspaceId: selectedTask.workspaceId,
+                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
+                                                                   isInitiallySynced: true,
+                                                                   isPendingDeletionOnTheServer: true,
+                                                                   priority: selectedTask.priority))
+        }
     }
     
     @objc private func editCurrentTaskButtonDidTap(_ sender: UIButton) {

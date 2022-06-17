@@ -912,7 +912,6 @@
 				09D275A62825B90300933F16 /* Tasks */,
 				099281612856766000F3EA66 /* PrioritySelection */,
 				09D276202825CE6000933F16 /* Storage */,
-				097EDF35282B63B10060C8FD /* Syncronizer */,
 				09D275472825B64600933F16 /* Coordinator */,
 				09D275702825B77500933F16 /* Injectors */,
 				0919BCAE2858623D00DB53C2 /* Providers */,
@@ -1247,6 +1246,7 @@
 		09D276202825CE6000933F16 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				097EDF35282B63B10060C8FD /* Syncronizer */,
 				099A909D28500EF500B0F4B7 /* Creators */,
 				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
 				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,

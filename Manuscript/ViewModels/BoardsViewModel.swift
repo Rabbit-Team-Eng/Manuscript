@@ -92,6 +92,13 @@ class BoardsViewModel {
         }
     }
     
+    func deleteTask(task: TaskBusinessModel) {
+        taskCreator.removeBoard(task: task) { [weak self] in guard let self = self else { return }
+            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
+            self.events.send(.taskJustEditedLocally(board: board))
+        }
+    }
+    
     func deleteBoard(board: BoardBusinessModel) {
         boardCreator.removeBoard(board: board) { [weak self] in guard let self = self else { return }
             self.events.send(.currentBoardDidRemoved)

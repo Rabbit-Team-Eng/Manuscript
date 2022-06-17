@@ -85,20 +85,19 @@ public class TaskService: TaskAPI {
             .eraseToAnyPublisher()
     }
     
-    public func deleteTaskById(taskId: String) -> AnyPublisher<TaskResponse, Error> {
+    public func deleteTaskById(taskId: String) -> AnyPublisher<Int, Error> {
         
         let request = DeleteTaskRequest(accessToken: accessToken, environment: environment, jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
         
         
         return URLSession.shared
             .dataTaskPublisher(for: request.getRequest(taskId: taskId))
-            .tryMap() { element -> Data in
+            .tryMap() { element -> Int in
                 guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     fatalError("Bad Response, code is: \(String(describing: (element.response as? HTTPURLResponse)?.statusCode))")
                 }
-                return element.data
+                return httpResponse.statusCode
             }
-            .decode(type: TaskResponse.self, decoder: jsonDecoder)
             .mapError({ error in
                 return TaskError.unableToCreateTask(errorMessage: "Decoding error.")
             })

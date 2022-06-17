@@ -176,6 +176,54 @@ class TaskCreator {
 
     }
     
+    func removeBoard(task: TaskBusinessModel, completion: @escaping () -> Void) {
+        let context = self.database.databaseContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            if let coreDataId = task.coreDataId, let taskToBeRemoved = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                taskToBeRemoved.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: task.lastModifiedDate)
+                taskToBeRemoved.isPendingDeletionOnTheServer = task.isPendingDeletionOnTheServer
+                
+                do {
+                    context.delete(taskToBeRemoved)
+                    try context.save()
+                    completion()
+                    self.removeFromServer(taskId: task.remoteId, coreDataId: coreDataId)
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    private func removeFromServer(taskId: Int64, coreDataId: NSManagedObjectID?) {
+        taskService.deleteTaskById(taskId: "\(taskId)")
+            .sink { completion in } receiveValue: { removedId in
+                
+                let context = self.database.databaseContainer.newBackgroundContext()
+                context.automaticallyMergesChangesFromParent = true
+                
+                context.performAndWait {
+                    if let coreDataId = coreDataId, let taskToBeRemoved = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                       
+                        context.delete(taskToBeRemoved)
+                        do {
+                            try context.save()
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
+                            }
+                        } catch {
+                            fatalError()
+                        }
+                    }
+                }
+                
+            }
+            .store(in: &tokens)
+    }
+    
+    
     private func notify() {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
