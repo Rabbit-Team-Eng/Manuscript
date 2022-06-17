@@ -34,26 +34,17 @@ class TaskCreator {
                 taskToBeUpdated.assigneeUserId = task.assigneeUserId
                 taskToBeUpdated.status = task.status
                 taskToBeUpdated.priority = PriorityTypeConverter.getString(priority: task.priority)
-                taskToBeUpdated.ownerBoardId = task.ownerBoardId
                 
                 if taskToBeUpdated.ownerBoardId != task.ownerBoardId {
-                    
+
                     let newBoardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
                     newBoardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(task.ownerBoardId))")
-                    
-                    let oldBoardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
-                    oldBoardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(taskToBeUpdated.ownerBoardId))")
-                    
+                    taskToBeUpdated.ownerBoardId = task.ownerBoardId
+
                     do {
-                        
                         let newBoard: [BoardEntity] = try context.fetch(newBoardFetchRequest)
                         let newBoardEntity = newBoard.first!
-                        newBoardEntity.addToTasks(taskToBeUpdated)
-                        
-                        let oldBoard: [BoardEntity] = try context.fetch(oldBoardFetchRequest)
-                        let oldBoardEntity = oldBoard.first!
-                        oldBoardEntity.removeFromTasks(taskToBeUpdated)
-                        
+                        taskToBeUpdated.ownerBoard = newBoardEntity
                     } catch {
                         fatalError()
                     }

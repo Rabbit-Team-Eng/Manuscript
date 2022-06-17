@@ -125,7 +125,7 @@ class DataProvider: Datasource {
                                                     isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
                 returningBoard = boardModel
             } catch {
-                
+                fatalError()
             }
         }
         return returningBoard!

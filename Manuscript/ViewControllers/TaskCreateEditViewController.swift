@@ -358,7 +358,7 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
                                                                    title: newTitle,
                                                                    detail: newDescription,
                                                                    dueDate: selectedTask.dueDate,
-                                                                   ownerBoardId: selectedTask.ownerBoardId,
+                                                                   ownerBoardId: Int64(selectedBoardId!)!,
                                                                    status: selectedTask.status,
                                                                    workspaceId: selectedTask.workspaceId,
                                                                    lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
@@ -563,7 +563,6 @@ extension TaskCreateEditViewController {
 extension TaskCreateEditViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-
         selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.id
         if indexPath.section != 1 { return false } else { return true }
     }
@@ -579,7 +578,5 @@ extension TaskCreateEditViewController: PrioritySelectionActionsProtocol {
             coordinator?.openPrioritySelectionSheet(withSelectedPriority: currentPriority)
         }
     }
-    
-    
 }
 
