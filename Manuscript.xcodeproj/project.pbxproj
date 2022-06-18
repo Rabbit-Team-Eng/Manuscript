@@ -40,7 +40,6 @@
 		096BEDC3284B27C7001C7136 /* BoardTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC2284B27C7001C7136 /* BoardTransformer.swift */; };
 		096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */; };
 		096EA95B285C495E0053F4F6 /* SignalRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EA95A285C495E0053F4F6 /* SignalRManager.swift */; };
-		096EA95F285C4E060053F4F6 /* MemoryLeaksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EA95E285C4E060053F4F6 /* MemoryLeaksTest.swift */; };
 		096EA962285C521F0053F4F6 /* SignalRClient in Frameworks */ = {isa = PBXBuildFile; productRef = 096EA961285C521F0053F4F6 /* SignalRClient */; };
 		096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */; };
 		096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */; };
@@ -379,7 +378,6 @@
 		096BEDC2284B27C7001C7136 /* BoardTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTransformer.swift; sourceTree = "<group>"; };
 		096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		096EA95A285C495E0053F4F6 /* SignalRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRManager.swift; sourceTree = "<group>"; };
-		096EA95E285C4E060053F4F6 /* MemoryLeaksTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeaksTest.swift; sourceTree = "<group>"; };
 		096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailSection.swift; sourceTree = "<group>"; };
 		096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailCellModel.swift; sourceTree = "<group>"; };
 		096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCellModel.swift; sourceTree = "<group>"; };
@@ -682,7 +680,6 @@
 				096BEDB8284AE0F2001C7136 /* WorkspaceComparatorTest.swift */,
 				096BEDBA284AE147001C7136 /* DateTimeUtilsTest.swift */,
 				0919BCA82857FEFD00DB53C2 /* TaskComparatorTest.swift */,
-				096EA95E285C4E060053F4F6 /* MemoryLeaksTest.swift */,
 			);
 			path = ManuscriptTests;
 			sourceTree = "<group>";
@@ -1480,7 +1477,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				096BEDBB284AE147001C7136 /* DateTimeUtilsTest.swift in Sources */,
-				096EA95F285C4E060053F4F6 /* MemoryLeaksTest.swift in Sources */,
 				0919BCA92857FEFD00DB53C2 /* TaskComparatorTest.swift in Sources */,
 				096BEDB9284AE0F2001C7136 /* WorkspaceComparatorTest.swift in Sources */,
 			);

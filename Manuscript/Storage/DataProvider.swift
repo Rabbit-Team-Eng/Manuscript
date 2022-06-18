@@ -14,7 +14,7 @@ protocol Datasource {
     /// Use this method to query the Database in order to get all worksapces in the Database
     /// - Parameter thread: Chouse on which thread you want to perform the Database query
     /// - Returns: List of Worksapce Business Moderl Objects with all the boards, members and tasks
-    func fetchWorkspaces(thread: Thread) -> [WorkspaceBusinessModel]
+    func fetchWorkspaces(thread: ThreadType) -> [WorkspaceBusinessModel]
     
     
     
@@ -23,7 +23,7 @@ protocol Datasource {
     ///   - thread: Chouse on which thread you want to perform the Database query
     ///   - id: Server-Given Id
     /// - Returns: A Worksapce Business Moderl Object with all the boards, members and tasks
-    func fetchWorkspace(thread: Thread, id: String) -> WorkspaceBusinessModel
+    func fetchWorkspace(thread: ThreadType, id: String) -> WorkspaceBusinessModel
 
     
     func fetchAllBoardsOnMainThread() -> [BoardBusinessModel]
@@ -32,7 +32,7 @@ protocol Datasource {
     
 }
 
-enum Thread {
+enum ThreadType {
     case main
     case background
 }
@@ -45,7 +45,7 @@ class DataProvider: Datasource {
         self.coreDataStack = coreDataStack
     }
     
-    func fetchWorkspace(thread: Thread, id: String) -> WorkspaceBusinessModel {
+    func fetchWorkspace(thread: ThreadType, id: String) -> WorkspaceBusinessModel {
         var context: NSManagedObjectContext!
         var searchingWorkspace: WorkspaceBusinessModel!
         
@@ -149,7 +149,7 @@ class DataProvider: Datasource {
         
     }
     
-    func fetchWorkspaces(thread: Thread) -> [WorkspaceBusinessModel] {
+    func fetchWorkspaces(thread: ThreadType) -> [WorkspaceBusinessModel] {
         var context: NSManagedObjectContext!
         var allWorkspaces: [WorkspaceBusinessModel] = []
         

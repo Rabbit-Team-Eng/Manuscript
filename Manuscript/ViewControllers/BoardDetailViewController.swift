@@ -94,7 +94,6 @@ class BoardDetailViewController: UIViewController {
         }
         
 
-
         
     }
     
