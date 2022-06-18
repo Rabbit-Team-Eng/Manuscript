@@ -68,11 +68,9 @@ class SignalRManager {
     
     //string enity, long id, string action, List<string> members
     func broadcastMessage(enity: String, id: Int, action: String, members: [String]) {
-        DispatchQueue.global(qos: .background).async { [weak self] in guard let self = self else { return }
-            self.connection.invoke(method: "WorkspaceEntitiesDidChange", enity, id, action, members) { error in
-                if let error = error {
-                    print("=================================SignalR Boardcasting Did Fail \(error.localizedDescription)=================================")
-                }
+        self.connection.invoke(method: "WorkspaceEntitiesDidChange", enity, id, action, members) { error in
+            if let error = error {
+                print("=================================SignalR Boardcasting Did Fail \(error.localizedDescription)=================================")
             }
         }
     }

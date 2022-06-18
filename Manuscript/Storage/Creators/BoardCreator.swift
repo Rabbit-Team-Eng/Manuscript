@@ -90,12 +90,12 @@ class BoardCreator {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
-        context.performAndWait {
+        context.performAndWait { [weak self] in guard let self = self else { return }
             if let coreDataId = board.coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
                 boardToBeUpdated.title = board.title
                 boardToBeUpdated.assetUrl = board.assetUrl
                 completion()
-                editBoardInServer(worskapceId: board.ownerWorkspaceId, assetUrl: board.assetUrl, title: board.title, boardId: board.remoteId, coreDataId: board.coreDataId)
+                self.editBoardInServer(worskapceId: board.ownerWorkspaceId, assetUrl: board.assetUrl, title: board.title, boardId: board.remoteId, coreDataId: board.coreDataId)
                 do {
                     try context.save()
                 } catch {
@@ -107,7 +107,7 @@ class BoardCreator {
     
     private func editBoardInServer(worskapceId: Int64, assetUrl: String, title: String, boardId: Int64, coreDataId: NSManagedObjectID?) {
         boardService.updateBoardById(requestBody: BoardRequest(workspaceId: Int(worskapceId), assetUrl: assetUrl, title: title), boardId: boardId)
-            .sink { completion in } receiveValue: { boardResponse in
+            .sink { completion in } receiveValue: { [weak self] boardResponse  in guard let self = self else { return }
                 
                 
                 let context = self.database.databaseContainer.newBackgroundContext()
@@ -120,6 +120,7 @@ class BoardCreator {
                             try context.save()
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
+                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
                             }
                         } catch {
                             fatalError()
@@ -173,6 +174,7 @@ class BoardCreator {
                             try context.save()
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
+                                self.signalRManager.broadcastMessage(enity: "board", id: Int(boardId), action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
                             }
                         } catch {
                             fatalError()

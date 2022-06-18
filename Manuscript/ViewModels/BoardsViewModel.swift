@@ -43,11 +43,6 @@ class BoardsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(newWorkspaceDidSwitched), name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(boardDidCreatedAndSyncedWithServer), name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(taskDidCreatedAndSyncedWithServer), name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let x = dataProvider.fetchWorkspaces(thread: .background)
-
-        }
     }
     
     func syncTheCloud() {
