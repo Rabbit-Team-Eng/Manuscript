@@ -90,8 +90,8 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.popViewController(animated: true)
     }
     
-    func presentCreateTaskSheet(workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?) {
-        parentCoordinator?.presentTaskDetailScreen(taskDetailState: .creation, workspaceBusinessModel: workspaceBusinessModel, selectedBoard: selectedBoard)
+    func presentCreateEditTaskSheet(taskDetailState: TaskSheetState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?, selectedTask: TaskBusinessModel?) {
+        parentCoordinator?.presentTaskDetailScreen(taskDetailState: taskDetailState, workspaceBusinessModel: workspaceBusinessModel, selectedBoard: selectedBoard, selectedTask: selectedTask)
     }
     
     deinit {

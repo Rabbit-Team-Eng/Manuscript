@@ -10,21 +10,24 @@ import CoreData
 
 public struct BoardBusinessModel: BusinessModelProtocol {
 
+    public var coreDataId: NSManagedObjectID?
+    public var ownerWorkspaceCoreDataId: NSManagedObjectID?
+    
     public let assetUrl: String
     public let ownerWorkspaceId: Int64
     public let remoteId: Int64
     public let title: String
     public let detailDescription: String
-    public var coreDataId: NSManagedObjectID?
     public let lastModifiedDate: Date
     public let isInitiallySynced: Bool
     public let isPendingDeletionOnTheServer: Bool
     public let tasks: [TaskBusinessModel]?
     
-    public init(remoteId: Int64, coreDataId: NSManagedObjectID? = nil, title: String, detailDescription: String, assetUrl: String, ownerWorkspaceId: Int64, lastModifiedDate: String, tasks: [TaskBusinessModel]? = nil, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
+    public init(remoteId: Int64, coreDataId: NSManagedObjectID? = nil, ownerWorkspaceCoreDataId: NSManagedObjectID? = nil,  title: String, detailDescription: String, assetUrl: String, ownerWorkspaceId: Int64, lastModifiedDate: String, tasks: [TaskBusinessModel]? = nil, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
         self.remoteId = remoteId
         self.assetUrl = assetUrl
         self.coreDataId = coreDataId
+        self.ownerWorkspaceCoreDataId = ownerWorkspaceCoreDataId
         self.ownerWorkspaceId = ownerWorkspaceId
         self.title = title
         self.detailDescription = detailDescription

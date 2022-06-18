@@ -8,5 +8,5 @@
 import Foundation
 
 protocol TaskCellProtocol: NSObject {
-    func taskDidSelected(task: TaskBusinessModel)
+    func taskDidSelected(task: TaskCellModel)
 }

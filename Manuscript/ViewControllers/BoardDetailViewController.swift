@@ -67,6 +67,15 @@ class BoardDetailViewController: UIViewController {
                 }
   
             }
+            
+            if case .taskJustEditedLocally(let board) = event {
+                if let tasks = board.tasks {
+                    self.selectedBoard = board
+                    self.navigationItem.title = board.title
+                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
+                    self.coordinator?.dismissTaskCreationScreen()
+                }
+            }
         }
         .store(in: &tokens)
         
@@ -84,7 +93,6 @@ class BoardDetailViewController: UIViewController {
             applySnapshot(items: taskCellModels)
         }
         
-
 
         
     }
@@ -112,7 +120,7 @@ class BoardDetailViewController: UIViewController {
     
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateTaskSheet(workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard)
+        coordinator?.presentCreateEditTaskSheet(taskDetailState: .creation, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: nil)
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIBarButtonItem) {
@@ -220,7 +228,7 @@ extension BoardDetailViewController {
         return .init { [weak self] cell, indexPath, itemIdentifier in
             guard let self = self else { return }
             cell.model = itemIdentifier
-//            cell.delegate = self
+            cell.delegate = self
         }
     }
 
@@ -238,8 +246,6 @@ extension BoardDetailViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: generalInfoCell, for: indexPath, item: itemIdentifier)
             case .low:
                 return collectionView.dequeueConfiguredReusableCell(using: generalInfoCell, for: indexPath, item: itemIdentifier)
-            default:
-                fatalError()
             }
         }
         
@@ -259,8 +265,6 @@ extension BoardDetailViewController {
                 let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier, for: indexPath) as? TaskGeneralInfoSectionHeaderView
                 view?.titleLabel.text = section.sectionHeaderTitle
                 return view
-            default:
-                fatalError()
 
             }
         }
@@ -268,14 +272,12 @@ extension BoardDetailViewController {
     }
 }
 
-extension BoardDetailViewController: UICollectionViewDelegate {
+extension BoardDetailViewController: TaskCellProtocol {
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        // TODO: We should crate enums for each section instead of using integers, Overall need to refactor
-        // ordering logic for the collection view
-//        if indexPath.section != 1 { return false } else { return true }
-        return true
-        
+    func taskDidSelected(task: TaskCellModel) {
+        if let tasks = selectedBoard.tasks, let selectedTask = tasks.first(where: { "\($0.remoteId)" == task.id }) {
+            coordinator?.presentCreateEditTaskSheet(taskDetailState: .edit, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: selectedTask)
+        }
     }
-    
+        
 }

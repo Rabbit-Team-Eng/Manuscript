@@ -14,12 +14,95 @@ class TaskCreator {
     
     private let taskService: TaskService
     private let database: CoreDataStack
-    
+    private let signalRManager: SignalRManager
+
     private var tokens: Set<AnyCancellable> = []
     
-    init(taskService: TaskService, database: CoreDataStack) {
+    init(taskService: TaskService, database: CoreDataStack, signalRManager: SignalRManager) {
         self.taskService = taskService
+        self.signalRManager = signalRManager
         self.database = database
+    }
+    
+    func editTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
+        let context = self.database.databaseContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            if let coreDataId = task.coreDataId, let taskToBeUpdated = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                taskToBeUpdated.title = task.title
+                taskToBeUpdated.detail = task.detail ?? ""
+                taskToBeUpdated.dueDate = task.dueDate
+                taskToBeUpdated.assigneeUserId = task.assigneeUserId
+                taskToBeUpdated.status = task.status
+                taskToBeUpdated.priority = PriorityTypeConverter.getString(priority: task.priority)
+                
+                if taskToBeUpdated.ownerBoardId != task.ownerBoardId {
+
+                    let newBoardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
+                    newBoardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(task.ownerBoardId))")
+                    taskToBeUpdated.ownerBoardId = task.ownerBoardId
+
+                    do {
+                        let newBoard: [BoardEntity] = try context.fetch(newBoardFetchRequest)
+                        let newBoardEntity = newBoard.first!
+                        taskToBeUpdated.ownerBoard = newBoardEntity
+                    } catch {
+                        fatalError()
+                    }
+                }
+                
+                do {
+                    try context.save()
+                    completion()
+                    editTaskInServer(taskId: task.remoteId,
+                                          ownerBoardId: task.ownerBoardId,
+                                          title: task.title,
+                                          detail: task.detail ?? "",
+                                          doeDate: task.dueDate,
+                                          priority: PriorityTypeConverter.getString(priority: task.priority),
+                                          assigneeId: task.assigneeUserId,
+                                          status: task.status,
+                                          coreDataId: task.coreDataId)
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    private func editTaskInServer(taskId: Int64, ownerBoardId: Int64, title: String, detail: String, doeDate: String, priority: String, assigneeId: String, status: String, coreDataId: NSManagedObjectID?) {
+        
+        taskService.updateTaskById(requestBody: TaskRequest(boardId: ownerBoardId,
+                                                            title: title,
+                                                            detail: detail,
+                                                            doeDate: doeDate,
+                                                            assigneeId: assigneeId,
+                                                            priority: priority,
+                                                            status: status),
+                                   taskId: "\(taskId)")
+        .sink { completion in } receiveValue: { taskResponse in
+            let context = self.database.databaseContainer.newBackgroundContext()
+            context.automaticallyMergesChangesFromParent = true
+            
+            context.performAndWait {
+                if let coreDataId = coreDataId, let taskToBeUpdated = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                    taskToBeUpdated.lastModifiedDate = taskResponse.lastModifiedDate
+                    
+                    do {
+                        try context.save()
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
+                        }
+                    } catch {
+                        fatalError()
+                    }
+
+                }
+            }
+        }
+        .store(in: &tokens)
+
     }
     
     func createNewTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
@@ -84,6 +167,8 @@ class TaskCreator {
                     do {
                         try context.save()
                         self.notify()
+                        self.signalRManager.broadcastMessage(enity: "task", id: taskResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
+
                     } catch {
                         fatalError()
                     }
@@ -94,6 +179,54 @@ class TaskCreator {
         .store(in: &tokens)
 
     }
+    
+    func removeBoard(task: TaskBusinessModel, completion: @escaping () -> Void) {
+        let context = self.database.databaseContainer.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            if let coreDataId = task.coreDataId, let taskToBeRemoved = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                taskToBeRemoved.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: task.lastModifiedDate)
+                taskToBeRemoved.isPendingDeletionOnTheServer = task.isPendingDeletionOnTheServer
+                
+                do {
+                    context.delete(taskToBeRemoved)
+                    try context.save()
+                    completion()
+                    self.removeFromServer(taskId: task.remoteId, coreDataId: coreDataId)
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    private func removeFromServer(taskId: Int64, coreDataId: NSManagedObjectID?) {
+        taskService.deleteTaskById(taskId: "\(taskId)")
+            .sink { completion in } receiveValue: { removedId in
+                
+                let context = self.database.databaseContainer.newBackgroundContext()
+                context.automaticallyMergesChangesFromParent = true
+                
+                context.performAndWait {
+                    if let coreDataId = coreDataId, let taskToBeRemoved = try? context.existingObject(with: coreDataId) as? TaskEntity {
+                       
+                        context.delete(taskToBeRemoved)
+                        do {
+                            try context.save()
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
+                            }
+                        } catch {
+                            fatalError()
+                        }
+                    }
+                }
+                
+            }
+            .store(in: &tokens)
+    }
+    
     
     private func notify() {
         DispatchQueue.main.async {

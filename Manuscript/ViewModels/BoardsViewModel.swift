@@ -16,6 +16,7 @@ enum BoardsViewControllerEvent {
     case currentBoardDidEdit(board: BoardBusinessModel)
     case currentBoardDidRemoved
     case taskJustCreatedLocally(board: BoardBusinessModel)
+    case taskJustEditedLocally(board: BoardBusinessModel)
     case boardDetailDidFetch(board: BoardBusinessModel)
 }
 
@@ -60,8 +61,8 @@ class BoardsViewModel {
     func fetchCurrentWorkspace() {
 
         if UserDefaults.selectedWorkspaceId == Constants.emptyString {
-            let allWorkspaces = dataProvider.fetchAllWorkspacesOnMainThread()
-
+            let allWorkspaces = dataProvider.fetchWorkspaces(thread: .main)
+            
             if let firstWorkspace = allWorkspaces.first {
                 events.send(.titleDidFetch(title: firstWorkspace.title))
                 UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
@@ -76,7 +77,7 @@ class BoardsViewModel {
             }
             
         } else {
-            let selectedWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
+            let selectedWorksapce = dataProvider.fetchWorkspace(thread: .main, id: UserDefaults.selectedWorkspaceId)
             
             events.send(.titleDidFetch(title: selectedWorksapce.title))
             UserDefaults.selectedWorkspaceId = "\(selectedWorksapce.remoteId)"
@@ -88,6 +89,13 @@ class BoardsViewModel {
                     events.send(.boardsDidFetch(boards: boards))
                 }
             }
+        }
+    }
+    
+    func deleteTask(task: TaskBusinessModel) {
+        taskCreator.removeBoard(task: task) { [weak self] in guard let self = self else { return }
+            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
+            self.events.send(.taskJustEditedLocally(board: board))
         }
     }
     
@@ -119,6 +127,13 @@ class BoardsViewModel {
         boardCreator.editBoard(board: board) { [weak self] in guard let self = self else { return }
             self.events.send(.currentBoardDidEdit(board: board))
             self.fetchCurrentWorkspace()
+        }
+    }
+    
+    func editCurrentTask(task: TaskBusinessModel) {
+        taskCreator.editTask(task: task) { [weak self] in guard let self = self else { return }
+            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
+            self.events.send(.taskJustEditedLocally(board: board))
         }
     }
     

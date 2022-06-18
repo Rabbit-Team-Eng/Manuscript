@@ -25,8 +25,8 @@
 		092F521428558FC50032B2D5 /* TaskDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F521328558FC50032B2D5 /* TaskDetailAction.swift */; };
 		092F5216285591210032B2D5 /* TaskDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F5215285591210032B2D5 /* TaskDetailCellModel.swift */; };
 		09323AEC284583C700006C1D /* RandomWordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09323AEB284583C700006C1D /* RandomWordGenerator.swift */; };
-		0939459F2855DDC400A0F963 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093945992855DDC400A0F963 /* TaskDetailViewController.swift */; };
-		093945A02855DDC400A0F963 /* BoardCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */; };
+		0939459F2855DDC400A0F963 /* TaskCreateEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */; };
+		093945A02855DDC400A0F963 /* BoardCreateEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */; };
 		093945A12855DDC400A0F963 /* WorksapceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */; };
 		093945A22855DDC400A0F963 /* WorkspaceSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */; };
 		093945A32855DDC400A0F963 /* BoardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */; };
@@ -39,6 +39,8 @@
 		096BEDC0284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */; };
 		096BEDC3284B27C7001C7136 /* BoardTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC2284B27C7001C7136 /* BoardTransformer.swift */; };
 		096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */; };
+		096EA95B285C495E0053F4F6 /* SignalRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EA95A285C495E0053F4F6 /* SignalRManager.swift */; };
+		096EA962285C521F0053F4F6 /* SignalRClient in Frameworks */ = {isa = PBXBuildFile; productRef = 096EA961285C521F0053F4F6 /* SignalRClient */; };
 		096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */; };
 		096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */; };
 		096EF7CC2853EA1E003BEC41 /* GeneralInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */; };
@@ -362,8 +364,8 @@
 		092F521328558FC50032B2D5 /* TaskDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailAction.swift; sourceTree = "<group>"; };
 		092F5215285591210032B2D5 /* TaskDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailCellModel.swift; sourceTree = "<group>"; };
 		09323AEB284583C700006C1D /* RandomWordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWordGenerator.swift; sourceTree = "<group>"; };
-		093945992855DDC400A0F963 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
-		0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCreateViewController.swift; sourceTree = "<group>"; };
+		093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCreateEditViewController.swift; sourceTree = "<group>"; };
+		0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCreateEditViewController.swift; sourceTree = "<group>"; };
 		0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorksapceDetailViewController.swift; sourceTree = "<group>"; };
 		0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorViewController.swift; sourceTree = "<group>"; };
 		0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardDetailViewController.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 		096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107448-human-in-vr-glasses-in-metaverse.json"; sourceTree = "<group>"; };
 		096BEDC2284B27C7001C7136 /* BoardTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTransformer.swift; sourceTree = "<group>"; };
 		096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		096EA95A285C495E0053F4F6 /* SignalRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRManager.swift; sourceTree = "<group>"; };
 		096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailSection.swift; sourceTree = "<group>"; };
 		096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailCellModel.swift; sourceTree = "<group>"; };
 		096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCellModel.swift; sourceTree = "<group>"; };
@@ -596,6 +599,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				096EA962285C521F0053F4F6 /* SignalRClient in Frameworks */,
 				09EDE71C2848893A009B23A9 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,10 +662,10 @@
 		093945982855DDC400A0F963 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				093945992855DDC400A0F963 /* TaskDetailViewController.swift */,
+				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
+				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
 				09D275452825B62D00933F16 /* BoardsViewController.swift */,
-				0939459A2855DDC400A0F963 /* BoardCreateViewController.swift */,
 				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
 				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
@@ -912,7 +916,6 @@
 				09D275A62825B90300933F16 /* Tasks */,
 				099281612856766000F3EA66 /* PrioritySelection */,
 				09D276202825CE6000933F16 /* Storage */,
-				097EDF35282B63B10060C8FD /* Syncronizer */,
 				09D275472825B64600933F16 /* Coordinator */,
 				09D275702825B77500933F16 /* Injectors */,
 				0919BCAE2858623D00DB53C2 /* Providers */,
@@ -925,6 +928,7 @@
 				09D275382825B54C00933F16 /* Application */,
 				09D275372825B53D00933F16 /* LaunchScreen */,
 				09D275362825B50900933F16 /* Resources */,
+				096EA95A285C495E0053F4F6 /* SignalRManager.swift */,
 			);
 			path = Manuscript;
 			sourceTree = "<group>";
@@ -1247,6 +1251,7 @@
 		09D276202825CE6000933F16 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				097EDF35282B63B10060C8FD /* Syncronizer */,
 				099A909D28500EF500B0F4B7 /* Creators */,
 				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
 				09D275FF2825CE2300933F16 /* CoreDataStack.swift */,
@@ -1381,6 +1386,7 @@
 			name = Manuscript;
 			packageProductDependencies = (
 				09EDE71B2848893A009B23A9 /* Lottie */,
+				096EA961285C521F0053F4F6 /* SignalRClient */,
 			);
 			productName = Manuscript;
 			productReference = 09D2751F2825B4B800933F16 /* Manuscript.app */;
@@ -1420,6 +1426,7 @@
 			mainGroup = 09D275162825B4B800933F16;
 			packageReferences = (
 				09EDE71A2848893A009B23A9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				096EA960285C521F0053F4F6 /* XCRemoteSwiftPackageReference "SignalR-Client-Swift" */,
 			);
 			productRefGroup = 09D275202825B4B800933F16 /* Products */;
 			projectDirPath = "";
@@ -1672,7 +1679,7 @@
 				096EF7D52853EB32003BEC41 /* GeneralInfoContentView.swift in Sources */,
 				092F5200285584750032B2D5 /* BoardSelectorView.swift in Sources */,
 				09D2763F2825CE6000933F16 /* TaskBusinessModel.swift in Sources */,
-				093945A02855DDC400A0F963 /* BoardCreateViewController.swift in Sources */,
+				093945A02855DDC400A0F963 /* BoardCreateEditViewController.swift in Sources */,
 				09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */,
 				09D27654282605E900933F16 /* MemberEntity+CoreDataProperties.swift in Sources */,
 				09D275DA2825CB5A00933F16 /* GetWorkspaceByIdRequest.swift in Sources */,
@@ -1718,6 +1725,7 @@
 				09D2763A2825CE6000933F16 /* BoardComparator.swift in Sources */,
 				0992816F285677BB00F3EA66 /* PrioritySelectionAction.swift in Sources */,
 				092F520828558E240032B2D5 /* TaskGeneralInfoCellModel.swift in Sources */,
+				096EA95B285C495E0053F4F6 /* SignalRManager.swift in Sources */,
 				09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */,
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
 				09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */,
@@ -1787,7 +1795,7 @@
 				0989BABE284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift in Sources */,
 				097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
-				0939459F2855DDC400A0F963 /* TaskDetailViewController.swift in Sources */,
+				0939459F2855DDC400A0F963 /* TaskCreateEditViewController.swift in Sources */,
 				096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */,
 				099281632856769300F3EA66 /* PrioritySelectorCell.swift in Sources */,
 				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,
@@ -2158,6 +2166,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		096EA960285C521F0053F4F6 /* XCRemoteSwiftPackageReference "SignalR-Client-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/moozzyk/SignalR-Client-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
 		09EDE71A2848893A009B23A9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -2169,6 +2185,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		096EA961285C521F0053F4F6 /* SignalRClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 096EA960285C521F0053F4F6 /* XCRemoteSwiftPackageReference "SignalR-Client-Swift" */;
+			productName = SignalRClient;
+		};
 		09EDE71B2848893A009B23A9 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09EDE71A2848893A009B23A9 /* XCRemoteSwiftPackageReference "lottie-ios" */;

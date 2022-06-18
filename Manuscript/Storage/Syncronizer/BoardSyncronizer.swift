@@ -100,4 +100,8 @@ class BoardSyncronizer: DataSyncronizer {
         
     }
     
+    deinit {
+        print("DEALLOC -> BoardSyncronizer")
+    }
+    
 }

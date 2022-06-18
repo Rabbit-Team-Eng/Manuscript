@@ -29,7 +29,7 @@ class WorkspacesViewModel {
     }
     
     func fetchWorkspaces() {
-        let allWorkspaces = dataProvider.fetchAllWorkspacesOnMainThread()
+        let allWorkspaces = dataProvider.fetchWorkspaces(thread: .main)
         events.send(.workspacesDidFetch(workspaces: allWorkspaces))
     }
     

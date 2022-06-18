@@ -8,6 +8,15 @@
         "revision" : "4a6058cbbdfe4f74aeae92c8bd51ad3b0de2a1ee",
         "version" : "3.3.0"
       }
+    },
+    {
+      "identity" : "signalr-client-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/moozzyk/SignalR-Client-Swift",
+      "state" : {
+        "revision" : "e70c77151872a4f973fe1c10376980b0db3fa4b2",
+        "version" : "0.9.0"
+      }
     }
   ],
   "version" : 2

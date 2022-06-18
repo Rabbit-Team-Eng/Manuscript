@@ -12,5 +12,5 @@ public protocol TaskAPI {
     func createTask(requestBody: TaskRequest) -> AnyPublisher<TaskResponse, Error>
     func getAllTasks() -> AnyPublisher<AllTaskResponse, Error>
     func updateTaskById(requestBody: TaskRequest, taskId: String) -> AnyPublisher<TaskResponse, Error>
-    func deleteTaskById(taskId: String) -> AnyPublisher<TaskResponse, Error>
+    func deleteTaskById(taskId: String) -> AnyPublisher<Int, Error>
 }
