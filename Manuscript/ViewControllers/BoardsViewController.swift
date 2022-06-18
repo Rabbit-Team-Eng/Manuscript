@@ -155,7 +155,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
 
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+        let layout = UICollectionViewCompositionalLayout { [unowned self] sectionIndex, layoutEnvironment in
             
             return self.createBoardsSection()
         }
@@ -265,7 +265,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.remoteId else { return }
-        let currentWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
+        let currentWorksapce = dataProvider.fetchWorkspace(thread: .main, id: UserDefaults.selectedWorkspaceId)
         let currentBoard = dataProvider.fetchCurrentBoardWithRemoteId(id: selectedBoardId)
         coordinator?.navigateToBoardDetail(selectedBoard: currentBoard, selectedWorkspace: currentWorksapce)
     }
@@ -281,8 +281,9 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     required init?(coder: NSCoder) {
         fatalError()
     }
+    
     deinit {
-
+        print("DEALLOC -> BoardsViewController")
     }
 }
 

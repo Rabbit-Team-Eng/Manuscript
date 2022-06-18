@@ -13,11 +13,13 @@ class BoardCreator {
     
     private let boardService: BoardService
     private let database: CoreDataStack
-    
+    private let signalRManager: SignalRManager
+
     private var tokens: Set<AnyCancellable> = []
     
-    init(boardService: BoardService, database: CoreDataStack) {
+    init(boardService: BoardService, database: CoreDataStack, signalRManager: SignalRManager) {
         self.boardService = boardService
+        self.signalRManager = signalRManager
         self.database = database
     }
     
@@ -72,6 +74,7 @@ class BoardCreator {
                             
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
+                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
                             }
                             
                         } catch {

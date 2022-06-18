@@ -10,15 +10,31 @@ import CoreData
 import Combine
 
 protocol Datasource {
+
+    /// Use this method to query the Database in order to get all worksapces in the Database
+    /// - Parameter thread: Chouse on which thread you want to perform the Database query
+    /// - Returns: List of Worksapce Business Moderl Objects with all the boards, members and tasks
+    func fetchWorkspaces(thread: Thread) -> [WorkspaceBusinessModel]
     
-    func fetchAllWorkspacesOnMainThread() -> [WorkspaceBusinessModel]
-    func fethAllWorkspacesOnBackgroundThread() -> [WorkspaceBusinessModel]
-    func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel
+    
+    
+    /// Use this method to query the Database in order to a worksapces in the Database using its Id
+    /// - Parameters:
+    ///   - thread: Chouse on which thread you want to perform the Database query
+    ///   - id: Server-Given Id
+    /// - Returns: A Worksapce Business Moderl Object with all the boards, members and tasks
+    func fetchWorkspace(thread: Thread, id: String) -> WorkspaceBusinessModel
+
     
     func fetchAllBoardsOnMainThread() -> [BoardBusinessModel]
     func fethAllBoardsOnBackgroundThread() -> [BoardBusinessModel]
     func fetchAllBoardsByWorkspaceIdOnMainThread(workspaceId: String) -> [BoardBusinessModel]
+    
+}
 
+enum Thread {
+    case main
+    case background
 }
 
 class DataProvider: Datasource {
@@ -29,12 +45,215 @@ class DataProvider: Datasource {
         self.coreDataStack = coreDataStack
     }
     
-    func fetchCurrentBoardWithRemoteId(id: String) -> BoardBusinessModel {
+    func fetchWorkspace(thread: Thread, id: String) -> WorkspaceBusinessModel {
+        var context: NSManagedObjectContext!
+        var searchingWorkspace: WorkspaceBusinessModel!
+        
+        switch thread {
+        case .main:
+            context = coreDataStack.databaseContainer.viewContext
+        case .background:
+            context = coreDataStack.databaseContainer.newBackgroundContext()
+        }
+        
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            
+            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
+            workspacesFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
+            
+            do {
+                let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
+                let worskpaceEntity = workspace.first!
+                var allBoards: [BoardBusinessModel] = []
+                var allMembers: [MemberBusinessModel] = []
+                
+                worskpaceEntity.boards?.forEach({ boardEntity in
+                    
+                    if let board = boardEntity as? BoardEntity {
+                        var allTasks: [TaskBusinessModel] = []
+                        
+                        board.tasks?.forEach({ taskEntity in
+                            if let task = taskEntity as? TaskEntity {
+                                allTasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                                  coreDataId: task.objectID,
+                                                                  ownerBoardCoreDataId: board.objectID,
+                                                                  ownerWorkspaceCoreDataId: worskpaceEntity.objectID,
+                                                                  assigneeUserId: task.assigneeUserId,
+                                                                  title: task.title,
+                                                                  detail: task.detail,
+                                                                  dueDate: task.dueDate,
+                                                                  ownerBoardId: task.ownerBoardId,
+                                                                  status: task.status,
+                                                                  workspaceId: task.workspaceId,
+                                                                  lastModifiedDate: task.lastModifiedDate,
+                                                                  isInitiallySynced: task.isInitiallySynced,
+                                                                  isPendingDeletionOnTheServer: task.isInitiallySynced,
+                                                                  priority: PriorityTypeConverter.getEnum(priority: task.priority)))
+                            }
+                        })
+                        
+                        allBoards.append(BoardBusinessModel(remoteId: board.remoteId,
+                                                            coreDataId: board.objectID,
+                                                            ownerWorkspaceCoreDataId: worskpaceEntity.objectID,
+                                                            title: board.title,
+                                                            detailDescription: board.mainDescription,
+                                                            assetUrl: board.assetUrl,
+                                                            ownerWorkspaceId: board.ownerWorkspaceId,
+                                                            lastModifiedDate: board.lastModifiedDate,
+                                                            tasks: allTasks,
+                                                            isInitiallySynced: board.isInitiallySynced,
+                                                            isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
+                        
+                    }
+                    
+                })
+                
+                worskpaceEntity.members?.forEach { memberEntity in
+                    if let member = memberEntity as? MemberEntity {
+                        allMembers.append(MemberBusinessModel(remoteId: member.remoteId,
+                                                              ownerWorkspaceCoreDataId: worskpaceEntity.objectID,
+                                                              firstName: member.firstName,
+                                                              lastName: member.lastName,
+                                                              avatarUrl: member.avatarUrl,
+                                                              email: member.email,
+                                                              isWorkspaceOwner: member.isWorkspaceOwner,
+                                                              ownerWorkspaceId: member.ownerWorkspaceId,
+                                                              lastModifiedDate: member.lastModifiedDate,
+                                                              isInitiallySynced: member.isInitiallySynced,
+                                                              isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
+                        )
+                    }
+                }
+                
+                
+                searchingWorkspace = WorkspaceBusinessModel(remoteId: worskpaceEntity.remoteId,
+                                                           coreDataId: worskpaceEntity.objectID,
+                                                           title: worskpaceEntity.title,
+                                                           mainDescription: worskpaceEntity.mainDescription,
+                                                           sharingEnabled: worskpaceEntity.sharingEnabled,
+                                                           boards: allBoards,
+                                                           members: allMembers,
+                                                           lastModifiedDate: worskpaceEntity.lastModifiedDate,
+                                                           isInitiallySynced: worskpaceEntity.isInitiallySynced,
+                                                           isPendingDeletionOnTheServer: worskpaceEntity.isPendingDeletionOnTheServer)
+                
+                
+            } catch {
+                fatalError()
+            }
+        }
 
+        return searchingWorkspace
+        
+    }
+    
+    func fetchWorkspaces(thread: Thread) -> [WorkspaceBusinessModel] {
+        var context: NSManagedObjectContext!
+        var allWorkspaces: [WorkspaceBusinessModel] = []
+        
+        switch thread {
+        case .main:
+            context = coreDataStack.databaseContainer.viewContext
+        case .background:
+            context = coreDataStack.databaseContainer.newBackgroundContext()
+        }
+        
+        context.automaticallyMergesChangesFromParent = true
+        
+        context.performAndWait {
+            
+            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
+            
+            do {
+                let allWorkspaceEntities: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
+                
+                allWorkspaceEntities.forEach { currentWorkspaceEntity in
+                    var members: [MemberBusinessModel] = []
+                    var boards: [BoardBusinessModel] = []
+                    
+                    currentWorkspaceEntity.boards?.forEach { boardEntity in
+                        if let board = boardEntity as? BoardEntity {
+                            var tasks: [TaskBusinessModel] = []
+                            
+                            board.tasks?.forEach { taskEntity in
+                                if let task = taskEntity as? TaskEntity {
+                                    tasks.append(TaskBusinessModel(remoteId: task.remoteId,
+                                                                   coreDataId: task.objectID,
+                                                                   ownerBoardCoreDataId: board.objectID,
+                                                                   ownerWorkspaceCoreDataId: currentWorkspaceEntity.objectID,
+                                                                   assigneeUserId: task.assigneeUserId,
+                                                                   title: task.title,
+                                                                   detail: task.detail,
+                                                                   dueDate: task.dueDate,
+                                                                   ownerBoardId: task.ownerBoardId,
+                                                                   status: task.status,
+                                                                   workspaceId: task.workspaceId,
+                                                                   lastModifiedDate: task.lastModifiedDate,
+                                                                   isInitiallySynced: task.isInitiallySynced,
+                                                                   isPendingDeletionOnTheServer: task.isInitiallySynced,
+                                                                   priority: PriorityTypeConverter.getEnum(priority: task.priority)))
+                                }
+                            }
+                            
+                            boards.append(BoardBusinessModel(remoteId: board.remoteId,
+                                                             coreDataId: board.objectID,
+                                                             ownerWorkspaceCoreDataId: currentWorkspaceEntity.objectID,
+                                                             title: board.title,
+                                                             detailDescription: board.mainDescription,
+                                                             assetUrl: board.assetUrl,
+                                                             ownerWorkspaceId: board.ownerWorkspaceId,
+                                                             lastModifiedDate: board.lastModifiedDate,
+                                                             tasks: tasks,
+                                                             isInitiallySynced: board.isInitiallySynced,
+                                                             isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
+                        }
+                    }
+                    
+                    currentWorkspaceEntity.members?.forEach { memberEntity in
+                        if let member = memberEntity as? MemberEntity {
+                            members.append(MemberBusinessModel(remoteId: member.remoteId,
+                                                               ownerWorkspaceCoreDataId: currentWorkspaceEntity.objectID,
+                                                               firstName: member.firstName,
+                                                               lastName: member.lastName,
+                                                               avatarUrl: member.avatarUrl,
+                                                               email: member.email,
+                                                               isWorkspaceOwner: member.isWorkspaceOwner,
+                                                               ownerWorkspaceId: member.ownerWorkspaceId,
+                                                               lastModifiedDate: member.lastModifiedDate,
+                                                               isInitiallySynced: member.isInitiallySynced,
+                                                               isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
+                            )
+                        }
+                    }
+                    
+                    let currentWorkspaceBusinessModel = WorkspaceBusinessModel(remoteId: currentWorkspaceEntity.remoteId,
+                                                                               coreDataId: currentWorkspaceEntity.objectID,
+                                                                               title: currentWorkspaceEntity.title,
+                                                                               mainDescription: currentWorkspaceEntity.mainDescription,
+                                                                               sharingEnabled: currentWorkspaceEntity.sharingEnabled,
+                                                                               boards: boards,
+                                                                               members: members,
+                                                                               lastModifiedDate: currentWorkspaceEntity.lastModifiedDate,
+                                                                               isInitiallySynced: currentWorkspaceEntity.isInitiallySynced,
+                                                                               isPendingDeletionOnTheServer: currentWorkspaceEntity.isPendingDeletionOnTheServer)
+                    
+                    allWorkspaces.append(currentWorkspaceBusinessModel)
+                }
+            } catch let error as NSError {
+                fatalError(error.localizedDescription)
+            }
+        }
+        return allWorkspaces
+    }
+    
+    func fetchCurrentBoardWithRemoteId(id: String) -> BoardBusinessModel {
+        
         let context = coreDataStack.databaseContainer.viewContext
         var returningBoard: BoardBusinessModel? = nil
         context.automaticallyMergesChangesFromParent = true
-
+        
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
             boardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
@@ -57,7 +276,7 @@ class DataProvider: Datasource {
                                                           lastModifiedDate: task.lastModifiedDate,
                                                           isInitiallySynced: task.isInitiallySynced,
                                                           isPendingDeletionOnTheServer: task.isInitiallySynced,
-                                                          priority: PriorityTypeConverter.getEnum(priority: task.priority))) 
+                                                          priority: PriorityTypeConverter.getEnum(priority: task.priority)))
                     }
                 })
                 
@@ -80,14 +299,14 @@ class DataProvider: Datasource {
     }
     
     func fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: String) -> BoardBusinessModel {
-
+        
         let context = coreDataStack.databaseContainer.newBackgroundContext()
-
+        
         // If needed, ensure the background context stays
         // up to date with changes from the parent
         var returningBoard: BoardBusinessModel? = nil
         context.automaticallyMergesChangesFromParent = true
-
+        
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
             boardFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
@@ -131,102 +350,13 @@ class DataProvider: Datasource {
         return returningBoard!
     }
     
-    func fetchWorkspaceByRemoteIdOnMainThread(id: String) -> WorkspaceBusinessModel {
-        var searchingWorkspace: WorkspaceBusinessModel? = nil
-        
-        let context = coreDataStack.databaseContainer.viewContext
-
-        context.performAndWait {
-            
-            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
-            workspacesFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(id))")
-            
-            do {
-                let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
-                let worskpaceEntity = workspace.first!
-                var allBoards: [BoardBusinessModel] = []
-                var allMembers: [MemberBusinessModel] = []
-
-                worskpaceEntity.boards?.forEach({ boardEntity in
-                      
-                    if let board = boardEntity as? BoardEntity {
-                        var allTasks: [TaskBusinessModel] = []
-                        
-                        board.tasks?.forEach({ taskEntity in
-                            if let task = taskEntity as? TaskEntity {
-                                allTasks.append(TaskBusinessModel(remoteId: task.remoteId,
-                                                                  assigneeUserId: task.assigneeUserId,
-                                                                  title: task.title,
-                                                                  detail: task.detail,
-                                                                  dueDate: task.dueDate,
-                                                                  ownerBoardId: task.ownerBoardId,
-                                                                  status: task.status,
-                                                                  workspaceId: task.workspaceId,
-                                                                  lastModifiedDate: task.lastModifiedDate,
-                                                                  isInitiallySynced: task.isInitiallySynced,
-                                                                  isPendingDeletionOnTheServer: task.isInitiallySynced,
-                                                                  priority: PriorityTypeConverter.getEnum(priority: task.priority)))
-                            }
-                        })
-                        
-                        allBoards.append(BoardBusinessModel(remoteId: board.remoteId,
-                                                         coreDataId: board.objectID,
-                                                            title: board.title,
-                                                            detailDescription: board.mainDescription,
-                                                         assetUrl: board.assetUrl,
-                                                         ownerWorkspaceId: board.ownerWorkspaceId,
-                                                         lastModifiedDate: board.lastModifiedDate,
-                                                         tasks: allTasks,
-                                                         isInitiallySynced: board.isInitiallySynced,
-                                                         isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
-                        
-                    }
-                    
-                })
-                
-                worskpaceEntity.members?.forEach { memberEntity in
-                    if let member = memberEntity as? MemberEntity {
-                        allMembers.append(MemberBusinessModel(remoteId: member.remoteId,
-                                                           firstName: member.firstName,
-                                                           lastName: member.lastName,
-                                                           avatarUrl: member.avatarUrl,
-                                                           email: member.email,
-                                                           isWorkspaceOwner: member.isWorkspaceOwner,
-                                                           ownerWorkspaceId: member.ownerWorkspaceId,
-                                                           lastModifiedDate: member.lastModifiedDate,
-                                                           isInitiallySynced: member.isInitiallySynced,
-                                                           isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
-                        )
-                    }
-                }
-                
-                
-                searchingWorkspace = WorkspaceBusinessModel(remoteId: worskpaceEntity.remoteId,
-                                                            coreDataId: worskpaceEntity.objectID,
-                                                            title: worskpaceEntity.title,
-                                                            mainDescription: worskpaceEntity.mainDescription,
-                                                            sharingEnabled: worskpaceEntity.sharingEnabled,
-                                                            boards: allBoards,
-                                                            members: allMembers,
-                                                            lastModifiedDate: worskpaceEntity.lastModifiedDate,
-                                                            isInitiallySynced: worskpaceEntity.isInitiallySynced,
-                                                            isPendingDeletionOnTheServer: worskpaceEntity.isPendingDeletionOnTheServer)
-                
-                
-            } catch {
-                fatalError()
-            }
-        }
-        // todo: handle error case
-        return searchingWorkspace!
-    }
-    
+   
     func fetchAllBoardsOnMainThread() -> [BoardBusinessModel] {
         var allBoardsModels: [BoardBusinessModel] = []
         let context = coreDataStack.databaseContainer.viewContext
-
+        
         context.automaticallyMergesChangesFromParent = true
-
+        
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
             do {
@@ -255,11 +385,11 @@ class DataProvider: Datasource {
     func fethAllBoardsOnBackgroundThread() -> [BoardBusinessModel] {
         var allBoardsModels: [BoardBusinessModel] = []
         let context = coreDataStack.databaseContainer.newBackgroundContext()
-
+        
         // If needed, ensure the background context stays
         // up to date with changes from the parent
         context.automaticallyMergesChangesFromParent = true
-
+        
         // Perform operations on the background context asynchronously
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
@@ -289,11 +419,11 @@ class DataProvider: Datasource {
     func fethAllTasksOnBackgroundThread() -> [TaskBusinessModel] {
         var allTasksModels: [TaskBusinessModel] = []
         let context = coreDataStack.databaseContainer.newBackgroundContext()
-
+        
         // If needed, ensure the background context stays
         // up to date with changes from the parent
         context.automaticallyMergesChangesFromParent = true
-
+        
         // Perform operations on the background context asynchronously
         context.performAndWait {
             let boardFetchRequest: NSFetchRequest<TaskEntity> = NSFetchRequest(entityName: "TaskEntity")
@@ -327,95 +457,6 @@ class DataProvider: Datasource {
     }
     
     
-    func fethAllWorkspacesOnBackgroundThread() -> [WorkspaceBusinessModel] {
-        var allWorkspaces: [WorkspaceBusinessModel] = []
-        let context = coreDataStack.databaseContainer.newBackgroundContext()
-
-        // If needed, ensure the background context stays
-        // up to date with changes from the parent
-        context.automaticallyMergesChangesFromParent = true
-
-        // Perform operations on the background context
-        // asynchronously
-        context.performAndWait {
-            
-            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
-            
-            do {
-                let allWorkspaceEntities: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
-                allWorkspaceEntities.forEach { currentWorkspaceEntity in
-                    var members: [MemberBusinessModel] = []
-                    var boards: [BoardBusinessModel] = []
-
-                    currentWorkspaceEntity.boards?.forEach { boardEntity in
-                        if let board = boardEntity as? BoardEntity {
-                            var tasks: [TaskBusinessModel] = []
-                            
-                            board.tasks?.forEach { taskEntity in
-                                if let task = taskEntity as? TaskEntity {
-                                    tasks.append(TaskBusinessModel(remoteId: task.remoteId,
-                                                                   assigneeUserId: task.assigneeUserId,
-                                                                   title: task.title,
-                                                                   detail: task.detail,
-                                                                   dueDate: task.dueDate,
-                                                                   ownerBoardId: task.ownerBoardId,
-                                                                   status: task.status,
-                                                                   workspaceId: task.workspaceId,
-                                                                   lastModifiedDate: task.lastModifiedDate,
-                                                                   isInitiallySynced: task.isInitiallySynced,
-                                                                   isPendingDeletionOnTheServer: task.isInitiallySynced, priority: .medium))
-                                }
-                            }
-                            
-                            boards.append(BoardBusinessModel(remoteId: board.remoteId,
-                                                             coreDataId: board.objectID,
-                                                             title: board.title, detailDescription: board.mainDescription,
-                                                             assetUrl: board.assetUrl,
-                                                             ownerWorkspaceId: board.ownerWorkspaceId,
-                                                             lastModifiedDate: board.lastModifiedDate,
-                                                             tasks: tasks,
-                                                             isInitiallySynced: board.isInitiallySynced,
-                                                             isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
-                        }
-                    }
-                    
-                    currentWorkspaceEntity.members?.forEach { memberEntity in
-                        if let member = memberEntity as? MemberEntity {
-                            members.append(MemberBusinessModel(remoteId: member.remoteId,
-                                                               firstName: member.firstName,
-                                                               lastName: member.lastName,
-                                                               avatarUrl: member.avatarUrl,
-                                                               email: member.email,
-                                                               isWorkspaceOwner: member.isWorkspaceOwner,
-                                                               ownerWorkspaceId: member.ownerWorkspaceId,
-                                                               lastModifiedDate: member.lastModifiedDate,
-                                                               isInitiallySynced: member.isInitiallySynced,
-                                                               isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
-                            )
-                        }
-                    }
-                    
-                    let currentWorkspaceBusinessModel = WorkspaceBusinessModel(remoteId: currentWorkspaceEntity.remoteId,
-                                                                               coreDataId: currentWorkspaceEntity.objectID,
-                                                                               title: currentWorkspaceEntity.title,
-                                                                               mainDescription: currentWorkspaceEntity.mainDescription,
-                                                                               sharingEnabled: currentWorkspaceEntity.sharingEnabled,
-                                                                               boards: boards,
-                                                                               members: members,
-                                                                               lastModifiedDate: currentWorkspaceEntity.lastModifiedDate,
-                                                                               isInitiallySynced: currentWorkspaceEntity.isInitiallySynced,
-                                                                               isPendingDeletionOnTheServer: currentWorkspaceEntity.isPendingDeletionOnTheServer)
-                    
-                    allWorkspaces.append(currentWorkspaceBusinessModel)
-                }
-            } catch let error as NSError {
-                fatalError(error.localizedDescription)
-            }
-        }
-        return allWorkspaces
-    }
-    
-    
     func fetchAllBoardsByWorkspaceIdOnMainThread(workspaceId: String) -> [BoardBusinessModel] {
         var returningBoards: [BoardBusinessModel] = []
         let mainThread = coreDataStack.mainThreadContext
@@ -425,98 +466,19 @@ class DataProvider: Datasource {
         do {
             returningBoards = try mainThread.fetch(boardsFetchRequest).map({ boardEntity in
                 BoardBusinessModel(remoteId: boardEntity.remoteId,
-                                                          coreDataId: boardEntity.objectID,
+                                   coreDataId: boardEntity.objectID,
                                    title: boardEntity.title,
                                    detailDescription: boardEntity.mainDescription,
-                                                          assetUrl: boardEntity.assetUrl,
-                                                          ownerWorkspaceId: boardEntity.ownerWorkspaceId,
-                                                          lastModifiedDate: boardEntity.lastModifiedDate,
-                                                          isInitiallySynced: boardEntity.isInitiallySynced,
-                                                          isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
+                                   assetUrl: boardEntity.assetUrl,
+                                   ownerWorkspaceId: boardEntity.ownerWorkspaceId,
+                                   lastModifiedDate: boardEntity.lastModifiedDate,
+                                   isInitiallySynced: boardEntity.isInitiallySynced,
+                                   isPendingDeletionOnTheServer: boardEntity.isPendingDeletionOnTheServer)
             })
         } catch {
             
         }
         
         return returningBoards
-    }
-    
-    func fetchAllWorkspacesOnMainThread() -> [WorkspaceBusinessModel] {
-        var allWorkspaces: [WorkspaceBusinessModel] = []
-        let context = coreDataStack.databaseContainer.viewContext
-        
-        let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
-        do {
-            let allWorkspaceEntities: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
-            allWorkspaceEntities.forEach { currentWorkspaceEntity in
-                var members: [MemberBusinessModel] = []
-                var boards: [BoardBusinessModel] = []
-
-                currentWorkspaceEntity.boards?.forEach { boardEntity in
-                    if let board = boardEntity as? BoardEntity {
-                        var tasks: [TaskBusinessModel] = []
-                        
-                        board.tasks?.forEach { taskEntity in
-                            if let task = taskEntity as? TaskEntity {
-                                tasks.append(TaskBusinessModel(remoteId: task.remoteId,
-                                                               assigneeUserId: task.assigneeUserId,
-                                                               title: task.title,
-                                                               detail: task.detail,
-                                                               dueDate: task.dueDate,
-                                                               ownerBoardId: task.ownerBoardId,
-                                                               status: task.status,
-                                                               workspaceId: task.workspaceId,
-                                                               lastModifiedDate: task.lastModifiedDate,
-                                                               isInitiallySynced: task.isInitiallySynced,
-                                                               isPendingDeletionOnTheServer: task.isInitiallySynced,
-                                                               priority: PriorityTypeConverter.getEnum(priority: task.priority)))
-                            }
-                        }
-                        
-                        boards.append(BoardBusinessModel(remoteId: board.remoteId,
-                                                         coreDataId: board.objectID,
-                                                         title: board.title, detailDescription: board.mainDescription,
-                                                         assetUrl: board.assetUrl,
-                                                         ownerWorkspaceId: board.ownerWorkspaceId,
-                                                         lastModifiedDate: board.lastModifiedDate,
-                                                         tasks: tasks,
-                                                         isInitiallySynced: board.isInitiallySynced,
-                                                         isPendingDeletionOnTheServer: board.isPendingDeletionOnTheServer))
-                    }
-                }
-                
-                currentWorkspaceEntity.members?.forEach { memberEntity in
-                    if let member = memberEntity as? MemberEntity {
-                        members.append(MemberBusinessModel(remoteId: member.remoteId,
-                                                           firstName: member.firstName,
-                                                           lastName: member.lastName,
-                                                           avatarUrl: member.avatarUrl,
-                                                           email: member.email,
-                                                           isWorkspaceOwner: member.isWorkspaceOwner,
-                                                           ownerWorkspaceId: member.ownerWorkspaceId,
-                                                           lastModifiedDate: member.lastModifiedDate,
-                                                           isInitiallySynced: member.isInitiallySynced,
-                                                           isPendingDeletionOnTheServer: member.isPendingDeletionOnTheServer)
-                        )
-                    }
-                }
-                
-                let currentWorkspaceBusinessModel = WorkspaceBusinessModel(remoteId: currentWorkspaceEntity.remoteId,
-                                                                           coreDataId: currentWorkspaceEntity.objectID,
-                                                                           title: currentWorkspaceEntity.title,
-                                                                           mainDescription: currentWorkspaceEntity.mainDescription,
-                                                                           sharingEnabled: currentWorkspaceEntity.sharingEnabled,
-                                                                           boards: boards,
-                                                                           members: members,
-                                                                           lastModifiedDate: currentWorkspaceEntity.lastModifiedDate,
-                                                                           isInitiallySynced: currentWorkspaceEntity.isInitiallySynced,
-                                                                           isPendingDeletionOnTheServer: currentWorkspaceEntity.isPendingDeletionOnTheServer)
-                
-                allWorkspaces.append(currentWorkspaceBusinessModel)
-            }
-        } catch let error as NSError {
-            fatalError(error.localizedDescription)
-        }
-        return allWorkspaces
     }
 }

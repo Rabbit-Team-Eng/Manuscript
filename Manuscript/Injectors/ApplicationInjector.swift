@@ -9,12 +9,17 @@ import Foundation
 
 class ApplicationInjector {
 
-    private let startupUtils: StartupUtils = StartupUtils()
+    private var startupUtils: StartupUtils? = nil
     private let jsonEncoder: JSONEncoder = JSONEncoder()
     private let jsonDecoder: JSONDecoder = JSONDecoder()
-
+    
     func provideStartupUtils() -> StartupUtils {
-        return startupUtils
+        if startupUtils != nil {
+            return startupUtils!
+        } else {
+            startupUtils = StartupUtils()
+            return startupUtils!
+        }
     }
 
     func provideJsonDecoder() -> JSONDecoder {

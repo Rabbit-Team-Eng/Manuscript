@@ -61,8 +61,8 @@ class BoardsViewModel {
     func fetchCurrentWorkspace() {
 
         if UserDefaults.selectedWorkspaceId == Constants.emptyString {
-            let allWorkspaces = dataProvider.fetchAllWorkspacesOnMainThread()
-
+            let allWorkspaces = dataProvider.fetchWorkspaces(thread: .main)
+            
             if let firstWorkspace = allWorkspaces.first {
                 events.send(.titleDidFetch(title: firstWorkspace.title))
                 UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
@@ -77,7 +77,7 @@ class BoardsViewModel {
             }
             
         } else {
-            let selectedWorksapce = dataProvider.fetchWorkspaceByRemoteIdOnMainThread(id: UserDefaults.selectedWorkspaceId)
+            let selectedWorksapce = dataProvider.fetchWorkspace(thread: .main, id: UserDefaults.selectedWorkspaceId)
             
             events.send(.titleDidFetch(title: selectedWorksapce.title))
             UserDefaults.selectedWorkspaceId = "\(selectedWorksapce.remoteId)"

@@ -30,6 +30,11 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         
         let cloud = mainInjector.provideCloudSync()
         cloud.syncronize()
+        
+        let signalRManager = mainInjector.provideSignalRManager()
+        signalRManager.startConnection()
+        signalRManager.startListener()
+        
 
     }
 
@@ -152,6 +157,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     deinit {
-        
+        print("DEALLOC -> TabBarCoordinator")
+
     }
 }

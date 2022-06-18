@@ -35,7 +35,7 @@ final class CloudSync {
                 
                 let dispatchers = DispatchGroup()
                 
-                let currentWorkspaces = self.dataProvider.fethAllWorkspacesOnBackgroundThread()
+                let currentWorkspaces = self.dataProvider.fetchWorkspaces(thread: .background)
                 let workspacesDiff = WorkspaceComparator.compare(responseCollection: allWorkspaces, cachedCollection: currentWorkspaces)
                 
                 dispatchers.enter()

@@ -14,11 +14,13 @@ class TaskCreator {
     
     private let taskService: TaskService
     private let database: CoreDataStack
-    
+    private let signalRManager: SignalRManager
+
     private var tokens: Set<AnyCancellable> = []
     
-    init(taskService: TaskService, database: CoreDataStack) {
+    init(taskService: TaskService, database: CoreDataStack, signalRManager: SignalRManager) {
         self.taskService = taskService
+        self.signalRManager = signalRManager
         self.database = database
     }
     
@@ -165,6 +167,8 @@ class TaskCreator {
                     do {
                         try context.save()
                         self.notify()
+                        self.signalRManager.broadcastMessage(enity: "task", id: taskResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
+
                     } catch {
                         fatalError()
                     }

@@ -27,6 +27,8 @@ class MainInjector {
     private var databaseManager: DatabaseManager? = nil
     private var boardCreator: BoardCreator? = nil
     private var taskCreator: TaskCreator? = nil
+    private var signalRManager: SignalRManager? = nil
+    private var socketIO: SignalRConnectionListener? = nil
 
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -48,11 +50,29 @@ class MainInjector {
         }
     }
     
+    func provideSocketIO() -> SignalRConnectionListener {
+        if socketIO != nil {
+            return socketIO!
+        } else {
+            socketIO = SignalRConnectionListener()
+            return socketIO!
+        }
+    }
+    
+    func provideSignalRManager() -> SignalRManager {
+        if signalRManager != nil {
+            return signalRManager!
+        } else {
+            signalRManager = SignalRManager(delegate: provideSocketIO(), startupUtils: provideStartUpUtils(), cloud: provideCloudSync())
+            return signalRManager!
+        }
+    }
+    
     func provideTaskCreator() -> TaskCreator {
         if taskCreator != nil {
             return taskCreator!
         } else {
-            taskCreator = TaskCreator(taskService: provideTaskService(), database: provideCoreDataStack())
+            taskCreator = TaskCreator(taskService: provideTaskService(), database: provideCoreDataStack(), signalRManager: provideSignalRManager())
             return taskCreator!
         }
     }
@@ -61,7 +81,7 @@ class MainInjector {
         if boardCreator != nil {
             return boardCreator!
         } else {
-            boardCreator = BoardCreator(boardService: provideBoardService(), database: provideCoreDataStack())
+            boardCreator = BoardCreator(boardService: provideBoardService(), database: provideCoreDataStack(), signalRManager: provideSignalRManager())
             return boardCreator!
         }
     }
@@ -215,6 +235,6 @@ class MainInjector {
     }
 
     deinit {
-
+        print("DEALLOC -> MainInjector")
     }
 }

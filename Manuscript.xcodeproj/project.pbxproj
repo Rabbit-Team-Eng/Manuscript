@@ -39,6 +39,9 @@
 		096BEDC0284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */; };
 		096BEDC3284B27C7001C7136 /* BoardTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC2284B27C7001C7136 /* BoardTransformer.swift */; };
 		096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */; };
+		096EA95B285C495E0053F4F6 /* SignalRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EA95A285C495E0053F4F6 /* SignalRManager.swift */; };
+		096EA95F285C4E060053F4F6 /* MemoryLeaksTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EA95E285C4E060053F4F6 /* MemoryLeaksTest.swift */; };
+		096EA962285C521F0053F4F6 /* SignalRClient in Frameworks */ = {isa = PBXBuildFile; productRef = 096EA961285C521F0053F4F6 /* SignalRClient */; };
 		096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */; };
 		096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */; };
 		096EF7CC2853EA1E003BEC41 /* GeneralInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */; };
@@ -375,6 +378,8 @@
 		096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107448-human-in-vr-glasses-in-metaverse.json"; sourceTree = "<group>"; };
 		096BEDC2284B27C7001C7136 /* BoardTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTransformer.swift; sourceTree = "<group>"; };
 		096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		096EA95A285C495E0053F4F6 /* SignalRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRManager.swift; sourceTree = "<group>"; };
+		096EA95E285C4E060053F4F6 /* MemoryLeaksTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeaksTest.swift; sourceTree = "<group>"; };
 		096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailSection.swift; sourceTree = "<group>"; };
 		096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailCellModel.swift; sourceTree = "<group>"; };
 		096EF7CB2853EA1E003BEC41 /* GeneralInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoCellModel.swift; sourceTree = "<group>"; };
@@ -596,6 +601,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				096EA962285C521F0053F4F6 /* SignalRClient in Frameworks */,
 				09EDE71C2848893A009B23A9 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,6 +682,7 @@
 				096BEDB8284AE0F2001C7136 /* WorkspaceComparatorTest.swift */,
 				096BEDBA284AE147001C7136 /* DateTimeUtilsTest.swift */,
 				0919BCA82857FEFD00DB53C2 /* TaskComparatorTest.swift */,
+				096EA95E285C4E060053F4F6 /* MemoryLeaksTest.swift */,
 			);
 			path = ManuscriptTests;
 			sourceTree = "<group>";
@@ -924,6 +931,7 @@
 				09D275382825B54C00933F16 /* Application */,
 				09D275372825B53D00933F16 /* LaunchScreen */,
 				09D275362825B50900933F16 /* Resources */,
+				096EA95A285C495E0053F4F6 /* SignalRManager.swift */,
 			);
 			path = Manuscript;
 			sourceTree = "<group>";
@@ -1381,6 +1389,7 @@
 			name = Manuscript;
 			packageProductDependencies = (
 				09EDE71B2848893A009B23A9 /* Lottie */,
+				096EA961285C521F0053F4F6 /* SignalRClient */,
 			);
 			productName = Manuscript;
 			productReference = 09D2751F2825B4B800933F16 /* Manuscript.app */;
@@ -1420,6 +1429,7 @@
 			mainGroup = 09D275162825B4B800933F16;
 			packageReferences = (
 				09EDE71A2848893A009B23A9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				096EA960285C521F0053F4F6 /* XCRemoteSwiftPackageReference "SignalR-Client-Swift" */,
 			);
 			productRefGroup = 09D275202825B4B800933F16 /* Products */;
 			projectDirPath = "";
@@ -1470,6 +1480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				096BEDBB284AE147001C7136 /* DateTimeUtilsTest.swift in Sources */,
+				096EA95F285C4E060053F4F6 /* MemoryLeaksTest.swift in Sources */,
 				0919BCA92857FEFD00DB53C2 /* TaskComparatorTest.swift in Sources */,
 				096BEDB9284AE0F2001C7136 /* WorkspaceComparatorTest.swift in Sources */,
 			);
@@ -1718,6 +1729,7 @@
 				09D2763A2825CE6000933F16 /* BoardComparator.swift in Sources */,
 				0992816F285677BB00F3EA66 /* PrioritySelectionAction.swift in Sources */,
 				092F520828558E240032B2D5 /* TaskGeneralInfoCellModel.swift in Sources */,
+				096EA95B285C495E0053F4F6 /* SignalRManager.swift in Sources */,
 				09F088E6284A57580012D83D /* KeychainHelper.swift in Sources */,
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
 				09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */,
@@ -2158,6 +2170,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		096EA960285C521F0053F4F6 /* XCRemoteSwiftPackageReference "SignalR-Client-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/moozzyk/SignalR-Client-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
 		09EDE71A2848893A009B23A9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -2169,6 +2189,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		096EA961285C521F0053F4F6 /* SignalRClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 096EA960285C521F0053F4F6 /* XCRemoteSwiftPackageReference "SignalR-Client-Swift" */;
+			productName = SignalRClient;
+		};
 		09EDE71B2848893A009B23A9 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09EDE71A2848893A009B23A9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
