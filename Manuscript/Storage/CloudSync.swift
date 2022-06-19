@@ -17,9 +17,11 @@ final class CloudSync {
     private let boardSyncronizer: BoardSyncronizer
     private let taskSyncronizer: TaskSyncronizer
     private let dataProvider: DataProvider
+    private let membersCoreDataManager: MemberCoreDataManager
 
-    init(workspaceService: WorkspaceService, boardsService: BoardService, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer, taskSyncronizer: TaskSyncronizer) {
+    init(workspaceService: WorkspaceService, boardsService: BoardService, membersCoreDataManager: MemberCoreDataManager, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer, taskSyncronizer: TaskSyncronizer) {
         self.workspaceService = workspaceService
+        self.membersCoreDataManager = membersCoreDataManager
         self.boardsService = boardsService
         self.workspaceSyncronizer = workspaceSyncronizer
         self.dataProvider = dataProvider
@@ -60,6 +62,9 @@ final class CloudSync {
                 self.taskSyncronizer.syncronize(items: tasksDiff) {
                     dispatchers.leave()
                 }
+                
+                let allMembersFromDifferentWorkspaces = allWorkspaces.compactMap { $0.members }.flatMap { $0 }
+                self.membersCoreDataManager.insertNewMembers(latestMembers: allMembersFromDifferentWorkspaces)
                 
                 dispatchers.notify(queue: .main) {
                     print("\n========================== Database did finish syncronization with the server ==========================\n")

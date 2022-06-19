@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-public struct MemberBusinessModel: BusinessModelProtocol {
+public struct MemberBusinessModel {
     public var coreDataId: NSManagedObjectID? = nil
     public var ownerWorkspaceCoreDataId: NSManagedObjectID? = nil
 
-    public var remoteId: Int64
+    public var remoteId: String
     public let firstName: String
     public let lastName: String
     public let avatarUrl: String
@@ -23,7 +23,7 @@ public struct MemberBusinessModel: BusinessModelProtocol {
     public let lastModifiedDate: Date
     public let isPendingDeletionOnTheServer: Bool
 
-    public init(remoteId: Int64, coreDataId: NSManagedObjectID? = nil, ownerWorkspaceCoreDataId: NSManagedObjectID? = nil, firstName: String, lastName: String, avatarUrl: String, email: String, isWorkspaceOwner: Bool, ownerWorkspaceId: Int64, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
+    public init(remoteId: String, coreDataId: NSManagedObjectID? = nil, ownerWorkspaceCoreDataId: NSManagedObjectID? = nil, firstName: String, lastName: String, avatarUrl: String, email: String, isWorkspaceOwner: Bool, ownerWorkspaceId: Int64, lastModifiedDate: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
         self.remoteId = remoteId
         self.coreDataId = coreDataId
         self.ownerWorkspaceCoreDataId = ownerWorkspaceCoreDataId

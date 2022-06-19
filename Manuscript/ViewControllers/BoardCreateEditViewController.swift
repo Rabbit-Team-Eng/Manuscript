@@ -144,9 +144,7 @@ class BoardCreateEditViewController: UIViewController {
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
 
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
-            // TODO: This frikcin thing was causing a memory leak and controller was staying in memory. For now just fatalError will be thrown.
-            guard let self = self else { fatalError() }
+        let layout = UICollectionViewCompositionalLayout { [unowned self] sectionIndex, layoutEnvironment in
             return self.createIconsSection()
         }
         return layout

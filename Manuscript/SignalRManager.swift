@@ -24,13 +24,10 @@ class SignalRConnectionListener: HubConnectionDelegate {
         print(error)
 
     }
-    
-    
+        
     deinit {
         print("DEALLOC -> SignalRConnectionListener")
     }
-    
-    
     
 }
 
@@ -58,6 +55,10 @@ class SignalRManager {
     
     func startConnection() {
         connection.start()
+    }
+    
+    func stopConnection() {
+        connection.stop()
     }
     
     func startListener() {

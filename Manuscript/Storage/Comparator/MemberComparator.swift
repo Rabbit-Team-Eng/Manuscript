@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct MemberComparator: ComparatorProtocol {
-    public typealias Model = MemberBusinessModel
-}
+//public struct MemberComparator: ComparatorProtocol {
+//    public typealias Model = MemberBusinessModel
+//}

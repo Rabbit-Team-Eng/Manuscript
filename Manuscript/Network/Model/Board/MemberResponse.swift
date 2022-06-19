@@ -10,7 +10,6 @@ import Foundation
 public struct MemberResponse: Codable {
     
     public var id: String
-    // TODO: Fix this
     public var firstName: String? = nil
     public var lastName: String? = nil
     public var email: String

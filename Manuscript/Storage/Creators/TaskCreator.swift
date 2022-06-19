@@ -15,13 +15,15 @@ class TaskCreator {
     private let taskService: TaskService
     private let database: CoreDataStack
     private let signalRManager: SignalRManager
+    private let dataProvider: DataProvider
 
     private var tokens: Set<AnyCancellable> = []
     
-    init(taskService: TaskService, database: CoreDataStack, signalRManager: SignalRManager) {
+    init(taskService: TaskService, database: CoreDataStack, signalRManager: SignalRManager, dataProvider: DataProvider) {
         self.taskService = taskService
         self.signalRManager = signalRManager
         self.database = database
+        self.dataProvider = dataProvider
     }
     
     func editTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
@@ -91,8 +93,12 @@ class TaskCreator {
                     
                     do {
                         try context.save()
+                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(taskResponse.workspaceId)").members?.compactMap { $0.remoteId }
+
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
+                            self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
+
                         }
                     } catch {
                         fatalError()
@@ -166,8 +172,10 @@ class TaskCreator {
                     
                     do {
                         try context.save()
+                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(taskResponse.workspaceId)").members?.compactMap { $0.remoteId }
+
                         self.notify()
-                        self.signalRManager.broadcastMessage(enity: "task", id: taskResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
+                        self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
 
                     } catch {
                         fatalError()
@@ -193,7 +201,7 @@ class TaskCreator {
                     context.delete(taskToBeRemoved)
                     try context.save()
                     completion()
-                    self.removeFromServer(taskId: task.remoteId, coreDataId: coreDataId)
+                    self.removeFromServer(taskId: task.remoteId, ownerWorkspaceId: task.workspaceId, coreDataId: coreDataId)
                 } catch {
                     fatalError()
                 }
@@ -201,7 +209,7 @@ class TaskCreator {
         }
     }
     
-    private func removeFromServer(taskId: Int64, coreDataId: NSManagedObjectID?) {
+    private func removeFromServer(taskId: Int64, ownerWorkspaceId: Int64, coreDataId: NSManagedObjectID?) {
         taskService.deleteTaskById(taskId: "\(taskId)")
             .sink { completion in } receiveValue: { removedId in
                 
@@ -214,8 +222,12 @@ class TaskCreator {
                         context.delete(taskToBeRemoved)
                         do {
                             try context.save()
+                            let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(ownerWorkspaceId)").members?.compactMap { $0.remoteId }
+
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
+                                self.signalRManager.broadcastMessage(enity: "board", id: Int(ownerWorkspaceId), action: "create", members: currentMembers!)
+
                             }
                         } catch {
                             fatalError()

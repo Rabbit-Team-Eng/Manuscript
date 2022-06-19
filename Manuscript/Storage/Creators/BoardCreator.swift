@@ -14,13 +14,15 @@ class BoardCreator {
     private let boardService: BoardService
     private let database: CoreDataStack
     private let signalRManager: SignalRManager
+    private let dataProvider: DataProvider
 
     private var tokens: Set<AnyCancellable> = []
     
-    init(boardService: BoardService, database: CoreDataStack, signalRManager: SignalRManager) {
+    init(boardService: BoardService, database: CoreDataStack, signalRManager: SignalRManager, dataProvider: DataProvider) {
         self.boardService = boardService
         self.signalRManager = signalRManager
         self.database = database
+        self.dataProvider = dataProvider
     }
     
     func createNewBoard(board: BoardBusinessModel, completion: @escaping () -> Void) {
@@ -71,10 +73,11 @@ class BoardCreator {
                         boardToBeUpdated.isInitiallySynced = true
                         do {
                             try context.save()
+                            let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(boardResponse.workspaceId)").members?.compactMap { $0.remoteId }
                             
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
+                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
                             }
                             
                         } catch {
@@ -118,9 +121,11 @@ class BoardCreator {
                         boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
                         do {
                             try context.save()
+                            let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(boardResponse.workspaceId)").members?.compactMap { $0.remoteId }
+
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
+                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
                             }
                         } catch {
                             fatalError()
@@ -151,7 +156,7 @@ class BoardCreator {
                 completion()
                 do {
                     try context.save()
-                    self.removeFromServer(boardId: board.remoteId, coreDataId: coreDataId)
+                    self.removeFromServer(boardId: board.remoteId, ownerWorkspaceId: board.ownerWorkspaceId, coreDataId: coreDataId)
                 } catch {
                     fatalError()
                 }
@@ -159,7 +164,7 @@ class BoardCreator {
         }
     }
     
-    private func removeFromServer(boardId: Int64, coreDataId: NSManagedObjectID?) {
+    private func removeFromServer(boardId: Int64, ownerWorkspaceId: Int64, coreDataId: NSManagedObjectID?) {
         boardService.deleteBoardById(boardId: boardId)
             .sink { completion in } receiveValue: { statusCode in
 
@@ -170,11 +175,13 @@ class BoardCreator {
                     if let coreDataId = coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
                        
                         context.delete(boardToBeRemoved)
+                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(boardId)").members?.compactMap { $0.remoteId }
+
                         do {
                             try context.save()
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: Int(boardId), action: "create", members: ["88b297bf-e308-4170-bc1c-8df74108d7e7"])
+                                self.signalRManager.broadcastMessage(enity: "board", id: Int(boardId), action: "create", members: currentMembers!)
                             }
                         } catch {
                             fatalError()

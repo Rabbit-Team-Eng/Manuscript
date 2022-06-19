@@ -110,8 +110,8 @@ public class WorkspaceService: WorkspaceAPI {
                     var members: [MemberBusinessModel] = []
                     var boards: [BoardBusinessModel] = []
 
-                    workspaceResponse.members?.forEach { memberResponse in
-                        members.append(MemberBusinessModel(remoteId: -999, // TODO: "Int32(memberResponse.id)",
+                    workspaceResponse.members.forEach { memberResponse in
+                        members.append(MemberBusinessModel(remoteId: memberResponse.id,
                                                            firstName: memberResponse.firstName ?? "null",
                                                            lastName: memberResponse.lastName ?? "null",
                                                            avatarUrl: memberResponse.avatarUrl ?? "null",
@@ -134,7 +134,6 @@ public class WorkspaceService: WorkspaceAPI {
                                                            dueDate: taskResponse.doeDate,
                                                            ownerBoardId: Int64(taskResponse.boardId),
                                                            status: taskResponse.status ?? "",
-//                                                           workspaceId: Int64(taskResponse.workspaceId),
                                                            workspaceId: workspaceResponse.id,
                                                            lastModifiedDate: taskResponse.lastModifiedDate,
                                                            isInitiallySynced: true,

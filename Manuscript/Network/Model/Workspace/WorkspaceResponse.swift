@@ -13,7 +13,7 @@ public struct WorkspaceResponse: Codable, Syncable {
     public var title: String
     public var description: String? = nil
     public var boards: [BoardResponse]? = nil
-    public var members: [MemberResponse]? = nil
+    public var members: [MemberResponse]
     public var shareEnabled: Bool
     public var lastModifiedDate: String = ""
 

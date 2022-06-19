@@ -29,7 +29,8 @@ class MainInjector {
     private var taskCreator: TaskCreator? = nil
     private var signalRManager: SignalRManager? = nil
     private var socketIO: SignalRConnectionListener? = nil
-
+    private var memberCoreDataManager: MemberCoreDataManager? = nil
+    
     // Injected from Application Scope
     private let startupUtils: StartupUtils
     private let jsonDecoder: JSONDecoder
@@ -72,7 +73,7 @@ class MainInjector {
         if taskCreator != nil {
             return taskCreator!
         } else {
-            taskCreator = TaskCreator(taskService: provideTaskService(), database: provideCoreDataStack(), signalRManager: provideSignalRManager())
+            taskCreator = TaskCreator(taskService: provideTaskService(), database: provideCoreDataStack(), signalRManager: provideSignalRManager(), dataProvider: provideDataManager())
             return taskCreator!
         }
     }
@@ -81,7 +82,7 @@ class MainInjector {
         if boardCreator != nil {
             return boardCreator!
         } else {
-            boardCreator = BoardCreator(boardService: provideBoardService(), database: provideCoreDataStack(), signalRManager: provideSignalRManager())
+            boardCreator = BoardCreator(boardService: provideBoardService(), database: provideCoreDataStack(), signalRManager: provideSignalRManager(), dataProvider: provideDataManager())
             return boardCreator!
         }
     }
@@ -216,12 +217,21 @@ class MainInjector {
         }
     }
     
+    func provideMemberCoreDataManager() -> MemberCoreDataManager {
+        if memberCoreDataManager != nil {
+            return memberCoreDataManager!
+        } else {
+            memberCoreDataManager = MemberCoreDataManager(coreDataStack: provideCoreDataStack())
+            return memberCoreDataManager!
+        }
+    }
+    
     func provideCloudSync() -> CloudSync {
         if cloudSync != nil {
             return cloudSync!
         } else {
             cloudSync = CloudSync(workspaceService: provideWorkspaceService(),
-                                  boardsService: provideBoardService(),
+                                  boardsService: provideBoardService(), membersCoreDataManager: provideMemberCoreDataManager(),
                                   workspaceSyncronizer: provideWorkspaceSyncronizer(),
                                   dataProvider: provideDataManager(),
                                   boardSyncronizer: provideBoardSyncronizer(),

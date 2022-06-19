@@ -22,7 +22,7 @@
         <attribute name="lastModifiedDate" attributeType="String"/>
         <attribute name="lastName" attributeType="String"/>
         <attribute name="ownerWorkspaceId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="remoteId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="remoteId" attributeType="String"/>
         <relationship name="ownerWorkspace" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkspaceEntity" inverseName="members" inverseEntity="WorkspaceEntity"/>
     </entity>
     <entity name="TaskEntity" representedClassName="TaskEntity" syncable="YES">

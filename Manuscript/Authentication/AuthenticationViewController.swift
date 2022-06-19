@@ -98,7 +98,7 @@ class AuthenticationViewController: UIViewController {
         textField.setLeftPaddingPoints(16)
         textField.backgroundColor = Palette.gray
         textField.textColor = Palette.white
-        textField.text = "Signalr@test.com"
+        textField.text = "mek@test.com"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()

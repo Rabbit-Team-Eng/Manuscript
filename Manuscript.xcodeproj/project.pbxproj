@@ -30,6 +30,17 @@
 		093945A12855DDC400A0F963 /* WorksapceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */; };
 		093945A22855DDC400A0F963 /* WorkspaceSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */; };
 		093945A32855DDC400A0F963 /* BoardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */; };
+		0964FF76285EEA5100BFB3F7 /* MemberCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */; };
+		0964FF77285EF28000BFB3F7 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
+		0964FF7A285F0E0500BFB3F7 /* KaleidoscopeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */; };
+		0964FF7E285F0FCC00BFB3F7 /* CardCellImagePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF7D285F0FCC00BFB3F7 /* CardCellImagePosition.swift */; };
+		0964FF80285F0FD300BFB3F7 /* CardContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF7F285F0FD300BFB3F7 /* CardContentModel.swift */; };
+		0964FF82285F10D500BFB3F7 /* CardCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF81285F10D500BFB3F7 /* CardCellContentView.swift */; };
+		0964FF84285F115200BFB3F7 /* CardCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF83285F115200BFB3F7 /* CardCellContentConfiguration.swift */; };
+		0964FF87285F11CC00BFB3F7 /* KaleidoscopeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF86285F11CC00BFB3F7 /* KaleidoscopeProtocol.swift */; };
+		0964FF89285F130100BFB3F7 /* KaleidoscopeSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF88285F130100BFB3F7 /* KaleidoscopeSectionProvider.swift */; };
+		0964FF8B285F164400BFB3F7 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF8A285F164400BFB3F7 /* CardCell.swift */; };
+		0964FF8D285F16C100BFB3F7 /* KaleidoscopeCellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF8C285F16C100BFB3F7 /* KaleidoscopeCellProvider.swift */; };
 		096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
 		096BEDA2284ABC38001C7136 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E7284A6E070012D83D /* Constants.swift */; };
 		096BEDA4284ADCB9001C7136 /* BoardCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */; };
@@ -369,6 +380,16 @@
 		0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorksapceDetailViewController.swift; sourceTree = "<group>"; };
 		0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceSelectorViewController.swift; sourceTree = "<group>"; };
 		0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardDetailViewController.swift; sourceTree = "<group>"; };
+		0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCoreDataManager.swift; sourceTree = "<group>"; };
+		0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaleidoscopeModel.swift; sourceTree = "<group>"; };
+		0964FF7D285F0FCC00BFB3F7 /* CardCellImagePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCellImagePosition.swift; sourceTree = "<group>"; };
+		0964FF7F285F0FD300BFB3F7 /* CardContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentModel.swift; sourceTree = "<group>"; };
+		0964FF81285F10D500BFB3F7 /* CardCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCellContentView.swift; sourceTree = "<group>"; };
+		0964FF83285F115200BFB3F7 /* CardCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCellContentConfiguration.swift; sourceTree = "<group>"; };
+		0964FF86285F11CC00BFB3F7 /* KaleidoscopeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaleidoscopeProtocol.swift; sourceTree = "<group>"; };
+		0964FF88285F130100BFB3F7 /* KaleidoscopeSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaleidoscopeSectionProvider.swift; sourceTree = "<group>"; };
+		0964FF8A285F164400BFB3F7 /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		0964FF8C285F16C100BFB3F7 /* KaleidoscopeCellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaleidoscopeCellProvider.swift; sourceTree = "<group>"; };
 		096BEDA0284ABBDC001C7136 /* CloudSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSync.swift; sourceTree = "<group>"; };
 		096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCoreDataManager.swift; sourceTree = "<group>"; };
 		096BEDAF284AE0C9001C7136 /* ManuscriptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManuscriptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -674,6 +695,38 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		0964FF78285F0DDC00BFB3F7 /* Kaleidoscope */ = {
+			isa = PBXGroup;
+			children = (
+				0964FF7B285F0E3E00BFB3F7 /* Cells */,
+				0964FF86285F11CC00BFB3F7 /* KaleidoscopeProtocol.swift */,
+				0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */,
+				0964FF88285F130100BFB3F7 /* KaleidoscopeSectionProvider.swift */,
+				0964FF8C285F16C100BFB3F7 /* KaleidoscopeCellProvider.swift */,
+			);
+			path = Kaleidoscope;
+			sourceTree = "<group>";
+		};
+		0964FF7B285F0E3E00BFB3F7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0964FF7C285F0E4D00BFB3F7 /* Card */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		0964FF7C285F0E4D00BFB3F7 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				0964FF7D285F0FCC00BFB3F7 /* CardCellImagePosition.swift */,
+				0964FF7F285F0FD300BFB3F7 /* CardContentModel.swift */,
+				0964FF81285F10D500BFB3F7 /* CardCellContentView.swift */,
+				0964FF83285F115200BFB3F7 /* CardCellContentConfiguration.swift */,
+				0964FF8A285F164400BFB3F7 /* CardCell.swift */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
 		096BEDB0284AE0C9001C7136 /* ManuscriptTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -774,6 +827,7 @@
 				097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */,
 				096BEDA3284ADCB9001C7136 /* BoardCoreDataManager.swift */,
 				099281802857165E00F3EA66 /* TaskCoreDataManager.swift */,
+				0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -785,7 +839,6 @@
 				097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */,
 				097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */,
 				0992817E2857154B00F3EA66 /* TaskSyncronizer.swift */,
-				096BEDA0284ABBDC001C7136 /* CloudSync.swift */,
 			);
 			path = Syncronizer;
 			sourceTree = "<group>";
@@ -909,6 +962,7 @@
 		09D275212825B4B800933F16 /* Manuscript */ = {
 			isa = PBXGroup;
 			children = (
+				0964FF78285F0DDC00BFB3F7 /* Kaleidoscope */,
 				093945982855DDC400A0F963 /* ViewControllers */,
 				0992815E28566F0100F3EA66 /* ViewModels */,
 				0989BAB8284D2F970032053C /* Workspace */,
@@ -1259,6 +1313,7 @@
 				09D276022825CE2300933F16 /* Entitites */,
 				09D276222825CE6000933F16 /* Comparator */,
 				09D2762C2825CE6000933F16 /* BusinessModel */,
+				096BEDA0284ABBDC001C7136 /* CloudSync.swift */,
 				09D276212825CE6000933F16 /* DataProvider.swift */,
 				096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */,
 			);
@@ -1488,6 +1543,7 @@
 			files = (
 				097EDF22282B1EE20060C8FD /* SingleButtonCell.swift in Sources */,
 				09CAAA2D2829D8B200FE0214 /* BoardComparator.swift in Sources */,
+				0964FF77285EF28000BFB3F7 /* CloudSync.swift in Sources */,
 				09CAAA632829D90C00FE0214 /* UpdateTaskRequest.swift in Sources */,
 				097EDF3B282B63F30060C8FD /* BoardSyncronizer.swift in Sources */,
 				097EDF24282B1EFB0060C8FD /* DatabaseEventProtocol.swift in Sources */,
@@ -1607,6 +1663,7 @@
 				09D275D22825CA4500933F16 /* DeleteWorkspaceByIdRequest.swift in Sources */,
 				09D275D02825CA2900933F16 /* DeleteBoardRequest.swift in Sources */,
 				09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */,
+				0964FF76285EEA5100BFB3F7 /* MemberCoreDataManager.swift in Sources */,
 				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
 				092F5216285591210032B2D5 /* TaskDetailCellModel.swift in Sources */,
 				0919BCAB2858020000DB53C2 /* TaskTransformer.swift in Sources */,
@@ -1642,6 +1699,7 @@
 				099A9096284FF63D00B0F4B7 /* IconSelectorCellModel.swift in Sources */,
 				09D275CA2825C9DE00933F16 /* CreateNewBoardRequest.swift in Sources */,
 				099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */,
+				0964FF7A285F0E0500BFB3F7 /* KaleidoscopeModel.swift in Sources */,
 				092F520C28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
 				0992817B28570B3A00F3EA66 /* TaskCellProtocol.swift in Sources */,
@@ -1667,6 +1725,7 @@
 				09D275E72825CC2100933F16 /* Syncable.swift in Sources */,
 				09D275922825B85700933F16 /* GetUserByIdRequest.swift in Sources */,
 				09EDE716284701D8009B23A9 /* DatabaseItem.swift in Sources */,
+				0964FF89285F130100BFB3F7 /* KaleidoscopeSectionProvider.swift in Sources */,
 				09D27650282605E900933F16 /* TaskEntity+CoreDataProperties.swift in Sources */,
 				096EF7E628542ED1003BEC41 /* ManageAccessSectionHeaderView.swift in Sources */,
 				097EDF43282B91C40060C8FD /* FieldButtonCell.swift in Sources */,
@@ -1699,6 +1758,7 @@
 				096BEDA1284ABBDC001C7136 /* CloudSync.swift in Sources */,
 				09D2757C2825B7C700933F16 /* AuthenticationAPI.swift in Sources */,
 				09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */,
+				0964FF80285F0FD300BFB3F7 /* CardContentModel.swift in Sources */,
 				092F5205285586440032B2D5 /* TaskDetailSectionType.swift in Sources */,
 				09D275B22825C81100933F16 /* BoardAPI.swift in Sources */,
 				09D276442825DA5800933F16 /* BoardsViewModel.swift in Sources */,
@@ -1746,13 +1806,19 @@
 				09D27653282605E900933F16 /* MemberEntity+CoreDataClass.swift in Sources */,
 				09D276352825CE6000933F16 /* ComparatorResult.swift in Sources */,
 				09D2763D2825CE6000933F16 /* BoardBusinessModel.swift in Sources */,
+				0964FF8B285F164400BFB3F7 /* CardCell.swift in Sources */,
 				096BEDA4284ADCB9001C7136 /* BoardCoreDataManager.swift in Sources */,
 				09D276372825CE6000933F16 /* WorkspaceComparator.swift in Sources */,
+				0964FF82285F10D500BFB3F7 /* CardCellContentView.swift in Sources */,
 				096EF7D32853EAC8003BEC41 /* GeneralInfoCellConfiguration.swift in Sources */,
+				0964FF7E285F0FCC00BFB3F7 /* CardCellImagePosition.swift in Sources */,
 				09D275742825B78000933F16 /* AuthenticationInjector.swift in Sources */,
+				0964FF87285F11CC00BFB3F7 /* KaleidoscopeProtocol.swift in Sources */,
 				09D275252825B4B800933F16 /* SceneDelegate.swift in Sources */,
 				09D275852825B80100933F16 /* ResetPasswordRequestModel.swift in Sources */,
+				0964FF8D285F16C100BFB3F7 /* KaleidoscopeCellProvider.swift in Sources */,
 				09D275542825B6AB00933F16 /* BoardsCoordinator.swift in Sources */,
+				0964FF84285F115200BFB3F7 /* CardCellContentConfiguration.swift in Sources */,
 				096BEDC3284B27C7001C7136 /* BoardTransformer.swift in Sources */,
 				09D2758E2825B84A00933F16 /* CreateNewUserRequest.swift in Sources */,
 				096EF7E228542CF7003BEC41 /* ManageAccessConfiguration.swift in Sources */,

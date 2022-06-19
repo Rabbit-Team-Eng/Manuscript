@@ -22,9 +22,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
     }()
     
     func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
-            
-            guard let self = self else { fatalError() }
+        let layout = UICollectionViewCompositionalLayout { [unowned self] sectionIndex, layoutEnvironment in
             
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
             
