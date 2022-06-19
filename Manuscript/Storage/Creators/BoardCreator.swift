@@ -175,7 +175,7 @@ class BoardCreator {
                     if let coreDataId = coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
                        
                         context.delete(boardToBeRemoved)
-                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(boardId)").members?.compactMap { $0.remoteId }
+                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(ownerWorkspaceId)").members?.compactMap { $0.remoteId }
 
                         do {
                             try context.save()
