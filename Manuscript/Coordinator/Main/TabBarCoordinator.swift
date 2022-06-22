@@ -80,7 +80,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
-             sheet.detents = [.medium(), .large()]
+             sheet.detents = [.large()]
          }
         mainTabBarController.present(vc, animated: true, completion: nil)
     }
@@ -107,6 +107,23 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
          }
         mainTabBarController.present(navController, animated: true, completion: nil)
 
+    }
+    
+    func presentMembersSelector() {
+        if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskCreateEditViewController {
+            
+            let vc = MembersViewController()
+//            vc.parentCoordinator = self
+            
+            vc.modalPresentationStyle = .pageSheet
+            
+            if let sheet = vc.sheetPresentationController {
+                sheet.detents = [.large()]
+            }
+            taskDetailViewController.present(vc, animated: true, completion: nil)
+            
+        }
+        
     }
     
     func openPrioritySelectionSheet(withSelectedPriority: PrioritySelectorCellModel) {

@@ -8,7 +8,8 @@
 import Foundation
 
 struct CardContentModel: Hashable {
-    let imageSource: String
+    var firstImageSource: String
+    var secondImageSource: String?
     let title: String
     let description: String?
     let imagePosition: CardCellImagePosition

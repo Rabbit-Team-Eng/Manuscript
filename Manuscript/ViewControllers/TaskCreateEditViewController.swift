@@ -594,6 +594,7 @@ extension TaskCreateEditViewController: PrioritySelectionActionsProtocol {
         
         if case .priorityShouldChange(let currentPriority) = action {
             boardViewModel.selectedPriority = currentPriority
+//            coordinator?.presentMembersSelector()
             coordinator?.openPrioritySelectionSheet(withSelectedPriority: currentPriority)
         }
     }

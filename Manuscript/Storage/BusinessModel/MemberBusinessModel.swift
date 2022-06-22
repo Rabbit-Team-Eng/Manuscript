@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-public struct MemberBusinessModel {
+public struct MemberBusinessModel: Hashable {
     public var coreDataId: NSManagedObjectID? = nil
     public var ownerWorkspaceCoreDataId: NSManagedObjectID? = nil
 

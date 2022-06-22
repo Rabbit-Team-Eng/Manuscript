@@ -30,6 +30,7 @@ class MainInjector {
     private var signalRManager: SignalRManager? = nil
     private var socketIO: SignalRConnectionListener? = nil
     private var memberCoreDataManager: MemberCoreDataManager? = nil
+    private var workspaceRepository: WorkspaceRepository? = nil
     
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -40,6 +41,19 @@ class MainInjector {
         self.startupUtils = applicationInjector.provideStartupUtils()
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
+    }
+    
+    func provideWorkspaceRepository() -> WorkspaceRepository {
+        if workspaceRepository != nil {
+            return workspaceRepository!
+        } else {
+            workspaceRepository = WorkspaceRepository(cloudSync: provideCloudSync(),
+                                                      dataProvider: provideDataManager(),
+                                                      boardCreator: provideBoardCreator(),
+                                                      taskCreator: provideTaskCreator(),
+                                                      signalRManager: provideSignalRManager())
+            return workspaceRepository!
+        }
     }
     
     func provideTaskService() -> TaskService {

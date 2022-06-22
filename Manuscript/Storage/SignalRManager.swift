@@ -31,11 +31,34 @@ class SignalRConnectionListener: HubConnectionDelegate {
     
 }
 
+enum SignalREvent {
+    case board
+    case workspace
+    case task
+}
+
+enum SignalRCompletionEvent {
+    case success
+    case error(description: String)
+}
+
+enum SignalRMethod {
+    case workspaceEntitiesDidChange
+    
+    func value() -> String {
+        switch self {
+        case .workspaceEntitiesDidChange:
+            return "WorkspaceEntitiesDidChange"
+        }
+    }
+}
+
 class SignalRManager {
     
     private var connection: HubConnection
     private var cloud: CloudSync
     private var startupUtils: StartupUtils
+    var workspaceEntitiesDidChangePublisher: PassthroughSubject<SignalREvent, Never> = PassthroughSubject()
 
     init(delegate: HubConnectionDelegate, startupUtils: StartupUtils, cloud: CloudSync) {
         self.cloud = cloud
@@ -61,9 +84,29 @@ class SignalRManager {
         connection.stop()
     }
     
+    func startListenningToHub(method: SignalRMethod) {
+        
+        if case .workspaceEntitiesDidChange = method {
+            connection.on(method: SignalRMethod.workspaceEntitiesDidChange.value()) { [weak self] (enity: String, id: Int, action: String) in guard let self = self else { return }
+                self.workspaceEntitiesDidChangePublisher.send(.board)
+            }
+        }
+    }
+    
     func startListener() {
         connection.on(method: "WorkspaceEntitiesDidChange") { [weak self] (enity: String, id: Int, action: String) in guard let self = self else { return }
+            print("AVERAKEDABRA: \(DateTimeUtils.getStringDateAndHourFromDate(date: Date())) | WorkspaceEntitiesDidChange Listener Fired")
             self.cloud.syncronize()
+        }
+    }
+    
+    func notifyMembers(signalREvent: SignalREvent, toMembers: [MemberBusinessModel], completion: @escaping (SignalRCompletionEvent) -> Void) {
+        connection.invoke(method: "WorkspaceEntitiesDidChange", "", 0, "", toMembers.map { $0.remoteId }) { error in
+            if let error = error {
+                completion(.error(description: error.localizedDescription))
+            } else {
+                completion(.success)
+            }
         }
     }
     

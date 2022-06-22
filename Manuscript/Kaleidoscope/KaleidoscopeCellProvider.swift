@@ -9,11 +9,20 @@ import UIKit
 
 struct KaleidoscopeCellProvider {
     
-    func provideCardCell(delegate: KaleidoscopeProtocol) -> UICollectionView.CellRegistration<CardCell, KaleidoscopeModel> {
-        return .init { cell, indexPath, itemIdentifier in
+    static func provideCardCell(delegate: KaleidoscopeProtocol) -> UICollectionView.CellRegistration<CardCell, KaleidoscopeModel> {
+        let cell = UICollectionView.CellRegistration<CardCell, KaleidoscopeModel> { cell, indexPath, itemIdentifier in
             cell.model = itemIdentifier.cardContentModel
             cell.delegate = delegate
         }
+        return cell
+    }
+    
+    static func provideInputCell(delegate: KaleidoscopeProtocol) -> UICollectionView.CellRegistration<InputCardCell, KaleidoscopeModel> {
+        let cell = UICollectionView.CellRegistration<InputCardCell, KaleidoscopeModel> { cell, indexPath, itemIdentifier in
+            cell.model = itemIdentifier.inputCardContentModel
+            cell.delegate = delegate
+        }
+        return cell
     }
 }
 

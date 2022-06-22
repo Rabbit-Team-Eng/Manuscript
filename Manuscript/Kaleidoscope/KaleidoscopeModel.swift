@@ -9,11 +9,22 @@ import Foundation
 
 struct KaleidoscopeModel: Hashable {
     let id: String
-    let cardContentModel: CardContentModel?
-    
-    init(id: String, cardContentModel: CardContentModel) {
+    var section: KaleidoscopeSection
+    var cardContentModel: CardContentModel?
+    var inputCardContentModel: InputCardCellModel?
+
+    init(id: String, section: KaleidoscopeSection, cardContentModel: CardContentModel) {
         self.id = id
+        self.section = section
         self.cardContentModel = cardContentModel
+        self.inputCardContentModel = nil
+    }
+    
+    init(id: String, section: KaleidoscopeSection, inputCardContentModel: InputCardCellModel) {
+        self.id = id
+        self.section = section
+        self.cardContentModel = nil
+        self.inputCardContentModel = inputCardContentModel
     }
 }
 

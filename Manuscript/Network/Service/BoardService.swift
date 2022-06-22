@@ -156,7 +156,6 @@ public class BoardService: BoardAPI {
                 
                 return httpResponse.statusCode
             }
-//            .decode(type: BoardResponse.self, decoder: jsonDecoder)
             .mapError({ error in
                 return BoardError.unableToDecodeResponse(errorMessage: "Decoding error")
             })

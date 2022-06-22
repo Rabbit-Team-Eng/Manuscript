@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum KaleidoscopeProtocolAction {
+    case checkBoxDidClicked(item: CardContentModel)
+}
+
 protocol KaleidoscopeProtocol: NSObject {
-    
+    func actionDidHappen(action: KaleidoscopeProtocolAction)
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardCell: UICollectionViewCell {
+class CardCell: UICollectionViewListCell {
     
     var model: CardContentModel?
     weak var delegate: KaleidoscopeProtocol?

@@ -14,7 +14,7 @@ public struct DateTimeUtils {
         static let DISPLAY_DATE: String = "MMM d, yyyy"
         static let DISPLAY_HOUR: String = "hh:mm a"
         static let DISPLAY_DATE_HOUR: String = "MMM d, yyyy | hh:mm a"
-
+        static let DISPLAY_DATE_HOUR_SECONDS: String = "MMM d, yyyy | hh:mm:ss a"
     }
     
     public static func convertServerStringToDate(stringDate: String) -> Date {
@@ -46,6 +46,12 @@ public struct DateTimeUtils {
     public static func getStringDateAndHourFromDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Constants.DISPLAY_DATE_HOUR
+        return dateFormatter.string(from: date)
+    }
+    
+    public static func getStringDateHourSecondsFromDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.DISPLAY_DATE_HOUR_SECONDS
         return dateFormatter.string(from: date)
     }
 }

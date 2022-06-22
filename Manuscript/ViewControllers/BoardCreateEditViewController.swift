@@ -152,12 +152,12 @@ class BoardCreateEditViewController: UIViewController {
     
     private func createIconsSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/5),
-                                              heightDimension: .fractionalHeight(1))
+                                              heightDimension: .fractionalWidth(1/5))
         
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 6, bottom: 6, trailing: 6)
 
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/5))
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
@@ -262,6 +262,8 @@ class BoardCreateEditViewController: UIViewController {
     
     private func getConstraintsForState(state: BoardSheetState) -> [NSLayoutConstraint] {
         
+        UIDevice.current.userInterfaceIdiom
+        
         switch state {
         case .creation:
             
@@ -294,8 +296,9 @@ class BoardCreateEditViewController: UIViewController {
                 myColectionView.topAnchor.constraint(equalTo: iconTextLabel.bottomAnchor, constant: 16),
                 myColectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
                 myColectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-                myColectionView.bottomAnchor.constraint(equalTo: createNewBoardeButton.topAnchor, constant: -32),
-                
+                myColectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
+
+                createNewBoardeButton.topAnchor.constraint(equalTo: myColectionView.bottomAnchor, constant: 32),
                 createNewBoardeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32),
                 createNewBoardeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
                 createNewBoardeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
