@@ -97,7 +97,7 @@ class TaskCreator {
 
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
-                            self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
+//                            self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
 
                         }
                     } catch {
@@ -175,7 +175,7 @@ class TaskCreator {
                         let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(taskResponse.workspaceId)").members?.compactMap { $0.remoteId }
 
                         self.notify()
-                        self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
+//                        self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
 
                     } catch {
                         fatalError()
@@ -226,7 +226,7 @@ class TaskCreator {
 
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: Int(ownerWorkspaceId), action: "create", members: currentMembers!)
+//                                self.signalRManager.broadcastMessage(enity: "board", id: Int(ownerWorkspaceId), action: "create", members: currentMembers!)
 
                             }
                         } catch {

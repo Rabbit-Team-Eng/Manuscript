@@ -139,7 +139,7 @@ class BoardCreator {
                             
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
+//                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
                             }
                             
                         } catch {
@@ -233,7 +233,7 @@ class BoardCreator {
 
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
+//                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
                             }
                         } catch {
                             fatalError()
@@ -289,7 +289,7 @@ class BoardCreator {
                             try context.save()
                             DispatchQueue.main.async {
                                 NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
-                                self.signalRManager.broadcastMessage(enity: "board", id: Int(boardId), action: "create", members: currentMembers!)
+//                                self.signalRManager.broadcastMessage(enity: "board", id: Int(boardId), action: "create", members: currentMembers!)
                             }
                         } catch {
                             fatalError()

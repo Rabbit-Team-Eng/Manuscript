@@ -43,13 +43,13 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
 
     func navigateToBoardsScreen() {
-        let vc = BoardsViewController(boardsViewModel: mainComponent.provideBoardsViewModel(), startUpUtils: mainComponent.provideStartUpUtils(), databaseManager: mainComponent.provideDatabaseManager(), dataProvider: mainComponent.provideDataManager())
+        let vc = BoardsViewController(viewModel: mainComponent.provideMainViewModel())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func presentCreateBoardScreen(state: BoardSheetState, selectedBoard: BoardBusinessModel?) {
-        parentCoordinator?.presentCreateBoardScreen(state: state, selectedBoard: selectedBoard)
+    func presentCreateBoardScreen(state: BoardSheetState, selectedBoardId: Int64?) {
+        parentCoordinator?.presentCreateBoardScreen(state: state, selectedBoardId: selectedBoardId)
 
     }
     
@@ -63,6 +63,10 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigateBack()
     }
     
+    func dismissWorspaceSelectorScreen() {
+        parentCoordinator?.dismissWorspaceSelectorScreen()
+    }
+    
     func dismissBoardCreationScreen() {
         parentCoordinator?.dismissBoardCreationScreen()
     }
@@ -72,7 +76,7 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
     }
     
     func navigateToWorksapceDetail(worksapceDetailState: WorksapceDetailState) {
-        let vc = WorksapceDetailViewController(workspacesViewModel: mainComponent.provideWorkspacesViewModel(), worksapceDetailState: worksapceDetailState)
+        let vc = WorksapceDetailViewController(mainViewModel: mainComponent.provideMainViewModel(), worksapceDetailState: worksapceDetailState)
         vc.hidesBottomBarWhenPushed = true
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)

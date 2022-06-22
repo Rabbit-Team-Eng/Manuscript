@@ -1,45 +1,21 @@
 //
-//  BoardsViewController.swift
+//  AllBoardsViewController.swift
 //  Manuscript
 //
-//  Created by Tigran Ghazinyan on 5/6/22.
+//  Created by Tigran Ghazinyan on 6/22/22.
 //
 
 import UIKit
 import Combine
 import Lottie
 
-struct BoardCellModel: Hashable {
-    let remoteId: String
-    let boardTitle: String
-    let numberOfTasks: Int
-    let imageIcon: String
-    let isSynced: Bool
-    
-    init(remoteId: String, boardTitle: String, numberOfTasks: Int, imageIcon: String, isSynced: Bool) {
-        self.remoteId = remoteId
-        self.boardTitle = boardTitle
-        self.numberOfTasks = numberOfTasks
-        self.imageIcon = imageIcon
-        self.isSynced = isSynced
-    }
-}
-
-
 class BoardsViewController: UIViewController, UICollectionViewDelegate {
-
-    weak var coordinator: BoardsCoordinator? = nil
     
-    enum BoardViewControllerSection {
-        case main
-    }
+    weak var coordinator: BoardsCoordinator? = nil
     
     typealias DataSource = UICollectionViewDiffableDataSource<BoardViewControllerSection, BoardCellModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<BoardViewControllerSection, BoardCellModel>
     
-    private let dataProvider: DataProvider
-    
-    // TODO: Check how to avoid lazy
     private lazy var myColectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: UIScreen.main.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.backgroundColor = Palette.lightBlack
@@ -84,25 +60,26 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    
-    private let boardsViewModel: BoardsViewModel
-    private let startUpUtils: StartupUtils
-    private let databaseManager: DatabaseManager
+
     private var tokens: Set<AnyCancellable> = []
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    
+    private let viewModel: MainViewModel
+    
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = Palette.lightBlack
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(signOut(_:)))
-        
+                
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
             UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),
@@ -112,37 +89,35 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         createBoardButton.addTarget(self, action: #selector(createBoardButtonDidTap(_:)), for: .touchUpInside)
         myColectionView.delegate = self
         
-        boardsViewModel.events
+        viewModel.selectedWorkspacePublisher
             .receive(on: RunLoop.main)
-            .sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
-                
-                if case .titleDidFetch(let title) = event {
-                    self.navigationItem.title = title
-                }
-                
-                if case .currentBoardDidRemoved = event {
-                    self.coordinator?.dismissAllPresentedControllers()
-                }
-                
-                if case .noBoardIsCreated = event {
-                    self.determineBoardPlaceholder(hasBoards: false)
-                }
-                
-                if case .boardsDidFetch(let boards) = event {
-                    self.determineBoardPlaceholder(hasBoards: true, boards: boards)
-                    self.refreshController.endRefreshing()
-                }
+            .sink { [weak self] workspaceBusinessModel in guard let self = self else { return }
+            
+                self.navigationItem.title = workspaceBusinessModel.title
+                self.determineBoardPlaceholder(boards: workspaceBusinessModel.boards ?? [])
+        }
+        .store(in: &tokens)
+        
+        viewModel.event
+            .receive(on: RunLoop.main)
+            .sink { [weak self] event in guard let self = self else { return }
                 
                 if case .newBoardDidCreated = event {
                     self.coordinator?.dismissBoardCreationScreen()
                 }
+                
+                if case .newWorkspaceDidSelected = event {
+                    self.viewModel.fetchLocalDatabase()
+                    self.coordinator?.dismissWorspaceSelectorScreen()
+                }
+            
         }
-        .store(in: &tokens)
-
+            .store(in: &tokens)
+        
+        viewModel.fetchLocalDatabase()
     }
     
     @objc private func refreshControllerDidCalled(_ sender: UIBarButtonItem) {
-        boardsViewModel.syncTheCloud()
     }
     
     @objc private func openWorkspaceSelector(_ sender: UIBarButtonItem) {
@@ -150,7 +125,11 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func createNewBoard(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoard: nil)
+        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoardId: nil)
+    }
+    
+    @objc private func createBoardButtonDidTap(_ sender: UIButton) {
+        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoardId: nil)
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -196,9 +175,15 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
             cell.configure(cellModel: itemIdentifier)
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedItemId = dataSource.itemIdentifier(for: indexPath)?.remoteId
+//        coordinator?.presentCreateBoardScreen(state: .edit, selectedBoard: <#T##BoardBusinessModel?#>)
+    }
 
-    private func determineBoardPlaceholder(hasBoards: Bool, boards: [BoardBusinessModel]? = nil) {
-        if hasBoards {
+    private func determineBoardPlaceholder(boards: [BoardBusinessModel]) {
+        
+        if boards.count > 0 {
             if titleTexLabel.isDescendant(of: view) {
                 titleTexLabel.removeFromSuperview()
             }
@@ -209,7 +194,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                 createBoardButton.removeFromSuperview()
             }
             view.addSubview(myColectionView)
-            applySnapshot(items: BoardTransformer.transformBoardsToCellModel(boards: boards!), animatingDifferences: true)
+            applySnapshot(items: BoardTransformer.transformBoardsToCellModel(boards: boards), animatingDifferences: true)
         } else {
             myColectionView.removeFromSuperview()
             view.addSubview(titleTexLabel)
@@ -238,52 +223,26 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        boardsViewModel.fetchCurrentWorkspace()
-        if lottieAnimationView.isDescendant(of: view) {
-            lottieAnimationView.play()
-        }
-    }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
+}
 
-    }
-    
-    @objc private func createBoardButtonDidTap(_ sender: UIButton) {
-        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoard: nil)
-    }
-    
-    @objc private func signOut(_ sender: UIBarButtonItem) {
-        UserDefaults.selectedWorkspaceId = ""
-        startUpUtils.deleteAcessToken()
-        databaseManager.clearDatabase()
-        coordinator?.signeOut()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.remoteId else { return }
-        let currentWorksapce = dataProvider.fetchWorkspace(thread: .main, id: UserDefaults.selectedWorkspaceId)
-        let currentBoard = dataProvider.fetchCurrentBoardWithRemoteId(id: selectedBoardId)
-        coordinator?.navigateToBoardDetail(selectedBoard: currentBoard, selectedWorkspace: currentWorksapce)
-    }
+enum BoardViewControllerSection {
+    case main
+}
 
-    init(boardsViewModel: BoardsViewModel, startUpUtils: StartupUtils, databaseManager: DatabaseManager, dataProvider: DataProvider) {
-        self.boardsViewModel = boardsViewModel
-        self.dataProvider = dataProvider
-        self.startUpUtils = startUpUtils
-        self.databaseManager = databaseManager
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError()
-    }
+struct BoardCellModel: Hashable {
+    let remoteId: String
+    let boardTitle: String
+    let numberOfTasks: Int
+    let imageIcon: String
+    let isSynced: Bool
     
-    deinit {
-        print("DEALLOC -> BoardsViewController")
+    init(remoteId: String, boardTitle: String, numberOfTasks: Int, imageIcon: String, isSynced: Bool) {
+        self.remoteId = remoteId
+        self.boardTitle = boardTitle
+        self.numberOfTasks = numberOfTasks
+        self.imageIcon = imageIcon
+        self.isSynced = isSynced
     }
 }
 

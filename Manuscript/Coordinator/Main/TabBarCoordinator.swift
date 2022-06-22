@@ -28,14 +28,9 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         super.init()
         mainTabBarController.delegate = self
         
-        let cloud = mainInjector.provideCloudSync()
-        cloud.syncronize()
-        
         let signalRManager = mainInjector.provideSignalRManager()
         signalRManager.startConnection()
-        signalRManager.startListener()
-        
-
+        signalRManager.startListenningToHub(method: .workspaceEntitiesDidChange)
     }
 
     func start(with flow: Flowable) {
@@ -75,8 +70,8 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         tasksCoordinator.start(with: TasksFlow.tasks)
     }
     
-    func presentCreateBoardScreen(state: BoardSheetState, selectedBoard: BoardBusinessModel?) {
-        let vc = BoardCreateEditViewController(boardSheetState: state, selectedBoard: selectedBoard, boardsViewModel: mainInjector.provideBoardsViewModel())
+    func presentCreateBoardScreen(state: BoardSheetState, selectedBoardId: Int64?) {
+        let vc = BoardCreateEditViewController(boardSheetState: state, selectedBoardId: selectedBoardId, mainViewModel: mainInjector.provideMainViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -96,7 +91,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func presentWorspaceSelectorScreen() {
-        let vc = WorkspaceSelectorViewController(workspacesViewModel: mainInjector.provideWorkspacesViewModel())
+        let vc = WorkspaceSelectorViewController(mainViewModel: mainInjector.provideMainViewModel())
         vc.parentCoordinator = self
                                                  
         let navController = UINavigationController(rootViewController: vc)

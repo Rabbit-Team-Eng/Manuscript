@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum BoardSheetState {
     case creation
@@ -20,7 +21,6 @@ class BoardCreateEditViewController: UIViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, IconSelectorCellModel>
 
     private lazy var dataSource = createDataSource()
-    private let boardsViewModel: BoardsViewModel
     
     private let closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -126,11 +126,12 @@ class BoardCreateEditViewController: UIViewController {
             titleTexLabel.text = "Create new board"
             createNewBoardeButton.configuration?.title = "Create New Board"
             createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
+            applySnapshot(items: IconProvider.icons(selectedIcon: nil))
         }
         
         if boardSheetState == .edit {
             titleTexLabel.text = "Edit Board"
-            enterNameTextField.text = selectedBoard?.title ?? ""
+//            enterNameTextField.text = selectedBoard?.title ?? ""
             createNewBoardeButton.configuration?.title = "Save the changes"
             createNewBoardeButton.addTarget(self, action: #selector(editCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
             deleteButton.addTarget(self, action: #selector(deletCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
@@ -139,7 +140,6 @@ class BoardCreateEditViewController: UIViewController {
         
         closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
-        applySnapshot(items: IconProvider.icons(selectedIcon: selectedBoard?.assetUrl))
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -193,18 +193,18 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     @objc private func deletCurrentBoardButtonDidTap(_ sender: UIButton) {
-        if let selectedBoard = selectedBoard {
-            let toBeRemovedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
-                                                      coreDataId: selectedBoard.coreDataId,
-                                                      title: selectedBoard.title,
-                                                      detailDescription: selectedBoard.detailDescription,
-                                                      assetUrl: selectedBoard.assetUrl,
-                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
-                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
-                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
+        if let selectedBoard = selectedBoardId {
+//            let toBeRemovedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
+//                                                      coreDataId: selectedBoard.coreDataId,
+//                                                      title: selectedBoard.title,
+//                                                      detailDescription: selectedBoard.detailDescription,
+//                                                      assetUrl: selectedBoard.assetUrl,
+//                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
+//                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+//                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
+//                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
             
-            boardsViewModel.deleteBoard(board: toBeRemovedBoard)
+//            boardsViewModel.deleteBoard(board: toBeRemovedBoard)
         }
     }
     
@@ -212,8 +212,7 @@ class BoardCreateEditViewController: UIViewController {
         guard let title = enterNameTextField.text,
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
-        
-        boardsViewModel.createNewBoard(title: title, icon: icon, ownerWorkspaceId: Int64(UserDefaults.selectedWorkspaceId)!)
+        mainViewModel.createBoard(title: title, asset: icon)
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIButton) {
@@ -221,18 +220,18 @@ class BoardCreateEditViewController: UIViewController {
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
         
-        if let selectedBoard = selectedBoard {
-            let toBeUpdatedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
-                                                      coreDataId: selectedBoard.coreDataId,
-                                                      title: title,
-                                                      detailDescription: "",
-                                                      assetUrl: icon,
-                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
-                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
-                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
+        if let selectedBoard = selectedBoardId {
+//            let toBeUpdatedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
+//                                                      coreDataId: selectedBoard.coreDataId,
+//                                                      title: title,
+//                                                      detailDescription: "",
+//                                                      assetUrl: icon,
+//                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
+//                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+//                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
+//                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
             
-            boardsViewModel.editBoard(board: toBeUpdatedBoard)
+//            boardsViewModel.editBoard(board: toBeUpdatedBoard)
         }
     }
 
@@ -243,12 +242,13 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     private let boardSheetState: BoardSheetState
-    private let selectedBoard: BoardBusinessModel?
+    private let selectedBoardId: Int64?
+    private let mainViewModel: MainViewModel
 
-    init(boardSheetState: BoardSheetState, selectedBoard: BoardBusinessModel?, boardsViewModel: BoardsViewModel) {
-        self.selectedBoard = selectedBoard
+    init(boardSheetState: BoardSheetState, selectedBoardId: Int64?, mainViewModel: MainViewModel) {
+        self.selectedBoardId = selectedBoardId
         self.boardSheetState = boardSheetState
-        self.boardsViewModel = boardsViewModel
+        self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -261,9 +261,7 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     private func getConstraintsForState(state: BoardSheetState) -> [NSLayoutConstraint] {
-        
-        UIDevice.current.userInterfaceIdiom
-        
+                
         switch state {
         case .creation:
             

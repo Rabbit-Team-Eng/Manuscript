@@ -15,7 +15,6 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
 
     private lazy var dataSource = createDataSource()
     private var tokens: Set<AnyCancellable> = []
-    private var currentWorksapces: [WorkspaceBusinessModel] = []
 
     weak var parentCoordinator: TabBarCoordinator? = nil
 
@@ -54,10 +53,10 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         return button
     }()
     
-    private let workspacesViewModel: WorkspacesViewModel
+    private let mainViewModel: MainViewModel
 
-    init(workspacesViewModel: WorkspacesViewModel) {
-        self.workspacesViewModel = workspacesViewModel
+    init(mainViewModel: MainViewModel) {
+        self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -81,21 +80,18 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         createNewWorkspaceButton.addTarget(self, action: #selector(createNewWorkspaceButtonDidTap(_:)), for: .touchUpInside)
         switchWorkspaceButton.addTarget(self, action: #selector(workspaceDidSwitched(_:)), for: .touchUpInside)
         
-        workspacesViewModel.events.sink { [weak self] workspaceEvent in guard let self = self else { return }
-            
-            switch workspaceEvent {
-            case .workspacesDidFetch(let workspaces):
-                self.currentWorksapces = workspaces
+
+        mainViewModel.workspacesPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] workspaces in guard let self = self else { return }
+                
                 self.applySnapshot(items: WorkspaceTransformer.transformWorkspacesToSelectorCellModel(workspaces: workspaces), withAnimation: true)
-            }
         }
         .store(in: &tokens)
+        
+        mainViewModel.fetchLocalDatabase()
 
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        workspacesViewModel.fetchWorkspaces()
+
     }
     
     override func viewWillLayoutSubviews() {
@@ -153,8 +149,8 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
     }
     
     func workspaceDetailFlowDidSelected(model: WorkspaceSelectorCellModel) {
-        guard let selectedWorkspace = currentWorksapces.first(where: {  "\($0.remoteId)" == model.id }) else { return }
-        parentCoordinator?.navigateToWorkspaceDetail(worksapceDetailState: .view(workspace: selectedWorkspace))
+//        guard let selectedWorkspace = currentWorksapces.first(where: {  "\($0.remoteId)" == model.id }) else { return }
+//        parentCoordinator?.navigateToWorkspaceDetail(worksapceDetailState: .view(workspace: selectedWorkspace))
     }
     
     @objc private func createNewWorkspaceButtonDidTap(_ sender: UIButton) {
@@ -165,9 +161,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         guard let getSelectedItemIndex = myColectionView.indexPathsForSelectedItems?.first?.item else { return }
         let item = dataSource.snapshot().itemIdentifiers[getSelectedItemIndex]
         UserDefaults.selectedWorkspaceId = item.id
-        print("workspaceDidSwitched: \(item.id) | \(item.title)")
-        parentCoordinator?.dismissWorspaceSelectorScreen()
-        NotificationCenter.default.post(name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
+        mainViewModel.selectNewWorkspace(id: item.id)
     }
 
 }

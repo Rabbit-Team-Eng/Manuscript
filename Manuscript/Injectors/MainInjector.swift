@@ -15,7 +15,6 @@ class MainInjector {
     private var taskService: TaskService? = nil
     private var dataManager: DataProvider? = nil
     private var boardsViewModel: BoardsViewModel? = nil
-    private var workspacesViewModel: WorkspacesViewModel? = nil
     private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
     private var taskSyncronizer: TaskSyncronizer? = nil
@@ -31,6 +30,7 @@ class MainInjector {
     private var socketIO: SignalRConnectionListener? = nil
     private var memberCoreDataManager: MemberCoreDataManager? = nil
     private var workspaceRepository: WorkspaceRepository? = nil
+    private var mainViewModel: MainViewModel? = nil
     
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -41,6 +41,15 @@ class MainInjector {
         self.startupUtils = applicationInjector.provideStartupUtils()
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
+    }
+    
+    func provideMainViewModel() -> MainViewModel {
+        if mainViewModel != nil {
+            return mainViewModel!
+        } else {
+            mainViewModel = MainViewModel(repository: provideWorkspaceRepository())
+            return mainViewModel!
+        }
     }
     
     func provideWorkspaceRepository() -> WorkspaceRepository {
@@ -78,7 +87,7 @@ class MainInjector {
         if signalRManager != nil {
             return signalRManager!
         } else {
-            signalRManager = SignalRManager(delegate: provideSocketIO(), startupUtils: provideStartUpUtils(), cloud: provideCloudSync())
+            signalRManager = SignalRManager(delegate: provideSocketIO(), startupUtils: provideStartUpUtils())
             return signalRManager!
         }
     }
@@ -171,15 +180,6 @@ class MainInjector {
         } else {
             workspaceCoreDatabaseManager = WorkspaceCoreDataManager(coreDataStack: provideCoreDataStack())
             return workspaceCoreDatabaseManager!
-        }
-    }
-    
-    func provideWorkspacesViewModel() -> WorkspacesViewModel {
-        if workspacesViewModel != nil {
-            return workspacesViewModel!
-        } else {
-            workspacesViewModel = WorkspacesViewModel(dataProvider: provideDataManager())
-            return workspacesViewModel!
         }
     }
     

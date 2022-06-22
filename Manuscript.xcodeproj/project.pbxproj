@@ -123,9 +123,10 @@
 		099A909A284FF66900B0F4B7 /* IconSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */; };
 		099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */; };
 		099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909E28500F0800B0F4B7 /* BoardCreator.swift */; };
-		099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09A37CA22862A0E2001F8B41 /* WorkspaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA12862A0E2001F8B41 /* WorkspaceRepository.swift */; };
+		09A37CA428636AFD001F8B41 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA328636AFD001F8B41 /* MainViewModel.swift */; };
+		09A37CA62863827C001F8B41 /* BoardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA52863827C001F8B41 /* BoardsViewController.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
 		09CAAA0C2829D80200FE0214 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */; };
 		09CAAA0E2829D80200FE0214 /* IntegrationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0D2829D80200FE0214 /* IntegrationsViewController.swift */; };
@@ -221,7 +222,6 @@
 		09D2753D2825B5DF00933F16 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2753C2825B5DF00933F16 /* AuthenticationViewController.swift */; };
 		09D2753F2825B5E500933F16 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2753E2825B5E500933F16 /* AuthenticationViewModel.swift */; };
 		09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275402825B5ED00933F16 /* ForgotPasswordViewController.swift */; };
-		09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275452825B62D00933F16 /* BoardsViewController.swift */; };
 		09D2754A2825B65700933F16 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275492825B65700933F16 /* ApplicationCoordinator.swift */; };
 		09D2754C2825B65D00933F16 /* ApplicationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2754B2825B65D00933F16 /* ApplicationFlow.swift */; };
 		09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2754E2825B68400933F16 /* AuthenticationCoordinator.swift */; };
@@ -470,9 +470,10 @@
 		099A9099284FF66900B0F4B7 /* IconSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorCell.swift; sourceTree = "<group>"; };
 		099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorContentConfiguration.swift; sourceTree = "<group>"; };
 		099A909E28500F0800B0F4B7 /* BoardCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreator.swift; sourceTree = "<group>"; };
-		099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacesViewModel.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09A37CA12862A0E2001F8B41 /* WorkspaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRepository.swift; sourceTree = "<group>"; };
+		09A37CA328636AFD001F8B41 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		09A37CA52863827C001F8B41 /* BoardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewController.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09CAAA092829D80200FE0214 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -492,7 +493,6 @@
 		09D2753C2825B5DF00933F16 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		09D2753E2825B5E500933F16 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		09D275402825B5ED00933F16 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
-		09D275452825B62D00933F16 /* BoardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewController.swift; sourceTree = "<group>"; };
 		09D275492825B65700933F16 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		09D2754B2825B65D00933F16 /* ApplicationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationFlow.swift; sourceTree = "<group>"; };
 		09D2754E2825B68400933F16 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
@@ -696,13 +696,13 @@
 			isa = PBXGroup;
 			children = (
 				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
-				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
-				09D275452825B62D00933F16 /* BoardsViewController.swift */,
 				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
-				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
 				0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */,
+				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
+				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
+				09A37CA52863827C001F8B41 /* BoardsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -890,8 +890,8 @@
 		0992815E28566F0100F3EA66 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				099B1591284E9DD200DF7D45 /* WorkspacesViewModel.swift */,
 				09D276432825DA5800933F16 /* BoardsViewModel.swift */,
+				09A37CA328636AFD001F8B41 /* MainViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1715,7 +1715,6 @@
 				09D2756D2825B74000933F16 /* FlowStarter.swift in Sources */,
 				09D276342825CE6000933F16 /* ComparatorProtocol.swift in Sources */,
 				092F521028558E640032B2D5 /* TaskGeneralInfoSectionHeaderView.swift in Sources */,
-				099B1592284E9DD200DF7D45 /* WorkspacesViewModel.swift in Sources */,
 				099281812857165E00F3EA66 /* TaskCoreDataManager.swift in Sources */,
 				093945A22855DDC400A0F963 /* WorkspaceSelectorViewController.swift in Sources */,
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
@@ -1740,6 +1739,7 @@
 				09D2759B2825B8A900933F16 /* ManuscriptEnvironment.swift in Sources */,
 				09D276332825CE6000933F16 /* DataProvider.swift in Sources */,
 				096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */,
+				09A37CA62863827C001F8B41 /* BoardsViewController.swift in Sources */,
 				096EF7CC2853EA1E003BEC41 /* GeneralInfoCellModel.swift in Sources */,
 				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */,
@@ -1860,10 +1860,10 @@
 				09D2763E2825CE6000933F16 /* MemberBusinessModel.swift in Sources */,
 				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
 				09EDE718284701E8009B23A9 /* DatabaseAction.swift in Sources */,
+				09A37CA428636AFD001F8B41 /* MainViewModel.swift in Sources */,
 				092F51FC285583FC0032B2D5 /* BoardSelectorCellModel.swift in Sources */,
 				096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */,
 				09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */,
-				09D275462825B62D00933F16 /* BoardsViewController.swift in Sources */,
 				09D275892825B80C00933F16 /* UserResponse.swift in Sources */,
 				09EDE719284702B2009B23A9 /* UIColor+Extension.swift in Sources */,
 				09D275632825B71100933F16 /* TasksCoordinator.swift in Sources */,

@@ -28,7 +28,6 @@ class WorkspaceRepository {
         self.taskCreator = taskCreator
         self.signalRManager = signalRManager
         self.refreshDatabase()
-        self.startSocketConnection(method: .workspaceEntitiesDidChange)
         self.initializeSocketListeners()
     }
     
@@ -39,10 +38,6 @@ class WorkspaceRepository {
         .store(in: &tokens)
     }
     
-    private func startSocketConnection(method: SignalRMethod) {
-        signalRManager.startListenningToHub(method: method)
-    }
-    
     func refreshDatabase() {
         cloudSync.syncronize() { [weak self] in guard let self = self else { return }
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
@@ -50,11 +45,12 @@ class WorkspaceRepository {
         }
     }
     
-    func createBoard(board: BoardBusinessModel) {
+    func createBoard(board: BoardBusinessModel, localCompletion: @escaping () -> Void) {
         boardCreator.createBoard(board: board) { [weak self] in guard let self = self else { return }
             
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
             self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            localCompletion()
             
         } serverCompletion: { [weak self] in guard let self = self else { return }
             
@@ -91,12 +87,23 @@ class WorkspaceRepository {
                     if case .success = signalRCompletionEvent { print("SignalR: \(board.title) board did successfully broadcasted!") }
                     self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
                 }
-                
             }
         }
     }
     
+    func fetchLocalDatabase() {
+        let allWorkspacesInitiallyBeforeSync = self.dataProvider.fetchWorkspaces(thread: .background)
+        notifyDataSetChanged(workspaces: allWorkspacesInitiallyBeforeSync)
+    }
+    
     private func notifyDataSetChanged(workspaces: [WorkspaceBusinessModel]) {
+        
+        if UserDefaults.selectedWorkspaceId == "" {
+            if let firstWorkspaceRemoteId = workspaces.first?.remoteId {
+                UserDefaults.selectedWorkspaceId = "\(firstWorkspaceRemoteId)"
+            }
+        }
+        
         if let selectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }) {
             self.worskpacesPublisher.send(workspaces)
             self.selectedWorskpacesPublisher.send(selectedWorkspace)
