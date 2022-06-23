@@ -48,6 +48,7 @@ class AuthenticationViewModel {
                     .sink(receiveCompletion: { completion in  }, receiveValue: { [weak self] accessTokenResponse in
                         guard let self = self else { return }
                         self.startupUtils.saveAccessToken(token: accessTokenResponse.access_token)
+                        UserDefaults.userId = accessTokenResponse.userId
                         self.authenticationEventPublisher.send(.didSignedInSuccessfully)
                     })
                     .store(in: &tokens)

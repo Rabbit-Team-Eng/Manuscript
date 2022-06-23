@@ -7,15 +7,18 @@
 
 import UIKit
 import CoreData
+import Combine
 
 enum BoardSheetState {
     case creation
-    case edit
+    case edit(id: Int64)
 }
 
 class BoardCreateEditViewController: UIViewController {
     
     weak var parentCoordinator: TabBarCoordinator? = nil
+    
+    private var tokens: Set<AnyCancellable> = []
     
     typealias DataSource = UICollectionViewDiffableDataSource<WorkspaceSelectorSectionType, IconSelectorCellModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<WorkspaceSelectorSectionType, IconSelectorCellModel>
@@ -122,21 +125,37 @@ class BoardCreateEditViewController: UIViewController {
 
         view.backgroundColor = Palette.mediumDarkGray
         
-        if boardSheetState == .creation {
+        if case .creation = boardSheetState {
             titleTexLabel.text = "Create new board"
             createNewBoardeButton.configuration?.title = "Create New Board"
             createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
             applySnapshot(items: IconProvider.icons(selectedIcon: nil))
         }
         
-        if boardSheetState == .edit {
+        if case .edit(let selectedBoardId) = boardSheetState {
+            
             titleTexLabel.text = "Edit Board"
-//            enterNameTextField.text = selectedBoard?.title ?? ""
             createNewBoardeButton.configuration?.title = "Save the changes"
             createNewBoardeButton.addTarget(self, action: #selector(editCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
             deleteButton.addTarget(self, action: #selector(deletCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
             view.addSubview(deleteButton)
+            
+            mainViewModel.event
+                .receive(on: RunLoop.main)
+                .sink { [weak self] event in guard let self = self else { return }
+                
+                    if case .existingBoardDidSelected(let selectedBoard) = event {
+                        self.selectedBoard = selectedBoard
+                        self.enterNameTextField.text = selectedBoard.title
+                        self.applySnapshot(items: IconProvider.icons(selectedIcon: selectedBoard.assetUrl))
+                    }
+            }
+                .store(in: &tokens)
+            
+            mainViewModel.fetchCurrentlySelectedBoard(id: selectedBoardId)
         }
+        
+
         
         closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
@@ -193,18 +212,8 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     @objc private func deletCurrentBoardButtonDidTap(_ sender: UIButton) {
-        if let selectedBoard = selectedBoardId {
-//            let toBeRemovedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
-//                                                      coreDataId: selectedBoard.coreDataId,
-//                                                      title: selectedBoard.title,
-//                                                      detailDescription: selectedBoard.detailDescription,
-//                                                      assetUrl: selectedBoard.assetUrl,
-//                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
-//                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-//                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
-//                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
-            
-//            boardsViewModel.deleteBoard(board: toBeRemovedBoard)
+        if let selectedBoard = selectedBoard, let coreDataId = selectedBoard.coreDataId {
+            mainViewModel.removeBoard(id: selectedBoard.remoteId, coreDataId: coreDataId)
         }
     }
     
@@ -219,19 +228,9 @@ class BoardCreateEditViewController: UIViewController {
         guard let title = enterNameTextField.text,
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
-        
-        if let selectedBoard = selectedBoardId {
-//            let toBeUpdatedBoard = BoardBusinessModel(remoteId: selectedBoard.remoteId,
-//                                                      coreDataId: selectedBoard.coreDataId,
-//                                                      title: title,
-//                                                      detailDescription: "",
-//                                                      assetUrl: icon,
-//                                                      ownerWorkspaceId: selectedBoard.ownerWorkspaceId,
-//                                                      lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-//                                                      isInitiallySynced: selectedBoard.isInitiallySynced,
-//                                                      isPendingDeletionOnTheServer: selectedBoard.isPendingDeletionOnTheServer)
-            
-//            boardsViewModel.editBoard(board: toBeUpdatedBoard)
+
+        if let selectedBoard = selectedBoard, let coreDataId = selectedBoard.coreDataId {
+            mainViewModel.editBoard(id: selectedBoard.remoteId, coreDataId: coreDataId, title: title, asset: icon)
         }
     }
 
@@ -242,11 +241,10 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     private let boardSheetState: BoardSheetState
-    private let selectedBoardId: Int64?
     private let mainViewModel: MainViewModel
-
-    init(boardSheetState: BoardSheetState, selectedBoardId: Int64?, mainViewModel: MainViewModel) {
-        self.selectedBoardId = selectedBoardId
+    private var selectedBoard: BoardBusinessModel?
+    
+    init(boardSheetState: BoardSheetState, mainViewModel: MainViewModel) {
         self.boardSheetState = boardSheetState
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)

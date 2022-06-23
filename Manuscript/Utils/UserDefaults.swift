@@ -20,5 +20,8 @@ extension UserDefaults {
     
     @Defaults(key: "selectedWorkspaceId", defaultValue: Constants.emptyString)
     static var selectedWorkspaceId: String
+    
+    @Defaults(key: "userId", defaultValue: Constants.emptyString)
+    static var userId: String
 
 }

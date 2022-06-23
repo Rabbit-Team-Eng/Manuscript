@@ -124,7 +124,7 @@ class BoardDetailViewController: UIViewController {
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateBoardScreen(state: .edit, selectedBoardId: selectedBoard.remoteId)
+        coordinator?.presentCreateBoardScreen(state: .edit(id: selectedBoard.remoteId))
     }
     
     init(selectedWorkspace: WorkspaceBusinessModel, selectedBoard: BoardBusinessModel, boardViewModel: BoardsViewModel) {

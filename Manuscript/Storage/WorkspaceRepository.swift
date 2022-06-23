@@ -12,6 +12,7 @@ class WorkspaceRepository {
     
     var worskpacesPublisher: PassthroughSubject<[WorkspaceBusinessModel], Never> = PassthroughSubject()
     var selectedWorskpacesPublisher: PassthroughSubject<WorkspaceBusinessModel, Never> = PassthroughSubject()
+    var selectedBoardPublisher: PassthroughSubject<BoardBusinessModel, Never> = PassthroughSubject()
 
     private let cloudSync: CloudSync
     private let dataProvider: DataProvider
@@ -57,7 +58,7 @@ class WorkspaceRepository {
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
             
             if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members {
+               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
                 
                 self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
                     if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.title) board did fail broadcasted: \(errorDescription)")  }
@@ -70,17 +71,18 @@ class WorkspaceRepository {
 
     }
     
-    func editBoard(board: BoardBusinessModel) {
+    func editBoard(board: BoardBusinessModel, localCompletion: @escaping () -> Void) {
         boardCreator.editBoard(board: board) { [weak self] in guard let self = self else { return }
             
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
             self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            localCompletion()
             
         } serverCompletion: { [weak self] in guard let self = self else { return }
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
             
             if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members {
+               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
                 
                 self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
                     if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.title) board did fail broadcasted: \(errorDescription)")  }
@@ -91,9 +93,40 @@ class WorkspaceRepository {
         }
     }
     
+    func removeBoard(board: BoardBusinessModel, localCompletion: @escaping () -> Void) {
+
+        boardCreator.removeBoard(board: board) { [weak self] in guard let self = self else { return }
+            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
+            self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            localCompletion()
+        } serverCompletion: { [weak self] in guard let self = self else { return }
+            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
+            
+            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
+               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
+                
+                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
+                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.title) board did fail broadcasted: \(errorDescription)")  }
+                    if case .success = signalRCompletionEvent { print("SignalR: \(board.title) board did successfully broadcasted!") }
+                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+                }
+            }
+        }
+
+    }
+    
     func fetchLocalDatabase() {
         let allWorkspacesInitiallyBeforeSync = self.dataProvider.fetchWorkspaces(thread: .background)
         notifyDataSetChanged(workspaces: allWorkspacesInitiallyBeforeSync)
+    }
+    
+    func fetchBoardById(id: Int64) {
+        let workspaces = self.dataProvider.fetchWorkspaces(thread: .background)
+        
+        if let selectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
+           let selectedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == id}) {
+            selectedBoardPublisher.send(selectedBoard)
+        }
     }
     
     private func notifyDataSetChanged(workspaces: [WorkspaceBusinessModel]) {

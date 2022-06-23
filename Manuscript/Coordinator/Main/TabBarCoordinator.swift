@@ -31,6 +31,12 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         let signalRManager = mainInjector.provideSignalRManager()
         signalRManager.startConnection()
         signalRManager.startListenningToHub(method: .workspaceEntitiesDidChange)
+        
+//        mainInjector.provideDatabaseManager().clearDatabase()
+//        UserDefaults.selectedWorkspaceId = ""
+//        UserDefaults.userId = ""
+//        mainInjector.provideStartUpUtils().deleteAcessToken()
+//        
     }
 
     func start(with flow: Flowable) {
@@ -70,8 +76,8 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         tasksCoordinator.start(with: TasksFlow.tasks)
     }
     
-    func presentCreateBoardScreen(state: BoardSheetState, selectedBoardId: Int64?) {
-        let vc = BoardCreateEditViewController(boardSheetState: state, selectedBoardId: selectedBoardId, mainViewModel: mainInjector.provideMainViewModel())
+    func presentCreateBoardScreen(state: BoardSheetState) {
+        let vc = BoardCreateEditViewController(boardSheetState: state, mainViewModel: mainInjector.provideMainViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self
         if let sheet = vc.sheetPresentationController {

@@ -60,7 +60,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     private var tokens: Set<AnyCancellable> = []
     
     private let viewModel: MainViewModel
@@ -79,7 +79,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         
         view.backgroundColor = Palette.lightBlack
         navigationController?.navigationBar.prefersLargeTitles = true
-                
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
             UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),
@@ -92,11 +92,11 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         viewModel.selectedWorkspacePublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] workspaceBusinessModel in guard let self = self else { return }
-            
+                self.refreshController.endRefreshing()
                 self.navigationItem.title = workspaceBusinessModel.title
                 self.determineBoardPlaceholder(boards: workspaceBusinessModel.boards ?? [])
-        }
-        .store(in: &tokens)
+            }
+            .store(in: &tokens)
         
         viewModel.event
             .receive(on: RunLoop.main)
@@ -106,18 +106,30 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                     self.coordinator?.dismissBoardCreationScreen()
                 }
                 
+                if case .existingBoardDidUpdated = event {
+                    self.coordinator?.dismissBoardCreationScreen()
+                }
+                
+                if case .existingBoardDidDeleted = event {
+                    self.coordinator?.dismissBoardCreationScreen()
+                }
+                
                 if case .newWorkspaceDidSelected = event {
-                    self.viewModel.fetchLocalDatabase()
                     self.coordinator?.dismissWorspaceSelectorScreen()
                 }
-            
-        }
+                
+            }
             .store(in: &tokens)
         
         viewModel.fetchLocalDatabase()
     }
     
     @objc private func refreshControllerDidCalled(_ sender: UIBarButtonItem) {
+        viewModel.syncTheCloud()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in guard let self = self else { return }
+            if self.refreshController.isRefreshing { self.refreshController.endRefreshing() }
+        }
     }
     
     @objc private func openWorkspaceSelector(_ sender: UIBarButtonItem) {
@@ -125,15 +137,15 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func createNewBoard(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoardId: nil)
+        coordinator?.presentCreateBoardScreen(state: .creation)
     }
     
     @objc private func createBoardButtonDidTap(_ sender: UIButton) {
-        coordinator?.presentCreateBoardScreen(state: .creation, selectedBoardId: nil)
+        coordinator?.presentCreateBoardScreen(state: .creation)
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
-
+        
         let layout = UICollectionViewCompositionalLayout { [unowned self] sectionIndex, layoutEnvironment in
             
             return self.createBoardsSection()
@@ -157,7 +169,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     private func createDataSource() -> DataSource {
         let boardCell = boardCellRegistration()
-
+        
         return DataSource(collectionView: myColectionView) { collectionView, indexPath, itemIdentifier in
             return collectionView.dequeueConfiguredReusableCell(using: boardCell, for: indexPath, item: itemIdentifier)
         }
@@ -178,9 +190,9 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItemId = dataSource.itemIdentifier(for: indexPath)?.remoteId
-//        coordinator?.presentCreateBoardScreen(state: .edit, selectedBoard: <#T##BoardBusinessModel?#>)
+        coordinator?.presentCreateBoardScreen(state: .edit(id: Int64(selectedItemId!)!))
     }
-
+    
     private func determineBoardPlaceholder(boards: [BoardBusinessModel]) {
         
         if boards.count > 0 {
@@ -218,7 +230,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                 createBoardButton.heightAnchor.constraint(equalToConstant: 50),
                 createBoardButton.widthAnchor.constraint(equalToConstant: 195),
                 createBoardButton.topAnchor.constraint(equalTo: titleTexLabel.bottomAnchor, constant: 50)
-
+                
             ])
         }
     }
@@ -263,7 +275,7 @@ class BoardCollectionViewCell: UICollectionViewCell {
     }()
     
     lazy var titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.numberOfLines = 2
         label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 17)
@@ -273,7 +285,7 @@ class BoardCollectionViewCell: UICollectionViewCell {
     }()
     
     lazy var numberOfTasksLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.numberOfLines = 2
         label.textColor = .white.withAlphaComponent(0.5)
         label.font = UIFont.systemFont(ofSize: 14)
@@ -336,7 +348,7 @@ class BoardCollectionViewCell: UICollectionViewCell {
             syncIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             syncIndicatorImageView.heightAnchor.constraint(equalToConstant: 10),
             syncIndicatorImageView.widthAnchor.constraint(equalToConstant: 10),
-
+            
         ])
     }
 }

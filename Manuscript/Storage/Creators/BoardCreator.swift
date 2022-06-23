@@ -84,73 +84,7 @@ class BoardCreator {
             }
             .store(in: &self.tokens)
     }
-    
-    @available(*, deprecated, message: "Use createBoard with two completions instead.")
-    func createNewBoard(board: BoardBusinessModel, completion: @escaping () -> Void) {
-        
-        let context = self.database.databaseContainer.newBackgroundContext()
-        context.automaticallyMergesChangesFromParent = true
-        
-        context.performAndWait {
-            let boardEntity = BoardEntity(context: context)
-            boardEntity.assetUrl = board.assetUrl
-            boardEntity.mainDescription = board.detailDescription
-            boardEntity.isInitiallySynced = board.isInitiallySynced
-            boardEntity.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
-            boardEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
-            boardEntity.ownerWorkspaceId = board.ownerWorkspaceId
-            boardEntity.remoteId = board.remoteId
-            boardEntity.title = board.title
-            
-            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
-            workspacesFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(board.ownerWorkspaceId))")
-            
-            do {
-                let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
-                let worskpaceEntity = workspace.first!
-                worskpaceEntity.addToBoards(boardEntity)
-                try context.save()
-                self.insertIntoServer(item: board, coreDataId: boardEntity.objectID)
-                completion()
-            } catch {
-                fatalError()
-            }
-        }
-    }
-    
-    @available(*, deprecated, message: "Use createBoardInServer with a completion instead.")
-    private func insertIntoServer(item: BoardBusinessModel, coreDataId: NSManagedObjectID?) {
-        
-        boardService.createNewBoard(requestBody: BoardRequest(workspaceId: Int(item.ownerWorkspaceId), assetUrl: item.assetUrl, title: item.title))
-            .sink { completion in } receiveValue: { [weak self] boardResponse in
-                
-                guard let self = self, let coreDataId = coreDataId else { return }
-                let context = self.database.databaseContainer.newBackgroundContext()
-                context.automaticallyMergesChangesFromParent = true
-                
-                context.performAndWait {
-                    if let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
-                        boardToBeUpdated.remoteId = Int64(boardResponse.id)
-                        boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
-                        boardToBeUpdated.isInitiallySynced = true
-                        do {
-                            try context.save()
-                            let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(boardResponse.workspaceId)").members?.compactMap { $0.remoteId }
-                            
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-//                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
-                            }
-                            
-                        } catch {
-                            fatalError()
-                        }
-                    }
-                }
-            }
-            .store(in: &self.tokens)
-    }
-    
+
     func editBoard(board: BoardBusinessModel, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
@@ -195,19 +129,28 @@ class BoardCreator {
             .store(in: &tokens)
     }
     
-    @available(*, deprecated, message: "Use editBoard with two completions instead.")
-    func editBoard(board: BoardBusinessModel, completion: @escaping () -> Void) {
+    func removeBoard(board: BoardBusinessModel, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
-        context.performAndWait { [weak self] in guard let self = self else { return }
-            if let coreDataId = board.coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
-                boardToBeUpdated.title = board.title
-                boardToBeUpdated.assetUrl = board.assetUrl
-                completion()
-                self.editBoardInServer(worskapceId: board.ownerWorkspaceId, assetUrl: board.assetUrl, title: board.title, boardId: board.remoteId, coreDataId: board.coreDataId)
+        context.performAndWait {
+            if let coreDataId = board.coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                boardToBeRemoved.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+                boardToBeRemoved.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
+                
+                boardToBeRemoved.tasks?.forEach({ boardTaskEntity in
+                    if let task = boardTaskEntity as? TaskEntity {
+                        task.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+                        task.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
+                    }
+                })
                 do {
                     try context.save()
+                    databaseCompletion()
+                    removeBoardInServer(board: board) { 
+                        serverCompletion()
+                    }
+                    
                 } catch {
                     fatalError()
                 }
@@ -215,26 +158,20 @@ class BoardCreator {
         }
     }
     
-    @available(*, deprecated, message: "Use editBoardInServer with a completion instead.")
-    private func editBoardInServer(worskapceId: Int64, assetUrl: String, title: String, boardId: Int64, coreDataId: NSManagedObjectID?) {
-        boardService.updateBoardById(requestBody: BoardRequest(workspaceId: Int(worskapceId), assetUrl: assetUrl, title: title), boardId: boardId)
-            .sink { completion in } receiveValue: { [weak self] boardResponse  in guard let self = self else { return }
-                
-                
+    private func removeBoardInServer(board: BoardBusinessModel, serverCompletion: @escaping () -> Void) {
+        boardService.deleteBoardById(boardId: board.remoteId)
+            .sink { completion in } receiveValue: { statusCode in
+
                 let context = self.database.databaseContainer.newBackgroundContext()
                 context.automaticallyMergesChangesFromParent = true
                 
                 context.performAndWait {
-                    if let coreDataId = coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
-                        boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
+                    if let coreDataId = board.coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                        context.delete(boardToBeRemoved)
+
                         do {
                             try context.save()
-                            let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(boardResponse.workspaceId)").members?.compactMap { $0.remoteId }
-
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-//                                self.signalRManager.broadcastMessage(enity: "board", id: boardResponse.id, action: "create", members: currentMembers!)
-                            }
+                            serverCompletion()
                         } catch {
                             fatalError()
                         }
@@ -242,10 +179,12 @@ class BoardCreator {
                 }
                 
                 
+                
             }
             .store(in: &tokens)
     }
     
+    @available(*, deprecated, message: "Use editBoardInServer with a completion instead.")
     func removeBoard(board: BoardBusinessModel, completion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
@@ -272,6 +211,7 @@ class BoardCreator {
         }
     }
     
+    @available(*, deprecated, message: "Use editBoardInServer with a completion instead.")
     private func removeFromServer(boardId: Int64, ownerWorkspaceId: Int64, coreDataId: NSManagedObjectID?) {
         boardService.deleteBoardById(boardId: boardId)
             .sink { completion in } receiveValue: { statusCode in
