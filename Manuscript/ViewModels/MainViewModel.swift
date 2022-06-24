@@ -49,7 +49,8 @@ class MainViewModel {
     }
     
     func createBoard(title: String, asset: String) {
-        let boardRequest = BoardCreateCoreDataRequest(title: title, assetUrl: asset)
+        guard let ownerWorkspaceCoreDataId = selectedWorkspace?.coreDataId else { return }
+        let boardRequest = BoardCreateCoreDataRequest(ownerWorkspaceCoreDataId: ownerWorkspaceCoreDataId, title: title, assetUrl: asset)
         
         repository.createBoard(board: boardRequest) { [weak self] in guard let self = self else { return }
             self.uiEvent.send(.newBoardDidCreated)

@@ -5,13 +5,16 @@
 //  Created by Tigran Ghazinyan on 6/23/22.
 //
 
-import Foundation
+import CoreData
 
 struct BoardCreateCoreDataRequest {
+    
+    let ownerWorkspaceCoreDataId: NSManagedObjectID
     let title: String
     let assetUrl: String
     
-    init(title: String, assetUrl: String) {
+    init(ownerWorkspaceCoreDataId: NSManagedObjectID, title: String, assetUrl: String) {
+        self.ownerWorkspaceCoreDataId = ownerWorkspaceCoreDataId
         self.title = title
         self.assetUrl = assetUrl
     }

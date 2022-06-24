@@ -15,7 +15,7 @@ class BoardCreator {
     private let database: CoreDataStack
     private let signalRManager: SignalRManager
     private let dataProvider: DataProvider
-
+    
     private var tokens: Set<AnyCancellable> = []
     
     init(boardService: BoardService, database: CoreDataStack, signalRManager: SignalRManager, dataProvider: DataProvider) {
@@ -40,21 +40,19 @@ class BoardCreator {
             boardEntity.remoteId = board.id
             boardEntity.title = board.title
             
-            let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
-            workspacesFetchRequest.predicate = NSPredicate(format: "remoteId == %@", "\(board.ownerWorkspaceId))")
-            
-            do {
-                let workspace: [WorkspaceEntity] = try context.fetch(workspacesFetchRequest)
-                let worskpaceEntity = workspace.first!
-                worskpaceEntity.addToBoards(boardEntity)
-                try context.save()
-                databaseCompletion()
-                self.createBoardInServer(item: board, coreDataId: boardEntity.objectID) {
-                    serverCompletion()
+            if let ownerWorkspace = try? context.existingObject(with: board.ownerWorkspaceCoreDataId) as? WorkspaceEntity {
+                do {
+                    
+                    ownerWorkspace.addToBoards(boardEntity)
+                    try context.save()
+                    databaseCompletion()
+                    self.createBoardInServer(item: board, coreDataId: boardEntity.objectID) { serverCompletion() }
+                } catch {
+                    fatalError()
                 }
-            } catch {
-                fatalError()
             }
+            
+            
         }
     }
     
@@ -84,7 +82,7 @@ class BoardCreator {
             }
             .store(in: &self.tokens)
     }
-
+    
     func editBoard(board: BoardEditCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
@@ -96,9 +94,7 @@ class BoardCreator {
                 do {
                     try context.save()
                     databaseCompletion()
-                    self.editBoardInServer(board: board) {
-                        serverCompletion()
-                    }
+                    self.editBoardInServer(board: board) { serverCompletion() }
                 } catch {
                     fatalError()
                 }
@@ -147,10 +143,7 @@ class BoardCreator {
                 do {
                     try context.save()
                     databaseCompletion()
-                    removeBoardInServer(board: board) { 
-                        serverCompletion()
-                    }
-                    
+                    removeBoardInServer(board: board) { serverCompletion() }
                 } catch {
                     fatalError()
                 }
@@ -161,14 +154,14 @@ class BoardCreator {
     private func removeBoardInServer(board: BoardDeleteCoreDataRequest, serverCompletion: @escaping () -> Void) {
         boardService.deleteBoardById(boardId: board.id)
             .sink { completion in } receiveValue: { statusCode in
-
+                
                 let context = self.database.databaseContainer.newBackgroundContext()
                 context.automaticallyMergesChangesFromParent = true
                 
                 context.performAndWait {
                     if let boardToBeRemoved = try? context.existingObject(with: board.coreDataId) as? BoardEntity {
                         context.delete(boardToBeRemoved)
-
+                        
                         do {
                             try context.save()
                             serverCompletion()
