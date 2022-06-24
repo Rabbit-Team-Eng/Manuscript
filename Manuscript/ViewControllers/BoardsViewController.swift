@@ -188,7 +188,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     private func boardCellRegistration() -> UICollectionView.CellRegistration<BoardCollectionViewCell, BoardCellModel> {
         return .init { cell, indexPath, itemIdentifier in
-            cell.configure(cellModel: itemIdentifier)
+            cell.model = itemIdentifier
         }
     }
     
@@ -203,18 +203,23 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     private func determineBoardPlaceholder(boards: [BoardBusinessModel]) {
         
         if boards.count > 0 {
+            
             if titleTexLabel.isDescendant(of: view) {
                 titleTexLabel.removeFromSuperview()
             }
+            
             if lottieAnimationView.isDescendant(of: view) {
                 lottieAnimationView.removeFromSuperview()
             }
+            
             if createBoardButton.isDescendant(of: view) {
                 createBoardButton.removeFromSuperview()
             }
+            
             view.addSubview(myColectionView)
             applySnapshot(items: BoardTransformer.transformBoardsToCellModel(boards: boards), animatingDifferences: true)
         } else {
+            
             myColectionView.removeFromSuperview()
             view.addSubview(titleTexLabel)
             view.addSubview(lottieAnimationView)
@@ -254,18 +259,57 @@ struct BoardCellModel: Hashable {
     let boardTitle: String
     let numberOfTasks: Int
     let imageIcon: String
-    let isSynced: Bool
+    let isLatestChangeSynced: Bool
     
     init(remoteId: String, boardTitle: String, numberOfTasks: Int, imageIcon: String, isSynced: Bool) {
         self.remoteId = remoteId
         self.boardTitle = boardTitle
         self.numberOfTasks = numberOfTasks
         self.imageIcon = imageIcon
-        self.isSynced = isSynced
+        self.isLatestChangeSynced = isSynced
     }
 }
 
+
 class BoardCollectionViewCell: UICollectionViewCell {
+    
+    var model: BoardCellModel?
+//    weak var delegate: KaleidoscopeProtocol?
+    
+    override func updateConfiguration(using state: UICellConfigurationState) {
+        var newConfiguration = BoardCellContentConfiguration().updated(for: state)
+        guard let binding = model else { return }
+        newConfiguration.model = binding
+//        newConfiguration.delegate = delegate
+        contentConfiguration = newConfiguration
+    }
+}
+
+
+struct BoardCellContentConfiguration: UIContentConfiguration {
+    
+    var model: BoardCellModel?
+//    weak var delegate: KaleidoscopeProtocol?
+    
+    func makeContentView() -> UIView & UIContentView {
+        let view = BoardCellContentView(configuration: self)
+//        view.delegate = delegate
+        return view
+    }
+    
+    func updated(for state: UIConfigurationState) -> BoardCellContentConfiguration {
+        var updatedConfiguration = self
+        updatedConfiguration.model = model
+        return updatedConfiguration
+    }
+}
+
+class BoardCellContentView: UIView, UIContentView {
+    
+    var model: BoardCellModel?
+    //    weak var delegate: KaleidoscopeProtocol?
+
+    var configuration: UIContentConfiguration
     
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -301,61 +345,75 @@ class BoardCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInitilization()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInitilization()
-    }
-    
-    func configure(cellModel: BoardCellModel) {
-        numberOfTasksLabel.text = "\(cellModel.numberOfTasks) Tasks"
-        titleLabel.text = cellModel.boardTitle
-        iconImageView.image = UIImage(systemName: cellModel.imageIcon)
+    init(configuration: BoardCellContentConfiguration) {
+        self.configuration = configuration
+        self.model = configuration.model
+        super.init(frame: .zero)
         
-        if cellModel.isSynced {
-            syncIndicatorImageView.tintColor = Palette.mediumDarkGray
-        } else {
-            syncIndicatorImageView.tintColor = Palette.magenta
-        }
-    }
-    
-    func commonInitilization() {
-        layer.cornerRadius = 22
+        layer.cornerRadius = 19
+        addSubview(iconImageView)
+        addSubview(syncIndicatorImageView)
+        addSubview(titleLabel)
+        addSubview(numberOfTasksLabel)
+
+        
         backgroundColor = Palette.mediumDarkGray
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(numberOfTasksLabel)
-        contentView.addSubview(iconImageView)
-        contentView.addSubview(syncIndicatorImageView)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
+        
         
         NSLayoutConstraint.activate([
-            numberOfTasksLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            numberOfTasksLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            numberOfTasksLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            numberOfTasksLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            numberOfTasksLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            numberOfTasksLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             numberOfTasksLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 25),
             
             titleLabel.bottomAnchor.constraint(equalTo: numberOfTasksLabel.topAnchor, constant: -8),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             numberOfTasksLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
             
-            iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            iconImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             iconImageView.heightAnchor.constraint(equalToConstant: 50),
             iconImageView.widthAnchor.constraint(equalToConstant: 50),
             
-            syncIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            syncIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            syncIndicatorImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            syncIndicatorImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             syncIndicatorImageView.heightAnchor.constraint(equalToConstant: 10),
             syncIndicatorImageView.widthAnchor.constraint(equalToConstant: 10),
             
         ])
+
+        
+        if let configModel = configuration.model { applyConfigurationModel(model: configModel) }
+
+
+        
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func applyConfigurationModel(model: BoardCellModel) {
+        guard let config = configuration as? BoardCellContentConfiguration, let model = config.model else { return }
+        self.model = model
+        
+        iconImageView.image = UIImage(systemName: model.imageIcon)
+        titleLabel.text = model.boardTitle
+        
+        if model.numberOfTasks > 1 {
+            numberOfTasksLabel.text = "\(model.numberOfTasks) Tasks"
+        } else {
+            numberOfTasksLabel.text = "\(model.numberOfTasks) Task"
+        }
+
+        if model.isLatestChangeSynced {
+            syncIndicatorImageView.tintColor = Palette.mediumDarkGray
+        } else {
+            syncIndicatorImageView.tintColor = Palette.magenta
+        }
+
+    }
+
+
 }

@@ -128,7 +128,7 @@ class BoardCreateEditViewController: UIViewController {
         if case .creation = boardSheetState {
             titleTexLabel.text = "Create new board"
             createNewBoardeButton.configuration?.title = "Create New Board"
-            createNewBoardeButton.addTarget(self, action: #selector(createNewBoardBarButtonDidTap(_:)), for: .touchUpInside)
+            createNewBoardeButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
             applySnapshot(items: IconProvider.icons(selectedIcon: nil))
         }
         

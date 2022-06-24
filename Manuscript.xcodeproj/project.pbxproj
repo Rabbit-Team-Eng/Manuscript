@@ -92,9 +92,6 @@
 		097EDF3E282B68360060C8FD /* FieldButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF3D282B68360060C8FD /* FieldButtonContentView.swift */; };
 		097EDF40282B68590060C8FD /* FieldButtonCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF3F282B68590060C8FD /* FieldButtonCellConfiguration.swift */; };
 		097EDF42282B91AD0060C8FD /* FieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF41282B91AD0060C8FD /* FieldButtonCell.swift */; };
-		097EDF43282B91C40060C8FD /* FieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF41282B91AD0060C8FD /* FieldButtonCell.swift */; };
-		097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF3F282B68590060C8FD /* FieldButtonCellConfiguration.swift */; };
-		097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF3D282B68360060C8FD /* FieldButtonContentView.swift */; };
 		0989BABC284D3CA00032053C /* WorkspaceSelectorCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABB284D3CA00032053C /* WorkspaceSelectorCellModel.swift */; };
 		0989BABE284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABD284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift */; };
 		0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0989BABF284D3CC00032053C /* WorkspaceSelectorView.swift */; };
@@ -330,18 +327,10 @@
 		09D27656282605E900933F16 /* WorkspaceEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2764E282605E900933F16 /* WorkspaceEntity+CoreDataProperties.swift */; };
 		09D276582826FB9700933F16 /* DataSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D276572826FB9700933F16 /* DataSyncronizer.swift */; };
 		09D4E09C282A300300B3A47F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4E09B282A300300B3A47F /* ViewModel.swift */; };
-		09D4E09E282A303300B3A47F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4E09D282A303300B3A47F /* UIColor+Extension.swift */; };
 		09D4E0A0282A32F000B3A47F /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = 09D4E09F282A32F000B3A47F /* words.json */; };
-		09DCED08282C242900A2884B /* SingleInputFieldContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED07282C242900A2884B /* SingleInputFieldContentView.swift */; };
 		09DCED09282C242900A2884B /* SingleInputFieldContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED07282C242900A2884B /* SingleInputFieldContentView.swift */; };
-		09DCED0B282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */; };
 		09DCED0C282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */; };
-		09DCED0E282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */; };
 		09DCED0F282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */; };
-		09EDE715284701CC009B23A9 /* DatabaseEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF23282B1EFB0060C8FD /* DatabaseEventProtocol.swift */; };
-		09EDE716284701D8009B23A9 /* DatabaseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF2B282B1F200060C8FD /* DatabaseItem.swift */; };
-		09EDE717284701E1009B23A9 /* DatabaseSectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF25282B1F0E0060C8FD /* DatabaseSectionType.swift */; };
-		09EDE718284701E8009B23A9 /* DatabaseAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF27282B1F140060C8FD /* DatabaseAction.swift */; };
 		09EDE719284702B2009B23A9 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4E09D282A303300B3A47F /* UIColor+Extension.swift */; };
 		09EDE71C2848893A009B23A9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 09EDE71B2848893A009B23A9 /* Lottie */; };
 		09F088E42849954B0012D83D /* 107115-id-authentication.json in Resources */ = {isa = PBXBuildFile; fileRef = 09F088E32849954B0012D83D /* 107115-id-authentication.json */; };
@@ -1647,7 +1636,6 @@
 				097EDF1E282B1EC10060C8FD /* SingleButtonContentView.swift in Sources */,
 				09CAAA4A2829D90400FE0214 /* WorkspaceRequest.swift in Sources */,
 				097EDF28282B1F140060C8FD /* DatabaseAction.swift in Sources */,
-				09D4E09E282A303300B3A47F /* UIColor+Extension.swift in Sources */,
 				09CAAA442829D8FE00FE0214 /* TaskResponse.swift in Sources */,
 				09CAAA6E2829D93000FE0214 /* Defaults.swift in Sources */,
 				09CAAA2B2829D8B200FE0214 /* ComparatorResult.swift in Sources */,
@@ -1718,7 +1706,6 @@
 				099281812857165E00F3EA66 /* TaskCoreDataManager.swift in Sources */,
 				093945A22855DDC400A0F963 /* WorkspaceSelectorViewController.swift in Sources */,
 				09D275EA2825CC3D00933F16 /* MemberResponse.swift in Sources */,
-				097EDF45282B91CE0060C8FD /* FieldButtonContentView.swift in Sources */,
 				0989BAC4284D40960032053C /* WorkspaceSelectorSectionType.swift in Sources */,
 				0992816D285677A900F3EA66 /* PrioritySelectionActionsProtocol.swift in Sources */,
 				0992817F2857154B00F3EA66 /* TaskSyncronizer.swift in Sources */,
@@ -1741,9 +1728,7 @@
 				096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */,
 				09A37CA62863827C001F8B41 /* BoardsViewController.swift in Sources */,
 				096EF7CC2853EA1E003BEC41 /* GeneralInfoCellModel.swift in Sources */,
-				097EDF44282B91CA0060C8FD /* FieldButtonCellConfiguration.swift in Sources */,
 				0989BAC0284D3CC00032053C /* WorkspaceSelectorView.swift in Sources */,
-				09DCED08282C242900A2884B /* SingleInputFieldContentView.swift in Sources */,
 				09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */,
 				09D275942825B85D00933F16 /* ResetPasswordRequest.swift in Sources */,
 				09D27652282605E900933F16 /* BoardEntity+CoreDataProperties.swift in Sources */,
@@ -1753,10 +1738,8 @@
 				09D275902825B85000933F16 /* ForgotPasswordRequest.swift in Sources */,
 				09D275E72825CC2100933F16 /* Syncable.swift in Sources */,
 				09D275922825B85700933F16 /* GetUserByIdRequest.swift in Sources */,
-				09EDE716284701D8009B23A9 /* DatabaseItem.swift in Sources */,
 				09D27650282605E900933F16 /* TaskEntity+CoreDataProperties.swift in Sources */,
 				096EF7E628542ED1003BEC41 /* ManageAccessSectionHeaderView.swift in Sources */,
-				097EDF43282B91C40060C8FD /* FieldButtonCell.swift in Sources */,
 				0919BCAD2858138E00DB53C2 /* PriorityTypeConverter.swift in Sources */,
 				09D275962825B86300933F16 /* SignInUserRequest.swift in Sources */,
 				09D275992825B89700933F16 /* AuthenticationManager.swift in Sources */,
@@ -1773,7 +1756,6 @@
 				09D275DA2825CB5A00933F16 /* GetWorkspaceByIdRequest.swift in Sources */,
 				09D275562825B6B100933F16 /* BoardsFlow.swift in Sources */,
 				0989BABC284D3CA00032053C /* WorkspaceSelectorCellModel.swift in Sources */,
-				09EDE717284701E1009B23A9 /* DatabaseSectionType.swift in Sources */,
 				09D275CE2825CA1000933F16 /* GetAllBoardsRequest.swift in Sources */,
 				09D275EC2825CC5200933F16 /* BoardRequest.swift in Sources */,
 				09D275B02825B94300933F16 /* StartupUtils.swift in Sources */,
@@ -1796,7 +1778,6 @@
 				0992815D28565AC000F3EA66 /* TaskCreator.swift in Sources */,
 				0992817D28570D3C00F3EA66 /* TaskSectionType.swift in Sources */,
 				09D275602825B6F800933F16 /* OnboardingFlow.swift in Sources */,
-				09DCED0B282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */,
 				09D275EE2825CC5D00933F16 /* BoardResponse.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
 				09A37CA22862A0E2001F8B41 /* Repository.swift in Sources */,
@@ -1821,7 +1802,6 @@
 				09D275722825B77A00933F16 /* ApplicationInjector.swift in Sources */,
 				09D275DE2825CB8100933F16 /* GetAllWorkspacesRequest.swift in Sources */,
 				096EF7E428542D89003BEC41 /* ManageAccessContentView.swift in Sources */,
-				09EDE715284701CC009B23A9 /* DatabaseEventProtocol.swift in Sources */,
 				09D2754A2825B65700933F16 /* ApplicationCoordinator.swift in Sources */,
 				09D275592825B6CE00933F16 /* TabBarCoordinator.swift in Sources */,
 				09D2764F282605E900933F16 /* TaskEntity+CoreDataClass.swift in Sources */,
@@ -1830,7 +1810,6 @@
 				093A90FC2861805C0054CBCB /* InputCellContentView.swift in Sources */,
 				09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */,
 				0992817328570A2B00F3EA66 /* TaskCell.swift in Sources */,
-				09DCED0E282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */,
 				092F520A28558E350032B2D5 /* TaskGeneralInfoCell.swift in Sources */,
 				09D275AE2825B93400933F16 /* Palette.swift in Sources */,
 				09D2753B2825B5D700933F16 /* AuthenticationEvent.swift in Sources */,
@@ -1859,7 +1838,6 @@
 				09D275E32825CBEF00933F16 /* WorkspaceResponse.swift in Sources */,
 				09D2763E2825CE6000933F16 /* MemberBusinessModel.swift in Sources */,
 				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
-				09EDE718284701E8009B23A9 /* DatabaseAction.swift in Sources */,
 				09A37CA428636AFD001F8B41 /* MainViewModel.swift in Sources */,
 				092F51FC285583FC0032B2D5 /* BoardSelectorCellModel.swift in Sources */,
 				096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */,
