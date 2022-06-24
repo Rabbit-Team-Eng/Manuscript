@@ -11,7 +11,7 @@ import Combine
 
 enum BoardSheetState {
     case creation
-    case edit(id: Int64)
+    case edit
 }
 
 class BoardCreateEditViewController: UIViewController {
@@ -132,27 +132,17 @@ class BoardCreateEditViewController: UIViewController {
             applySnapshot(items: IconProvider.icons(selectedIcon: nil))
         }
         
-        if case .edit(let selectedBoardId) = boardSheetState {
+        if case .edit = boardSheetState {
             
-            titleTexLabel.text = "Edit Board"
-            createNewBoardeButton.configuration?.title = "Save the changes"
-            createNewBoardeButton.addTarget(self, action: #selector(editCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
-            deleteButton.addTarget(self, action: #selector(deletCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
-            view.addSubview(deleteButton)
-            
-            mainViewModel.event
-                .receive(on: RunLoop.main)
-                .sink { [weak self] event in guard let self = self else { return }
-                
-                    if case .existingBoardDidSelected(let selectedBoard) = event {
-                        self.selectedBoard = selectedBoard
-                        self.enterNameTextField.text = selectedBoard.title
-                        self.applySnapshot(items: IconProvider.icons(selectedIcon: selectedBoard.assetUrl))
-                    }
+            if let selectedBoard = mainViewModel.selectedBoard {
+                titleTexLabel.text = "Edit Board"
+                createNewBoardeButton.configuration?.title = "Save the changes"
+                createNewBoardeButton.addTarget(self, action: #selector(editCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
+                deleteButton.addTarget(self, action: #selector(deletCurrentBoardButtonDidTap(_:)), for: .touchUpInside)
+                enterNameTextField.text = selectedBoard.title
+                view.addSubview(deleteButton)
+                self.applySnapshot(items: IconProvider.icons(selectedIcon: selectedBoard.assetUrl))
             }
-                .store(in: &tokens)
-            
-            mainViewModel.fetchCurrentlySelectedBoard(id: selectedBoardId)
         }
         
 
@@ -212,7 +202,7 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     @objc private func deletCurrentBoardButtonDidTap(_ sender: UIButton) {
-        if let selectedBoard = selectedBoard, let coreDataId = selectedBoard.coreDataId {
+        if let selectedBoard = mainViewModel.selectedBoard, let coreDataId = selectedBoard.coreDataId {
             mainViewModel.removeBoard(id: selectedBoard.remoteId, coreDataId: coreDataId)
         }
     }
@@ -229,7 +219,7 @@ class BoardCreateEditViewController: UIViewController {
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
 
-        if let selectedBoard = selectedBoard, let coreDataId = selectedBoard.coreDataId {
+        if let selectedBoard = mainViewModel.selectedBoard, let coreDataId = selectedBoard.coreDataId {
             mainViewModel.editBoard(id: selectedBoard.remoteId, coreDataId: coreDataId, title: title, asset: icon)
         }
     }
@@ -242,7 +232,6 @@ class BoardCreateEditViewController: UIViewController {
     
     private let boardSheetState: BoardSheetState
     private let mainViewModel: MainViewModel
-    private var selectedBoard: BoardBusinessModel?
     
     init(boardSheetState: BoardSheetState, mainViewModel: MainViewModel) {
         self.boardSheetState = boardSheetState

@@ -29,7 +29,7 @@ class MainInjector {
     private var signalRManager: SignalRManager? = nil
     private var socketIO: SignalRConnectionListener? = nil
     private var memberCoreDataManager: MemberCoreDataManager? = nil
-    private var workspaceRepository: WorkspaceRepository? = nil
+    private var workspaceRepository: Repository? = nil
     private var mainViewModel: MainViewModel? = nil
     
     // Injected from Application Scope
@@ -52,11 +52,11 @@ class MainInjector {
         }
     }
     
-    func provideWorkspaceRepository() -> WorkspaceRepository {
+    func provideWorkspaceRepository() -> Repository {
         if workspaceRepository != nil {
             return workspaceRepository!
         } else {
-            workspaceRepository = WorkspaceRepository(cloudSync: provideCloudSync(),
+            workspaceRepository = Repository(cloudSync: provideCloudSync(),
                                                       dataProvider: provideDataManager(),
                                                       boardCreator: provideBoardCreator(),
                                                       taskCreator: provideTaskCreator(),

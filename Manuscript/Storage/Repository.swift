@@ -8,11 +8,10 @@
 import Combine
 import Foundation
 
-class WorkspaceRepository {
+class Repository {
     
     var worskpacesPublisher: PassthroughSubject<[WorkspaceBusinessModel], Never> = PassthroughSubject()
     var selectedWorskpacesPublisher: PassthroughSubject<WorkspaceBusinessModel, Never> = PassthroughSubject()
-    var selectedBoardPublisher: PassthroughSubject<BoardBusinessModel, Never> = PassthroughSubject()
 
     private let cloudSync: CloudSync
     private let dataProvider: DataProvider
@@ -118,15 +117,6 @@ class WorkspaceRepository {
     func fetchLocalDatabase() {
         let allWorkspacesInitiallyBeforeSync = self.dataProvider.fetchWorkspaces(thread: .background)
         notifyDataSetChanged(workspaces: allWorkspacesInitiallyBeforeSync)
-    }
-    
-    func fetchBoardById(id: Int64) {
-        let workspaces = self.dataProvider.fetchWorkspaces(thread: .background)
-        
-        if let selectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-           let selectedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == id}) {
-            selectedBoardPublisher.send(selectedBoard)
-        }
     }
     
     private func notifyDataSetChanged(workspaces: [WorkspaceBusinessModel]) {

@@ -98,7 +98,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
             }
             .store(in: &tokens)
         
-        viewModel.event
+        viewModel.uiEvent
             .receive(on: RunLoop.main)
             .sink { [weak self] event in guard let self = self else { return }
                 
@@ -111,10 +111,14 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                 }
                 
                 if case .existingBoardDidDeleted = event {
-                    self.coordinator?.dismissBoardCreationScreen()
+                    self.coordinator?.dismissAllPresentedControllers()
                 }
                 
-                if case .newWorkspaceDidSelected = event {
+                if case .selectedWorkspaceDidChanged = event {
+                    if let newlySelectedWorkspace = self.viewModel.selectedWorkspace {
+                        self.navigationItem.title = newlySelectedWorkspace.title
+                        self.determineBoardPlaceholder(boards: newlySelectedWorkspace.boards ?? [])
+                    }
                     self.coordinator?.dismissWorspaceSelectorScreen()
                 }
                 
@@ -137,11 +141,11 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func createNewBoard(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateBoardScreen(state: .creation)
+        coordinator?.presentBoardCreateEditScreen(state: .creation)
     }
     
     @objc private func createBoardButtonDidTap(_ sender: UIButton) {
-        coordinator?.presentCreateBoardScreen(state: .creation)
+        coordinator?.presentBoardCreateEditScreen(state: .creation)
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
@@ -190,7 +194,10 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedItemId = dataSource.itemIdentifier(for: indexPath)?.remoteId
-        coordinator?.presentCreateBoardScreen(state: .edit(id: Int64(selectedItemId!)!))
+        if let selectedWorkspace = viewModel.selectedWorkspace, let selectedBoard = selectedWorkspace.boards?.first(where: { "\($0.remoteId)" == selectedItemId }) {
+            viewModel.selectedBoard = selectedBoard
+            coordinator?.navigateToBoardDetail()
+        }
     }
     
     private func determineBoardPlaceholder(boards: [BoardBusinessModel]) {

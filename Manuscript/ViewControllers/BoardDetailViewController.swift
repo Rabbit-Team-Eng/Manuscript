@@ -26,9 +26,6 @@ class BoardDetailViewController: UIViewController {
     
     lazy var dataSource = createDataSource()
 
-    private var selectedWorkspace: WorkspaceBusinessModel
-    private var selectedBoard: BoardBusinessModel
-    private let boardViewModel: BoardsViewModel
     private var tokens: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
@@ -45,53 +42,59 @@ class BoardDetailViewController: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "slider.vertical.3"), style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
         ]
         
-        
-        self.navigationItem.title = selectedBoard.title
-        
-        boardViewModel.events.sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
+        if let board = mainViewModel.selectedBoard {
+            self.navigationItem.title = board.title
             
-            if case .boardsDidFetch(let boards) = event {
-                print(boards.first { $0.remoteId == self.selectedBoard.remoteId } ?? "We need to handle this error when deleting board!")
-            }
-            
-            if case .currentBoardDidEdit(let board) = event {
-                self.selectedBoard = board
-                self.navigationItem.title = board.title
-                self.coordinator?.dismissBoardCreationScreen()
-            }
-            
-            if case .taskJustCreatedLocally(let board) = event {
-                if let tasks = board.tasks {
-                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
-                    self.coordinator?.dismissTaskCreationScreen()
-                }
-  
-            }
-            
-            if case .taskJustEditedLocally(let board) = event {
-                if let tasks = board.tasks {
-                    self.selectedBoard = board
-                    self.navigationItem.title = board.title
-                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
-                    self.coordinator?.dismissTaskCreationScreen()
-                }
+            if let tasks = board.tasks {
+
+                let taskCellModels = tasks.map { TaskCellModel(id: "\($0.remoteId)",
+                                                               title: $0.title,
+                                                               description: $0.detail ?? "",
+                                                               priority: $0.priority,
+                                                               assignee: $0.assigneeUserId,
+                                                               status: $0.status,
+                                                               boardTitle: board.title)}
+
+
+                applySnapshot(items: taskCellModels)
             }
         }
-        .store(in: &tokens)
         
-        if let tasks = selectedBoard.tasks {
-            
-            let taskCellModels = tasks.map { TaskCellModel(id: "\($0.remoteId)",
-                                                           title: $0.title,
-                                                           description: $0.detail ?? "",
-                                                           priority: $0.priority,
-                                                           assignee: $0.assigneeUserId,
-                                                           status: $0.status,
-                                                           boardTitle: selectedBoard.title)}
-            
-            
-            applySnapshot(items: taskCellModels)
-        }
+//
+//        self.navigationItem.title = selectedBoard.title
+//
+//        boardViewModel.events.sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
+//
+//            if case .boardsDidFetch(let boards) = event {
+//                print(boards.first { $0.remoteId == self.selectedBoard.remoteId } ?? "We need to handle this error when deleting board!")
+//            }
+//
+//            if case .currentBoardDidEdit(let board) = event {
+//                self.selectedBoard = board
+//                self.navigationItem.title = board.title
+//                self.coordinator?.dismissBoardCreationScreen()
+//            }
+//
+//            if case .taskJustCreatedLocally(let board) = event {
+//                if let tasks = board.tasks {
+//                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
+//                    self.coordinator?.dismissTaskCreationScreen()
+//                }
+//
+//            }
+//
+//            if case .taskJustEditedLocally(let board) = event {
+//                if let tasks = board.tasks {
+//                    self.selectedBoard = board
+//                    self.navigationItem.title = board.title
+//                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
+//                    self.coordinator?.dismissTaskCreationScreen()
+//                }
+//            }
+//        }
+//        .store(in: &tokens)
+//
+//        }
         
 
         
@@ -120,17 +123,17 @@ class BoardDetailViewController: UIViewController {
     
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateEditTaskSheet(taskDetailState: .creation, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: nil)
+//        coordinator?.presentCreateEditTaskSheet(taskDetailState: .creation, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: nil)
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIBarButtonItem) {
-        coordinator?.presentCreateBoardScreen(state: .edit(id: selectedBoard.remoteId))
+        coordinator?.presentBoardCreateEditScreen(state: .edit)
     }
     
-    init(selectedWorkspace: WorkspaceBusinessModel, selectedBoard: BoardBusinessModel, boardViewModel: BoardsViewModel) {
-        self.selectedWorkspace = selectedWorkspace
-        self.selectedBoard = selectedBoard
-        self.boardViewModel = boardViewModel
+    private let mainViewModel: MainViewModel
+
+    init(mainViewModel: MainViewModel) {
+        self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -275,9 +278,9 @@ extension BoardDetailViewController {
 extension BoardDetailViewController: TaskCellProtocol {
     
     func taskDidSelected(task: TaskCellModel) {
-        if let tasks = selectedBoard.tasks, let selectedTask = tasks.first(where: { "\($0.remoteId)" == task.id }) {
-            coordinator?.presentCreateEditTaskSheet(taskDetailState: .edit, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: selectedTask)
-        }
+//        if let tasks = selectedBoard.tasks, let selectedTask = tasks.first(where: { "\($0.remoteId)" == task.id }) {
+//            coordinator?.presentCreateEditTaskSheet(taskDetailState: .edit, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: selectedTask)
+//        }
     }
         
 }

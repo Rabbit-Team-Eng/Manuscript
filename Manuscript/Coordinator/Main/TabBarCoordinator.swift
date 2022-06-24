@@ -76,7 +76,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         tasksCoordinator.start(with: TasksFlow.tasks)
     }
     
-    func presentCreateBoardScreen(state: BoardSheetState) {
+    func presentBoardCreateEditScreen(state: BoardSheetState) {
         let vc = BoardCreateEditViewController(boardSheetState: state, mainViewModel: mainInjector.provideMainViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.parentCoordinator = self

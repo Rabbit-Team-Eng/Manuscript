@@ -124,7 +124,7 @@
 		099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */; };
 		099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909E28500F0800B0F4B7 /* BoardCreator.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
-		09A37CA22862A0E2001F8B41 /* WorkspaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA12862A0E2001F8B41 /* WorkspaceRepository.swift */; };
+		09A37CA22862A0E2001F8B41 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA12862A0E2001F8B41 /* Repository.swift */; };
 		09A37CA428636AFD001F8B41 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA328636AFD001F8B41 /* MainViewModel.swift */; };
 		09A37CA62863827C001F8B41 /* BoardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA52863827C001F8B41 /* BoardsViewController.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
@@ -471,7 +471,7 @@
 		099A909B284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorContentConfiguration.swift; sourceTree = "<group>"; };
 		099A909E28500F0800B0F4B7 /* BoardCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreator.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
-		09A37CA12862A0E2001F8B41 /* WorkspaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRepository.swift; sourceTree = "<group>"; };
+		09A37CA12862A0E2001F8B41 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		09A37CA328636AFD001F8B41 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		09A37CA52863827C001F8B41 /* BoardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewController.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -697,11 +697,11 @@
 			children = (
 				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
-				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
 				0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */,
 				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
 				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
+				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
 				09A37CA52863827C001F8B41 /* BoardsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1341,7 +1341,7 @@
 				096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */,
 				096EA95A285C495E0053F4F6 /* SignalRManager.swift */,
 				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
-				09A37CA12862A0E2001F8B41 /* WorkspaceRepository.swift */,
+				09A37CA12862A0E2001F8B41 /* Repository.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1799,7 +1799,7 @@
 				09DCED0B282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */,
 				09D275EE2825CC5D00933F16 /* BoardResponse.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
-				09A37CA22862A0E2001F8B41 /* WorkspaceRepository.swift in Sources */,
+				09A37CA22862A0E2001F8B41 /* Repository.swift in Sources */,
 				09D2757F2825B7D900933F16 /* AuthenticationError.swift in Sources */,
 				096EF7E028542CBC003BEC41 /* ManageAcessCellModel.swift in Sources */,
 				099A9098284FF64D00B0F4B7 /* IconSelectorView.swift in Sources */,

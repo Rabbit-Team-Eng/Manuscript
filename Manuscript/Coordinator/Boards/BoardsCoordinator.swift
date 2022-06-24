@@ -48,8 +48,8 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func presentCreateBoardScreen(state: BoardSheetState) {
-        parentCoordinator?.presentCreateBoardScreen(state: state)
+    func presentBoardCreateEditScreen(state: BoardSheetState) {
+        parentCoordinator?.presentBoardCreateEditScreen(state: state)
 
     }
     
@@ -82,10 +82,8 @@ class BoardsCoordinator: Coordinator, RootProvider, FlowStarter {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func navigateToBoardDetail(selectedBoard: BoardBusinessModel, selectedWorkspace: WorkspaceBusinessModel) {
-        let vc = BoardDetailViewController(selectedWorkspace: selectedWorkspace,
-                                           selectedBoard: selectedBoard,
-                                           boardViewModel: mainComponent.provideBoardsViewModel())
+    func navigateToBoardDetail() {
+        let vc = BoardDetailViewController(mainViewModel: mainComponent.provideMainViewModel())
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: true)
     }

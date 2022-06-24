@@ -9,28 +9,29 @@ import Combine
 import UIKit
 import CoreData
 
-enum MainViewModelEvent {
+enum UIEvent {
     case newBoardDidCreated
-    case newWorkspaceDidSelected
-    case existingBoardDidSelected(board: BoardBusinessModel)
+    case selectedWorkspaceDidChanged
     case existingBoardDidUpdated
     case existingBoardDidDeleted
 }
 
 class MainViewModel {
     
-    private let repository: WorkspaceRepository
+    private let repository: Repository
     
     var selectedWorkspacePublisher: PassthroughSubject<WorkspaceBusinessModel, Never> = PassthroughSubject()
     var workspacesPublisher: PassthroughSubject<[WorkspaceBusinessModel], Never> = PassthroughSubject()
 
-    var event: PassthroughSubject<MainViewModelEvent, Never> = PassthroughSubject()
+    var uiEvent: PassthroughSubject<UIEvent, Never> = PassthroughSubject()
     
+    var workspaces: [WorkspaceBusinessModel]?
     var selectedWorkspace: WorkspaceBusinessModel?
+    var selectedBoard: BoardBusinessModel?
 
     var tokens: Set<AnyCancellable> = []
     
-    init(repository: WorkspaceRepository) {
+    init(repository: Repository) {
         self.repository = repository
         self.startListenningToWorkspaceDatabaseEvent()
     }
@@ -40,13 +41,11 @@ class MainViewModel {
     }
     
     func selectNewWorkspace(id: String) {
-        UserDefaults.selectedWorkspaceId = id
-        fetchLocalDatabase()
-        event.send(.newWorkspaceDidSelected)
-    }
-    
-    func fetchCurrentlySelectedBoard(id: Int64) {
-        repository.fetchBoardById(id: id)
+        if let workspaces = workspaces, let newlySelectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == id }) {
+            UserDefaults.selectedWorkspaceId = id
+            selectedWorkspace = newlySelectedWorkspace
+            uiEvent.send(.selectedWorkspaceDidChanged)
+        }
     }
     
     func createBoard(title: String, asset: String) {
@@ -60,7 +59,7 @@ class MainViewModel {
                                        isPendingDeletionOnTheServer: false)
         
         repository.createBoard(board: board) { [weak self] in guard let self = self else { return }
-            self.event.send(.newBoardDidCreated)
+            self.uiEvent.send(.newBoardDidCreated)
         }
     }
     
@@ -76,7 +75,7 @@ class MainViewModel {
                                        isPendingDeletionOnTheServer: false)
         
         repository.editBoard(board: board) { [weak self] in guard let self = self else { return }
-            self.event.send(.existingBoardDidUpdated)
+            self.uiEvent.send(.existingBoardDidUpdated)
         }
     }
     
@@ -92,7 +91,7 @@ class MainViewModel {
                                        isPendingDeletionOnTheServer: false)
         
         repository.removeBoard(board: board) { [weak self] in guard let self = self else { return }
-            self.event.send(.existingBoardDidDeleted)
+            self.uiEvent.send(.existingBoardDidDeleted)
         }
     }
     
@@ -101,25 +100,27 @@ class MainViewModel {
     }
     
     private func startListenningToWorkspaceDatabaseEvent() {
-        workspacesPublisher = repository.worskpacesPublisher
+        
+        repository.worskpacesPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] workspaces in guard let self = self else { return }
+                
+                self.workspaces = workspaces
+                self.workspacesPublisher.send(workspaces)
+                
+        }
+        .store(in: &tokens)
         
         repository.selectedWorskpacesPublisher
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] selectedWorkspace in guard let self = self else { return }
                 
-                self.selectedWorkspacePublisher.send(selectedWorkspace)
                 self.selectedWorkspace = selectedWorkspace
+                self.selectedWorkspacePublisher.send(selectedWorkspace)
                 
         }
         .store(in: &tokens)
 
-        repository.selectedBoardPublisher
-            .receive(on: DispatchQueue.global(qos: .userInitiated))
-            .sink { [weak self] boardBusinessModel in guard let self = self else { return }
-                
-                self.event.send(.existingBoardDidSelected(board: boardBusinessModel))
-        }
-        .store(in: &tokens)
     }
     
 }
