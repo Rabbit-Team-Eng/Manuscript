@@ -81,18 +81,18 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoard(_:))),
-            UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelector(_:))),
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoardBarButtonDidTap(_:))),
+            UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelectorBarButtonDidTap(_:))),
         ]
         
-        refreshController.addTarget(self, action: #selector(refreshControllerDidCalled(_:)), for: .valueChanged)
-        createBoardButton.addTarget(self, action: #selector(createBoardButtonDidTap(_:)), for: .touchUpInside)
+        refreshController.addTarget(self, action: #selector(refreshControllerDidPulled(_:)), for: .valueChanged)
+        createBoardButton.addTarget(self, action: #selector(createNewBoardButtonDidTap(_:)), for: .touchUpInside)
         myColectionView.delegate = self
         
         viewModel.selectedWorkspacePublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] workspaceBusinessModel in guard let self = self else { return }
-                self.refreshController.endRefreshing()
+                if self.refreshController.isRefreshing { self.refreshController.endRefreshing() }
                 self.navigationItem.title = workspaceBusinessModel.title
                 self.determineBoardPlaceholder(boards: workspaceBusinessModel.boards ?? [])
             }
@@ -128,7 +128,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         viewModel.fetchLocalDatabase()
     }
     
-    @objc private func refreshControllerDidCalled(_ sender: UIBarButtonItem) {
+    @objc private func refreshControllerDidPulled(_ sender: UIBarButtonItem) {
         viewModel.syncTheCloud()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in guard let self = self else { return }
@@ -136,15 +136,15 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    @objc private func openWorkspaceSelector(_ sender: UIBarButtonItem) {
+    @objc private func openWorkspaceSelectorBarButtonDidTap(_ sender: UIBarButtonItem) {
         coordinator?.presentWorkspaceSelectorScreen()
     }
     
-    @objc private func createNewBoard(_ sender: UIBarButtonItem) {
+    @objc private func createNewBoardBarButtonDidTap(_ sender: UIBarButtonItem) {
         coordinator?.presentBoardCreateEditScreen(state: .creation)
     }
     
-    @objc private func createBoardButtonDidTap(_ sender: UIButton) {
+    @objc private func createNewBoardButtonDidTap(_ sender: UIButton) {
         coordinator?.presentBoardCreateEditScreen(state: .creation)
     }
     
