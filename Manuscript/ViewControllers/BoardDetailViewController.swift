@@ -42,6 +42,26 @@ class BoardDetailViewController: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "slider.vertical.3"), style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
         ]
         
+        refreshBoardDate()
+        
+        mainViewModel.uiEvent
+            .receive(on: RunLoop.main)
+            .sink { [weak self] event in guard let self = self else { return }
+                
+                if case .existingBoardDidUpdated = event {
+                    
+                    self.coordinator?.dismissBoardCreationScreen()
+                    self.refreshBoardDate()
+                }
+
+                
+                
+            }
+            .store(in: &tokens)
+
+    }
+    
+    private func refreshBoardDate() {
         if let board = mainViewModel.selectedBoard {
             self.navigationItem.title = board.title
             
@@ -59,45 +79,6 @@ class BoardDetailViewController: UIViewController {
                 applySnapshot(items: taskCellModels)
             }
         }
-        
-//
-//        self.navigationItem.title = selectedBoard.title
-//
-//        boardViewModel.events.sink { completion in } receiveValue: { [weak self] event in guard let self = self else { return }
-//
-//            if case .boardsDidFetch(let boards) = event {
-//                print(boards.first { $0.remoteId == self.selectedBoard.remoteId } ?? "We need to handle this error when deleting board!")
-//            }
-//
-//            if case .currentBoardDidEdit(let board) = event {
-//                self.selectedBoard = board
-//                self.navigationItem.title = board.title
-//                self.coordinator?.dismissBoardCreationScreen()
-//            }
-//
-//            if case .taskJustCreatedLocally(let board) = event {
-//                if let tasks = board.tasks {
-//                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
-//                    self.coordinator?.dismissTaskCreationScreen()
-//                }
-//
-//            }
-//
-//            if case .taskJustEditedLocally(let board) = event {
-//                if let tasks = board.tasks {
-//                    self.selectedBoard = board
-//                    self.navigationItem.title = board.title
-//                    self.applySnapshot(items: TaskTransformer.transformTasksToTaskCellModel(tasks: tasks))
-//                    self.coordinator?.dismissTaskCreationScreen()
-//                }
-//            }
-//        }
-//        .store(in: &tokens)
-//
-//        }
-        
-
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -123,7 +104,7 @@ class BoardDetailViewController: UIViewController {
     
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
-//        coordinator?.presentCreateEditTaskSheet(taskDetailState: .creation, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: nil)
+        coordinator?.presentCreateEditTaskSheet(taskDetailState: .creation)
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIBarButtonItem) {

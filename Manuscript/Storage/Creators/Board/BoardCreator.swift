@@ -25,7 +25,7 @@ class BoardCreator {
         self.dataProvider = dataProvider
     }
     
-    func createBoard(board: BoardBusinessModel, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
+    func createBoard(board: BoardCreateCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
@@ -35,9 +35,9 @@ class BoardCreator {
             boardEntity.mainDescription = board.detailDescription
             boardEntity.isInitiallySynced = board.isInitiallySynced
             boardEntity.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
-            boardEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+            boardEntity.lastModifiedDate = board.lastModifiedDate
             boardEntity.ownerWorkspaceId = board.ownerWorkspaceId
-            boardEntity.remoteId = board.remoteId
+            boardEntity.remoteId = board.id
             boardEntity.title = board.title
             
             let workspacesFetchRequest: NSFetchRequest<WorkspaceEntity> = NSFetchRequest(entityName: "WorkspaceEntity")
@@ -58,7 +58,7 @@ class BoardCreator {
         }
     }
     
-    private func createBoardInServer(item: BoardBusinessModel, coreDataId: NSManagedObjectID?, serverCompletion: @escaping () -> Void) {
+    private func createBoardInServer(item: BoardCreateCoreDataRequest, coreDataId: NSManagedObjectID?, serverCompletion: @escaping () -> Void) {
         
         boardService.createNewBoard(requestBody: BoardRequest(workspaceId: Int(item.ownerWorkspaceId), assetUrl: item.assetUrl, title: item.title))
             .sink { completion in } receiveValue: { [weak self] boardResponse in
@@ -85,12 +85,12 @@ class BoardCreator {
             .store(in: &self.tokens)
     }
 
-    func editBoard(board: BoardBusinessModel, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
+    func editBoard(board: BoardEditCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
         context.performAndWait { [weak self] in guard let self = self else { return }
-            if let coreDataId = board.coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
+            if let boardToBeUpdated = try? context.existingObject(with: board.coreDataId) as? BoardEntity {
                 boardToBeUpdated.title = board.title
                 boardToBeUpdated.assetUrl = board.assetUrl
                 do {
@@ -106,16 +106,16 @@ class BoardCreator {
         }
     }
     
-    private func editBoardInServer(board: BoardBusinessModel, serverCompletion: @escaping () -> Void) {
+    private func editBoardInServer(board: BoardEditCoreDataRequest, serverCompletion: @escaping () -> Void) {
         
-        boardService.updateBoardById(requestBody: BoardRequest(workspaceId: Int(board.ownerWorkspaceId), assetUrl: board.assetUrl, title: board.title), boardId: board.remoteId)
+        boardService.updateBoardById(requestBody: BoardRequest(workspaceId: Int(board.ownerWorkspaceId), assetUrl: board.assetUrl, title: board.title), boardId: board.id)
             .sink { completion in } receiveValue: { [weak self] boardResponse  in guard let self = self else { return }
                 
                 let context = self.database.databaseContainer.newBackgroundContext()
                 context.automaticallyMergesChangesFromParent = true
                 
                 context.performAndWait {
-                    if let coreDataId = board.coreDataId, let boardToBeUpdated = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                    if let boardToBeUpdated = try? context.existingObject(with: board.coreDataId) as? BoardEntity {
                         boardToBeUpdated.lastModifiedDate = boardResponse.lastModifiedDate
                         do {
                             try context.save()
@@ -129,18 +129,18 @@ class BoardCreator {
             .store(in: &tokens)
     }
     
-    func removeBoard(board: BoardBusinessModel, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
+    func removeBoard(board: BoardDeleteCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
         context.performAndWait {
-            if let coreDataId = board.coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
-                boardToBeRemoved.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+            if let boardToBeRemoved = try? context.existingObject(with: board.coreDataId) as? BoardEntity {
+                boardToBeRemoved.lastModifiedDate = board.lastModifiedDate
                 boardToBeRemoved.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
                 
                 boardToBeRemoved.tasks?.forEach({ boardTaskEntity in
                     if let task = boardTaskEntity as? TaskEntity {
-                        task.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: board.lastModifiedDate)
+                        task.lastModifiedDate = board.lastModifiedDate
                         task.isPendingDeletionOnTheServer = board.isPendingDeletionOnTheServer
                     }
                 })
@@ -158,15 +158,15 @@ class BoardCreator {
         }
     }
     
-    private func removeBoardInServer(board: BoardBusinessModel, serverCompletion: @escaping () -> Void) {
-        boardService.deleteBoardById(boardId: board.remoteId)
+    private func removeBoardInServer(board: BoardDeleteCoreDataRequest, serverCompletion: @escaping () -> Void) {
+        boardService.deleteBoardById(boardId: board.id)
             .sink { completion in } receiveValue: { statusCode in
 
                 let context = self.database.databaseContainer.newBackgroundContext()
                 context.automaticallyMergesChangesFromParent = true
                 
                 context.performAndWait {
-                    if let coreDataId = board.coreDataId, let boardToBeRemoved = try? context.existingObject(with: coreDataId) as? BoardEntity {
+                    if let boardToBeRemoved = try? context.existingObject(with: board.coreDataId) as? BoardEntity {
                         context.delete(boardToBeRemoved)
 
                         do {

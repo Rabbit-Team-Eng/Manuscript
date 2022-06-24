@@ -86,8 +86,8 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         mainTabBarController.present(vc, animated: true, completion: nil)
     }
     
-    func presentTaskDetailScreen(taskDetailState: TaskSheetState, workspaceBusinessModel: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?, selectedTask: TaskBusinessModel?) {
-        let vc = TaskCreateEditViewController(state: taskDetailState, selectedWorkspace: workspaceBusinessModel, selectedBoard: selectedBoard, selectedTask: selectedTask, boardViewModel: mainInjector.provideBoardsViewModel())
+    func presentTaskDetailScreen(taskDetailState: TaskSheetState) {
+        let vc = TaskCreateEditViewController(state: taskDetailState, viewModel: mainInjector.provideMainViewModel())
         vc.modalPresentationStyle = .pageSheet
         vc.coordinator = self
         if let sheet = vc.sheetPresentationController {

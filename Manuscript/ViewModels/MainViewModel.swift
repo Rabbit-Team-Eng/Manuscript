@@ -49,30 +49,15 @@ class MainViewModel {
     }
     
     func createBoard(title: String, asset: String) {
-        let board = BoardBusinessModel(remoteId: 0,
-                                       title: title,
-                                       detailDescription: "",
-                                       assetUrl: asset,
-                                       ownerWorkspaceId: Int64(UserDefaults.selectedWorkspaceId)!,
-                                       lastModifiedDate: DateTimeUtils.convertDateToServerString(date: .now),
-                                       isInitiallySynced: false,
-                                       isPendingDeletionOnTheServer: false)
+        let boardRequest = BoardCreateCoreDataRequest(title: title, assetUrl: asset)
         
-        repository.createBoard(board: board) { [weak self] in guard let self = self else { return }
+        repository.createBoard(board: boardRequest) { [weak self] in guard let self = self else { return }
             self.uiEvent.send(.newBoardDidCreated)
         }
     }
     
     func editBoard(id: Int64, coreDataId: NSManagedObjectID, title: String, asset: String) {
-        let board = BoardBusinessModel(remoteId: id,
-                                       coreDataId: coreDataId,
-                                       title: title,
-                                       detailDescription: "",
-                                       assetUrl: asset,
-                                       ownerWorkspaceId: Int64(UserDefaults.selectedWorkspaceId)!,
-                                       lastModifiedDate: DateTimeUtils.convertDateToServerString(date: .now),
-                                       isInitiallySynced: true,
-                                       isPendingDeletionOnTheServer: false)
+        let board = BoardEditCoreDataRequest(id: id, coreDataId: coreDataId, title: title, assetUrl: asset)
         
         repository.editBoard(board: board) { [weak self] in guard let self = self else { return }
             self.uiEvent.send(.existingBoardDidUpdated)
@@ -80,15 +65,7 @@ class MainViewModel {
     }
     
     func removeBoard(id: Int64, coreDataId: NSManagedObjectID) {
-        let board = BoardBusinessModel(remoteId: id,
-                                       coreDataId: coreDataId,
-                                       title: "title",
-                                       detailDescription: "",
-                                       assetUrl: "asset",
-                                       ownerWorkspaceId: Int64(UserDefaults.selectedWorkspaceId)!,
-                                       lastModifiedDate: DateTimeUtils.convertDateToServerString(date: .now),
-                                       isInitiallySynced: true,
-                                       isPendingDeletionOnTheServer: false)
+        let board = BoardDeleteCoreDataRequest(id: id, coreDataId: coreDataId)
         
         repository.removeBoard(board: board) { [weak self] in guard let self = self else { return }
             self.uiEvent.send(.existingBoardDidDeleted)
@@ -116,6 +93,9 @@ class MainViewModel {
             .sink { [weak self] selectedWorkspace in guard let self = self else { return }
                 
                 self.selectedWorkspace = selectedWorkspace
+                
+                if let updatedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == self.selectedBoard?.remoteId }) { self.selectedBoard = updatedBoard }
+                
                 self.selectedWorkspacePublisher.send(selectedWorkspace)
                 
         }

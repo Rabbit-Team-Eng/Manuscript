@@ -81,8 +81,10 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewBoardBarButtonDidTap(_:))),
-            UIBarButtonItem(image: UIImage(systemName: "square.stack.3d.up"), style: .plain, target: self, action: #selector(openWorkspaceSelectorBarButtonDidTap(_:))),
+            
+            UIBarButtonItem(image: Icon.plus, style: .plain, target: self, action: #selector(createNewBoardBarButtonDidTap(_:))),
+            UIBarButtonItem(image: Icon.selector, style: .plain, target: self, action: #selector(openWorkspaceSelectorBarButtonDidTap(_:))),
+            
         ]
         
         refreshController.addTarget(self, action: #selector(refreshControllerDidPulled(_:)), for: .valueChanged)
@@ -103,10 +105,6 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
             .sink { [weak self] event in guard let self = self else { return }
                 
                 if case .newBoardDidCreated = event {
-                    self.coordinator?.dismissBoardCreationScreen()
-                }
-                
-                if case .existingBoardDidUpdated = event {
                     self.coordinator?.dismissBoardCreationScreen()
                 }
                 
@@ -308,8 +306,12 @@ class BoardCellContentView: UIView, UIContentView {
     
     var model: BoardCellModel?
     //    weak var delegate: KaleidoscopeProtocol?
-
-    var configuration: UIContentConfiguration
+    
+    var configuration: UIContentConfiguration {
+        didSet {
+            applyConfiguration(configuration: configuration)
+        }
+    }
     
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -382,19 +384,16 @@ class BoardCellContentView: UIView, UIContentView {
             syncIndicatorImageView.widthAnchor.constraint(equalToConstant: 10),
             
         ])
-
         
-        if let configModel = configuration.model { applyConfigurationModel(model: configModel) }
+        applyConfiguration(configuration: configuration)
 
-
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func applyConfigurationModel(model: BoardCellModel) {
+    private func applyConfiguration(configuration: UIContentConfiguration) {
         guard let config = configuration as? BoardCellContentConfiguration, let model = config.model else { return }
         self.model = model
         

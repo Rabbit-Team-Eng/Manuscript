@@ -13,31 +13,14 @@ enum TaskSheetState {
     case edit
 }
 
-class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
+class TaskCreateEditViewController: UIViewController {
     
     weak var coordinator: TabBarCoordinator? = nil
-    
-    func actionDidHappen(action: TaskDetailAction) {
-        
-        if case .titleDidUpdated(let title) = action {
-            newTitle = title
-            print(newTitle)
-        }
-        
-        if case .descriptionDidUpdated(let description) = action {
-            newDescription = description
-            print(newDescription)
-
-        }
-    }
     
     typealias DataSource = UICollectionViewDiffableDataSource<TaskDetailSectionType, TaskDetailCellModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel>
     
     lazy var dataSource = createDataSource()
-    
-
-    let boardViewModel: BoardsViewModel
     var tokens: Set<AnyCancellable> = []
     
     lazy var myColectionView: UICollectionView = {
@@ -93,21 +76,11 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
     }()
 
     private let state: TaskSheetState
-    private let selectedBoard: BoardBusinessModel?
-    private var selectedWorkspace: WorkspaceBusinessModel?
-    private var selectedTask: TaskBusinessModel?
+    private let viewModel: MainViewModel
 
-    private var newTitle: String = ""
-    private var newDescription: String = ""
-    private var selectedPriority: Priority?
-    private var selectedBoardId: String?
-
-    init(state: TaskSheetState, selectedWorkspace: WorkspaceBusinessModel?, selectedBoard: BoardBusinessModel?, selectedTask: TaskBusinessModel?, boardViewModel: BoardsViewModel) {
+    init(state: TaskSheetState, viewModel: MainViewModel) {
         self.state = state
-        self.selectedTask = selectedTask
-        self.selectedBoard = selectedBoard
-        self.selectedWorkspace = selectedWorkspace
-        self.boardViewModel = boardViewModel
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -122,49 +95,49 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        boardViewModel.priorirtySetEvenet.sink { completion in } receiveValue: { [weak self] priority in guard let self = self else { return }
-            
-            var newSnapshot = self.dataSource.snapshot().itemIdentifiers.filter { $0.section != .prioritySection }
-            
-            if priority == .low {
-                self.selectedPriority = .low
-                newSnapshot.append(
-                    TaskDetailCellModel(id: "0", priorityCellModel: PrioritySelectorCellModel(title: "Low",
-                                                                                              description: "Low priority task which will go to the end of your task list",
-                                                                                              priority: .low,
-                                                                                              isHighlighted: true))
-                
-                )
-                
-            } else if priority == .medium {
-                self.selectedPriority = .medium
-                newSnapshot.append(
-                    TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
-                                                                                              description: "Medium priority is a regular task which will be in your task list",
-                                                                                              priority: .medium,
-                                                                                              isHighlighted: true))
-                
-                )
-                
-            } else if priority == .high {
-                self.selectedPriority = .high
-                newSnapshot.append(
-                    TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "High",
-                                                                                              description: "High priority task will go to top of your list and you will get notifications frequently",
-                                                                                              priority: .high,
-                                                                                              isHighlighted: true))
-                
-                )
-                
-            }
-
-            
-            self.applySnapshot(items: newSnapshot)
-
-            
-            
-        }
-        .store(in: &tokens)
+//        boardViewModel.priorirtySetEvenet.sink { completion in } receiveValue: { [weak self] priority in guard let self = self else { return }
+//
+//            var newSnapshot = self.dataSource.snapshot().itemIdentifiers.filter { $0.section != .prioritySection }
+//
+//            if priority == .low {
+//                self.selectedPriority = .low
+//                newSnapshot.append(
+//                    TaskDetailCellModel(id: "0", priorityCellModel: PrioritySelectorCellModel(title: "Low",
+//                                                                                              description: "Low priority task which will go to the end of your task list",
+//                                                                                              priority: .low,
+//                                                                                              isHighlighted: true))
+//
+//                )
+//
+//            } else if priority == .medium {
+//                self.selectedPriority = .medium
+//                newSnapshot.append(
+//                    TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
+//                                                                                              description: "Medium priority is a regular task which will be in your task list",
+//                                                                                              priority: .medium,
+//                                                                                              isHighlighted: true))
+//
+//                )
+//
+//            } else if priority == .high {
+//                self.selectedPriority = .high
+//                newSnapshot.append(
+//                    TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "High",
+//                                                                                              description: "High priority task will go to top of your list and you will get notifications frequently",
+//                                                                                              priority: .high,
+//                                                                                              isHighlighted: true))
+//
+//                )
+//
+//            }
+//
+//
+//            self.applySnapshot(items: newSnapshot)
+//
+//
+//
+//        }
+//        .store(in: &tokens)
 
         
         view.backgroundColor = Palette.lightBlack
@@ -251,74 +224,71 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
         
         var localSnapshot: [TaskDetailCellModel] = []
         
-        if let selectedTask = selectedTask, let board = selectedBoard, let allBoards = selectedWorkspace?.boards {
-            
-            localSnapshot.append(
-                TaskDetailCellModel(id: "0",
-                                    generalInformationCellModel: TaskGeneralInfoCellModel(title: selectedTask.title,
-                                                                                          description: selectedTask.detail ?? "",
-                                                                                          isEditable: true,
-                                                                                          needPlaceholders: true)))
-            
-      
+//        if let selectedTask = selectedTask, let board = selectedBoard, let allBoards = selectedWorkspace?.boards {
+//
+//            localSnapshot.append(
+//                TaskDetailCellModel(id: "0",
+//                                    generalInformationCellModel: TaskGeneralInfoCellModel(title: selectedTask.title,
+//                                                                                          description: selectedTask.detail ?? "",
+//                                                                                          isEditable: true,
+//                                                                                          needPlaceholders: true)))
+//
+//
+//            localSnapshot.append(TaskDetailCellModel(id: "\(board.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: board.title, iconResource: board.assetUrl)))
+//
+//            let otherBoardAfterFilter = allBoards.filter { $0.remoteId != board.remoteId }.map { TaskDetailCellModel(id: "\($0.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: $0.title, iconResource: $0.assetUrl)) }
+//
+//
+//            localSnapshot.append(contentsOf: otherBoardAfterFilter)
+//
+//            if selectedTask.priority == .high {
+//                let priorityCell = TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "High",
+//                                                                                                                         description: "High priority task will go to top of your list and you will get notifications frequently",
+//                                                                                                                         priority: .high,
+//                                                                                                                         isHighlighted: true))
+//                localSnapshot.append(priorityCell)
+//            }
+//
+//            if selectedTask.priority == .medium {
+//                let priorityCell = TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
+//                                                                                          description: "Medium priority is a regular task which will be in your task list",
+//                                                                                          priority: .medium,
+//                                                                                          isHighlighted: true))
+//                localSnapshot.append(priorityCell)
+//
+//            }
+//
+//            if selectedTask.priority == .low {
+//                let priorityCell =  TaskDetailCellModel(id: "3", priorityCellModel: PrioritySelectorCellModel(title: "Low",
+//                                                                                                              description: "Low priority task which will go to the end of your task list",
+//                                                                                                              priority: .low,
+//                                                                                                              isHighlighted: true))
+//                localSnapshot.append(priorityCell)
+//            }
+//        }
+        
+
+        localSnapshot.append(
+            TaskDetailCellModel(id: "0",
+                                generalInformationCellModel: TaskGeneralInfoCellModel(title: "",
+                                                                                      description: "",
+                                                                                      isEditable: true,
+                                                                                      needPlaceholders: true)))
+        
+        if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards {
             localSnapshot.append(TaskDetailCellModel(id: "\(board.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: board.title, iconResource: board.assetUrl)))
             
             let otherBoardAfterFilter = allBoards.filter { $0.remoteId != board.remoteId }.map { TaskDetailCellModel(id: "\($0.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: $0.title, iconResource: $0.assetUrl)) }
             
             
             localSnapshot.append(contentsOf: otherBoardAfterFilter)
-            
-            if selectedTask.priority == .high {
-                let priorityCell = TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "High",
-                                                                                                                         description: "High priority task will go to top of your list and you will get notifications frequently",
-                                                                                                                         priority: .high,
-                                                                                                                         isHighlighted: true))
-                localSnapshot.append(priorityCell)
-            }
-            
-            if selectedTask.priority == .medium {
-                let priorityCell = TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
-                                                                                          description: "Medium priority is a regular task which will be in your task list",
-                                                                                          priority: .medium,
-                                                                                          isHighlighted: true))
-                localSnapshot.append(priorityCell)
-
-            }
-            
-            if selectedTask.priority == .low {
-                let priorityCell =  TaskDetailCellModel(id: "3", priorityCellModel: PrioritySelectorCellModel(title: "Low",
-                                                                                                              description: "Low priority task which will go to the end of your task list",
-                                                                                                              priority: .low,
-                                                                                                              isHighlighted: true))
-                localSnapshot.append(priorityCell)
-            }
         }
         
-        if selectedTask == nil {
-            localSnapshot.append(
-                TaskDetailCellModel(id: "0",
-                                    generalInformationCellModel: TaskGeneralInfoCellModel(title: "",
-                                                                                          description: "",
-                                                                                          isEditable: true,
-                                                                                          needPlaceholders: true)))
-            
-            if let board = selectedBoard, let allBoards = selectedWorkspace?.boards {
-                localSnapshot.append(TaskDetailCellModel(id: "\(board.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: board.title, iconResource: board.assetUrl)))
-                
-                let otherBoardAfterFilter = allBoards.filter { $0.remoteId != board.remoteId }.map { TaskDetailCellModel(id: "\($0.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: $0.title, iconResource: $0.assetUrl)) }
-                
-                
-                localSnapshot.append(contentsOf: otherBoardAfterFilter)
-            }
-            
-            let priorityCell = TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "High",
-                                                                                                         description: "High priority task will go to top of your list and you will get notifications frequently",
-                                                                                                         priority: .high,
-                                                                                                         isHighlighted: true))
-            localSnapshot.append(priorityCell)
-            
-
-        }
+        let priorityCell = TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "High",
+                                                                                                     description: "High priority task will go to top of your list and you will get notifications frequently",
+                                                                                                     priority: .high,
+                                                                                                     isHighlighted: true))
+        localSnapshot.append(priorityCell)
         
 
         applySnapshot(items: localSnapshot)
@@ -332,59 +302,59 @@ class TaskCreateEditViewController: UIViewController, TaskDetailActionProtocol {
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIButton) {
         
-        if let selectedPriority = selectedPriority {
-            let model = TaskBusinessModel(remoteId: -999,
-                                          assigneeUserId: "im idin",
-                                          title: newTitle,
-                                          detail: newDescription,
-                                          dueDate: DateTimeUtils.convertDateToServerString(date: Date()),
-                                          ownerBoardId: Int64(selectedBoardId!)!,
-                                          status: "new",
-                                          workspaceId: selectedWorkspace!.remoteId,
-                                          lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-                                          isInitiallySynced: false,
-                                          isPendingDeletionOnTheServer: false,
-                                          priority: selectedPriority)
-            
-            boardViewModel.createNewTask(task: model)
-        }
+//        if let selectedPriority = selectedPriority {
+//            let model = TaskBusinessModel(remoteId: -999,
+//                                          assigneeUserId: "im idin",
+//                                          title: newTitle,
+//                                          detail: newDescription,
+//                                          dueDate: DateTimeUtils.convertDateToServerString(date: Date()),
+//                                          ownerBoardId: Int64(selectedBoardId!)!,
+//                                          status: "new",
+//                                          workspaceId: selectedWorkspace!.remoteId,
+//                                          lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
+//                                          isInitiallySynced: false,
+//                                          isPendingDeletionOnTheServer: false,
+//                                          priority: selectedPriority)
+//
+//            boardViewModel.createNewTask(task: model)
+//        }
      
     }
     
     @objc private func deleteCurrentTaskButtonDidTap(_ sender: UIButton) {
-        if let selectedTask = selectedTask {
-            boardViewModel.deleteTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
-                                                                   coreDataId: selectedTask.coreDataId,
-                                                                   assigneeUserId: selectedTask.assigneeUserId,
-                                                                   title: newTitle,
-                                                                   detail: newDescription,
-                                                                   dueDate: selectedTask.dueDate,
-                                                                   ownerBoardId: Int64(selectedBoardId!)!,
-                                                                   status: selectedTask.status,
-                                                                   workspaceId: selectedTask.workspaceId,
-                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
-                                                                   isInitiallySynced: true,
-                                                                   isPendingDeletionOnTheServer: true,
-                                                                   priority: selectedTask.priority))
-        }
+//        if let selectedTask = selectedTask {
+//            boardViewModel.deleteTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
+//                                                                   coreDataId: selectedTask.coreDataId,
+//                                                                   assigneeUserId: selectedTask.assigneeUserId,
+//                                                                   title: newTitle,
+//                                                                   detail: newDescription,
+//                                                                   dueDate: selectedTask.dueDate,
+//                                                                   ownerBoardId: Int64(selectedBoardId!)!,
+//                                                                   status: selectedTask.status,
+//                                                                   workspaceId: selectedTask.workspaceId,
+//                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
+//                                                                   isInitiallySynced: true,
+//                                                                   isPendingDeletionOnTheServer: true,
+//                                                                   priority: selectedTask.priority))
+//        }
     }
     
     @objc private func editCurrentTaskButtonDidTap(_ sender: UIButton) {
-        if let selectedTask = selectedTask {
-            boardViewModel.editCurrentTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
-                                                                   coreDataId: selectedTask.coreDataId,
-                                                                   assigneeUserId: selectedTask.assigneeUserId,
-                                                                   title: newTitle,
-                                                                   detail: newDescription,
-                                                                   dueDate: selectedTask.dueDate,
-                                                                   ownerBoardId: Int64(selectedBoardId!)!,
-                                                                   status: selectedTask.status,
-                                                                   workspaceId: selectedTask.workspaceId,
-                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
-                                                                   isInitiallySynced: true,
-                                                                   isPendingDeletionOnTheServer: false,
-                                                                   priority: selectedTask.priority))
-        }
+//        if let selectedTask = selectedTask {
+//            boardViewModel.editCurrentTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
+//                                                                   coreDataId: selectedTask.coreDataId,
+//                                                                   assigneeUserId: selectedTask.assigneeUserId,
+//                                                                   title: newTitle,
+//                                                                   detail: newDescription,
+//                                                                   dueDate: selectedTask.dueDate,
+//                                                                   ownerBoardId: Int64(selectedBoardId!)!,
+//                                                                   status: selectedTask.status,
+//                                                                   workspaceId: selectedTask.workspaceId,
+//                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
+//                                                                   isInitiallySynced: true,
+//                                                                   isPendingDeletionOnTheServer: false,
+//                                                                   priority: selectedTask.priority))
+//        }
     }
 
 
@@ -419,7 +389,7 @@ extension TaskCreateEditViewController {
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
             guard let self = self else { return }
             
-            if self.selectedBoard != nil && self.myColectionView.indexPathsForSelectedItems == [] {
+            if self.viewModel.selectedBoard != nil && self.myColectionView.indexPathsForSelectedItems == [] {
                 self.myColectionView.selectItem(at: IndexPath(item: 0, section: 1), animated: false, scrollPosition: [])
             }
         }
@@ -516,7 +486,7 @@ extension TaskCreateEditViewController {
         return .init { [weak self] cell, indexPath, itemIdentifier in
             guard let self = self else { return }
             cell.model = itemIdentifier.generalInformationCellModel
-            cell.delegate = self
+//            cell.delegate = self
         }
     }
     
@@ -582,7 +552,7 @@ extension TaskCreateEditViewController {
 extension TaskCreateEditViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.id
+//        selectedBoardId = dataSource.itemIdentifier(for: indexPath)?.id
         if indexPath.section != 1 { return false } else { return true }
     }
     
@@ -593,7 +563,7 @@ extension TaskCreateEditViewController: PrioritySelectionActionsProtocol {
     func actionDidHappen(action: PrioritySelectionAction) {
         
         if case .priorityShouldChange(let currentPriority) = action {
-            boardViewModel.selectedPriority = currentPriority
+//            boardViewModel.selectedPriority = currentPriority
 //            coordinator?.presentMembersSelector()
             coordinator?.openPrioritySelectionSheet(withSelectedPriority: currentPriority)
         }

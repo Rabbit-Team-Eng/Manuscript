@@ -55,6 +55,10 @@
 		096BEDC0284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */; };
 		096BEDC3284B27C7001C7136 /* BoardTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC2284B27C7001C7136 /* BoardTransformer.swift */; };
 		096BEDC5284B2E7A001C7136 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */; };
+		096CC62E286560560096C1E4 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096CC62D286560560096C1E4 /* Icon.swift */; };
+		096CC630286592030096C1E4 /* BoardCreateCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096CC62F286592030096C1E4 /* BoardCreateCoreDataRequest.swift */; };
+		096CC632286593CE0096C1E4 /* BoardEditCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096CC631286593CE0096C1E4 /* BoardEditCoreDataRequest.swift */; };
+		096CC634286595780096C1E4 /* BoardDeleteCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096CC633286595780096C1E4 /* BoardDeleteCoreDataRequest.swift */; };
 		096EA95B285C495E0053F4F6 /* SignalRManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EA95A285C495E0053F4F6 /* SignalRManager.swift */; };
 		096EA962285C521F0053F4F6 /* SignalRClient in Frameworks */ = {isa = PBXBuildFile; productRef = 096EA961285C521F0053F4F6 /* SignalRClient */; };
 		096EF7C82853E9F4003BEC41 /* WorksapceDetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */; };
@@ -398,6 +402,10 @@
 		096BEDBF284B14C5001C7136 /* 107448-human-in-vr-glasses-in-metaverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "107448-human-in-vr-glasses-in-metaverse.json"; sourceTree = "<group>"; };
 		096BEDC2284B27C7001C7136 /* BoardTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTransformer.swift; sourceTree = "<group>"; };
 		096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		096CC62D286560560096C1E4 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		096CC62F286592030096C1E4 /* BoardCreateCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreateCoreDataRequest.swift; sourceTree = "<group>"; };
+		096CC631286593CE0096C1E4 /* BoardEditCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardEditCoreDataRequest.swift; sourceTree = "<group>"; };
+		096CC633286595780096C1E4 /* BoardDeleteCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDeleteCoreDataRequest.swift; sourceTree = "<group>"; };
 		096EA95A285C495E0053F4F6 /* SignalRManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalRManager.swift; sourceTree = "<group>"; };
 		096EF7C72853E9F4003BEC41 /* WorksapceDetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksapceDetailSection.swift; sourceTree = "<group>"; };
 		096EF7C92853EA08003BEC41 /* WorkspaceDetailCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDetailCellModel.swift; sourceTree = "<group>"; };
@@ -684,13 +692,13 @@
 		093945982855DDC400A0F963 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
 				0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */,
 				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
-				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
+				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
 				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
+				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
 				09A37CA52863827C001F8B41 /* BoardsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -760,6 +768,25 @@
 				0919BCAC2858138E00DB53C2 /* PriorityTypeConverter.swift */,
 			);
 			path = DataTransformers;
+			sourceTree = "<group>";
+		};
+		096CC635286597130096C1E4 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				099A909E28500F0800B0F4B7 /* BoardCreator.swift */,
+				096CC62F286592030096C1E4 /* BoardCreateCoreDataRequest.swift */,
+				096CC631286593CE0096C1E4 /* BoardEditCoreDataRequest.swift */,
+				096CC633286595780096C1E4 /* BoardDeleteCoreDataRequest.swift */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		096CC636286597200096C1E4 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				0992815C28565AC000F3EA66 /* TaskCreator.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 		096EF7C62853B388003BEC41 /* WorkspaceSelector */ = {
@@ -913,8 +940,8 @@
 		099A909D28500EF500B0F4B7 /* Creators */ = {
 			isa = PBXGroup;
 			children = (
-				099A909E28500F0800B0F4B7 /* BoardCreator.swift */,
-				0992815C28565AC000F3EA66 /* TaskCreator.swift */,
+				096CC636286597200096C1E4 /* Task */,
+				096CC635286597130096C1E4 /* Board */,
 			);
 			path = Creators;
 			sourceTree = "<group>";
@@ -1265,6 +1292,7 @@
 				09D275AD2825B93400933F16 /* Palette.swift */,
 				09D275AF2825B94300933F16 /* StartupUtils.swift */,
 				09F088E7284A6E070012D83D /* Constants.swift */,
+				096CC62D286560560096C1E4 /* Icon.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1716,6 +1744,7 @@
 				099A909C284FF67800B0F4B7 /* IconSelectorContentConfiguration.swift in Sources */,
 				0964FF7A285F0E0500BFB3F7 /* KaleidoscopeModel.swift in Sources */,
 				092F520C28558E4C0032B2D5 /* TaskGeneralInfoConfiguration.swift in Sources */,
+				096CC632286593CE0096C1E4 /* BoardEditCoreDataRequest.swift in Sources */,
 				09D2756F2825B74600933F16 /* RootProvider.swift in Sources */,
 				0992817B28570B3A00F3EA66 /* TaskCellProtocol.swift in Sources */,
 				096EF7D12853EA93003BEC41 /* GeneralInfoCell.swift in Sources */,
@@ -1804,6 +1833,7 @@
 				096EF7E428542D89003BEC41 /* ManageAccessContentView.swift in Sources */,
 				09D2754A2825B65700933F16 /* ApplicationCoordinator.swift in Sources */,
 				09D275592825B6CE00933F16 /* TabBarCoordinator.swift in Sources */,
+				096CC630286592030096C1E4 /* BoardCreateCoreDataRequest.swift in Sources */,
 				09D2764F282605E900933F16 /* TaskEntity+CoreDataClass.swift in Sources */,
 				09D275C42825C95900933F16 /* GetAllTaskRequest.swift in Sources */,
 				099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */,
@@ -1871,7 +1901,9 @@
 				0989BABE284D3CAB0032053C /* WorkspaceSelectorContentConfiguration.swift in Sources */,
 				097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */,
 				09D2755E2825B6F200933F16 /* OnboardingCoordinator.swift in Sources */,
+				096CC62E286560560096C1E4 /* Icon.swift in Sources */,
 				0939459F2855DDC400A0F963 /* TaskCreateEditViewController.swift in Sources */,
+				096CC634286595780096C1E4 /* BoardDeleteCoreDataRequest.swift in Sources */,
 				096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */,
 				099281632856769300F3EA66 /* PrioritySelectorCell.swift in Sources */,
 				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,

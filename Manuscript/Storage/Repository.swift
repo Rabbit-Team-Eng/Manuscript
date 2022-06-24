@@ -45,7 +45,7 @@ class Repository {
         }
     }
     
-    func createBoard(board: BoardBusinessModel, localCompletion: @escaping () -> Void) {
+    func createBoard(board: BoardCreateCoreDataRequest, localCompletion: @escaping () -> Void) {
         boardCreator.createBoard(board: board) { [weak self] in guard let self = self else { return }
             
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
@@ -70,7 +70,7 @@ class Repository {
 
     }
     
-    func editBoard(board: BoardBusinessModel, localCompletion: @escaping () -> Void) {
+    func editBoard(board: BoardEditCoreDataRequest, localCompletion: @escaping () -> Void) {
         boardCreator.editBoard(board: board) { [weak self] in guard let self = self else { return }
             
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
@@ -92,7 +92,7 @@ class Repository {
         }
     }
     
-    func removeBoard(board: BoardBusinessModel, localCompletion: @escaping () -> Void) {
+    func removeBoard(board: BoardDeleteCoreDataRequest, localCompletion: @escaping () -> Void) {
 
         boardCreator.removeBoard(board: board) { [weak self] in guard let self = self else { return }
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
@@ -105,8 +105,8 @@ class Repository {
                let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
                 
                 self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.title) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(board.title) board did successfully broadcasted!") }
+                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.id) board did fail broadcasted: \(errorDescription)")  }
+                    if case .success = signalRCompletionEvent { print("SignalR: \(board.id) board did successfully broadcasted!") }
                     self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
                 }
             }
