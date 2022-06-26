@@ -44,7 +44,7 @@ class BoardDetailViewController: UIViewController {
         
         refreshBoardDate()
         
-        mainViewModel.uiEvent
+        mainViewModel.boardsViewControllerUIEvent
             .receive(on: RunLoop.main)
             .sink { [weak self] event in guard let self = self else { return }
                 
@@ -111,9 +111,9 @@ class BoardDetailViewController: UIViewController {
         coordinator?.presentBoardCreateEditScreen(state: .edit)
     }
     
-    private let mainViewModel: MainViewModel
+    private let mainViewModel: BoardsViewModel
 
-    init(mainViewModel: MainViewModel) {
+    init(mainViewModel: BoardsViewModel) {
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -14,7 +14,6 @@ class MainInjector {
     private var workspaceService: WorkspaceService? = nil
     private var taskService: TaskService? = nil
     private var dataManager: DataProvider? = nil
-    private var boardsViewModel: BoardsViewModel? = nil
     private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
     private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
     private var taskSyncronizer: TaskSyncronizer? = nil
@@ -30,7 +29,7 @@ class MainInjector {
     private var socketIO: SignalRConnectionListener? = nil
     private var memberCoreDataManager: MemberCoreDataManager? = nil
     private var workspaceRepository: Repository? = nil
-    private var mainViewModel: MainViewModel? = nil
+    private var mainViewModel: BoardsViewModel? = nil
     
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -43,11 +42,11 @@ class MainInjector {
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
     }
     
-    func provideMainViewModel() -> MainViewModel {
+    func provideMainViewModel() -> BoardsViewModel {
         if mainViewModel != nil {
             return mainViewModel!
         } else {
-            mainViewModel = MainViewModel(repository: provideWorkspaceRepository())
+            mainViewModel = BoardsViewModel(repository: provideWorkspaceRepository())
             return mainViewModel!
         }
     }
@@ -180,15 +179,6 @@ class MainInjector {
         } else {
             workspaceCoreDatabaseManager = WorkspaceCoreDataManager(coreDataStack: provideCoreDataStack())
             return workspaceCoreDatabaseManager!
-        }
-    }
-    
-    func provideBoardsViewModel() -> BoardsViewModel {
-        if boardsViewModel != nil {
-            return boardsViewModel!
-        } else {
-            boardsViewModel = BoardsViewModel(dataProvider: provideDataManager(), boardCreator: provideBoardCreator(), taskCreator: provideTaskCreator(), cloudSync: provideCloudSync())
-            return boardsViewModel!
         }
     }
     

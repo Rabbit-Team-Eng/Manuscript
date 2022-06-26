@@ -168,7 +168,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
         return dataSource
     }
 
-    private let mainViewModel: MainViewModel
+    private let mainViewModel: BoardsViewModel
     private let worksapceDetailState: WorksapceDetailState
     
     weak var coordinator: BoardsCoordinator? = nil
@@ -234,7 +234,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
         coordinator?.goBackFromWorkspaceCreationScreen()
     }
     
-    init(mainViewModel: MainViewModel, worksapceDetailState: WorksapceDetailState) {
+    init(mainViewModel: BoardsViewModel, worksapceDetailState: WorksapceDetailState) {
         self.mainViewModel = mainViewModel
         self.worksapceDetailState = worksapceDetailState
         super.init(nibName: nil, bundle: nil)

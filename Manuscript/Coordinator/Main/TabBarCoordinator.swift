@@ -36,7 +36,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
 //        UserDefaults.selectedWorkspaceId = ""
 //        UserDefaults.userId = ""
 //        mainInjector.provideStartUpUtils().deleteAcessToken()
-//        
+        
     }
 
     func start(with flow: Flowable) {
@@ -130,7 +130,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     func openPrioritySelectionSheet(withSelectedPriority: PrioritySelectorCellModel) {
         if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskCreateEditViewController {
             
-            let vc = PrioritySelectorViewController(boardViewModel: mainInjector.provideBoardsViewModel())
+            let vc = PrioritySelectorViewController(mainViewModel: mainInjector.provideMainViewModel())
             vc.parentCoordinator = self
             
             let navController = UINavigationController(rootViewController: vc)

@@ -203,7 +203,7 @@ class BoardCreateEditViewController: UIViewController {
     
     @objc private func deletCurrentBoardButtonDidTap(_ sender: UIButton) {
         if let selectedBoard = mainViewModel.selectedBoard, let coreDataId = selectedBoard.coreDataId {
-            mainViewModel.removeBoard(id: selectedBoard.remoteId, coreDataId: coreDataId)
+            mainViewModel.removeBoardForSelectedWorkspace(id: selectedBoard.remoteId, coreDataId: coreDataId)
         }
     }
     
@@ -211,7 +211,7 @@ class BoardCreateEditViewController: UIViewController {
         guard let title = enterNameTextField.text,
         let iconIndexPath = myColectionView.indexPathsForSelectedItems?.first,
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
-        mainViewModel.createBoard(title: title, asset: icon)
+        mainViewModel.createBoardForSelectedWorkspace(title: title, asset: icon)
     }
     
     @objc private func editCurrentBoardButtonDidTap(_ sender: UIButton) {
@@ -220,7 +220,7 @@ class BoardCreateEditViewController: UIViewController {
         let icon = dataSource.itemIdentifier(for: iconIndexPath)?.iconResource else { return }
 
         if let selectedBoard = mainViewModel.selectedBoard, let coreDataId = selectedBoard.coreDataId {
-            mainViewModel.editBoard(id: selectedBoard.remoteId, coreDataId: coreDataId, title: title, asset: icon)
+            mainViewModel.editBoardForSelectedWorkspace(id: selectedBoard.remoteId, coreDataId: coreDataId, title: title, asset: icon)
         }
     }
 
@@ -231,9 +231,9 @@ class BoardCreateEditViewController: UIViewController {
     }
     
     private let boardSheetState: BoardSheetState
-    private let mainViewModel: MainViewModel
+    private let mainViewModel: BoardsViewModel
     
-    init(boardSheetState: BoardSheetState, mainViewModel: MainViewModel) {
+    init(boardSheetState: BoardSheetState, mainViewModel: BoardsViewModel) {
         self.boardSheetState = boardSheetState
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)

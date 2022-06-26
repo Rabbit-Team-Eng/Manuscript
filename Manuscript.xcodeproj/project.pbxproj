@@ -126,7 +126,7 @@
 		099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099A909E28500F0800B0F4B7 /* BoardCreator.swift */; };
 		099B1594284EAEE700DF7D45 /* WorkspaceTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */; };
 		09A37CA22862A0E2001F8B41 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA12862A0E2001F8B41 /* Repository.swift */; };
-		09A37CA428636AFD001F8B41 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA328636AFD001F8B41 /* MainViewModel.swift */; };
+		09A37CA428636AFD001F8B41 /* BoardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA328636AFD001F8B41 /* BoardsViewModel.swift */; };
 		09A37CA62863827C001F8B41 /* BoardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A37CA52863827C001F8B41 /* BoardsViewController.swift */; };
 		09CAAA0A2829D80200FE0214 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA092829D80200FE0214 /* AppDelegate.swift */; };
 		09CAAA0C2829D80200FE0214 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CAAA0B2829D80200FE0214 /* SceneDelegate.swift */; };
@@ -320,7 +320,6 @@
 		09D2763F2825CE6000933F16 /* TaskBusinessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D2762F2825CE6000933F16 /* TaskBusinessModel.swift */; };
 		09D276402825CE6000933F16 /* BusinessModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D276302825CE6000933F16 /* BusinessModelProtocol.swift */; };
 		09D276412825CE6000933F16 /* WorkspaceBusinessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D276312825CE6000933F16 /* WorkspaceBusinessModel.swift */; };
-		09D276442825DA5800933F16 /* BoardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D276432825DA5800933F16 /* BoardsViewModel.swift */; };
 		09D2764F282605E900933F16 /* TaskEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D27647282605E900933F16 /* TaskEntity+CoreDataClass.swift */; };
 		09D27650282605E900933F16 /* TaskEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D27648282605E900933F16 /* TaskEntity+CoreDataProperties.swift */; };
 		09D27651282605E900933F16 /* BoardEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D27649282605E900933F16 /* BoardEntity+CoreDataClass.swift */; };
@@ -469,7 +468,7 @@
 		099A909E28500F0800B0F4B7 /* BoardCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCreator.swift; sourceTree = "<group>"; };
 		099B1593284EAEE700DF7D45 /* WorkspaceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTransformer.swift; sourceTree = "<group>"; };
 		09A37CA12862A0E2001F8B41 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		09A37CA328636AFD001F8B41 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		09A37CA328636AFD001F8B41 /* BoardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewModel.swift; sourceTree = "<group>"; };
 		09A37CA52863827C001F8B41 /* BoardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewController.swift; sourceTree = "<group>"; };
 		09CAAA072829D80200FE0214 /* Database-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Database-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09CAAA092829D80200FE0214 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -587,7 +586,6 @@
 		09D2762F2825CE6000933F16 /* TaskBusinessModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskBusinessModel.swift; sourceTree = "<group>"; };
 		09D276302825CE6000933F16 /* BusinessModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessModelProtocol.swift; sourceTree = "<group>"; };
 		09D276312825CE6000933F16 /* WorkspaceBusinessModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkspaceBusinessModel.swift; sourceTree = "<group>"; };
-		09D276432825DA5800933F16 /* BoardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardsViewModel.swift; sourceTree = "<group>"; };
 		09D27647282605E900933F16 /* TaskEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		09D27648282605E900933F16 /* TaskEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		09D27649282605E900933F16 /* BoardEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BoardEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -694,8 +692,8 @@
 			children = (
 				09D275A72825B90900933F16 /* TasksViewController.swift */,
 				0939459B2855DDC400A0F963 /* WorksapceDetailViewController.swift */,
-				0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */,
 				0939459C2855DDC400A0F963 /* WorkspaceSelectorViewController.swift */,
+				0992815F2856740800F3EA66 /* PrioritySelectorViewController.swift */,
 				093945992855DDC400A0F963 /* TaskCreateEditViewController.swift */,
 				0939459D2855DDC400A0F963 /* BoardDetailViewController.swift */,
 				0939459A2855DDC400A0F963 /* BoardCreateEditViewController.swift */,
@@ -906,8 +904,7 @@
 		0992815E28566F0100F3EA66 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				09D276432825DA5800933F16 /* BoardsViewModel.swift */,
-				09A37CA328636AFD001F8B41 /* MainViewModel.swift */,
+				09A37CA328636AFD001F8B41 /* BoardsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1802,7 +1799,6 @@
 				0964FF80285F0FD300BFB3F7 /* CardContentModel.swift in Sources */,
 				092F5205285586440032B2D5 /* TaskDetailSectionType.swift in Sources */,
 				09D275B22825C81100933F16 /* BoardAPI.swift in Sources */,
-				09D276442825DA5800933F16 /* BoardsViewModel.swift in Sources */,
 				09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */,
 				0992815D28565AC000F3EA66 /* TaskCreator.swift in Sources */,
 				0992817D28570D3C00F3EA66 /* TaskSectionType.swift in Sources */,
@@ -1868,7 +1864,7 @@
 				09D275E32825CBEF00933F16 /* WorkspaceResponse.swift in Sources */,
 				09D2763E2825CE6000933F16 /* MemberBusinessModel.swift in Sources */,
 				09D275832825B7FA00933F16 /* AccessTokenResponse.swift in Sources */,
-				09A37CA428636AFD001F8B41 /* MainViewModel.swift in Sources */,
+				09A37CA428636AFD001F8B41 /* BoardsViewModel.swift in Sources */,
 				092F51FC285583FC0032B2D5 /* BoardSelectorCellModel.swift in Sources */,
 				096EF7CA2853EA08003BEC41 /* WorkspaceDetailCellModel.swift in Sources */,
 				09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */,

@@ -63,9 +63,9 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     
     private var tokens: Set<AnyCancellable> = []
     
-    private let viewModel: MainViewModel
+    private let viewModel: BoardsViewModel
     
-    init(viewModel: MainViewModel) {
+    init(viewModel: BoardsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -100,7 +100,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
             }
             .store(in: &tokens)
         
-        viewModel.uiEvent
+        viewModel.boardsViewControllerUIEvent
             .receive(on: RunLoop.main)
             .sink { [weak self] event in guard let self = self else { return }
                 
@@ -123,7 +123,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
             }
             .store(in: &tokens)
         
-        viewModel.fetchLocalDatabase()
+        viewModel.fetchLocalDatabaseAndNotifyAllSubscribers()
     }
     
     @objc private func refreshControllerDidPulled(_ sender: UIBarButtonItem) {

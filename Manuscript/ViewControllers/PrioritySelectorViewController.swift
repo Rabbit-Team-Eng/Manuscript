@@ -52,35 +52,19 @@ class PrioritySelectorViewController: UIViewController, UICollectionViewDelegate
         selectNewPriorityButton.addTarget(self, action: #selector(newPriorityDidSelected(_:)), for: .touchUpInside)
         
         applySnapshot(items:[
-
-            TaskDetailCellModel(id: "2", priorityCellModel: PrioritySelectorCellModel(title: "High",
-                                                                                      description: "High priority task will go to top of your list and you will get notifications frequently",
-                                                                                      priority: .high,
-                                                                                      isHighlighted: false)),
-                            
-            TaskDetailCellModel(id: "1", priorityCellModel: PrioritySelectorCellModel(title: "Medium",
-                                                                                      description: "Medium priority is a regular task which will be in your task list",
-                                                                                      priority: .medium,
-                                                                                      isHighlighted: false)),
-                            
-            
-            TaskDetailCellModel(id: "0", priorityCellModel: PrioritySelectorCellModel(title: "Low",
-                                                                                      description: "Low priority task which will go to the end of your task list",
-                                                                                      priority: .low,
-                                                                                      isHighlighted: false)),
-                            
+            TaksSectionProvider.providePrioritySection(id: "0", priority: .low, isHighlighted: false),
+            TaksSectionProvider.providePrioritySection(id: "1", priority: .medium, isHighlighted: false),
+            TaksSectionProvider.providePrioritySection(id: "2", priority: .high, isHighlighted: false),
         ])
     }
     
     @objc private func newPriorityDidSelected(_ sender: UIButton) {
-        parentCoordinator?.dismissPrioritySheet()
         if let selectedIndex = myColectionView.indexPathsForSelectedItems?.first,
            let cellModel = dataSource.itemIdentifier(for: selectedIndex),
            let priority = cellModel.priorityCellModel?.priority {
             
-            boardViewModel.newPriorityDidSet(priority: priority)
         }
-
+        
     }
     
     override func viewWillLayoutSubviews() {
@@ -102,10 +86,10 @@ class PrioritySelectorViewController: UIViewController, UICollectionViewDelegate
         ])
     }
     
-    let boardViewModel: BoardsViewModel
+    let mainViewModel: BoardsViewModel
 
-    init(boardViewModel: BoardsViewModel) {
-        self.boardViewModel = boardViewModel
+    init(mainViewModel: BoardsViewModel) {
+        self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -138,19 +122,19 @@ extension PrioritySelectorViewController {
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences) { [weak self] in
             guard let self = self else { return }
             
-            if let priority = self.boardViewModel.selectedPriority?.priority {
-                
-                if priority == .low {
-                    self.myColectionView.selectItem(at: IndexPath(item: 2, section: 0), animated: false, scrollPosition: [])
-                } else if priority == .medium {
-                    self.myColectionView.selectItem(at: IndexPath(item: 1, section: 0), animated: false, scrollPosition: [])
-                } else if priority == .high {
-                    self.myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: [])
-                }
-                
-            } else {
-                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: [])
-            }
+//            if let priority = self.boardViewModel.selectedPriority?.priority {
+//                
+//                if priority == .low {
+//                    self.myColectionView.selectItem(at: IndexPath(item: 2, section: 0), animated: false, scrollPosition: [])
+//                } else if priority == .medium {
+//                    self.myColectionView.selectItem(at: IndexPath(item: 1, section: 0), animated: false, scrollPosition: [])
+//                } else if priority == .high {
+//                    self.myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: [])
+//                }
+//                
+//            } else {
+//                self.myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: [])
+//            }
         }
     }
     

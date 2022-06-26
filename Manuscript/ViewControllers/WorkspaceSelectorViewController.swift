@@ -53,9 +53,9 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         return button
     }()
     
-    private let mainViewModel: MainViewModel
+    private let mainViewModel: BoardsViewModel
 
-    init(mainViewModel: MainViewModel) {
+    init(mainViewModel: BoardsViewModel) {
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -89,7 +89,7 @@ class WorkspaceSelectorViewController: UIViewController, WorkspaceSelectorProtoc
         }
         .store(in: &tokens)
         
-        mainViewModel.fetchLocalDatabase()
+        mainViewModel.fetchLocalDatabaseAndNotifyAllSubscribers()
 
 
     }

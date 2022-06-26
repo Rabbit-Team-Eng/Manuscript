@@ -1,139 +1,123 @@
 //
-//  BoardsViewModel.swift
+//  MainViewModel.swift
 //  Manuscript
 //
-//  Created by Tigran Ghazinyan on 5/6/22.
+//  Created by Tigran Ghazinyan on 6/22/22.
 //
 
 import Combine
 import UIKit
+import CoreData
 
-enum BoardsViewControllerEvent {
-    case titleDidFetch(title: String)
-    case boardsDidFetch(boards: [BoardBusinessModel])
-    case noBoardIsCreated
+enum BoardsViewControllerUIEvent {
     case newBoardDidCreated
-    case currentBoardDidEdit(board: BoardBusinessModel)
-    case currentBoardDidRemoved
-    case taskJustCreatedLocally(board: BoardBusinessModel)
-    case taskJustEditedLocally(board: BoardBusinessModel)
-    case boardDetailDidFetch(board: BoardBusinessModel)
+    case selectedWorkspaceDidChanged
+    case existingBoardDidUpdated
+    case existingBoardDidDeleted
 }
 
-class BoardsViewModel {
+protocol BoardsViewModelProtocol {
     
-    private let dataProvider: DataProvider
-    private let boardCreator: BoardCreator
-    private let taskCreator: TaskCreator
-    private let cloudSync: CloudSync
-    let events: PassthroughSubject<BoardsViewControllerEvent, Never> = PassthroughSubject()
+    func selectNewWorkspace(id: String)
     
-    public var selectedPriority: PrioritySelectorCellModel? = nil
+    func createBoardForSelectedWorkspace(title: String, asset: String)
     
-    let priorirtySetEvenet: PassthroughSubject<Priority, Never> = PassthroughSubject()
-
-
-    init(dataProvider: DataProvider, boardCreator: BoardCreator, taskCreator: TaskCreator, cloudSync: CloudSync) {
-        self.dataProvider = dataProvider
-        self.boardCreator = boardCreator
-        self.taskCreator = taskCreator
-        self.cloudSync = cloudSync
+    func editBoardForSelectedWorkspace(id: Int64, coreDataId: NSManagedObjectID, title: String, asset: String)
+    
+    func removeBoardForSelectedWorkspace(id: Int64, coreDataId: NSManagedObjectID)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(cloudSyncDidFinish), name: Notification.Name("CloudSyncDidFinish"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(newWorkspaceDidSwitched), name: Notification.Name("NewWorkspaceDidSwitched"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(boardDidCreatedAndSyncedWithServer), name: Notification.Name("BoardDidCreatedAndSyncedWithServer"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(taskDidCreatedAndSyncedWithServer), name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
+    func fetchLocalDatabaseAndNotifyAllSubscribers()
+    
+    func syncTheCloud()
+
+}
+
+class BoardsViewModel: BoardsViewModelProtocol {
+    
+    private let repository: Repository
+    
+    var selectedWorkspacePublisher: PassthroughSubject<WorkspaceBusinessModel, Never> = PassthroughSubject()
+    var workspacesPublisher: PassthroughSubject<[WorkspaceBusinessModel], Never> = PassthroughSubject()
+
+    var boardsViewControllerUIEvent: PassthroughSubject<BoardsViewControllerUIEvent, Never> = PassthroughSubject()
+
+    var workspaces: [WorkspaceBusinessModel]?
+    var selectedWorkspace: WorkspaceBusinessModel?
+    var selectedBoard: BoardBusinessModel?
+
+    var tokens: Set<AnyCancellable> = []
+    
+    init(repository: Repository) {
+        self.repository = repository
+        self.startListenningToWorkspaceDatabaseEvent()
+    }
+    
+    func fetchLocalDatabaseAndNotifyAllSubscribers() {
+        repository.fetchLocalDatabase()
+    }
+    
+    func selectNewWorkspace(id: String) {
+        if let workspaces = workspaces, let newlySelectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == id }) {
+            UserDefaults.selectedWorkspaceId = id
+            selectedWorkspace = newlySelectedWorkspace
+            boardsViewControllerUIEvent.send(.selectedWorkspaceDidChanged)
+        }
+    }
+    
+    func createBoardForSelectedWorkspace(title: String, asset: String) {
+        guard let ownerWorkspaceCoreDataId = selectedWorkspace?.coreDataId else { return }
+        let boardRequest = BoardCreateCoreDataRequest(ownerWorkspaceCoreDataId: ownerWorkspaceCoreDataId, title: title, assetUrl: asset)
+        
+        repository.createBoard(board: boardRequest) { [weak self] in guard let self = self else { return }
+            self.boardsViewControllerUIEvent.send(.newBoardDidCreated)
+        }
+    }
+    
+    func editBoardForSelectedWorkspace(id: Int64, coreDataId: NSManagedObjectID, title: String, asset: String) {
+        let board = BoardEditCoreDataRequest(id: id, coreDataId: coreDataId, title: title, assetUrl: asset)
+        
+        repository.editBoard(board: board) { [weak self] in guard let self = self else { return }
+            self.boardsViewControllerUIEvent.send(.existingBoardDidUpdated)
+        }
+    }
+    
+    func removeBoardForSelectedWorkspace(id: Int64, coreDataId: NSManagedObjectID) {
+        let board = BoardDeleteCoreDataRequest(id: id, coreDataId: coreDataId)
+        
+        repository.removeBoard(board: board) { [weak self] in guard let self = self else { return }
+            self.boardsViewControllerUIEvent.send(.existingBoardDidDeleted)
+        }
     }
     
     func syncTheCloud() {
-        cloudSync.syncronize()
+        repository.refreshDatabase()
     }
     
-    func newPriorityDidSet(priority: Priority) {
-        priorirtySetEvenet.send(priority)
-    }
-    
-    func fetchCurrentBoard(id: String) {
-        let board = dataProvider.fetchCurrentBoardWithRemoteId(id: id)
-        events.send(.boardDetailDidFetch(board: board))
-    }
-    
-    func fetchCurrentWorkspace() {
+    private func startListenningToWorkspaceDatabaseEvent() {
+        
+        repository.worskpacesPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] workspaces in guard let self = self else { return }
+                
+                self.workspaces = workspaces
+                self.workspacesPublisher.send(workspaces)
+                
+        }
+        .store(in: &tokens)
+        
+        repository.selectedWorskpacesPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] selectedWorkspace in guard let self = self else { return }
+                
+                self.selectedWorkspace = selectedWorkspace
+                
+                if let updatedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == self.selectedBoard?.remoteId }) { self.selectedBoard = updatedBoard }
+                
+                self.selectedWorkspacePublisher.send(selectedWorkspace)
+                
+        }
+        .store(in: &tokens)
 
-        if UserDefaults.selectedWorkspaceId == Constants.emptyString {
-            let allWorkspaces = dataProvider.fetchWorkspaces(thread: .main)
-            
-            if let firstWorkspace = allWorkspaces.first {
-                events.send(.titleDidFetch(title: firstWorkspace.title))
-                UserDefaults.selectedWorkspaceId = "\(firstWorkspace.remoteId)"
-
-                if  let boards = firstWorkspace.boards {
-                    if boards.count == 0 {
-                        events.send(.noBoardIsCreated)
-                    } else {
-                        events.send(.boardsDidFetch(boards: boards))
-                    }
-                }
-            }
-            
-        } else {
-            let selectedWorksapce = dataProvider.fetchWorkspace(thread: .main, id: UserDefaults.selectedWorkspaceId)
-            
-            events.send(.titleDidFetch(title: selectedWorksapce.title))
-            UserDefaults.selectedWorkspaceId = "\(selectedWorksapce.remoteId)"
-
-            if let boards = selectedWorksapce.boards {
-                if boards.count == 0 {
-                    events.send(.noBoardIsCreated)
-                } else {
-                    events.send(.boardsDidFetch(boards: boards))
-                }
-            }
-        }
-    }
-    
-    func deleteTask(task: TaskBusinessModel) {
-        taskCreator.removeBoard(task: task) { [weak self] in guard let self = self else { return }
-            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
-            self.events.send(.taskJustEditedLocally(board: board))
-        }
-    }
-    
-    func editCurrentTask(task: TaskBusinessModel) {
-        taskCreator.editTask(task: task) { [weak self] in guard let self = self else { return }
-            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
-            self.events.send(.taskJustEditedLocally(board: board))
-        }
-    }
-    
-    func createNewTask(task: TaskBusinessModel) {
-        taskCreator.createNewTask(task: task) { [weak self] in guard let self = self else { return }
-            let board = self.dataProvider.fetchCurrentBoardWithRemoteIdOnBackgroundThread(id: "\(task.ownerBoardId)")
-            self.events.send(.taskJustCreatedLocally(board: board))
-        }
-    }
-    
-    @objc func boardDidCreatedAndSyncedWithServer() {
-        fetchCurrentWorkspace()
-    }
-    
-    @objc func newWorkspaceDidSwitched() {
-        fetchCurrentWorkspace()
-    }
-    
-    @objc private func cloudSyncDidFinish() {
-        fetchCurrentWorkspace()
-    }
-    
-    @objc private func taskDidCreatedAndSyncedWithServer() {
-        fetchCurrentWorkspace()
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name:  Notification.Name("CloudSyncDidFinish") , object: nil)
-        NotificationCenter.default.removeObserver(self, name:  Notification.Name("NewWorkspaceDidSwitched") , object: nil)
-        NotificationCenter.default.removeObserver(self, name:  Notification.Name("BoardDidCreatedAndSyncedWithServer") , object: nil)
-        NotificationCenter.default.removeObserver(self, name:  Notification.Name("TaskDidCreatedAndSyncedWithServer") , object: nil)
     }
     
 }

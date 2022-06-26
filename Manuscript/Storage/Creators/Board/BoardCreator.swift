@@ -42,7 +42,6 @@ class BoardCreator {
             
             if let ownerWorkspace = try? context.existingObject(with: board.ownerWorkspaceCoreDataId) as? WorkspaceEntity {
                 do {
-                    
                     ownerWorkspace.addToBoards(boardEntity)
                     try context.save()
                     databaseCompletion()
@@ -51,8 +50,6 @@ class BoardCreator {
                     fatalError()
                 }
             }
-            
-            
         }
     }
     
