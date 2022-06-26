@@ -87,7 +87,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     }
     
     func presentTaskDetailScreen(taskDetailState: TaskSheetState) {
-        let vc = TaskCreateEditViewController(state: taskDetailState, viewModel: mainInjector.provideMainViewModel())
+        let vc = TaskCreateEditViewController(state: taskDetailState, viewModel: mainInjector.provideMainViewModel(), taskFlowInteractor: mainInjector.provideTaskFlowInteractor())
         vc.modalPresentationStyle = .pageSheet
         vc.coordinator = self
         if let sheet = vc.sheetPresentationController {
@@ -130,7 +130,7 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
     func openPrioritySelectionSheet(withSelectedPriority: PrioritySelectorCellModel) {
         if let taskDetailViewController = mainTabBarController.presentedViewController as? TaskCreateEditViewController {
             
-            let vc = PrioritySelectorViewController(mainViewModel: mainInjector.provideMainViewModel())
+            let vc = PrioritySelectorViewController(mainViewModel: mainInjector.provideMainViewModel(), taskFlowInteractor: mainInjector.provideTaskFlowInteractor())
             vc.parentCoordinator = self
             
             let navController = UINavigationController(rootViewController: vc)

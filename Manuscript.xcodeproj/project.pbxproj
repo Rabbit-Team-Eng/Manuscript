@@ -342,6 +342,7 @@
 		09F088E9284A71010012D83D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088E5284A57580012D83D /* KeychainHelper.swift */; };
 		09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088ED284A7F420012D83D /* UITextField+Extensions.swift */; };
 		09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088EF284A7F640012D83D /* UIFont+Extensions.swift */; };
+		09F434A62869159A0086B691 /* TaskCreateCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -606,6 +607,7 @@
 		09F088E7284A6E070012D83D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		09F088ED284A7F420012D83D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		09F088EF284A7F640012D83D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateCoreDataRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -783,6 +785,7 @@
 			isa = PBXGroup;
 			children = (
 				0992815C28565AC000F3EA66 /* TaskCreator.swift */,
+				09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -1707,6 +1710,7 @@
 				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
 				092F5216285591210032B2D5 /* TaskDetailCellModel.swift in Sources */,
 				093A90F828617FF00054CBCB /* InputCardCell.swift in Sources */,
+				09F434A62869159A0086B691 /* TaskCreateCoreDataRequest.swift in Sources */,
 				0919BCAB2858020000DB53C2 /* TaskTransformer.swift in Sources */,
 				09D276122825CE2300933F16 /* TaskDB.xcdatamodeld in Sources */,
 				09928167285676A300F3EA66 /* PrioritySelectorContentConfiguration.swift in Sources */,

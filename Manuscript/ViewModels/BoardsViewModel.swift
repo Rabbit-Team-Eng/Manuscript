@@ -14,6 +14,7 @@ enum BoardsViewControllerUIEvent {
     case selectedWorkspaceDidChanged
     case existingBoardDidUpdated
     case existingBoardDidDeleted
+    case newTaskDidCreated
 }
 
 protocol BoardsViewModelProtocol {
@@ -62,6 +63,23 @@ class BoardsViewModel: BoardsViewModelProtocol {
             selectedWorkspace = newlySelectedWorkspace
             boardsViewControllerUIEvent.send(.selectedWorkspaceDidChanged)
         }
+    }
+    
+    func createTaskForBoard(title: String, description: String, doeDate: String, ownerBoardId: Int64, status: String, priority: String, assigneeUserId: String) {
+        if let updatedBoard = selectedWorkspace?.boards?.first(where: { $0.remoteId == ownerBoardId }) { self.selectedBoard = updatedBoard }
+        
+        repository.createTask(task: TaskCreateCoreDataRequest(title: title,
+                                                              description: description,
+                                                              doeDate: doeDate,
+                                                              ownerBoardId: ownerBoardId,
+                                                              status: status,
+                                                              priority: priority,
+                                                              assigneeUserId: assigneeUserId)) {  [weak self] in guard let self = self else { return }
+            self.boardsViewControllerUIEvent.send(.newTaskDidCreated)
+
+            
+        }
+        
     }
     
     func createBoardForSelectedWorkspace(title: String, asset: String) {

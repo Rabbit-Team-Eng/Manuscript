@@ -56,6 +56,17 @@ class PrioritySelectorViewController: UIViewController, UICollectionViewDelegate
             TaksSectionProvider.providePrioritySection(id: "1", priority: .medium, isHighlighted: false),
             TaksSectionProvider.providePrioritySection(id: "2", priority: .high, isHighlighted: false),
         ])
+        
+        if let priority = taskFlowInteractor.selectedPriority {
+            switch priority {
+            case .low:
+                myColectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: true, scrollPosition: .top)
+            case .medium:
+                myColectionView.selectItem(at: IndexPath(item: 1, section: 0), animated: true, scrollPosition: .top)
+            case .high:
+                myColectionView.selectItem(at: IndexPath(item: 2, section: 0), animated: true, scrollPosition: .top)
+            }
+        }
     }
     
     @objc private func newPriorityDidSelected(_ sender: UIButton) {
@@ -63,6 +74,7 @@ class PrioritySelectorViewController: UIViewController, UICollectionViewDelegate
            let cellModel = dataSource.itemIdentifier(for: selectedIndex),
            let priority = cellModel.priorityCellModel?.priority {
             
+            taskFlowInteractor.selectNewPriority(priority: priority)
         }
         
     }
@@ -86,10 +98,12 @@ class PrioritySelectorViewController: UIViewController, UICollectionViewDelegate
         ])
     }
     
-    let mainViewModel: BoardsViewModel
+    private let mainViewModel: BoardsViewModel
+    private let taskFlowInteractor: TaskFlowInteractor
 
-    init(mainViewModel: BoardsViewModel) {
+    init(mainViewModel: BoardsViewModel, taskFlowInteractor: TaskFlowInteractor) {
         self.mainViewModel = mainViewModel
+        self.taskFlowInteractor = taskFlowInteractor
         super.init(nibName: nil, bundle: nil)
     }
     

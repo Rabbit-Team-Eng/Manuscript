@@ -77,10 +77,12 @@ class TaskCreateEditViewController: UIViewController {
 
     private let state: TaskSheetState
     private let viewModel: BoardsViewModel
-
-    init(state: TaskSheetState, viewModel: BoardsViewModel) {
+    private let taskFlowInteractor: TaskFlowInteractor
+    
+    init(state: TaskSheetState, viewModel: BoardsViewModel, taskFlowInteractor: TaskFlowInteractor) {
         self.state = state
         self.viewModel = viewModel
+        self.taskFlowInteractor = taskFlowInteractor
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -165,6 +167,9 @@ class TaskCreateEditViewController: UIViewController {
             titleTexLabel.text = "Create new Task"
             createNewTaskButton.addTarget(self, action: #selector(createNewTaskButtonDidTap(_:)), for: .touchUpInside)
             NSLayoutConstraint.activate(creationConstraints)
+            taskFlowInteractor.selectNewPriority(priority: .high)
+            
+            if let id = viewModel.selectedBoard?.remoteId { taskFlowInteractor.selectNewBoard(id: id) }
         }
         
         if state == .edit {
@@ -178,10 +183,23 @@ class TaskCreateEditViewController: UIViewController {
 
         }
         
-        if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards {
-            let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards)
+        if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards, let priority = taskFlowInteractor.selectedPriority {
+            let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
             applySnapshot(snapshot: localSnapshot)
         }
+        
+        taskFlowInteractor.taskFlowUIEvent
+            .receive(on: RunLoop.main)
+            .sink { [weak self] event in guard let self = self else { return }
+                if let board = self.viewModel.selectedBoard, let allBoards = self.viewModel.selectedWorkspace?.boards, let priority = self.taskFlowInteractor.selectedPriority {
+                    let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
+                    self.applySnapshot(snapshot: localSnapshot)
+                }
+                self.coordinator?.dismissPrioritySheet()
+            }
+            .store(in: &tokens)
+        
+        
     }
     
     @objc private func closeScreen(_ sender: UIButton) {
@@ -190,22 +208,21 @@ class TaskCreateEditViewController: UIViewController {
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIButton) {
         
-//        if let selectedPriority = selectedPriority {
-//            let model = TaskBusinessModel(remoteId: -999,
-//                                          assigneeUserId: "im idin",
-//                                          title: newTitle,
-//                                          detail: newDescription,
-//                                          dueDate: DateTimeUtils.convertDateToServerString(date: Date()),
-//                                          ownerBoardId: Int64(selectedBoardId!)!,
-//                                          status: "new",
-//                                          workspaceId: selectedWorkspace!.remoteId,
-//                                          lastModifiedDate: DateTimeUtils.convertDateToServerString(date: Date()),
-//                                          isInitiallySynced: false,
-//                                          isPendingDeletionOnTheServer: false,
-//                                          priority: selectedPriority)
-//
-//            boardViewModel.createNewTask(task: model)
-//        }
+        if let selectedPriority = taskFlowInteractor.selectedPriority,
+           let title = taskFlowInteractor.newTitle,
+           let description = taskFlowInteractor.newDescription,
+           let selectedBoard = taskFlowInteractor.selectedBoardId
+        {
+            viewModel.createTaskForBoard(title: title,
+                                         description: description,
+                                         doeDate: DateTimeUtils.convertDateToServerString(date: .now + 2),
+                                         ownerBoardId: selectedBoard,
+                                         status: "Open",
+                                         priority: PriorityTypeConverter.getString(priority: selectedPriority),
+                                         assigneeUserId: "")
+
+
+        }
      
     }
     
@@ -352,7 +369,7 @@ extension TaskCreateEditViewController {
         return .init { [weak self] cell, indexPath, itemIdentifier in
             guard let self = self else { return }
             cell.model = itemIdentifier.generalInformationCellModel
-//            cell.delegate = self
+            cell.delegate = self
         }
     }
     
@@ -420,9 +437,27 @@ extension TaskCreateEditViewController: UICollectionViewDelegate {
         if indexPath.section != 1 { return false } else { return true }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if let item = dataSource.itemIdentifier(for: indexPath)?.id {
+            taskFlowInteractor.selectNewBoard(id: Int64(item)!)
+
+        }
+    }
+    
 }
 
-extension TaskCreateEditViewController: PrioritySelectionActionsProtocol {
+extension TaskCreateEditViewController: PrioritySelectionActionsProtocol, TaskDetailActionProtocol {
+    
+    func actionDidHappen(action: TaskDetailAction) {
+        switch action {
+        case .descriptionDidUpdated(let text):
+            taskFlowInteractor.setDescription(description: text)
+        case .titleDidUpdated(let text):
+            taskFlowInteractor.setTitle(title: text)
+        }
+    }
+    
     
     func actionDidHappen(action: PrioritySelectionAction) {
         
@@ -433,9 +468,42 @@ extension TaskCreateEditViewController: PrioritySelectionActionsProtocol {
 }
 
 
+enum TaskFlowUIEvent {
+    case newPriorityDidSet
+}
+
+class TaskFlowInteractor {
+    
+    private(set) var selectedPriority: Priority?
+    private(set) var selectedBoardId: Int64?
+    private(set) var newTitle: String?
+    private(set) var newDescription: String?
+
+    var taskFlowUIEvent: PassthroughSubject<TaskFlowUIEvent, Never> = PassthroughSubject()
+    
+    func selectNewPriority(priority: Priority) {
+        selectedPriority = priority
+        taskFlowUIEvent.send(.newPriorityDidSet)
+    }
+    
+    func selectNewBoard(id: Int64) {
+        selectedBoardId = id
+    }
+    
+    func setTitle(title: String) {
+        newTitle = title
+    }
+    
+    func setDescription(description: String) {
+        newDescription = description
+    }
+    
+}
+
+
 public struct TaksSectionProvider {
     
-    static func provideSectionsForCreateState(board: BoardBusinessModel, allBoards: [BoardBusinessModel]) -> NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel> {
+    static func provideSectionsForCreateState(board: BoardBusinessModel, allBoards: [BoardBusinessModel], priorirty: Priority) -> NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel> {
         var snapshot = NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel>()
         
         var localSnapshot: [TaskDetailCellModel] = []
@@ -451,7 +519,7 @@ public struct TaksSectionProvider {
         
         localSnapshot.append(contentsOf: otherBoardAfterFilter)
         
-        let priorityCell = TaksSectionProvider.providePrioritySection(id: "1", priority: .high, isHighlighted: true)
+        let priorityCell = TaksSectionProvider.providePrioritySection(id: "1", priority: priorirty, isHighlighted: true)
         
         localSnapshot.append(priorityCell)
         

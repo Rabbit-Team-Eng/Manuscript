@@ -45,6 +45,28 @@ class Repository {
         }
     }
     
+    func createTask(task: TaskCreateCoreDataRequest, localCompletion: @escaping () -> Void) {
+        taskCreator.createNewTask(task: task) { [weak self] in guard let self = self else { return }
+            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
+            self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            localCompletion()
+        } serverCompletion: { [weak self] in guard let self = self else { return }
+            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
+            
+            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
+               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
+                
+                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
+                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(task.title) board did fail broadcasted: \(errorDescription)")  }
+                    if case .success = signalRCompletionEvent { print("SignalR: \(task.title) board did successfully broadcasted!") }
+                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+                }
+                
+            }
+        }
+
+    }
+    
     func createBoard(board: BoardCreateCoreDataRequest, localCompletion: @escaping () -> Void) {
         boardCreator.createBoard(board: board) { [weak self] in guard let self = self else { return }
             

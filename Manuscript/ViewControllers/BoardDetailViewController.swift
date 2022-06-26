@@ -53,9 +53,19 @@ class BoardDetailViewController: UIViewController {
                     self.coordinator?.dismissBoardCreationScreen()
                     self.refreshBoardDate()
                 }
+                
+                if case .newTaskDidCreated = event {
+                    self.coordinator?.dismissTaskCreationScreen()
+                    self.refreshBoardDate()
+                }
 
-                
-                
+            }
+            .store(in: &tokens)
+        
+        mainViewModel.selectedWorkspacePublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] workspaceBusinessModel in guard let self = self else { return }
+                self.refreshBoardDate()
             }
             .store(in: &tokens)
 

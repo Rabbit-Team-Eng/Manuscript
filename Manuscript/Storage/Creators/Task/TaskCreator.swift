@@ -111,7 +111,7 @@ class TaskCreator {
 
     }
     
-    func createNewTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
+    func createNewTask(task: TaskCreateCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
@@ -121,17 +121,17 @@ class TaskCreator {
             
 
             taskEntity.assigneeUserId = task.assigneeUserId
-            taskEntity.detail = task.detail ?? ""
-            taskEntity.dueDate = task.dueDate
+            taskEntity.detail = task.description
+            taskEntity.dueDate = task.doeDate
             taskEntity.isInitiallySynced = task.isInitiallySynced
             taskEntity.isPendingDeletionOnTheServer = task.isPendingDeletionOnTheServer
             taskEntity.ownerBoardId = task.ownerBoardId
             taskEntity.workspaceId = task.workspaceId
-            taskEntity.remoteId = task.remoteId
+            taskEntity.remoteId = -1
             taskEntity.status = task.status
             taskEntity.title = task.title
-            taskEntity.priority = PriorityTypeConverter.getString(priority: task.priority)
-            taskEntity.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: task.lastModifiedDate)
+            taskEntity.priority = task.priority
+            taskEntity.lastModifiedDate = task.lastModifiedDate
 
             
             let boardFetchRequest: NSFetchRequest<BoardEntity> = NSFetchRequest(entityName: "BoardEntity")
@@ -142,20 +142,22 @@ class TaskCreator {
                 let boardEntity = boards.first!
                 boardEntity.addToTasks(taskEntity)
                 try context.save()
-                self.insertIntoServer(item: task, coreDataId: taskEntity.objectID)
-                completion()
+                databaseCompletion()
+                self.insertIntoServer(item: task, coreDataId: taskEntity.objectID) {
+                    serverCompletion()
+                }
             } catch {
                 fatalError()
             }
         }
     }
     
-    private func insertIntoServer(item: TaskBusinessModel, coreDataId: NSManagedObjectID?) {
+    private func insertIntoServer(item: TaskCreateCoreDataRequest, coreDataId: NSManagedObjectID?, serverCompletion: @escaping () -> Void) {
         
         taskService.createTask(requestBody: TaskRequest(boardId: item.ownerBoardId,
                                                         title: item.title,
-                                                        detail: item.detail ?? "",
-                                                        doeDate: item.dueDate,
+                                                        detail: item.description,
+                                                        doeDate: item.doeDate,
                                                         assigneeId: item.assigneeUserId,
                                                         priority: "\(item.priority)",
                                                         status: item.status))
@@ -172,11 +174,7 @@ class TaskCreator {
                     
                     do {
                         try context.save()
-                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(taskResponse.workspaceId)").members?.compactMap { $0.remoteId }
-
-                        self.notify()
-//                        self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
-
+                        serverCompletion()
                     } catch {
                         fatalError()
                     }

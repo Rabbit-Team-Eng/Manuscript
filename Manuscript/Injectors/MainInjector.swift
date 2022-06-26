@@ -30,6 +30,7 @@ class MainInjector {
     private var memberCoreDataManager: MemberCoreDataManager? = nil
     private var workspaceRepository: Repository? = nil
     private var mainViewModel: BoardsViewModel? = nil
+    private var taskFlowInteractor: TaskFlowInteractor? = nil
     
     // Injected from Application Scope
     private let startupUtils: StartupUtils
@@ -40,6 +41,15 @@ class MainInjector {
         self.startupUtils = applicationInjector.provideStartupUtils()
         self.jsonDecoder = applicationInjector.provideJsonDecoder()
         self.jsonEncoder = applicationInjector.provideJsonEncoder()
+    }
+    
+    func provideTaskFlowInteractor() -> TaskFlowInteractor {
+        if taskFlowInteractor != nil {
+            return taskFlowInteractor!
+        } else {
+            taskFlowInteractor = TaskFlowInteractor()
+            return taskFlowInteractor!
+        }
     }
     
     func provideMainViewModel() -> BoardsViewModel {
