@@ -17,23 +17,7 @@ enum BoardsViewControllerUIEvent {
     case newTaskDidCreated
 }
 
-protocol BoardsViewModelProtocol {
-    
-    func selectNewWorkspace(id: String)
-    
-    func createBoardForSelectedWorkspace(title: String, asset: String)
-    
-    func editBoardForSelectedWorkspace(id: Int64, coreDataId: NSManagedObjectID, title: String, asset: String)
-    
-    func removeBoardForSelectedWorkspace(id: Int64, coreDataId: NSManagedObjectID)
-        
-    func fetchLocalDatabaseAndNotifyAllSubscribers()
-    
-    func syncTheCloud()
-
-}
-
-class BoardsViewModel: BoardsViewModelProtocol {
+class BoardsViewModel {
     
     private let repository: Repository
     
@@ -42,11 +26,11 @@ class BoardsViewModel: BoardsViewModelProtocol {
 
     var boardsViewControllerUIEvent: PassthroughSubject<BoardsViewControllerUIEvent, Never> = PassthroughSubject()
 
-    var workspaces: [WorkspaceBusinessModel]?
-    var selectedWorkspace: WorkspaceBusinessModel?
-    var selectedBoard: BoardBusinessModel?
+    private(set) var workspaces: [WorkspaceBusinessModel]?
+    private(set) var selectedWorkspace: WorkspaceBusinessModel?
+    private(set) var selectedBoard: BoardBusinessModel?
 
-    var tokens: Set<AnyCancellable> = []
+    private var tokens: Set<AnyCancellable> = []
     
     init(repository: Repository) {
         self.repository = repository
@@ -55,6 +39,12 @@ class BoardsViewModel: BoardsViewModelProtocol {
     
     func fetchLocalDatabaseAndNotifyAllSubscribers() {
         repository.fetchLocalDatabase()
+    }
+    
+    func selectNewBoard(id: Int64) {
+        if let selectedWorkspace = selectedWorkspace, let selectedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == id }) {
+            self.selectedBoard = selectedBoard
+        }
     }
     
     func selectNewWorkspace(id: String) {
@@ -74,7 +64,7 @@ class BoardsViewModel: BoardsViewModelProtocol {
                                                               ownerBoardId: ownerBoardId,
                                                               status: status,
                                                               priority: priority,
-                                                              assigneeUserId: assigneeUserId)) {  [weak self] in guard let self = self else { return }
+                                                              assigneeUserId: assigneeUserId)) { [weak self] in guard let self = self else { return }
             self.boardsViewControllerUIEvent.send(.newTaskDidCreated)
 
             

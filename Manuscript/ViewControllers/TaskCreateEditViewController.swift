@@ -183,10 +183,7 @@ class TaskCreateEditViewController: UIViewController {
 
         }
         
-        if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards, let priority = taskFlowInteractor.selectedPriority {
-            let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
-            applySnapshot(snapshot: localSnapshot)
-        }
+        refreshData()
         
         taskFlowInteractor.taskFlowUIEvent
             .receive(on: RunLoop.main)
@@ -199,7 +196,21 @@ class TaskCreateEditViewController: UIViewController {
             }
             .store(in: &tokens)
         
+        viewModel.selectedWorkspacePublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] workspaceBusinessModel in guard let self = self else { return }
+                self.refreshData()
+            }
+            .store(in: &tokens)
         
+        
+    }
+    
+    func refreshData() {
+        if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards, let priority = taskFlowInteractor.selectedPriority {
+            let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
+            applySnapshot(snapshot: localSnapshot, animatingDifferences: true)
+        }
     }
     
     @objc private func closeScreen(_ sender: UIButton) {

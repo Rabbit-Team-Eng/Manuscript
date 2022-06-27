@@ -50,8 +50,5 @@ public struct BoardBusinessModel: BusinessModelProtocol {
     
     public static func < (lhs: BoardBusinessModel, rhs: BoardBusinessModel) -> Bool {
         lhs.lastModifiedDate > rhs.lastModifiedDate
-        
-        
-
     }
 }

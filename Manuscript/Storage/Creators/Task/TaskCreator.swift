@@ -26,18 +26,21 @@ class TaskCreator {
         self.dataProvider = dataProvider
     }
     
-    func editTask(task: TaskBusinessModel, completion: @escaping () -> Void) {
+    func editTask(task: TaskEditCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
         context.performAndWait {
-            if let coreDataId = task.coreDataId, let taskToBeUpdated = try? context.existingObject(with: coreDataId) as? TaskEntity {
+            if let taskToBeUpdated = try? context.existingObject(with: task.coreDataId) as? TaskEntity {
                 taskToBeUpdated.title = task.title
-                taskToBeUpdated.detail = task.detail ?? ""
-                taskToBeUpdated.dueDate = task.dueDate
+                taskToBeUpdated.detail = task.description
+                taskToBeUpdated.dueDate = task.doeDate
                 taskToBeUpdated.assigneeUserId = task.assigneeUserId
                 taskToBeUpdated.status = task.status
-                taskToBeUpdated.priority = PriorityTypeConverter.getString(priority: task.priority)
+                taskToBeUpdated.priority = task.priority
+                taskToBeUpdated.isInitiallySynced = task.isInitiallySynced
+                taskToBeUpdated.isPendingDeletionOnTheServer = task.isPendingDeletionOnTheServer
+
                 
                 if taskToBeUpdated.ownerBoardId != task.ownerBoardId {
 
@@ -56,16 +59,18 @@ class TaskCreator {
                 
                 do {
                     try context.save()
-                    completion()
-                    editTaskInServer(taskId: task.remoteId,
+                    databaseCompletion()
+                    editTaskInServer(taskId: task.id,
                                           ownerBoardId: task.ownerBoardId,
                                           title: task.title,
-                                          detail: task.detail ?? "",
-                                          doeDate: task.dueDate,
-                                          priority: PriorityTypeConverter.getString(priority: task.priority),
+                                          detail: task.description,
+                                          doeDate: task.doeDate,
+                                          priority: task.priority,
                                           assigneeId: task.assigneeUserId,
                                           status: task.status,
-                                          coreDataId: task.coreDataId)
+                                     coreDataId: task.coreDataId) {
+                        serverCompletion()
+                    }
                 } catch {
                     fatalError()
                 }
@@ -73,7 +78,7 @@ class TaskCreator {
         }
     }
     
-    private func editTaskInServer(taskId: Int64, ownerBoardId: Int64, title: String, detail: String, doeDate: String, priority: String, assigneeId: String, status: String, coreDataId: NSManagedObjectID?) {
+    private func editTaskInServer(taskId: Int64, ownerBoardId: Int64, title: String, detail: String, doeDate: String, priority: String, assigneeId: String, status: String, coreDataId: NSManagedObjectID?, serverCompletion: @escaping () -> Void) {
         
         taskService.updateTaskById(requestBody: TaskRequest(boardId: ownerBoardId,
                                                             title: title,
@@ -90,16 +95,11 @@ class TaskCreator {
             context.performAndWait {
                 if let coreDataId = coreDataId, let taskToBeUpdated = try? context.existingObject(with: coreDataId) as? TaskEntity {
                     taskToBeUpdated.lastModifiedDate = taskResponse.lastModifiedDate
-                    
+                    taskToBeUpdated.isInitiallySynced = true
+
                     do {
                         try context.save()
-                        let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(taskResponse.workspaceId)").members?.compactMap { $0.remoteId }
-
-                        DispatchQueue.main.async {
-                            NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
-//                            self.signalRManager.broadcastMessage(enity: "board", id: taskResponse.id, action: "create", members: currentMembers!)
-
-                        }
+                        serverCompletion()
                     } catch {
                         fatalError()
                     }

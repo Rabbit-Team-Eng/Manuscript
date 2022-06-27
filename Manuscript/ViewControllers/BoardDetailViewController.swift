@@ -38,8 +38,8 @@ class BoardDetailViewController: UIViewController {
         myColectionView.register(TaskGeneralInfoSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TaskGeneralInfoSectionHeaderView.reuseIdentifier)
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewTaskButtonDidTap(_:))),
-            UIBarButtonItem(image: UIImage(systemName: "slider.vertical.3"), style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
+            UIBarButtonItem(image: Icon.plus, style: .plain, target: self, action: #selector(createNewTaskButtonDidTap(_:))),
+            UIBarButtonItem(image: Icon.edit, style: .plain, target: self, action: #selector(editCurrentBoardButtonDidTap(_:))),
         ]
         
         refreshBoardDate()
@@ -75,7 +75,7 @@ class BoardDetailViewController: UIViewController {
         if let board = mainViewModel.selectedBoard {
             self.navigationItem.title = board.title
             
-            if let tasks = board.tasks {
+            if let tasks = board.tasks?.sorted() {
 
                 let taskCellModels = tasks.map { TaskCellModel(id: "\($0.remoteId)",
                                                                title: $0.title,
@@ -86,7 +86,7 @@ class BoardDetailViewController: UIViewController {
                                                                boardTitle: board.title)}
 
 
-                applySnapshot(items: taskCellModels)
+                applySnapshot(items: taskCellModels, animatingDifferences: true)
             }
         }
     }
@@ -105,13 +105,11 @@ class BoardDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     @objc private func backButtonDidTap(_ sender: UIBarButtonItem) {
         coordinator?.goBackFromWorkspaceCreationScreen()
     }
-    
     
     @objc private func createNewTaskButtonDidTap(_ sender: UIBarButtonItem) {
         coordinator?.presentCreateEditTaskSheet(taskDetailState: .creation)
@@ -141,7 +139,7 @@ class BoardDetailViewController: UIViewController {
 extension BoardDetailViewController {
     
     
-    func applySnapshot(items: [TaskCellModel], animatingDifferences: Bool = false) {
+    func applySnapshot(items: [TaskCellModel], animatingDifferences: Bool) {
         var snapshot = Snapshot()
         
         let priorities = items.compactMap({ $0.priority })
@@ -188,8 +186,6 @@ extension BoardDetailViewController {
                 return self.createPrioritySelectorSectionLayout()
             case .lowPrioritySection:
                 return self.createPrioritySelectorSectionLayout()
-            default:
-                fatalError()
             }
         }
 

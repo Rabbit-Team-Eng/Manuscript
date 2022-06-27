@@ -191,11 +191,11 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedItemId = dataSource.itemIdentifier(for: indexPath)?.remoteId
-        if let selectedWorkspace = viewModel.selectedWorkspace, let selectedBoard = selectedWorkspace.boards?.first(where: { "\($0.remoteId)" == selectedItemId }) {
-            viewModel.selectedBoard = selectedBoard
+        if let selectedItemId = dataSource.itemIdentifier(for: indexPath)?.remoteId {
+            viewModel.selectNewBoard(id: Int64(selectedItemId)!)
             coordinator?.navigateToBoardDetail()
         }
+        
     }
     
     private func determineBoardPlaceholder(boards: [BoardBusinessModel]) {

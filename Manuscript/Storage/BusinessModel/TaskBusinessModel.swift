@@ -61,7 +61,7 @@ public struct TaskBusinessModel: BusinessModelProtocol {
     }
     
     public static func < (lhs: TaskBusinessModel, rhs: TaskBusinessModel) -> Bool {
-        lhs.remoteId < rhs.remoteId
+        lhs.lastModifiedDate > rhs.lastModifiedDate
     }
     
 }

@@ -343,6 +343,7 @@
 		09F088EE284A7F420012D83D /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088ED284A7F420012D83D /* UITextField+Extensions.swift */; };
 		09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F088EF284A7F640012D83D /* UIFont+Extensions.swift */; };
 		09F434A62869159A0086B691 /* TaskCreateCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */; };
+		09F434A8286951DF0086B691 /* TaskEditCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F434A7286951DF0086B691 /* TaskEditCoreDataRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -608,6 +609,7 @@
 		09F088ED284A7F420012D83D /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		09F088EF284A7F640012D83D /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateCoreDataRequest.swift; sourceTree = "<group>"; };
+		09F434A7286951DF0086B691 /* TaskEditCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditCoreDataRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -786,6 +788,7 @@
 			children = (
 				0992815C28565AC000F3EA66 /* TaskCreator.swift */,
 				09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */,
+				09F434A7286951DF0086B691 /* TaskEditCoreDataRequest.swift */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -1906,6 +1909,7 @@
 				096CC634286595780096C1E4 /* BoardDeleteCoreDataRequest.swift in Sources */,
 				096EF7D92853EB81003BEC41 /* WorkspaceDetailAction.swift in Sources */,
 				099281632856769300F3EA66 /* PrioritySelectorCell.swift in Sources */,
+				09F434A8286951DF0086B691 /* TaskEditCoreDataRequest.swift in Sources */,
 				09F088F0284A7F640012D83D /* UIFont+Extensions.swift in Sources */,
 				097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
