@@ -331,6 +331,7 @@
 		09D276582826FB9700933F16 /* DataSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D276572826FB9700933F16 /* DataSyncronizer.swift */; };
 		09D4E09C282A300300B3A47F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4E09B282A300300B3A47F /* ViewModel.swift */; };
 		09D4E0A0282A32F000B3A47F /* words.json in Resources */ = {isa = PBXBuildFile; fileRef = 09D4E09F282A32F000B3A47F /* words.json */; };
+		09DB9F4B286A96A50013F8CB /* TaskDeleteCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DB9F4A286A96A50013F8CB /* TaskDeleteCoreDataRequest.swift */; };
 		09DCED09282C242900A2884B /* SingleInputFieldContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED07282C242900A2884B /* SingleInputFieldContentView.swift */; };
 		09DCED0C282C245700A2884B /* SingleInputFieldCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */; };
 		09DCED0F282C245E00A2884B /* SingleInputFieldButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */; };
@@ -600,6 +601,7 @@
 		09D4E09B282A300300B3A47F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		09D4E09D282A303300B3A47F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		09D4E09F282A32F000B3A47F /* words.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = words.json; sourceTree = "<group>"; };
+		09DB9F4A286A96A50013F8CB /* TaskDeleteCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDeleteCoreDataRequest.swift; sourceTree = "<group>"; };
 		09DCED07282C242900A2884B /* SingleInputFieldContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldContentView.swift; sourceTree = "<group>"; };
 		09DCED0A282C245700A2884B /* SingleInputFieldCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldCellConfiguration.swift; sourceTree = "<group>"; };
 		09DCED0D282C245E00A2884B /* SingleInputFieldButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleInputFieldButtonCell.swift; sourceTree = "<group>"; };
@@ -789,6 +791,7 @@
 				0992815C28565AC000F3EA66 /* TaskCreator.swift */,
 				09F434A52869159A0086B691 /* TaskCreateCoreDataRequest.swift */,
 				09F434A7286951DF0086B691 /* TaskEditCoreDataRequest.swift */,
+				09DB9F4A286A96A50013F8CB /* TaskDeleteCoreDataRequest.swift */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -1892,6 +1895,7 @@
 				09D275A02825B8C300933F16 /* OnboardingViewModel.swift in Sources */,
 				09D275F02825CC6800933F16 /* AllBoardsResponse.swift in Sources */,
 				096EF7DB2853F04A003BEC41 /* GeneralInfoSectionHeaderView.swift in Sources */,
+				09DB9F4B286A96A50013F8CB /* TaskDeleteCoreDataRequest.swift in Sources */,
 				09D275C62825C96C00933F16 /* DeleteTaskRequest.swift in Sources */,
 				093945A32855DDC400A0F963 /* BoardDetailViewController.swift in Sources */,
 				09D2763C2825CE6000933F16 /* DateTimeUtils.swift in Sources */,

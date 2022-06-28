@@ -87,7 +87,7 @@ class TaskCreator {
                                                             assigneeId: assigneeId,
                                                             priority: priority,
                                                             status: status),
-                                   taskId: "\(taskId)")
+                                                            taskId: "\(taskId)")
         .sink { completion in } receiveValue: { taskResponse in
             let context = self.database.databaseContainer.newBackgroundContext()
             context.automaticallyMergesChangesFromParent = true
@@ -171,6 +171,8 @@ class TaskCreator {
                     taskToBeUpdated.remoteId = Int64(taskResponse.id)
                     taskToBeUpdated.lastModifiedDate = taskResponse.lastModifiedDate
                     taskToBeUpdated.isInitiallySynced = true
+                    taskToBeUpdated.isPendingDeletionOnTheServer = false
+
                     
                     do {
                         try context.save()
@@ -186,20 +188,28 @@ class TaskCreator {
 
     }
     
-    func removeBoard(task: TaskBusinessModel, completion: @escaping () -> Void) {
+    func removeTask(task: TaskDeleteCoreDataRequest, databaseCompletion: @escaping () -> Void, serverCompletion: @escaping () -> Void) {
         let context = self.database.databaseContainer.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         
         context.performAndWait {
-            if let coreDataId = task.coreDataId, let taskToBeRemoved = try? context.existingObject(with: coreDataId) as? TaskEntity {
-                taskToBeRemoved.lastModifiedDate = DateTimeUtils.convertDateToServerString(date: task.lastModifiedDate)
-                taskToBeRemoved.isPendingDeletionOnTheServer = task.isPendingDeletionOnTheServer
+            if let taskToBeRemoved = try? context.existingObject(with: task.coreDataId) as? TaskEntity {
+                taskToBeRemoved.lastModifiedDate = task.lastModifiedDate
+                var needToBeRemovedFromServer = false
                 
+                if task.isInitiallySynced {
+                    needToBeRemovedFromServer = true
+                }
                 do {
                     context.delete(taskToBeRemoved)
+     
                     try context.save()
-                    completion()
-                    self.removeFromServer(taskId: task.remoteId, ownerWorkspaceId: task.workspaceId, coreDataId: coreDataId)
+                    databaseCompletion()
+                    if needToBeRemovedFromServer {
+                        self.removeFromServer(taskId: task.id, coreDataId: task.coreDataId) {
+                            serverCompletion()
+                        }
+                    }
                 } catch {
                     fatalError()
                 }
@@ -207,7 +217,7 @@ class TaskCreator {
         }
     }
     
-    private func removeFromServer(taskId: Int64, ownerWorkspaceId: Int64, coreDataId: NSManagedObjectID?) {
+    private func removeFromServer(taskId: Int64, coreDataId: NSManagedObjectID?, serverCompletion: @escaping () -> Void) {
         taskService.deleteTaskById(taskId: "\(taskId)")
             .sink { completion in } receiveValue: { removedId in
                 
@@ -220,13 +230,7 @@ class TaskCreator {
                         context.delete(taskToBeRemoved)
                         do {
                             try context.save()
-                            let currentMembers = self.dataProvider.fetchWorkspace(thread: .background, id: "\(ownerWorkspaceId)").members?.compactMap { $0.remoteId }
-
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: Notification.Name("CloudSyncDidFinish"), object: nil)
-//                                self.signalRManager.broadcastMessage(enity: "board", id: Int(ownerWorkspaceId), action: "create", members: currentMembers!)
-
-                            }
+                            serverCompletion()
                         } catch {
                             fatalError()
                         }
@@ -237,10 +241,4 @@ class TaskCreator {
             .store(in: &tokens)
     }
     
-    
-    private func notify() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Notification.Name("TaskDidCreatedAndSyncedWithServer"), object: nil)
-        }
-    }
 }

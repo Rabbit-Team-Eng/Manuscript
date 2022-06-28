@@ -157,6 +157,11 @@ class BoardCreator {
                 
                 context.performAndWait {
                     if let boardToBeRemoved = try? context.existingObject(with: board.coreDataId) as? BoardEntity {
+                        boardToBeRemoved.tasks?.forEach({ boardTaskEntity in
+                            if let task = boardTaskEntity as? TaskEntity {
+                                context.delete(task)
+                            }
+                        })
                         context.delete(boardToBeRemoved)
                         
                         do {

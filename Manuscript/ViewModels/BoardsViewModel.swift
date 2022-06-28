@@ -15,6 +15,8 @@ enum BoardsViewControllerUIEvent {
     case existingBoardDidUpdated
     case existingBoardDidDeleted
     case newTaskDidCreated
+    case taskDidUpdated
+    case taskDidRemoved
 }
 
 class BoardsViewModel {
@@ -29,6 +31,7 @@ class BoardsViewModel {
     private(set) var workspaces: [WorkspaceBusinessModel]?
     private(set) var selectedWorkspace: WorkspaceBusinessModel?
     private(set) var selectedBoard: BoardBusinessModel?
+    private(set) var selectedTask: TaskBusinessModel?
 
     private var tokens: Set<AnyCancellable> = []
     
@@ -39,6 +42,12 @@ class BoardsViewModel {
     
     func fetchLocalDatabaseAndNotifyAllSubscribers() {
         repository.fetchLocalDatabase()
+    }
+    
+    func selectNewTask(id: Int64) {
+        if let selectedBoard = selectedBoard, let task = selectedBoard.tasks?.first(where: { $0.remoteId == id}) {
+            self.selectedTask = task
+        }
     }
     
     func selectNewBoard(id: Int64) {
@@ -52,6 +61,25 @@ class BoardsViewModel {
             UserDefaults.selectedWorkspaceId = id
             selectedWorkspace = newlySelectedWorkspace
             boardsViewControllerUIEvent.send(.selectedWorkspaceDidChanged)
+        }
+    }
+    
+    func editTaskForBoard(id: Int64, coreDataId: NSManagedObjectID, title: String, description: String, doeDate: String, ownerBoardId: Int64, status: String, priority: String, assigneeUserId: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
+        if let updatedBoard = selectedWorkspace?.boards?.first(where: { $0.remoteId == ownerBoardId }) { self.selectedBoard = updatedBoard }
+
+        repository.editTask(task: TaskEditCoreDataRequest(id: id,
+                                                          coreDataId: coreDataId,
+                                                          title: title,
+                                                          description: description,
+                                                          doeDate: doeDate,
+                                                          ownerBoardId: ownerBoardId,
+                                                          status: status,
+                                                          priority: priority,
+                                                          assigneeUserId: assigneeUserId,
+                                                          isInitiallySynced: isInitiallySynced,
+                                                          isPendingDeletionOnTheServer: isPendingDeletionOnTheServer)) {
+            self.boardsViewControllerUIEvent.send(.taskDidRemoved)
+
         }
     }
     
@@ -70,6 +98,14 @@ class BoardsViewModel {
             
         }
         
+    }
+    
+    
+    func removeTaskForBoard(id: Int64, coreDataId: NSManagedObjectID, isInitiallySynced: Bool) {
+        repository.removeTask(task: TaskDeleteCoreDataRequest(id: id, coreDataId: coreDataId, isInitiallySynced: isInitiallySynced)) { [weak self] in guard let self = self else { return }
+            self.boardsViewControllerUIEvent.send(.newTaskDidCreated)
+
+        }
     }
     
     func createBoardForSelectedWorkspace(title: String, asset: String) {

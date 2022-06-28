@@ -58,6 +58,16 @@ class BoardDetailViewController: UIViewController {
                     self.coordinator?.dismissTaskCreationScreen()
                     self.refreshBoardDate()
                 }
+                
+                if case .taskDidUpdated = event {
+                    self.coordinator?.dismissTaskCreationScreen()
+                    self.refreshBoardDate()
+                }
+                
+                if case .taskDidRemoved = event {
+                    self.coordinator?.dismissTaskCreationScreen()
+                    self.refreshBoardDate()
+                }                
 
             }
             .store(in: &tokens)
@@ -265,9 +275,8 @@ extension BoardDetailViewController {
 extension BoardDetailViewController: TaskCellProtocol {
     
     func taskDidSelected(task: TaskCellModel) {
-//        if let tasks = selectedBoard.tasks, let selectedTask = tasks.first(where: { "\($0.remoteId)" == task.id }) {
-//            coordinator?.presentCreateEditTaskSheet(taskDetailState: .edit, workspaceBusinessModel: selectedWorkspace, selectedBoard: selectedBoard, selectedTask: selectedTask)
-//        }
+        mainViewModel.selectNewTask(id: Int64(task.id)!)
+        coordinator?.presentCreateEditTaskSheet(taskDetailState: .edit)
     }
         
 }

@@ -178,12 +178,15 @@ class TaskCreateEditViewController: UIViewController {
             createNewTaskButton.addTarget(self, action: #selector(editCurrentTaskButtonDidTap(_:)), for: .touchUpInside)
             deleteButton.addTarget(self, action: #selector(deleteCurrentTaskButtonDidTap(_:)), for: .touchUpInside)
 
+            if let task = viewModel.selectedTask {
+                taskFlowInteractor.selectNewPriority(priority: task.priority)
+            }
             view.addSubview(deleteButton)
             NSLayoutConstraint.activate(editConstraints)
 
         }
         
-        refreshData()
+        refreshData(for: state)
         
         taskFlowInteractor.taskFlowUIEvent
             .receive(on: RunLoop.main)
@@ -199,18 +202,34 @@ class TaskCreateEditViewController: UIViewController {
         viewModel.selectedWorkspacePublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] workspaceBusinessModel in guard let self = self else { return }
-                self.refreshData()
+                self.refreshData(for: self.state)
             }
             .store(in: &tokens)
         
         
     }
     
-    func refreshData() {
-        if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards, let priority = taskFlowInteractor.selectedPriority {
-            let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
-            applySnapshot(snapshot: localSnapshot, animatingDifferences: true)
+    func refreshData(for state: TaskSheetState) {
+        
+        if state == .edit {
+            if let board = viewModel.selectedBoard,
+               let allBoards = viewModel.selectedWorkspace?.boards,
+               let priority = taskFlowInteractor.selectedPriority,
+               let task = viewModel.selectedTask {
+                
+                let localSnapshot = TaksSectionProvider.provideEditState(task: task, board: board, allBoards: allBoards, priorirty: priority)
+                applySnapshot(snapshot: localSnapshot, animatingDifferences: true)
+            }
         }
+        
+        if state == .creation {
+            if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards, let priority = taskFlowInteractor.selectedPriority {
+                let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
+                applySnapshot(snapshot: localSnapshot, animatingDifferences: true)
+            }
+        }
+        
+
     }
     
     @objc private func closeScreen(_ sender: UIButton) {
@@ -238,39 +257,35 @@ class TaskCreateEditViewController: UIViewController {
     }
     
     @objc private func deleteCurrentTaskButtonDidTap(_ sender: UIButton) {
-//        if let selectedTask = selectedTask {
-//            boardViewModel.deleteTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
-//                                                                   coreDataId: selectedTask.coreDataId,
-//                                                                   assigneeUserId: selectedTask.assigneeUserId,
-//                                                                   title: newTitle,
-//                                                                   detail: newDescription,
-//                                                                   dueDate: selectedTask.dueDate,
-//                                                                   ownerBoardId: Int64(selectedBoardId!)!,
-//                                                                   status: selectedTask.status,
-//                                                                   workspaceId: selectedTask.workspaceId,
-//                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
-//                                                                   isInitiallySynced: true,
-//                                                                   isPendingDeletionOnTheServer: true,
-//                                                                   priority: selectedTask.priority))
-//        }
+        if let selectedTask = viewModel.selectedTask, let coreDataId = selectedTask.coreDataId {
+            viewModel.removeTaskForBoard(id: selectedTask.remoteId , coreDataId: coreDataId, isInitiallySynced: selectedTask.isInitiallySynced)
+        }
     }
     
     @objc private func editCurrentTaskButtonDidTap(_ sender: UIButton) {
-//        if let selectedTask = selectedTask {
-//            boardViewModel.editCurrentTask(task: TaskBusinessModel(remoteId: selectedTask.remoteId,
-//                                                                   coreDataId: selectedTask.coreDataId,
-//                                                                   assigneeUserId: selectedTask.assigneeUserId,
-//                                                                   title: newTitle,
-//                                                                   detail: newDescription,
-//                                                                   dueDate: selectedTask.dueDate,
-//                                                                   ownerBoardId: Int64(selectedBoardId!)!,
-//                                                                   status: selectedTask.status,
-//                                                                   workspaceId: selectedTask.workspaceId,
-//                                                                   lastModifiedDate: DateTimeUtils.convertDateToServerString(date: selectedTask.lastModifiedDate),
-//                                                                   isInitiallySynced: true,
-//                                                                   isPendingDeletionOnTheServer: false,
-//                                                                   priority: selectedTask.priority))
-//        }
+        
+        if let selectedPriority = taskFlowInteractor.selectedPriority,
+           let title = taskFlowInteractor.newTitle,
+           let description = taskFlowInteractor.newDescription,
+           let selectedBoard = taskFlowInteractor.selectedBoardId,
+           let selectedTask = viewModel.selectedTask,
+           let coreDataId = selectedTask.coreDataId
+        {
+            viewModel.editTaskForBoard(id: selectedTask.remoteId,
+                                       coreDataId: coreDataId,
+                                       title: title,
+                                       description: description,
+                                       doeDate: selectedTask.dueDate,
+                                       ownerBoardId: selectedBoard,
+                                       status: selectedTask.status,
+                                       priority: PriorityTypeConverter.getString(priority: selectedPriority),
+                                       assigneeUserId: selectedTask.assigneeUserId,
+                                       isInitiallySynced: selectedTask.isInitiallySynced,
+                                       isPendingDeletionOnTheServer: selectedTask.isPendingDeletionOnTheServer)
+
+
+        }
+
     }
 
 
@@ -513,6 +528,49 @@ class TaskFlowInteractor {
 
 
 public struct TaksSectionProvider {
+    
+    static func provideEditState(task: TaskBusinessModel, board: BoardBusinessModel, allBoards: [BoardBusinessModel], priorirty: Priority) -> NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel> {
+        var snapshot = NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel>()
+        
+        var localSnapshot: [TaskDetailCellModel] = []
+
+        localSnapshot.append(TaskDetailCellModel(id: "0",  generalInformationCellModel: TaskGeneralInfoCellModel(title: task.title, description: task.detail ?? "", isEditable: true, needPlaceholders: true)))
+        
+        localSnapshot.append(TaskDetailCellModel(id: "\(board.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: board.title, iconResource: board.assetUrl)))
+        
+        let otherBoardAfterFilter = allBoards.filter { $0.remoteId != board.remoteId }.map {
+            TaskDetailCellModel(id: "\($0.remoteId)", boardSelectorCellModel: BoardSelectorCellModel(title: $0.title, iconResource: $0.assetUrl))
+        }
+        
+        
+        localSnapshot.append(contentsOf: otherBoardAfterFilter)
+        
+        let priorityCell = TaksSectionProvider.providePrioritySection(id: "1", priority: priorirty, isHighlighted: true)
+        
+        localSnapshot.append(priorityCell)
+        
+        
+        snapshot.appendSections([.generalInformationSection])
+        snapshot.appendSections([.boardSelectorSection])
+        snapshot.appendSections([.prioritySection])
+
+        localSnapshot.forEach { item in
+            
+            if item.generalInformationCellModel != nil {
+                snapshot.appendItems([item], toSection: .generalInformationSection)
+            }
+            
+            if item.boardSelectorCellModel != nil {
+                snapshot.appendItems([item], toSection: .boardSelectorSection)
+            }
+            
+            if item.priorityCellModel != nil {
+                snapshot.appendItems([item], toSection: .prioritySection)
+            }
+        }
+        
+        return snapshot
+    }
     
     static func provideSectionsForCreateState(board: BoardBusinessModel, allBoards: [BoardBusinessModel], priorirty: Priority) -> NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel> {
         var snapshot = NSDiffableDataSourceSnapshot<TaskDetailSectionType, TaskDetailCellModel>()
