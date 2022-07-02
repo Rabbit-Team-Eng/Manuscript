@@ -63,8 +63,6 @@ class TaskGeneralInfoContentView: UIView, UIContentView, UITextFieldDelegate {
         ])
         
         if let configModel = configuration.model { applyConfigurationModel(model: configModel) }
-
-        
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {

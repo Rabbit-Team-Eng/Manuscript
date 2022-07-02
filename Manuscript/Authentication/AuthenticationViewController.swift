@@ -98,7 +98,6 @@ class AuthenticationViewController: UIViewController {
         textField.setLeftPaddingPoints(16)
         textField.backgroundColor = Palette.gray
         textField.textColor = Palette.white
-        textField.text = "mek@test.com"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -122,6 +121,7 @@ class AuthenticationViewController: UIViewController {
         textField.setLeftPaddingPoints(16)
         textField.backgroundColor = Palette.gray
         textField.textColor = Palette.white
+        textField.isSecureTextEntry = true
         textField.text = "Pass123!"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -292,7 +292,7 @@ class AuthenticationViewController: UIViewController {
         enterEmailTextField.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray, .font: UIFont.systemFont(ofSize: 14)])
         enterEmailTextField.text = ""
         enterPasswordTextField.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray, .font: UIFont.systemFont(ofSize: 14)])
-        enterPasswordTextField.text = ""
+        enterPasswordTextField.text = "Pass123!"
     }
     
     override func viewWillLayoutSubviews() {

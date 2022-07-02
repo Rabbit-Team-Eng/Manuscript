@@ -43,7 +43,11 @@ class Repository {
     func refreshDatabase() {
         cloudSync.syncronize() { [weak self] in guard let self = self else { return }
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            if allWorkspacesAfterSync.isEmpty {
+                self.createSpace(space: SpaceCreateCoreDataRequest(title: "Personal", mainDescription: "")) { }
+            } else {
+                self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            }
         }
     }
     

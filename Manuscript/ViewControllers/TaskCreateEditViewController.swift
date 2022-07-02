@@ -97,7 +97,6 @@ class TaskCreateEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         view.backgroundColor = Palette.lightBlack
         
         closeButton.addTarget(self, action: #selector(closeScreen(_:)), for: .touchUpInside)
@@ -206,7 +205,14 @@ class TaskCreateEditViewController: UIViewController {
             }
             .store(in: &tokens)
         
-        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    
+    @objc func dismissKeyboard(_ sender: UIView) {
+        view.endEditing(true)
     }
     
     func refreshData(for state: TaskSheetState) {

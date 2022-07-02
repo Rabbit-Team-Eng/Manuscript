@@ -38,6 +38,7 @@
 		093A90FC2861805C0054CBCB /* InputCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093A90FB2861805C0054CBCB /* InputCellContentView.swift */; };
 		094841822870D29D008C5450 /* SpaceCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094841812870D29D008C5450 /* SpaceCreator.swift */; };
 		094841842870D37F008C5450 /* SpaceCreateCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094841832870D37F008C5450 /* SpaceCreateCoreDataRequest.swift */; };
+		094841872870EBB7008C5450 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094841862870EBB7008C5450 /* UserManager.swift */; };
 		0964FF76285EEA5100BFB3F7 /* MemberCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */; };
 		0964FF77285EF28000BFB3F7 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
 		0964FF7A285F0E0500BFB3F7 /* KaleidoscopeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */; };
@@ -391,6 +392,7 @@
 		093A90FB2861805C0054CBCB /* InputCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCellContentView.swift; sourceTree = "<group>"; };
 		094841812870D29D008C5450 /* SpaceCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCreator.swift; sourceTree = "<group>"; };
 		094841832870D37F008C5450 /* SpaceCreateCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCreateCoreDataRequest.swift; sourceTree = "<group>"; };
+		094841862870EBB7008C5450 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCoreDataManager.swift; sourceTree = "<group>"; };
 		0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaleidoscopeModel.swift; sourceTree = "<group>"; };
 		0964FF7D285F0FCC00BFB3F7 /* CardCellImagePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCellImagePosition.swift; sourceTree = "<group>"; };
@@ -732,6 +734,14 @@
 			path = Space;
 			sourceTree = "<group>";
 		};
+		094841852870EBB0008C5450 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				094841862870EBB7008C5450 /* UserManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		0964FF78285F0DDC00BFB3F7 /* Kaleidoscope */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1033,7 @@
 		09D275212825B4B800933F16 /* Manuscript */ = {
 			isa = PBXGroup;
 			children = (
+				094841852870EBB0008C5450 /* User */,
 				0964FF78285F0DDC00BFB3F7 /* Kaleidoscope */,
 				093945982855DDC400A0F963 /* ViewControllers */,
 				0992815E28566F0100F3EA66 /* ViewModels */,
@@ -1859,6 +1870,7 @@
 				09D275C42825C95900933F16 /* GetAllTaskRequest.swift in Sources */,
 				099A909F28500F0800B0F4B7 /* BoardCreator.swift in Sources */,
 				093A90FC2861805C0054CBCB /* InputCellContentView.swift in Sources */,
+				094841872870EBB7008C5450 /* UserManager.swift in Sources */,
 				09D2754F2825B68400933F16 /* AuthenticationCoordinator.swift in Sources */,
 				0992817328570A2B00F3EA66 /* TaskCell.swift in Sources */,
 				092F520A28558E350032B2D5 /* TaskGeneralInfoCell.swift in Sources */,

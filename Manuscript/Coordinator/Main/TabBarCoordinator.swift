@@ -31,12 +31,6 @@ class TabBarCoordinator: NSObject, Coordinator, RootProvider, UITabBarController
         let signalRManager = mainInjector.provideSignalRManager()
         signalRManager.startConnection()
         signalRManager.startListenningToHub(method: .workspaceEntitiesDidChange)
-        
-//        mainInjector.provideDatabaseManager().clearDatabase()
-//        UserDefaults.selectedWorkspaceId = ""
-//        UserDefaults.userId = ""
-//        mainInjector.provideStartUpUtils().deleteAcessToken()
-        
     }
 
     func start(with flow: Flowable) {

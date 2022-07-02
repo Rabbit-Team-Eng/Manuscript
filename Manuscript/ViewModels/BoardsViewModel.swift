@@ -19,12 +19,14 @@ enum BoardsViewControllerUIEvent {
     case taskDidRemoved
     
     case newSpaceDidCreated
+    case signOutDidFinished
 }
 
 class BoardsViewModel {
     
     private let repository: Repository
-    
+    private let userManager: UserManager
+
     var selectedWorkspacePublisher: PassthroughSubject<WorkspaceBusinessModel, Never> = PassthroughSubject()
     var workspacesPublisher: PassthroughSubject<[WorkspaceBusinessModel], Never> = PassthroughSubject()
 
@@ -37,9 +39,15 @@ class BoardsViewModel {
 
     private var tokens: Set<AnyCancellable> = []
     
-    init(repository: Repository) {
+    init(repository: Repository, userManager: UserManager) {
         self.repository = repository
+        self.userManager = userManager
         self.startListenningToWorkspaceDatabaseEvent()
+    }
+    
+    func signOut() {
+        userManager.signOut()
+        boardsViewControllerUIEvent.send(.signOutDidFinished)
     }
     
     func fetchLocalDatabaseAndNotifyAllSubscribers() {
