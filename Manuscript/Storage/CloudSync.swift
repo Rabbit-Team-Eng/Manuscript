@@ -11,15 +11,15 @@ import Combine
 final class CloudSync {
     
     private var tokens: Set<AnyCancellable> = []
-    private let workspaceService: WorkspaceService
+    private let workspaceService: SpaceService
     private let boardsService: BoardService
-    private let workspaceSyncronizer: WorkspaceSyncronizer
+    private let workspaceSyncronizer: SpaceSyncronizer
     private let boardSyncronizer: BoardSyncronizer
     private let taskSyncronizer: TaskSyncronizer
     private let dataProvider: DataProvider
     private let membersCoreDataManager: MemberCoreDataManager
 
-    init(workspaceService: WorkspaceService, boardsService: BoardService, membersCoreDataManager: MemberCoreDataManager, workspaceSyncronizer: WorkspaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer, taskSyncronizer: TaskSyncronizer) {
+    init(workspaceService: SpaceService, boardsService: BoardService, membersCoreDataManager: MemberCoreDataManager, workspaceSyncronizer: SpaceSyncronizer, dataProvider: DataProvider, boardSyncronizer: BoardSyncronizer, taskSyncronizer: TaskSyncronizer) {
         self.workspaceService = workspaceService
         self.membersCoreDataManager = membersCoreDataManager
         self.boardsService = boardsService

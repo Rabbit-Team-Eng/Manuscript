@@ -13,7 +13,7 @@ public enum SyncError: Error {
     case board
 }
 
-public class WorkspaceService: WorkspaceAPI {
+public class SpaceService: WorkspaceAPI {
     
     private let environment: ManuscriptEnvironment
     private let jsonEncoder: JSONEncoder

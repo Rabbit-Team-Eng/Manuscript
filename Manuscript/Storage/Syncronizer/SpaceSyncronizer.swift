@@ -8,23 +8,23 @@
 import CoreData
 import Combine
 
-enum WorkspaceSyncronizerState {
+enum SpaceSyncronizerState {
     case initial
     case done
 }
 
-class WorkspaceSyncronizer: DataSyncronizer {
+class SpaceSyncronizer: DataSyncronizer {
     
     typealias Model = WorkspaceBusinessModel
     
     private let coreDataStack: CoreDataStack
-    private let workspaceService: WorkspaceService
+    private let workspaceService: SpaceService
     private var tokens: Set<AnyCancellable> = []
     private let startupUtils: StartupUtils
     private let workspaceCoreDataManager: WorkspaceCoreDataManager
     
 
-    init(coreDataStack: CoreDataStack, workspaceService: WorkspaceService, startupUtils: StartupUtils, workspaceCoreDataManager: WorkspaceCoreDataManager) {
+    init(coreDataStack: CoreDataStack, workspaceService: SpaceService, startupUtils: StartupUtils, workspaceCoreDataManager: WorkspaceCoreDataManager) {
         self.coreDataStack = coreDataStack
         self.workspaceService = workspaceService
         self.startupUtils = startupUtils

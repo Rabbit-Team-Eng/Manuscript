@@ -191,7 +191,7 @@ class TaskCreateEditViewController: UIViewController {
         taskFlowInteractor.taskFlowUIEvent
             .receive(on: RunLoop.main)
             .sink { [weak self] event in guard let self = self else { return }
-                if let board = self.viewModel.selectedBoard, let allBoards = self.viewModel.selectedWorkspace?.boards, let priority = self.taskFlowInteractor.selectedPriority {
+                if let board = self.viewModel.selectedBoard, let allBoards = self.viewModel.selectedSpace?.boards, let priority = self.taskFlowInteractor.selectedPriority {
                     let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
                     self.applySnapshot(snapshot: localSnapshot)
                 }
@@ -213,7 +213,7 @@ class TaskCreateEditViewController: UIViewController {
         
         if state == .edit {
             if let board = viewModel.selectedBoard,
-               let allBoards = viewModel.selectedWorkspace?.boards,
+               let allBoards = viewModel.selectedSpace?.boards,
                let priority = taskFlowInteractor.selectedPriority,
                let task = viewModel.selectedTask {
                 
@@ -223,7 +223,7 @@ class TaskCreateEditViewController: UIViewController {
         }
         
         if state == .creation {
-            if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedWorkspace?.boards, let priority = taskFlowInteractor.selectedPriority {
+            if let board = viewModel.selectedBoard, let allBoards = viewModel.selectedSpace?.boards, let priority = taskFlowInteractor.selectedPriority {
                 let localSnapshot = TaksSectionProvider.provideSectionsForCreateState(board: board, allBoards: allBoards, priorirty: priority)
                 applySnapshot(snapshot: localSnapshot, animatingDifferences: true)
             }

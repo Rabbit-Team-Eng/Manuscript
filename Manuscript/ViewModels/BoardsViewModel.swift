@@ -17,6 +17,8 @@ enum BoardsViewControllerUIEvent {
     case newTaskDidCreated
     case taskDidUpdated
     case taskDidRemoved
+    
+    case newSpaceDidCreated
 }
 
 class BoardsViewModel {
@@ -28,8 +30,8 @@ class BoardsViewModel {
 
     var boardsViewControllerUIEvent: PassthroughSubject<BoardsViewControllerUIEvent, Never> = PassthroughSubject()
 
-    private(set) var workspaces: [WorkspaceBusinessModel]?
-    private(set) var selectedWorkspace: WorkspaceBusinessModel?
+    private(set) var spaces: [WorkspaceBusinessModel]?
+    private(set) var selectedSpace: WorkspaceBusinessModel?
     private(set) var selectedBoard: BoardBusinessModel?
     private(set) var selectedTask: TaskBusinessModel?
 
@@ -44,6 +46,12 @@ class BoardsViewModel {
         repository.fetchLocalDatabase()
     }
     
+    func createNewSpace(title: String, description: String) {
+        repository.createSpace(space: SpaceCreateCoreDataRequest(title: title, mainDescription: description)) { [weak self] in guard let self = self else { return }
+            self.boardsViewControllerUIEvent.send(.newSpaceDidCreated)
+        }
+    }
+    
     func selectNewTask(id: Int64) {
         if let selectedBoard = selectedBoard, let task = selectedBoard.tasks?.first(where: { $0.remoteId == id}) {
             self.selectedTask = task
@@ -51,21 +59,21 @@ class BoardsViewModel {
     }
     
     func selectNewBoard(id: Int64) {
-        if let selectedWorkspace = selectedWorkspace, let selectedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == id }) {
+        if let selectedWorkspace = selectedSpace, let selectedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == id }) {
             self.selectedBoard = selectedBoard
         }
     }
     
     func selectNewWorkspace(id: String) {
-        if let workspaces = workspaces, let newlySelectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == id }) {
+        if let workspaces = spaces, let newlySelectedWorkspace = workspaces.first(where: { "\($0.remoteId)" == id }) {
             UserDefaults.selectedWorkspaceId = id
-            selectedWorkspace = newlySelectedWorkspace
+            selectedSpace = newlySelectedWorkspace
             boardsViewControllerUIEvent.send(.selectedWorkspaceDidChanged)
         }
     }
     
     func editTaskForBoard(id: Int64, coreDataId: NSManagedObjectID, title: String, description: String, doeDate: String, ownerBoardId: Int64, status: String, priority: String, assigneeUserId: String, isInitiallySynced: Bool, isPendingDeletionOnTheServer: Bool) {
-        if let updatedBoard = selectedWorkspace?.boards?.first(where: { $0.remoteId == ownerBoardId }) { self.selectedBoard = updatedBoard }
+        if let updatedBoard = selectedSpace?.boards?.first(where: { $0.remoteId == ownerBoardId }) { self.selectedBoard = updatedBoard }
 
         repository.editTask(task: TaskEditCoreDataRequest(id: id,
                                                           coreDataId: coreDataId,
@@ -84,7 +92,7 @@ class BoardsViewModel {
     }
     
     func createTaskForBoard(title: String, description: String, doeDate: String, ownerBoardId: Int64, status: String, priority: String, assigneeUserId: String) {
-        if let updatedBoard = selectedWorkspace?.boards?.first(where: { $0.remoteId == ownerBoardId }) { self.selectedBoard = updatedBoard }
+        if let updatedBoard = selectedSpace?.boards?.first(where: { $0.remoteId == ownerBoardId }) { self.selectedBoard = updatedBoard }
         
         repository.createTask(task: TaskCreateCoreDataRequest(title: title,
                                                               description: description,
@@ -109,7 +117,7 @@ class BoardsViewModel {
     }
     
     func createBoardForSelectedWorkspace(title: String, asset: String) {
-        guard let ownerWorkspaceCoreDataId = selectedWorkspace?.coreDataId else { return }
+        guard let ownerWorkspaceCoreDataId = selectedSpace?.coreDataId else { return }
         let boardRequest = BoardCreateCoreDataRequest(ownerWorkspaceCoreDataId: ownerWorkspaceCoreDataId, title: title, assetUrl: asset)
         
         repository.createBoard(board: boardRequest) { [weak self] in guard let self = self else { return }
@@ -143,7 +151,7 @@ class BoardsViewModel {
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] workspaces in guard let self = self else { return }
                 
-                self.workspaces = workspaces
+                self.spaces = workspaces
                 self.workspacesPublisher.send(workspaces)
                 
         }
@@ -153,7 +161,7 @@ class BoardsViewModel {
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] selectedWorkspace in guard let self = self else { return }
                 
-                self.selectedWorkspace = selectedWorkspace
+                self.selectedSpace = selectedWorkspace
                 
                 if let updatedBoard = selectedWorkspace.boards?.first(where: { $0.remoteId == self.selectedBoard?.remoteId }) { self.selectedBoard = updatedBoard }
                 
