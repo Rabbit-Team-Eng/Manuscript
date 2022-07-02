@@ -47,6 +47,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        handleDeepLink(openURLContexts: URLContexts)
+    }
+    
+    private func handleDeepLink(openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        for context in URLContexts {
+            if let host = context.url.host,
+               let schema = context.url.scheme {
+                
+                
+                
+                let deepLink = "\(schema)://\(host)"
+                
+                switch deepLink {
+                case "mns://workspace":
+                    if (context.url.path != "") {
+                        
+                        print(context.url.path)
+                    }
+                default:
+                    print("")
+                }
+                
+            }
+        }
+    }
 
 
 }
