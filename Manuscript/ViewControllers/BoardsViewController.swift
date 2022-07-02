@@ -74,6 +74,10 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func signOut(_ sender: UIBarButtonItem) {
+        viewModel.signOut()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,6 +86,7 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
         
         navigationItem.rightBarButtonItems = [
             
+            UIBarButtonItem(image: Icon.rabbit, style: .plain, target: self, action: #selector(signOut(_:))),
             UIBarButtonItem(image: Icon.plus, style: .plain, target: self, action: #selector(createNewBoardBarButtonDidTap(_:))),
             UIBarButtonItem(image: Icon.selector, style: .plain, target: self, action: #selector(openWorkspaceSelectorBarButtonDidTap(_:))),
             
@@ -127,6 +132,10 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                     }
                     self.coordinator?.goBackFromWorkspaceCreationScreen()
                     
+                }
+                
+                if case .signOutDidFinished = event {
+                    self.coordinator?.signeOut()
                 }
                 
             }
@@ -253,8 +262,6 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
             ])
         }
     }
-    
-    
 }
 
 enum BoardViewControllerSection {

@@ -115,6 +115,10 @@ class BoardCreateEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard(_:)))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
         view.addSubview(closeButton)
         view.addSubview(titleTexLabel)
         view.addSubview(nameTextLabel)
@@ -149,6 +153,10 @@ class BoardCreateEditViewController: UIViewController {
         
         closeButton.addTarget(self, action: #selector(dismissScreen(_:)), for: .touchUpInside)
         
+    }
+    
+    @objc func dismissKeyboard(_ sender: UIView) {
+        view.endEditing(true)
     }
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
