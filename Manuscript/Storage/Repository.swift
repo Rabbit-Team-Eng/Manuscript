@@ -17,15 +17,17 @@ class Repository {
     private let dataProvider: DataProvider
     private let boardCreator: BoardCreator
     private let taskCreator: TaskCreator
+    private let spaceCreator: SpaceCreator
     private let signalRManager: SignalRManager
     
     private var tokens: Set<AnyCancellable> = []
 
-    init(cloudSync: CloudSync, dataProvider: DataProvider, boardCreator: BoardCreator, taskCreator: TaskCreator, signalRManager: SignalRManager) {
+    init(cloudSync: CloudSync, dataProvider: DataProvider, boardCreator: BoardCreator, taskCreator: TaskCreator, spaceCreator: SpaceCreator, signalRManager: SignalRManager) {
         self.cloudSync = cloudSync
         self.dataProvider = dataProvider
         self.boardCreator = boardCreator
         self.taskCreator = taskCreator
+        self.spaceCreator = spaceCreator
         self.signalRManager = signalRManager
         self.refreshDatabase()
         self.initializeSocketListeners()
@@ -45,24 +47,24 @@ class Repository {
         }
     }
     
+    func createSpace(space: SpaceCreateCoreDataRequest, localCompletion: @escaping () -> Void) {
+        spaceCreator.createNewSpace(space: space) { [weak self] in guard let self = self else { return }
+            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
+            self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            localCompletion()
+        } serverCompletion: { [weak self] in guard let self = self else { return }
+            self.broadcastServerCompletionEvent()
+        }
+
+    }
+    
     func editTask(task: TaskEditCoreDataRequest, localCompletion: @escaping () -> Void) {
         taskCreator.editTask(task: task) { [weak self] in guard let self = self else { return }
             let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
             self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
             localCompletion()
         } serverCompletion: { [weak self] in guard let self = self else { return }
-            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            
-            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
-                
-                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(task.title) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(task.title) board did successfully broadcasted!") }
-                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
-                }
-                
-            }
+            self.broadcastServerCompletionEvent()
         }
 
     }
@@ -73,18 +75,7 @@ class Repository {
             self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
             localCompletion()
         } serverCompletion: { [weak self] in guard let self = self else { return }
-            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            
-            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
-                
-                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(task.title) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(task.title) board did successfully broadcasted!") }
-                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
-                }
-                
-            }
+            self.broadcastServerCompletionEvent()
         }
 
     }
@@ -95,18 +86,7 @@ class Repository {
             self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
             localCompletion()
         } serverCompletion: { [weak self] in guard let self = self else { return }
-            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            
-            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
-                
-                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(task.id) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(task.id) board did successfully broadcasted!") }
-                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
-                }
-                
-            }
+            self.broadcastServerCompletionEvent()
         }
     }
     
@@ -118,19 +98,7 @@ class Repository {
             localCompletion()
             
         } serverCompletion: { [weak self] in guard let self = self else { return }
-            
-            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            
-            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
-                
-                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.title) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(board.title) board did successfully broadcasted!") }
-                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
-                }
-                
-            }
+            self.broadcastServerCompletionEvent()
         }
 
     }
@@ -143,17 +111,7 @@ class Repository {
             localCompletion()
             
         } serverCompletion: { [weak self] in guard let self = self else { return }
-            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            
-            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
-                
-                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.title) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(board.title) board did successfully broadcasted!") }
-                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
-                }
-            }
+            self.broadcastServerCompletionEvent()
         }
     }
     
@@ -164,17 +122,7 @@ class Repository {
             self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
             localCompletion()
         } serverCompletion: { [weak self] in guard let self = self else { return }
-            let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
-            
-            if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
-               let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
-                
-                self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
-                    if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: \(board.id) board did fail broadcasted: \(errorDescription)")  }
-                    if case .success = signalRCompletionEvent { print("SignalR: \(board.id) board did successfully broadcasted!") }
-                    self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
-                }
-            }
+            self.broadcastServerCompletionEvent()
         }
 
     }
@@ -182,6 +130,20 @@ class Repository {
     func fetchLocalDatabase() {
         let allWorkspacesInitiallyBeforeSync = self.dataProvider.fetchWorkspaces(thread: .background)
         notifyDataSetChanged(workspaces: allWorkspacesInitiallyBeforeSync)
+    }
+    
+    private func broadcastServerCompletionEvent() {
+        let allWorkspacesAfterSync = self.dataProvider.fetchWorkspaces(thread: .background)
+        
+        if let currentWorkspaces = allWorkspacesAfterSync.first(where: { "\($0.remoteId)" == UserDefaults.selectedWorkspaceId }),
+           let currentMembers = currentWorkspaces.members?.filter({ $0.remoteId != UserDefaults.userId }) {
+            
+            self.signalRManager.notifyMembers(signalREvent: .board, toMembers: currentMembers) { [weak self] signalRCompletionEvent in guard let self = self else { return }
+                if case .error(let errorDescription) = signalRCompletionEvent { print("SignalR: did fail broadcasting: \(errorDescription)")  }
+                if case .success = signalRCompletionEvent { print("SignalR: did successfully broadcasted!") }
+                self.notifyDataSetChanged(workspaces: allWorkspacesAfterSync)
+            }
+        }
     }
     
     private func notifyDataSetChanged(workspaces: [WorkspaceBusinessModel]) {

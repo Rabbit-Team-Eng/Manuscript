@@ -36,6 +36,8 @@
 		093A90F828617FF00054CBCB /* InputCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093A90F728617FF00054CBCB /* InputCardCell.swift */; };
 		093A90FA286180240054CBCB /* InputCellContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093A90F9286180240054CBCB /* InputCellContentConfiguration.swift */; };
 		093A90FC2861805C0054CBCB /* InputCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093A90FB2861805C0054CBCB /* InputCellContentView.swift */; };
+		094841822870D29D008C5450 /* SpaceCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094841812870D29D008C5450 /* SpaceCreator.swift */; };
+		094841842870D37F008C5450 /* SpaceCreateCoreDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094841832870D37F008C5450 /* SpaceCreateCoreDataRequest.swift */; };
 		0964FF76285EEA5100BFB3F7 /* MemberCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */; };
 		0964FF77285EF28000BFB3F7 /* CloudSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096BEDA0284ABBDC001C7136 /* CloudSync.swift */; };
 		0964FF7A285F0E0500BFB3F7 /* KaleidoscopeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */; };
@@ -89,8 +91,8 @@
 		097EDF30282B22180060C8FD /* DatabaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF2F282B22180060C8FD /* DatabaseViewModel.swift */; };
 		097EDF33282B635A0060C8FD /* WorkspaceCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */; };
 		097EDF34282B63970060C8FD /* WorkspaceCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */; };
-		097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */; };
-		097EDF38282B63C80060C8FD /* WorkspaceSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */; };
+		097EDF37282B63C50060C8FD /* SpaceSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF36282B63C50060C8FD /* SpaceSyncronizer.swift */; };
+		097EDF38282B63C80060C8FD /* SpaceSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF36282B63C50060C8FD /* SpaceSyncronizer.swift */; };
 		097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */; };
 		097EDF3B282B63F30060C8FD /* BoardSyncronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */; };
 		097EDF3E282B68360060C8FD /* FieldButtonContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097EDF3D282B68360060C8FD /* FieldButtonContentView.swift */; };
@@ -208,7 +210,7 @@
 		09CAAA632829D90C00FE0214 /* UpdateTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C12825C93D00933F16 /* UpdateTaskRequest.swift */; };
 		09CAAA642829D90C00FE0214 /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275932825B85D00933F16 /* ResetPasswordRequest.swift */; };
 		09CAAA682829D91300FE0214 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B72825C84400933F16 /* TaskService.swift */; };
-		09CAAA692829D91300FE0214 /* WorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BB2825C86A00933F16 /* WorkspaceService.swift */; };
+		09CAAA692829D91300FE0214 /* SpaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BB2825C86A00933F16 /* SpaceService.swift */; };
 		09CAAA6A2829D91300FE0214 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275982825B89700933F16 /* AuthenticationManager.swift */; };
 		09CAAA6B2829D91300FE0214 /* BoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B32825C82000933F16 /* BoardService.swift */; };
 		09CAAA6C2829D91B00FE0214 /* StartupUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275AF2825B94300933F16 /* StartupUtils.swift */; };
@@ -271,7 +273,7 @@
 		09D275B62825C83400933F16 /* TaskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B52825C83400933F16 /* TaskAPI.swift */; };
 		09D275B82825C84400933F16 /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B72825C84400933F16 /* TaskService.swift */; };
 		09D275BA2825C85600933F16 /* WorkspaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275B92825C85600933F16 /* WorkspaceAPI.swift */; };
-		09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BB2825C86A00933F16 /* WorkspaceService.swift */; };
+		09D275BC2825C86A00933F16 /* SpaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BB2825C86A00933F16 /* SpaceService.swift */; };
 		09D275BE2825C8F300933F16 /* CreateNewTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BD2825C8F300933F16 /* CreateNewTaskRequest.swift */; };
 		09D275C02825C92500933F16 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275BF2825C92500933F16 /* Endpoint.swift */; };
 		09D275C22825C93D00933F16 /* UpdateTaskRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D275C12825C93D00933F16 /* UpdateTaskRequest.swift */; };
@@ -387,6 +389,8 @@
 		093A90F728617FF00054CBCB /* InputCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCardCell.swift; sourceTree = "<group>"; };
 		093A90F9286180240054CBCB /* InputCellContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCellContentConfiguration.swift; sourceTree = "<group>"; };
 		093A90FB2861805C0054CBCB /* InputCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCellContentView.swift; sourceTree = "<group>"; };
+		094841812870D29D008C5450 /* SpaceCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCreator.swift; sourceTree = "<group>"; };
+		094841832870D37F008C5450 /* SpaceCreateCoreDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCreateCoreDataRequest.swift; sourceTree = "<group>"; };
 		0964FF75285EEA5100BFB3F7 /* MemberCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCoreDataManager.swift; sourceTree = "<group>"; };
 		0964FF79285F0E0500BFB3F7 /* KaleidoscopeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaleidoscopeModel.swift; sourceTree = "<group>"; };
 		0964FF7D285F0FCC00BFB3F7 /* CardCellImagePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCellImagePosition.swift; sourceTree = "<group>"; };
@@ -436,7 +440,7 @@
 		097EDF2B282B1F200060C8FD /* DatabaseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseItem.swift; sourceTree = "<group>"; };
 		097EDF2F282B22180060C8FD /* DatabaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewModel.swift; sourceTree = "<group>"; };
 		097EDF32282B635A0060C8FD /* WorkspaceCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoreDataManager.swift; sourceTree = "<group>"; };
-		097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSyncronizer.swift; sourceTree = "<group>"; };
+		097EDF36282B63C50060C8FD /* SpaceSyncronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceSyncronizer.swift; sourceTree = "<group>"; };
 		097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSyncronizer.swift; sourceTree = "<group>"; };
 		097EDF3D282B68360060C8FD /* FieldButtonContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldButtonContentView.swift; sourceTree = "<group>"; };
 		097EDF3F282B68590060C8FD /* FieldButtonCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldButtonCellConfiguration.swift; sourceTree = "<group>"; };
@@ -540,7 +544,7 @@
 		09D275B52825C83400933F16 /* TaskAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAPI.swift; sourceTree = "<group>"; };
 		09D275B72825C84400933F16 /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
 		09D275B92825C85600933F16 /* WorkspaceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAPI.swift; sourceTree = "<group>"; };
-		09D275BB2825C86A00933F16 /* WorkspaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceService.swift; sourceTree = "<group>"; };
+		09D275BB2825C86A00933F16 /* SpaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceService.swift; sourceTree = "<group>"; };
 		09D275BD2825C8F300933F16 /* CreateNewTaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewTaskRequest.swift; sourceTree = "<group>"; };
 		09D275BF2825C92500933F16 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		09D275C12825C93D00933F16 /* UpdateTaskRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTaskRequest.swift; sourceTree = "<group>"; };
@@ -719,6 +723,15 @@
 			path = InputCard;
 			sourceTree = "<group>";
 		};
+		094841802870D27A008C5450 /* Space */ = {
+			isa = PBXGroup;
+			children = (
+				094841812870D29D008C5450 /* SpaceCreator.swift */,
+				094841832870D37F008C5450 /* SpaceCreateCoreDataRequest.swift */,
+			);
+			path = Space;
+			sourceTree = "<group>";
+		};
 		0964FF78285F0DDC00BFB3F7 /* Kaleidoscope */ = {
 			isa = PBXGroup;
 			children = (
@@ -884,7 +897,7 @@
 			isa = PBXGroup;
 			children = (
 				09D276572826FB9700933F16 /* DataSyncronizer.swift */,
-				097EDF36282B63C50060C8FD /* WorkspaceSyncronizer.swift */,
+				097EDF36282B63C50060C8FD /* SpaceSyncronizer.swift */,
 				097EDF39282B63EA0060C8FD /* BoardSyncronizer.swift */,
 				0992817E2857154B00F3EA66 /* TaskSyncronizer.swift */,
 			);
@@ -946,6 +959,7 @@
 		099A909D28500EF500B0F4B7 /* Creators */ = {
 			isa = PBXGroup;
 			children = (
+				094841802870D27A008C5450 /* Space */,
 				096CC636286597200096C1E4 /* Task */,
 				096CC635286597130096C1E4 /* Board */,
 			);
@@ -1258,7 +1272,7 @@
 				09D275982825B89700933F16 /* AuthenticationManager.swift */,
 				09D275B32825C82000933F16 /* BoardService.swift */,
 				09D275B72825C84400933F16 /* TaskService.swift */,
-				09D275BB2825C86A00933F16 /* WorkspaceService.swift */,
+				09D275BB2825C86A00933F16 /* SpaceService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1363,8 +1377,8 @@
 				09D276212825CE6000933F16 /* DataProvider.swift */,
 				096BEDC4284B2E7A001C7136 /* DatabaseManager.swift */,
 				096EA95A285C495E0053F4F6 /* SignalRManager.swift */,
-				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
 				09A37CA12862A0E2001F8B41 /* Repository.swift */,
+				09D276002825CE2300933F16 /* TaskDB.xcdatamodeld */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1659,9 +1673,9 @@
 				097EDF2A282B1F1A0060C8FD /* DatabaseSection.swift in Sources */,
 				09CAAA552829D90C00FE0214 /* GetTaskByIdRequest.swift in Sources */,
 				09CAAA422829D8FE00FE0214 /* AllTaskResponse.swift in Sources */,
-				097EDF38282B63C80060C8FD /* WorkspaceSyncronizer.swift in Sources */,
+				097EDF38282B63C80060C8FD /* SpaceSyncronizer.swift in Sources */,
 				09CAAA242829D8A800FE0214 /* MemberEntity+CoreDataProperties.swift in Sources */,
-				09CAAA692829D91300FE0214 /* WorkspaceService.swift in Sources */,
+				09CAAA692829D91300FE0214 /* SpaceService.swift in Sources */,
 				09CAAA3C2829D8E900FE0214 /* BoardAPI.swift in Sources */,
 				09CAAA532829D90C00FE0214 /* UpdateWorkspaceByIdRequest.swift in Sources */,
 				09CAAA6B2829D91300FE0214 /* BoardService.swift in Sources */,
@@ -1713,7 +1727,7 @@
 				09D275F52825CC8E00933F16 /* AllTaskResponse.swift in Sources */,
 				0964FF76285EEA5100BFB3F7 /* MemberCoreDataManager.swift in Sources */,
 				093A90F328616CC30054CBCB /* KaleidoscopeSection.swift in Sources */,
-				097EDF37282B63C50060C8FD /* WorkspaceSyncronizer.swift in Sources */,
+				097EDF37282B63C50060C8FD /* SpaceSyncronizer.swift in Sources */,
 				092F5216285591210032B2D5 /* TaskDetailCellModel.swift in Sources */,
 				093A90F828617FF00054CBCB /* InputCardCell.swift in Sources */,
 				09F434A62869159A0086B691 /* TaskCreateCoreDataRequest.swift in Sources */,
@@ -1787,7 +1801,7 @@
 				093A90F128616C710054CBCB /* KaleidoscopeViewController.swift in Sources */,
 				09D2763F2825CE6000933F16 /* TaskBusinessModel.swift in Sources */,
 				093945A02855DDC400A0F963 /* BoardCreateEditViewController.swift in Sources */,
-				09D275BC2825C86A00933F16 /* WorkspaceService.swift in Sources */,
+				09D275BC2825C86A00933F16 /* SpaceService.swift in Sources */,
 				09D27654282605E900933F16 /* MemberEntity+CoreDataProperties.swift in Sources */,
 				09D275DA2825CB5A00933F16 /* GetWorkspaceByIdRequest.swift in Sources */,
 				09D275562825B6B100933F16 /* BoardsFlow.swift in Sources */,
@@ -1812,6 +1826,7 @@
 				09D275412825B5ED00933F16 /* ForgotPasswordViewController.swift in Sources */,
 				0992815D28565AC000F3EA66 /* TaskCreator.swift in Sources */,
 				0992817D28570D3C00F3EA66 /* TaskSectionType.swift in Sources */,
+				094841822870D29D008C5450 /* SpaceCreator.swift in Sources */,
 				09D275602825B6F800933F16 /* OnboardingFlow.swift in Sources */,
 				09D275EE2825CC5D00933F16 /* BoardResponse.swift in Sources */,
 				09D275232825B4B800933F16 /* AppDelegate.swift in Sources */,
@@ -1918,6 +1933,7 @@
 				097EDF3A282B63EA0060C8FD /* BoardSyncronizer.swift in Sources */,
 				09D275672825B72E00933F16 /* Coordinator.swift in Sources */,
 				09D275D82825CB4300933F16 /* GetWorkspaceSharingUrlRequest.swift in Sources */,
+				094841842870D37F008C5450 /* SpaceCreateCoreDataRequest.swift in Sources */,
 				096EF7D72853EB71003BEC41 /* WorkspaceDetailActionsProtocol.swift in Sources */,
 				0992817728570A4500F3EA66 /* TaskCellContentConfiguration.swift in Sources */,
 				09D275FD2825CCCC00933F16 /* TaskError.swift in Sources */,

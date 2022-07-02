@@ -11,11 +11,11 @@ class MainInjector {
     
     // Local Scope
     private var coreDataStack: CoreDataStack? = nil
-    private var workspaceService: WorkspaceService? = nil
+    private var workspaceService: SpaceService? = nil
     private var taskService: TaskService? = nil
     private var dataManager: DataProvider? = nil
     private var workspaceCoreDatabaseManager: WorkspaceCoreDataManager? = nil
-    private var workspaceSyncronizer: WorkspaceSyncronizer? = nil
+    private var workspaceSyncronizer: SpaceSyncronizer? = nil
     private var taskSyncronizer: TaskSyncronizer? = nil
     private var taskCoreDataManager: TaskCoreDataManager? = nil
     private var boardService: BoardService? = nil
@@ -25,6 +25,7 @@ class MainInjector {
     private var databaseManager: DatabaseManager? = nil
     private var boardCreator: BoardCreator? = nil
     private var taskCreator: TaskCreator? = nil
+    private var spaceCreator: SpaceCreator? = nil
     private var signalRManager: SignalRManager? = nil
     private var socketIO: SignalRConnectionListener? = nil
     private var memberCoreDataManager: MemberCoreDataManager? = nil
@@ -61,15 +62,25 @@ class MainInjector {
         }
     }
     
+    func provideSpaceCreator() -> SpaceCreator {
+        if spaceCreator != nil {
+            return spaceCreator!
+        } else {
+            spaceCreator = SpaceCreator(spaceService: provideWorkspaceService(), database: provideCoreDataStack(), dataProvider: provideDataManager())
+            return spaceCreator!
+        }
+    }
+    
     func provideWorkspaceRepository() -> Repository {
         if workspaceRepository != nil {
             return workspaceRepository!
         } else {
             workspaceRepository = Repository(cloudSync: provideCloudSync(),
-                                                      dataProvider: provideDataManager(),
-                                                      boardCreator: provideBoardCreator(),
-                                                      taskCreator: provideTaskCreator(),
-                                                      signalRManager: provideSignalRManager())
+                                             dataProvider: provideDataManager(),
+                                             boardCreator: provideBoardCreator(),
+                                             taskCreator: provideTaskCreator(),
+                                             spaceCreator: provideSpaceCreator(),
+                                             signalRManager: provideSignalRManager())
             return workspaceRepository!
         }
     }
@@ -171,11 +182,11 @@ class MainInjector {
         }
     }
     
-    func provideWorkspaceSyncronizer() -> WorkspaceSyncronizer {
+    func provideWorkspaceSyncronizer() -> SpaceSyncronizer {
         if workspaceSyncronizer != nil {
             return workspaceSyncronizer!
         } else {
-            workspaceSyncronizer = WorkspaceSyncronizer(coreDataStack: provideCoreDataStack(),
+            workspaceSyncronizer = SpaceSyncronizer(coreDataStack: provideCoreDataStack(),
                                                         workspaceService: provideWorkspaceService(),
                                                         startupUtils: startupUtils,
                                                         workspaceCoreDataManager: provideWorkspaceCoreDataManager())
@@ -201,11 +212,11 @@ class MainInjector {
         }
     }
     
-    func provideWorkspaceService() -> WorkspaceService {
+    func provideWorkspaceService() -> SpaceService {
         if workspaceService != nil {
             return workspaceService!
         } else {
-            workspaceService = WorkspaceService(accessToken: startupUtils.getAccessToken(), environment: startupUtils.provideEnvironment(), jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
+            workspaceService = SpaceService(accessToken: startupUtils.getAccessToken(), environment: startupUtils.provideEnvironment(), jsonEncoder: jsonEncoder, jsonDecoder: jsonDecoder)
             return workspaceService!
         }
     }

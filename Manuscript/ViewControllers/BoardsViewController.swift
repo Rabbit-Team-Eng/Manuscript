@@ -113,11 +113,20 @@ class BoardsViewController: UIViewController, UICollectionViewDelegate {
                 }
                 
                 if case .selectedWorkspaceDidChanged = event {
-                    if let newlySelectedWorkspace = self.viewModel.selectedWorkspace {
+                    if let newlySelectedWorkspace = self.viewModel.selectedSpace {
                         self.navigationItem.title = newlySelectedWorkspace.title
                         self.determineBoardPlaceholder(boards: newlySelectedWorkspace.boards ?? [])
                     }
                     self.coordinator?.dismissWorspaceSelectorScreen()
+                }
+                
+                if case .newSpaceDidCreated = event {
+                    if let newlySelectedWorkspace = self.viewModel.selectedSpace {
+                        self.navigationItem.title = newlySelectedWorkspace.title
+                        self.determineBoardPlaceholder(boards: newlySelectedWorkspace.boards ?? [])
+                    }
+                    self.coordinator?.goBackFromWorkspaceCreationScreen()
+                    
                 }
                 
             }

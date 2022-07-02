@@ -9,8 +9,16 @@ import UIKit
 
 class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsProtocol {
     
+    private var spaceTitle: String? = nil
+    private var spaceDescription: String? = nil
+
     func actionDidHappen(action: WorkspaceDetailAction) {
-        
+        switch action {
+        case .descriptionDidUpdated(let description):
+            spaceDescription = description
+        case .titleDidUpdated(let title):
+            spaceTitle = title
+        }
     }
     
     lazy var myColectionView: UICollectionView = {
@@ -202,6 +210,7 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
         if case .create = worksapceDetailState {
             navigationItem.title = "Create new workspace"
             primaryBottomButton.setTitle("Create New Worksapce", for: .normal)
+            primaryBottomButton.addTarget(self, action: #selector(createNewSpaceDidTap(_:)), for: .touchUpInside)
             applySnapshot(items: [WorkspaceDetailCellModel(id: "0", generalInformationCellModel: GeneralInfoCellModel(title: "", description: "", isEditable: true, needPlaceholders: true))])
         }
         
@@ -228,6 +237,12 @@ class WorksapceDetailViewController: UIViewController, WorkspaceDetailActionsPro
             primaryBottomButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
+    }
+    
+    @objc func createNewSpaceDidTap(_ sender: UIButton) {
+        if let spaceTitle = spaceTitle, let spaceDescription = spaceDescription {
+            mainViewModel.createNewSpace(title: spaceTitle, description: spaceDescription)
+        }
     }
     
     @objc private func backButtonDidTap(_ sender: UIBarButtonItem) {
